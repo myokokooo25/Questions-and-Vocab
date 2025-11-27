@@ -1,0 +1,5 @@
+{
+  "name": "Japanese Technical Vocabulary Flashcards",
+  "description": "An interactive flashcard application to study Japanese-English-Burmese technical vocabulary for construction and engineering, based on provided learning materials. Users can flip through cards, filter by category, and search for specific terms.",
+  "requestFramePermissions": []
+}
