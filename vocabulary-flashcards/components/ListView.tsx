@@ -1,8 +1,7 @@
 
-
 import React from 'react';
 import type { VocabularyWord } from '../types';
-import { CheckCircleIcon } from './Icons';
+import { CheckCircleIcon, SpeakerIcon } from './Icons';
 
 interface ListViewProps {
   words: VocabularyWord[];
@@ -11,9 +10,17 @@ interface ListViewProps {
   categories: string[];
   markedAsLearned: Set<number>;
   onToggleMarkedAsLearned: (id: number) => void;
+  onPlayAudio: (word: VocabularyWord) => void;
+  loadingAudioId: number | null;
 }
 
-const ReadOnlyView: React.FC<{ words: VocabularyWord[], markedAsLearned: Set<number>, onToggleMarkedAsLearned: (id: number) => void }> = ({ words, markedAsLearned, onToggleMarkedAsLearned }) => {
+const ReadOnlyView: React.FC<{ 
+    words: VocabularyWord[], 
+    markedAsLearned: Set<number>, 
+    onToggleMarkedAsLearned: (id: number) => void,
+    onPlayAudio: (word: VocabularyWord) => void,
+    loadingAudioId: number | null
+}> = ({ words, markedAsLearned, onToggleMarkedAsLearned, onPlayAudio, loadingAudioId }) => {
    if (words.length === 0) {
     return (
       <div className="w-full max-w-4xl h-full flex items-center justify-center bg-neumorphic-bg shadow-neumorphic-inset rounded-xl p-6">
@@ -25,8 +32,9 @@ const ReadOnlyView: React.FC<{ words: VocabularyWord[], markedAsLearned: Set<num
     <div className="w-full max-w-4xl bg-neumorphic-bg shadow-neumorphic-inset rounded-xl overflow-hidden p-2 flex flex-col">
       {/* Header */}
       <div className="p-1 sm:p-2 shrink-0">
-        <div className="grid grid-cols-[40px_1fr_1fr_1fr_1fr] w-full text-left gap-2">
+        <div className="grid grid-cols-[40px_40px_1fr_1fr_1fr_1fr] w-full text-left gap-2">
             <div className="p-3 sm:p-4"></div> {/* Placeholder for checkmark */}
+            <div className="p-3 sm:p-4"></div> {/* Placeholder for audio */}
             <div className="p-3 sm:p-4 text-blue-600 font-semibold text-sm">Kanji</div>
             <div className="p-3 sm:p-4 text-blue-600 font-semibold text-sm">Reading</div>
             <div className="p-3 sm:p-4 text-blue-600 font-semibold text-sm">English</div>
@@ -40,8 +48,9 @@ const ReadOnlyView: React.FC<{ words: VocabularyWord[], markedAsLearned: Set<num
       <div className="overflow-y-auto max-h-[55vh] p-2 space-y-3">
         {words.map((word) => {
             const isLearned = markedAsLearned.has(word.id);
+            const isAudioLoading = loadingAudioId === word.id;
             return (
-            <div key={word.id} className="bg-neumorphic-bg shadow-neumorphic-outset p-3 sm:p-4 rounded-lg grid grid-cols-[40px_1fr_1fr_1fr_1fr] gap-2 w-full text-left transition-shadow duration-200 hover:shadow-neumorphic-inset">
+            <div key={word.id} className="bg-neumorphic-bg shadow-neumorphic-outset p-3 sm:p-4 rounded-lg grid grid-cols-[40px_40px_1fr_1fr_1fr_1fr] gap-2 w-full text-left transition-shadow duration-200 hover:shadow-neumorphic-inset">
                 <div className="self-center justify-self-center">
                     <button 
                         onClick={() => onToggleMarkedAsLearned(word.id)}
@@ -49,6 +58,16 @@ const ReadOnlyView: React.FC<{ words: VocabularyWord[], markedAsLearned: Set<num
                         aria-label={isLearned ? "Mark as not learned" : "Mark as learned"}
                     >
                         <CheckCircleIcon solid={isLearned} className="w-6 h-6" />
+                    </button>
+                </div>
+                <div className="self-center justify-self-center">
+                    <button 
+                        onClick={() => onPlayAudio(word)}
+                        disabled={loadingAudioId !== null} // Disable if ANY audio is loading to prevent overlap
+                        className={`p-1 rounded-full transition-colors text-slate-400 hover:text-blue-500 disabled:opacity-50`}
+                        aria-label="Play pronunciation"
+                    >
+                        <SpeakerIcon isLoading={isAudioLoading} className="w-5 h-5" />
                     </button>
                 </div>
                 <p className="font-bold text-md sm:text-lg truncate self-center text-slate-700">{word.kanji}</p>
@@ -63,7 +82,7 @@ const ReadOnlyView: React.FC<{ words: VocabularyWord[], markedAsLearned: Set<num
   );
 };
 
-const EditView: React.FC<Omit<ListViewProps, 'isEditMode' | 'markedAsLearned' | 'onToggleMarkedAsLearned'>> = ({ words, setWords, categories }) => {
+const EditView: React.FC<Omit<ListViewProps, 'isEditMode' | 'markedAsLearned' | 'onToggleMarkedAsLearned' | 'onPlayAudio' | 'loadingAudioId'>> = ({ words, setWords, categories }) => {
     
     const handleAddWord = () => {
         const newId = words.length > 0 ? Math.max(...words.map(w => w.id)) + 1 : 1;
@@ -144,11 +163,11 @@ const EditView: React.FC<Omit<ListViewProps, 'isEditMode' | 'markedAsLearned' | 
 };
 
 
-const ListView: React.FC<ListViewProps> = ({ words, isEditMode, setWords, categories, markedAsLearned, onToggleMarkedAsLearned }) => {
+const ListView: React.FC<ListViewProps> = ({ words, isEditMode, setWords, categories, markedAsLearned, onToggleMarkedAsLearned, onPlayAudio, loadingAudioId }) => {
   if (isEditMode) {
       return <EditView words={words} setWords={setWords} categories={categories} />;
   }
-  return <ReadOnlyView words={words} markedAsLearned={markedAsLearned} onToggleMarkedAsLearned={onToggleMarkedAsLearned} />;
+  return <ReadOnlyView words={words} markedAsLearned={markedAsLearned} onToggleMarkedAsLearned={onToggleMarkedAsLearned} onPlayAudio={onPlayAudio} loadingAudioId={loadingAudioId} />;
 };
 
 export default ListView;

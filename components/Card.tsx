@@ -1,11 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { StudyCardData, VocabItem } from '../types';
-import { ChevronDownIcon, BookmarkIcon, BookmarkSolidIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, CheckCircleSolidIcon, XCircleSolidIcon, LightBulbIcon } from './Icons';
+
+import React, { useState, useEffect } from 'react';
+import { StudyCardData } from '../types';
+import { BookmarkIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, PencilIcon, AcademicCapIcon, CheckCircleSolidIcon, XCircleSolidIcon, LightBulbIcon, FlagIcon } from './Icons';
 import { useBookmarks } from '../hooks/useBookmarks';
 import { useLanguage } from '../contexts/LanguageContext';
 import JapaneseText from './JapaneseText';
-import { GoogleGenAI, Modality } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { vocabularyData } from '../data/vocab';
+import ReportModal from './ReportModal';
 
 // Helper function to prepare text for TTS by removing furigana annotations.
 const stripHtml = (html: string): string => {
@@ -18,8 +20,61 @@ const stripHtml = (html: string): string => {
   return doc.body.textContent || "";
 };
 
+// Instantiate the AI client once at the module level.
+// This improves performance and reliability by reusing the same client instance.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
-// Helper functions for audio decoding
+// --- IndexedDB Caching Logic ---
+const DB_NAME = 'tts-cache';
+const STORE_NAME = 'audios';
+
+const openDB = (): Promise<IDBDatabase> => {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (event) => {
+            const db = (event.target as IDBOpenDBRequest).result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME);
+            }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+};
+
+const getCachedAudio = async (text: string): Promise<Uint8Array | null> => {
+    try {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(STORE_NAME, 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.get(text);
+            request.onsuccess = () => resolve(request.result ? (request.result as Uint8Array) : null);
+            request.onerror = () => reject(request.error);
+        });
+    } catch (e) {
+        console.error("Error reading from cache", e);
+        return null;
+    }
+};
+
+const saveCachedAudio = async (text: string, data: Uint8Array): Promise<void> => {
+    try {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.put(data, text);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    } catch (e) {
+        console.error("Error saving to cache", e);
+    }
+};
+// -------------------------------
+
+// Helper functions for Audio Decoding
 function decode(base64: string) {
   const binaryString = atob(base64);
   const len = binaryString.length;
@@ -49,10 +104,6 @@ async function decodeAudioData(
   return buffer;
 }
 
-// Instantiate the AI client once at the module level.
-// This improves performance and reliability by reusing the same client instance.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
-
 interface CardProps {
   data: StudyCardData;
   onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void;
@@ -74,10 +125,6 @@ const Card: React.FC<CardProps> = ({
   const { bookmarkedIds, toggleBookmark } = useBookmarks();
   const isBookmarked = bookmarkedIds.has(data.id);
   
-  const [audioLoadingId, setAudioLoadingId] = useState<string | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const currentSourceRef = useRef<AudioBufferSourceNode | null>(null);
-  
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -89,7 +136,10 @@ const Card: React.FC<CardProps> = ({
   const [hint, setHint] = useState<string | null>(null);
   const [isHintLoading, setIsHintLoading] = useState(false);
   const [hintError, setHintError] = useState<string | null>(null);
+  
+  const [audioLoadingId, setAudioLoadingId] = useState<string | null>(null);
 
+  const [isReportOpen, setIsReportOpen] = useState(false);
 
   useEffect(() => {
     setAiExplanation(null);
@@ -99,6 +149,8 @@ const Card: React.FC<CardProps> = ({
     setHint(null);
     setIsHintLoading(false);
     setHintError(null);
+    setAudioLoadingId(null);
+    setIsReportOpen(false);
   }, [data.id]);
 
   useEffect(() => {
@@ -146,7 +198,7 @@ const Card: React.FC<CardProps> = ({
 
     try {
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-flash-preview',
         contents: prompt,
       });
 
@@ -199,7 +251,7 @@ const Card: React.FC<CardProps> = ({
 
     try {
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-flash-preview',
         contents: prompt,
       });
       
@@ -219,84 +271,95 @@ const Card: React.FC<CardProps> = ({
   };
 
 
-  const handlePlayAudio = async (textToSpeak: string, uniqueId: string) => {
-    if (audioLoadingId) return; // Prevent multiple requests
+  const handlePlayAudio = async (textToSpeak: string, id: string) => {
+    if (audioLoadingId) return; // Prevent multiple clicks
+    setAudioLoadingId(id);
 
-    if (currentSourceRef.current) {
-      currentSourceRef.current.stop();
-      currentSourceRef.current = null;
+    const cleanText = stripHtml(textToSpeak);
+    if (!cleanText.trim()) {
+        setAudioLoadingId(null);
+        return;
     }
 
-    setAudioLoadingId(uniqueId);
-
     try {
-      if (!audioContextRef.current) {
-        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-      }
-      const audioContext = audioContextRef.current;
-      
-      const cleanText = stripHtml(textToSpeak);
-      if (!cleanText.trim()) {
-          console.error("Text to speak is empty after cleaning.");
-          setAudioLoadingId(null);
-          return;
-      }
+        // Create context only on user gesture to ensure playback
+        const outputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({sampleRate: 24000});
+        
+        if (outputAudioContext.state === 'suspended') {
+            await outputAudioContext.resume();
+        }
 
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-preview-tts",
-        contents: [{ parts: [{ text: `Say clearly in standard Japanese: ${cleanText}` }] }],
-        config: {
-          responseModalities: [Modality.AUDIO],
-          speechConfig: {
-            voiceConfig: {
-              prebuiltVoiceConfig: { voiceName: 'Kore' },
-            },
-          },
-        },
-      });
+        // Check cache first
+        const cachedData = await getCachedAudio(cleanText);
+        let pcmData: Uint8Array;
 
-      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-      if (!base64Audio) {
-        throw new Error("No audio data received from API.");
-      }
+        if (cachedData) {
+             // Hit cache
+             pcmData = cachedData;
+        } else {
+             // Miss cache - fetch from AI
+             const response = await ai.models.generateContent({
+                model: "gemini-2.5-flash-preview-tts",
+                contents: [{ parts: [{ text: cleanText }] }],
+                config: {
+                    responseModalities: ['AUDIO'],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: 'Kore' }, // 'Kore' is good for clear reading
+                        },
+                    },
+                },
+            });
 
-      const audioBytes = decode(base64Audio);
-      const audioBuffer = await decodeAudioData(audioBytes, audioContext, 24000, 1);
-      
-      const source = audioContext.createBufferSource();
-      source.buffer = audioBuffer;
-      source.connect(audioContext.destination);
-      source.start();
+            const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+            if (!base64Audio) throw new Error("No audio data received from AI");
+            
+            pcmData = decode(base64Audio);
+            // Save to cache
+            await saveCachedAudio(cleanText, pcmData);
+        }
 
-      currentSourceRef.current = source;
-      source.onended = () => {
-        setAudioLoadingId(null);
-        currentSourceRef.current = null;
-      };
+        const audioBuffer = await decodeAudioData(
+            pcmData,
+            outputAudioContext,
+            24000,
+            1,
+        );
+        const source = outputAudioContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(outputAudioContext.destination);
+        source.start();
 
     } catch (error) {
-      console.error("Error playing audio:", error);
-      setAudioLoadingId(null);
+        console.error("Error playing AI audio:", error);
+    } finally {
+        setAudioLoadingId(null);
     }
   };
   
   const AudioButton = ({ text, id }: { text: string, id: string }) => (
     <button
       onClick={(e) => { e.stopPropagation(); handlePlayAudio(text, id); }}
-      disabled={!!audioLoadingId}
-      className="p-1.5 text-slate-400 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-      aria-label="Play audio for question"
+      disabled={audioLoadingId !== null}
+      className="p-1.5 text-slate-400 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all hover:text-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+      aria-label="Play audio"
+      title="Click to listen"
     >
       {audioLoadingId === id ? (
-        <LoadingSpinnerIcon className="w-4 h-4" />
+          <LoadingSpinnerIcon className="w-4 h-4 text-blue-500" />
       ) : (
-        <SpeakerIcon className="w-4 h-4" />
+          <SpeakerIcon className="w-4 h-4" />
       )}
     </button>
   );
 
   return (
     <div className="bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset">
+      <ReportModal 
+        isOpen={isReportOpen} 
+        onClose={() => setIsReportOpen(false)} 
+        contextInfo={`Question ${data.id}: ${data.questionMY.substring(0, 30)}...`} 
+      />
       <div className="p-6">
         <div className='flex items-start justify-between mb-6'>
             <div className="flex-1 pr-4">
@@ -308,7 +371,7 @@ const Card: React.FC<CardProps> = ({
                       <p className="font-mono text-base text-slate-500">
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
                       </p>
-                      <AudioButton text={data.questionJP} id={`${data.id}-question`} />
+                      <AudioButton text={data.questionJP} id={`q-${data.id}`} />
                     </div>
                   </>
                 ) : ( // Covers 'jp' and 'jp-only'
@@ -317,7 +380,7 @@ const Card: React.FC<CardProps> = ({
                       <p className="font-mono text-lg text-slate-700">
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
                       </p>
-                      <AudioButton text={data.questionJP} id={`${data.id}-question`} />
+                      <AudioButton text={data.questionJP} id={`q-${data.id}`} />
                     </div>
                      {language === 'jp' && (
                         <p className="text-base font-semibold leading-relaxed text-slate-500">{data.questionMY}</p>
@@ -326,6 +389,14 @@ const Card: React.FC<CardProps> = ({
                 )}
             </div>
             <div className="flex items-center -mt-2 -mr-2 gap-1">
+                <button
+                    onClick={() => setIsReportOpen(true)}
+                    className="p-2.5 rounded-full shadow-neumorphic-outset text-slate-400 hover:text-red-500 transition-all duration-200 active:shadow-neumorphic-inset"
+                    aria-label="Report an error"
+                    title="Report error in this question"
+                >
+                    <FlagIcon className="w-5 h-5" />
+                </button>
                 <button
                     onClick={handleGetHint}
                     disabled={isHintLoading || !!hint || isSubmitted}
@@ -384,7 +455,7 @@ const Card: React.FC<CardProps> = ({
                                 <p className="font-mono text-sm text-slate-500">
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
                                 </p>
-                                <AudioButton text={option.textJP} id={`${data.id}-option-${option.id}`} />
+                                <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                         </>
                     ) : ( // Covers 'jp' and 'jp-only'
@@ -393,7 +464,7 @@ const Card: React.FC<CardProps> = ({
                                 <p className="font-mono font-medium">
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
                                 </p>
-                                <AudioButton text={option.textJP} id={`${data.id}-option-${option.id}`} />
+                                <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                              {language === 'jp' && (
                                 <p className="mt-1 text-sm text-slate-500">{option.textMY}</p>

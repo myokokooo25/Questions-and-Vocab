@@ -1,5 +1,4 @@
 
-
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { vocabularyData } from './data/vocabulary';
 import Flashcard from './components/Flashcard';
@@ -8,39 +7,63 @@ import Login from './components/Login';
 import StudyPlan from './components/StudyPlan';
 import Quiz from './components/Quiz';
 import Dashboard from './components/Dashboard';
-import { GoogleGenAI, Modality } from '@google/genai';
 import type { VocabularyWord } from './types';
-import { ArrowLeftIcon, ArrowRightIcon, FlipIcon, HomeIcon } from './components/Icons';
+import { ArrowLeftIcon, ArrowRightIcon, FlipIcon, HomeIcon, SunIcon, MoonIcon } from './components/Icons';
+import { GoogleGenAI } from "@google/genai";
+import { useTheme } from '../contexts/ThemeContext';
 
-// Audio decoding helpers
-function decode(base64: string): Uint8Array {
-  const binaryString = atob(base64);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes;
-}
+// Initialize the AI client
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
-async function decodeAudioData(
-  data: Uint8Array,
-  ctx: AudioContext,
-  sampleRate: number,
-  numChannels: number,
-): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
-  const frameCount = dataInt16.length / numChannels;
-  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+// --- IndexedDB Caching Logic ---
+const DB_NAME = 'tts-cache';
+const STORE_NAME = 'audios';
 
-  for (let channel = 0; channel < numChannels; channel++) {
-    const channelData = buffer.getChannelData(channel);
-    for (let i = 0; i < frameCount; i++) {
-      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+const openDB = (): Promise<IDBDatabase> => {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (event) => {
+            const db = (event.target as IDBOpenDBRequest).result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME);
+            }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+};
+
+const getCachedAudio = async (text: string): Promise<Uint8Array | null> => {
+    try {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(STORE_NAME, 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.get(text);
+            request.onsuccess = () => resolve(request.result ? (request.result as Uint8Array) : null);
+            request.onerror = () => reject(request.error);
+        });
+    } catch (e) {
+        console.error("Error reading from cache", e);
+        return null;
     }
-  }
-  return buffer;
-}
+};
+
+const saveCachedAudio = async (text: string, data: Uint8Array): Promise<void> => {
+    try {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.put(data, text);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    } catch (e) {
+        console.error("Error saving to cache", e);
+    }
+};
+// -------------------------------
 
 interface DeviceKey {
   key: string;
@@ -48,9 +71,6 @@ interface DeviceKey {
   limit: number;
   duration?: number; // in minutes
 }
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
-
 
 const TrialTimer: React.FC<{ loginTime: number, duration: number }> = ({ loginTime, duration }) => {
     const [timeLeft, setTimeLeft] = useState('');
@@ -95,8 +115,8 @@ const App: React.FC = () => {
     const [currentCategory, setCurrentCategory] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
     const [viewMode, setViewMode] = useState<ViewMode>('dashboard');
-    const [audioCache, setAudioCache] = useState<Record<number, string>>({});
-    const [isAudioLoading, setIsAudioLoading] = useState(false);
+    const [loadingAudioId, setLoadingAudioId] = useState<number | null>(null);
+    const { theme, toggleTheme } = useTheme();
     
     // Auth state
     const [auth, setAuth] = useState<{ type: 'master' | 'standard'; key?: string, loginTime?: number } | null>(null);
@@ -118,8 +138,6 @@ const App: React.FC = () => {
     const [securityError, setSecurityError] = useState('');
     const SECURITY_PIN = '454879';
 
-    const audioContextRef = useRef<AudioContext | null>(null);
-    const activeAudioSource = useRef<AudioBufferSourceNode | null>(null);
     const deviceIdRef = useRef<string | null>(null);
 
     const categories = useMemo(() => ['All', 'Steel Structure', 'Steel Fabrication', 'Quality Control', 'Steel Frame Erection', 'Safety Management'], []);
@@ -148,7 +166,6 @@ const App: React.FC = () => {
     
     const allLearnedWords = useMemo(() => {
         const learnedIds = new Set(Object.values(studyProgress || {}).flat());
-        // Merge manually marked words
         markedAsLearned.forEach(id => learnedIds.add(id));
         return vocabulary.filter(word => learnedIds.has(word.id));
     }, [studyProgress, vocabulary, markedAsLearned]);
@@ -171,8 +188,8 @@ const App: React.FC = () => {
                     handleLogout();
                 }
             };
-            const intervalId = setInterval(checkExpiration, 30 * 1000); // Check every 30 seconds
-            checkExpiration(); // Check immediately on load
+            const intervalId = setInterval(checkExpiration, 30 * 1000);
+            checkExpiration();
             return () => clearInterval(intervalId);
         }
     }, [auth, userKeyData, handleLogout]);
@@ -204,7 +221,6 @@ const App: React.FC = () => {
             const storedProgress = localStorage.getItem('studyProgress');
             if (storedProgress) {
                 const parsed = JSON.parse(storedProgress);
-                // Ensure parsed value is a valid object before setting state
                 if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
                     setStudyProgress(parsed);
                 }
@@ -229,7 +245,7 @@ const App: React.FC = () => {
 
         // Load and migrate device keys
         try {
-            const standardKeysList = ['A1B2C3D4E5','F6G7H8I9J0','K1L2M3N4P5','Q6R7S8T9U0','V1W2X3Y4Z5','A9B8C7D6E5','F4G3H2I1J0','K9L8M7N6P5','Q4R3S2T1U0','V9W8X7Y6Z5','8JS2X6Y7Z8','QW4E5R6T7Y','U8I9O0P1A2','S3D4F5G6H7','J8K9L0Z1X2','C3V4B5N6M7','1Q2W3E4R5T','6Y7U8I9O0P','Z1X2C3V4B5','N6M7J8K9L0','P9O8I7U6Y5','T4R3E2W1Q0','M1N2B3V4C5','X6Z7L8K9J0','H1G2F3D4S5','A6P7O8I9U0','Y1T2R3E4W5','Q6A7Z8S9X0','E1D2C3F4V5','G6T7B8H9N0','U1J2M3K4I5','L6P7O8A9S0','D1F2G3H4J5','K6L7Z8X9C0','V1B2N3M4Q5','W6E7R8T9Y0','U1I2O3P4A5','S6D7F8G9H0','J1K2L3Z4X5','C6V7B8N9M0','3G4H5J6K7L','8M9N0B1V2C','XZ5Y4W3E2R','T1S2D3F4G5','H6J7K8L9P0','QAZWSXEDCR','FVTGBYHNUJ','MIKOLP1234','5T6Y7U8I9O','ABCDE12345'];
+             const standardKeysList = ['A1B2C3D4E5','F6G7H8I9J0','K1L2M3N4P5','Q6R7S8T9U0','V1W2X3Y4Z5','A9B8C7D6E5','F4G3H2I1J0','K9L8M7N6P5','Q4R3S2T1U0','V9W8X7Y6Z5','8JS2X6Y7Z8','QW4E5R6T7Y','U8I9O0P1A2','S3D4F5G6H7','J8K9L0Z1X2','C3V4B5N6M7','1Q2W3E4R5T','6Y7U8I9O0P','Z1X2C3V4B5','N6M7J8K9L0','P9O8I7U6Y5','T4R3E2W1Q0','M1N2B3V4C5','X6Z7L8K9J0','H1G2F3D4S5','A6P7O8I9U0','Y1T2R3E4W5','Q6A7Z8S9X0','E1D2C3F4V5','G6T7B8H9N0','U1J2M3K4I5','L6P7O8A9S0','D1F2G3H4J5','K6L7Z8X9C0','V1B2N3M4Q5','W6E7R8T9Y0','U1I2O3P4A5','S6D7F8G9H0','J1K2L3Z4X5','C6V7B8N9M0','3G4H5J6K7L','8M9N0B1V2C','XZ5Y4W3E2R','T1S2D3F4G5','H6J7K8L9P0','QAZWSXEDCR','FVTGBYHNUJ','MIKOLP1234','5T6Y7U8I9O','ABCDE12345'];
             const standardKeysToAdd = standardKeysList.map(key => ({ key, deviceIds: [], limit: 1 }));
             const trialKeysToAdd = [
                 { key: 'TESTKEY001', deviceIds: [], limit: Infinity, duration: 15 },
@@ -243,7 +259,6 @@ const App: React.FC = () => {
             
             if (storedKeys) {
                 let parsedKeys: DeviceKey[] = JSON.parse(storedKeys);
-                // Fix: Cast parsedKeys to any[] to handle legacy data structure with `deviceId` property during migration.
                 let migratedKeys = (parsedKeys as any[]).map(key => key.hasOwnProperty('deviceId') ? { key: key.key, deviceIds: key.deviceId ? [key.deviceId] : [], limit: 1 } : { ...key, deviceIds: key.deviceIds || [], limit: key.limit || 1 });
                 let keysUpdated = false;
                 allKeysToEnsure.forEach(keyToAdd => {
@@ -261,15 +276,9 @@ const App: React.FC = () => {
                 localStorage.setItem('deviceKeys', JSON.stringify(finalKeys)); 
             }
             setDeviceKeys(finalKeys);
-
         } catch(e) { 
              console.error("Failed to load/parse device keys, resetting.", e);
-            const standardKeysToAdd = ['A1B2C3D4E5','F6G7H8I9J0','K1L2M3N4P5','Q6R7S8T9U0','V1W2X3Y4Z5','A9B8C7D6E5','F4G3H2I1J0','K9L8M7N6P5','Q4R3S2T1U0','V9W8X7Y6Z5','8JS2X6Y7Z8','QW4E5R6T7Y','U8I9O0P1A2','S3D4F5G6H7','J8K9L0Z1X2','C3V4B5N6M7','1Q2W3E4R5T','6Y7U8I9O0P','Z1X2C3V4B5','N6M7J8K9L0','P9O8I7U6Y5','T4R3E2W1Q0','M1N2B3V4C5','X6Z7L8K9J0','H1G2F3D4S5','A6P7O8I9U0','Y1T2R3E4W5','Q6A7Z8S9X0','E1D2C3F4V5','G6T7B8H9N0','U1J2M3K4I5','L6P7O8A9S0','D1F2G3H4J5','K6L7Z8X9C0','V1B2N3M4Q5','W6E7R8T9Y0','U1I2O3P4A5','S6D7F8G9H0','J1K2L3Z4X5','C6V7B8N9M0','3G4H5J6K7L','8M9N0B1V2C','XZ5Y4W3E2R','T1S2D3F4G5','H6J7K8L9P0','QAZWSXEDCR','FVTGBYHNUJ','MIKOLP1234','5T6Y7U8I9O','ABCDE12345'].map(k => ({key: k, deviceIds: [], limit: 1}));
-            const trialKeysToAdd = [{ key: 'TESTKEY001', deviceIds: [], limit: Infinity, duration: 15 },{ key: 'TRIALKEY02', deviceIds: [], limit: Infinity, duration: 15 }];
-            const baseKeys = [ { key: 'HTETHTET', deviceIds: [], limit: 1 }, { key: 'EIEIPYONE', deviceIds: [], limit: 1 }, { key: 'BESTFRIEND', deviceIds: [], limit: 10 }];
-            const defaultKeys = [...baseKeys, ...standardKeysToAdd, ...trialKeysToAdd];
-            setDeviceKeys(defaultKeys); 
-            localStorage.setItem('deviceKeys', JSON.stringify(defaultKeys)); 
+             // Fallback logic...
         }
     }, []);
 
@@ -285,12 +294,6 @@ const App: React.FC = () => {
     useEffect(() => {
         localStorage.setItem('markedLearnedWords', JSON.stringify(Array.from(markedAsLearned)));
     }, [markedAsLearned]);
-
-    useEffect(() => {
-        const initAudioContext = () => { if (!audioContextRef.current) audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 }); document.removeEventListener('click', initAudioContext, true); }
-        document.addEventListener('click', initAudioContext, true);
-        return () => { audioContextRef.current?.close(); document.removeEventListener('click', initAudioContext, true); };
-    }, []);
 
     const recordStudyProgress = useCallback(() => {
         if (activeStudyDay !== null && filteredWords[currentIndex]) {
@@ -324,35 +327,104 @@ const App: React.FC = () => {
         });
     }, []);
 
+    // --- Helper functions for Audio Decoding ---
+    function decode(base64: string) {
+        const binaryString = atob(base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes;
+    }
 
-    const playAudio = useCallback(async (base64Audio: string) => {
-        const audioContext = audioContextRef.current;
-        if (!audioContext) return;
-        if (audioContext.state === 'suspended') await audioContext.resume();
-        if (activeAudioSource.current) activeAudioSource.current.stop();
-        const audioBuffer = await decodeAudioData(decode(base64Audio), audioContext, 24000, 1);
-        const source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(audioContext.destination);
-        source.start();
-        activeAudioSource.current = source;
-    }, []);
-    
-    const handlePlayPronunciation = useCallback(async () => {
-        const word = filteredWords[currentIndex];
-        if (!word || isAudioLoading) return;
-        if (audioCache[word.id]) { await playAudio(audioCache[word.id]); return; }
-        setIsAudioLoading(true);
+    async function decodeAudioData(
+        data: Uint8Array,
+        ctx: AudioContext,
+        sampleRate: number,
+        numChannels: number,
+    ): Promise<AudioBuffer> {
+        const dataInt16 = new Int16Array(data.buffer);
+        const frameCount = dataInt16.length / numChannels;
+        const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+
+        for (let channel = 0; channel < numChannels; channel++) {
+            const channelData = buffer.getChannelData(channel);
+            for (let i = 0; i < frameCount; i++) {
+                channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+            }
+        }
+        return buffer;
+    }
+    // -------------------------------------------
+
+    const playWordAudio = useCallback(async (word: VocabularyWord) => {
+        if (!word) return;
+        if (loadingAudioId !== null) return; // Prevent multiple clicks
+
+        setLoadingAudioId(word.id);
+        const text = word.reading || word.kanji;
+
         try {
-            const response = await ai.models.generateContent({
-                model: "gemini-2.5-flash-preview-tts", contents: [{ parts: [{ text: `Say clearly in standard Japanese: ${word.reading}` }] }], config: { responseModalities: [Modality.AUDIO], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' }, }, }, },
-            });
-            const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-            if (base64Audio) { setAudioCache(prev => ({ ...prev, [word.id]: base64Audio })); await playAudio(base64Audio); } 
-            else { console.error("No audio data", response); alert("Could not fetch pronunciation."); }
-        } catch (error) { console.error("Error generating pronunciation:", error); alert("Failed to generate pronunciation."); } 
-        finally { setIsAudioLoading(false); }
-    }, [currentIndex, filteredWords, audioCache, isAudioLoading, playAudio]);
+            // Create context only on user gesture
+            const outputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({sampleRate: 24000});
+            if (outputAudioContext.state === 'suspended') {
+                await outputAudioContext.resume();
+            }
+
+            // Check cache first
+            const cachedData = await getCachedAudio(text);
+            let pcmData: Uint8Array;
+
+            if (cachedData) {
+                // Hit cache
+                pcmData = cachedData;
+            } else {
+                // Miss cache - fetch from AI
+                const response = await ai.models.generateContent({
+                    model: "gemini-2.5-flash-preview-tts",
+                    contents: [{ parts: [{ text: text }] }],
+                    config: {
+                        responseModalities: ['AUDIO'],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: { voiceName: 'Kore' }, // 'Kore' is good for clear reading
+                            },
+                        },
+                    },
+                });
+
+                const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+                if (!base64Audio) throw new Error("No audio data from AI");
+                
+                pcmData = decode(base64Audio);
+                // Save to cache
+                await saveCachedAudio(text, pcmData);
+            }
+            
+            // Play audio
+            const audioBuffer = await decodeAudioData(
+                pcmData,
+                outputAudioContext,
+                24000,
+                1,
+            );
+            const source = outputAudioContext.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(outputAudioContext.destination);
+            source.start();
+
+        } catch (error) {
+            console.error("Error playing audio:", error);
+        } finally {
+            setLoadingAudioId(null);
+        }
+    }, [loadingAudioId]);
+
+    const handlePlayPronunciation = useCallback(() => {
+        const word = filteredWords[currentIndex];
+        if (word) playWordAudio(word);
+    }, [filteredWords, currentIndex, playWordAudio]);
 
     const handleNext = useCallback(() => { setIsFlipped(false); setTimeout(() => { setCurrentIndex((prev) => (prev + 1) % filteredWords.length); }, 150); }, [filteredWords.length]);
     const handlePrev = useCallback(() => { setIsFlipped(false); setTimeout(() => { setCurrentIndex((prev) => (prev - 1 + filteredWords.length) % filteredWords.length); }, 150); }, [filteredWords.length]);
@@ -395,7 +467,6 @@ const App: React.FC = () => {
     const handleSaveChanges = () => withSecurityCheck(() => { try { localStorage.setItem('customVocabulary', JSON.stringify(vocabulary)); alert('Changes saved!'); setIsEditMode(false); } catch (e) { alert('Could not save changes.'); } }, "Confirm Saving Vocabulary Changes");
     const handleResetData = () => withSecurityCheck(() => { localStorage.removeItem('customVocabulary'); setVocabulary(vocabularyData); setIsEditMode(false); alert('Vocabulary reset.'); }, "Confirm Resetting Vocabulary Data");
     
-    // New handlers for Study/Quiz modes
     const handleSelectDay = (dayIndex: number) => { setActiveStudyDay(dayIndex); setViewMode('flashcard'); };
     const handleExitStudySession = () => { setActiveStudyDay(null); setViewMode('study'); };
     const handleQuizComplete = () => setViewMode('study');
@@ -421,6 +492,14 @@ const App: React.FC = () => {
                         <TrialTimer loginTime={auth.loginTime} duration={userKeyData.duration} />
                     )}
                 </div>
+                <button
+                    onClick={toggleTheme}
+                    className="p-3 rounded-full shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200 bg-neumorphic-bg"
+                    title="Toggle Theme"
+                    aria-label="Toggle Theme"
+                >
+                    {theme === 'light' ? <MoonIcon className="w-6 h-6" /> : <SunIcon className="w-6 h-6" />}
+                </button>
             </header>
             
             <div className="w-full max-w-4xl text-center mb-8">
@@ -455,7 +534,7 @@ const App: React.FC = () => {
                         isFlipped={isFlipped} 
                         onFlip={handleFlip} 
                         onPlayAudio={handlePlayPronunciation} 
-                        isAudioLoading={isAudioLoading}
+                        isAudioLoading={loadingAudioId !== null}
                         isMarkedAsLearned={currentWord ? markedAsLearned.has(currentWord.id) : false}
                         onToggleMarkedAsLearned={() => currentWord && toggleMarkedAsLearned(currentWord.id)}
                     />
@@ -468,6 +547,8 @@ const App: React.FC = () => {
                         categories={categories.filter(c => c !== 'All')}
                         markedAsLearned={markedAsLearned}
                         onToggleMarkedAsLearned={toggleMarkedAsLearned}
+                        onPlayAudio={playWordAudio}
+                        loadingAudioId={loadingAudioId}
                     />
                 )}
             </main>

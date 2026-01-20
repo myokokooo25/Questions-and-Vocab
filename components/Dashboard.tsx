@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import Card from './Card';
 import KanjiTooltip from './KanjiTooltip';
@@ -9,8 +10,9 @@ import { Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, LogoIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon } from './Icons';
+import { LogoutIcon, LogoIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon } from './Icons';
 import { useBookmarks } from '../hooks/useBookmarks';
+import ChapterQuiz from './ChapterQuiz';
 
 interface HistoryEntry {
   deviceId: string;
@@ -58,7 +60,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [activeKanji, setActiveKanji] = useState<Kanji | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   
-  const [view, setView] = useState<'study' | 'list'>('study');
+  const [view, setView] = useState<'study' | 'list' | 'quiz'>('study');
 
   // Admin View State
   const [showAdminLogin, setShowAdminLogin] = useState(false);
@@ -193,6 +195,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }));
   }, [is2021Mode, totalChapters]);
 
+  const activeChapterLabel = useMemo(() => {
+    const opt = chapterOptions.find(o => o.value === activeChapter);
+    return opt ? opt.label : '';
+  }, [activeChapter, chapterOptions]);
+
   const answeredIDsInFilter = useMemo(() => {
     const filteredIds = new Set(filteredData.map(c => c.id));
     return Object.keys(studyAnswers).filter(answeredId => filteredIds.has(answeredId));
@@ -241,6 +248,17 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 )}
             </div>
         </div>
+      );
+    }
+
+    if (view === 'quiz') {
+      return (
+        <ChapterQuiz 
+          questions={currentChapterData} 
+          chapterTitle={activeChapterLabel}
+          onExit={() => setView('study')}
+          onKanjiClick={handleKanjiClick}
+        />
       );
     }
     
@@ -348,7 +366,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     <div className="min-h-screen bg-neumorphic-bg">
        {showAdminLogin && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="w-full max-w-sm p-8 space-y-6 bg-slate-900 rounded-xl shadow-xl ring-1 ring-white/10">
+          <div className="w-full max-sm p-8 space-y-6 bg-slate-900 rounded-xl shadow-xl ring-1 ring-white/10">
             {/* Admin Login remains dark themed */}
             <h2 className="text-xl font-bold text-center text-slate-100">Admin Access</h2>
             <form onSubmit={handleAdminLogin} className="space-y-4">
@@ -439,7 +457,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
        {!isAdminViewVisible && (
         <>
             <div className="flex flex-col sm:flex-row items-center justify-between p-3 mb-6 bg-neumorphic-bg rounded-xl shadow-neumorphic-outset gap-4">
-                <div className="w-full sm:w-1/2">
+                <div className="w-full sm:w-1/3">
                     <Dropdown
                         options={chapterOptions}
                         value={activeChapter}
@@ -448,17 +466,25 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         disabled={is2021Mode}
                     />
                 </div>
-                 <button
-                    onClick={() => setView(view === 'study' ? 'list' : 'study')}
-                    className="relative flex items-center justify-center w-full sm:w-auto px-4 py-2.5 text-sm font-semibold text-neumorphic-text bg-neumorphic-bg rounded-lg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
-                >
-                    {view === 'study' ? <ListBulletIcon className="w-5 h-5 mr-2"/> : <ChevronLeftIcon className="w-5 h-5 mr-2"/>}
-                    {view === 'study' ? 'Question Bank' : 'Back to Study'}
-                    <span className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-xs font-bold text-slate-600 bg-neumorphic-bg rounded-full shadow-neumorphic-outset">{filteredData.length}</span>
-                </button>
+                <div className="flex gap-4 w-full sm:w-auto">
+                    <button
+                        onClick={() => setView(view === 'study' ? 'list' : 'study')}
+                        className="flex-1 flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-neumorphic-text bg-neumorphic-bg rounded-lg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
+                    >
+                        {view === 'list' ? <BookOpenIcon className="w-5 h-5 mr-2"/> : <ListBulletIcon className="w-5 h-5 mr-2"/>}
+                        {view === 'list' ? 'Study Mode' : 'Question Bank'}
+                    </button>
+                    <button
+                        onClick={() => setView(view === 'quiz' ? 'study' : 'quiz')}
+                        className={`flex-1 flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-lg transition-all ${view === 'quiz' ? 'text-blue-600 shadow-neumorphic-inset' : 'text-neumorphic-text bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset'}`}
+                    >
+                        <AcademicCapIcon className="w-5 h-5 mr-2"/>
+                        {view === 'quiz' ? 'Exit Quiz' : 'Start Quiz'}
+                    </button>
+                </div>
             </div>
 
-            {view === 'study' && (
+            {view !== 'quiz' && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                   <div className="bg-neumorphic-bg p-4 rounded-xl shadow-neumorphic-outset flex items-center justify-between">
                       <div>
