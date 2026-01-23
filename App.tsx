@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -8,7 +9,7 @@ import WelcomeScreen from './components/WelcomeScreen';
 import FlashcardApp from './vocabulary-flashcards/App';
 import { ChevronLeftIcon } from './components/Icons';
 
-type AppMode = 'main' | '2021' | 'flashcards';
+type AppMode = 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards';
 
 const FlashcardAppWrapper: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   return (
@@ -58,9 +59,11 @@ const AppContent: React.FC = () => {
     return <WelcomeScreen onSelectApp={handleSelectApp} />;
   }
 
+  const isOldQuestionMode = ['2021', '2022', '2023', '2024', '2025'].includes(selectedApp);
+
   return (
     <div className="min-h-screen">
-      { (selectedApp === 'main' || selectedApp === '2021') && <Dashboard selectedApp={selectedApp} onGoBack={handleGoBack} /> }
+      { (selectedApp === 'main' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as any} onGoBack={handleGoBack} /> }
       { selectedApp === 'flashcards' && <FlashcardAppWrapper onGoBack={handleGoBack} /> }
     </div>
   );

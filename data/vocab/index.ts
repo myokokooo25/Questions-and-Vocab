@@ -1,5 +1,4 @@
 
-
 import { VocabItem } from '../../types';
 
 import vocab1_1 from './questions/1-1.js';
@@ -305,4 +304,18 @@ export const vocabularyData: { [key: string]: VocabItem[] } = {
   '5-6': vocab5_6,
   '5-7': vocab5_7,
   '5-8': vocab5_8,
+  '2024-1': [
+    { jp: '断面形 (だんめんけい)', my: 'ဖြတ်ပိုင်းပုံသဏ္ဍာန်', type: 'Noun' },
+    { jp: '直角 (ちょっかく)', my: 'ထောင့်မှန်', type: 'Noun' },
+    { jp: '交点 (こうてん)', my: 'ဆုံမှတ်', type: 'Noun' },
+    { jp: '鉛直荷重 (えんちょくかじゅう)', my: 'ဒေါင်လိုက်ဝန်', type: 'Noun' },
+    { jp: '最大 (さいだい)', my: 'အများဆုံး', type: 'Adjective' },
+    { jp: 'せん断力 (せんだんりょく)', my: 'ညှပ်အား (Shear Force)', type: 'Noun' }
+  ],
+  '2024-3': [
+    { jp: '免震構造 (めんしんこうぞう)', my: 'ငလျင်ဒဏ်သက်သာစေသောစနစ်', type: 'Noun' },
+    { jp: '軟弱地盤 (なんじゃくじばん)', my: 'မြေပျော့', type: 'Noun' },
+    { jp: '吸収 (きゅうしゅう)', my: 'စုပ်ယူခြင်း', type: 'Noun' },
+    { jp: '一体化 (いったいか)', my: 'တစ်သားတည်းဖြစ်ခြင်း', type: 'Noun' }
+  ]
 };

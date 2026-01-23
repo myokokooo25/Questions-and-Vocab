@@ -5,12 +5,16 @@ import KanjiTooltip from './KanjiTooltip';
 import Dropdown from './Dropdown';
 import { studyDataByChapter, chapterCount } from '../data/content';
 import { chapter2021Data } from '../data/2021-old-question';
+import { chapter2022Data } from '../data/2022-old-question';
+import { chapter2023Data } from '../data/2023-old-question';
+import { chapter2024Data } from '../data/2024-old-question';
+import { chapter2025Data } from '../data/2025-old-question';
 import { kanjiDictionary } from '../data/kanji';
-import { Kanji } from '../types';
+import { Kanji, StudyCardData } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, LogoIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon } from './Icons';
+import { LogoutIcon, LogoIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon } from './Icons';
 import { useBookmarks } from '../hooks/useBookmarks';
 import ChapterQuiz from './ChapterQuiz';
 
@@ -22,44 +26,48 @@ interface HistoryEntry {
 }
 
 interface DashboardProps {
-  selectedApp: 'main' | '2021';
+  selectedApp: 'main' | '2021' | '2022' | '2023' | '2024' | '2025';
   onGoBack: () => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const { language, toggleLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { bookmarkedIds } = useBookmarks();
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showProfile, setShowProfile] = useState(false);
 
-  const is2021Mode = selectedApp === '2021';
+  const isOldQuestionMode = ['2021', '2022', '2023', '2024', '2025'].includes(selectedApp);
 
   const { dataByChapter, totalChapters } = useMemo(() => {
-    if (is2021Mode) {
-      // For 2021 mode, treat the whole dataset as a single "chapter"
-      return { dataByChapter: { 2021: chapter2021Data }, totalChapters: 1 };
+    if (isOldQuestionMode) {
+      const oldDataMap: Record<string, StudyCardData[]> = {
+        '2021': chapter2021Data,
+        '2022': chapter2022Data,
+        '2023': chapter2023Data,
+        '2024': chapter2024Data,
+        '2025': chapter2025Data,
+      };
+      const yearData = oldDataMap[selectedApp] || [];
+      return { dataByChapter: { [selectedApp]: yearData }, totalChapters: 1 };
     }
     return { dataByChapter: studyDataByChapter, totalChapters: chapterCount };
-  }, [is2021Mode]);
+  }, [isOldQuestionMode, selectedApp]);
   
   const chapterKeys = useMemo(() => Object.keys(dataByChapter).map(Number), [dataByChapter]);
   
   const [activeChapter, setActiveChapter] = useState(chapterKeys[0]);
 
-  // This effect ensures that when the mode changes, the active chapter is reset to the first available one.
   useEffect(() => {
     setActiveChapter(chapterKeys[0]);
   }, [chapterKeys]);
 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-
   const [studyAnswers, setStudyAnswers] = useState<{[key: string]: number}>({});
-
   const [activeKanji, setActiveKanji] = useState<Kanji | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-  
   const [view, setView] = useState<'study' | 'list' | 'quiz'>('study');
 
   // Admin View State
@@ -69,7 +77,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
   
-  // Constants for Admin View
   const DEVICE_HISTORY_KEY = 'auth_device_history';
   const ADMIN_PASSCODE = '454879';
 
@@ -95,7 +102,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       setShowAdminLogin(true);
       setAdminPassword('');
       setAdminLoginError('');
-      setSearchQuery(''); // Clear input field
+      setSearchQuery('');
     } else {
       if (isAdminViewVisible) setIsAdminViewVisible(false);
       setSearchQuery(value);
@@ -133,11 +140,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   const filteredData = useMemo(() => {
     let data = currentChapterData;
-
     if (showOnlyBookmarked) {
       data = data.filter(item => bookmarkedIds.has(item.id));
     }
-
     if (searchQuery.trim() !== '') {
       const lowercasedQuery = searchQuery.toLowerCase().trim();
       data = data.filter(item => {
@@ -150,15 +155,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         return inQuestionJP || inQuestionMY || inOptions;
       });
     }
-
     return data;
   }, [currentChapterData, showOnlyBookmarked, bookmarkedIds, searchQuery]);
 
-  // Reset states when filters or chapter change
   useEffect(() => {
     setCurrentCardIndex(0);
     setStudyAnswers({});
-    setView('study'); // Go back to study view when chapter changes
+    setView('study');
   }, [activeChapter, showOnlyBookmarked, searchQuery]);
 
   const goToNextCard = () => {
@@ -179,21 +182,21 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   };
   
   const handleOptionSelect = (cardId: string, optionId: number) => {
-    if (studyAnswers[cardId] !== undefined) return; // Already answered
+    if (studyAnswers[cardId] !== undefined) return;
     setStudyAnswers(prev => ({...prev, [cardId]: optionId}));
   };
 
   const currentCard = filteredData[currentCardIndex];
   
   const chapterOptions = useMemo(() => {
-    if (is2021Mode) {
-      return [{ value: 2021, label: '2021年 過去問題' }];
+    if (isOldQuestionMode) {
+      return [{ value: Number(selectedApp), label: `${selectedApp}年 過去問題` }];
     }
     return Array.from({ length: totalChapters }, (_, i) => ({
       value: i + 1,
       label: `Chapter ${i + 1}`,
     }));
-  }, [is2021Mode, totalChapters]);
+  }, [isOldQuestionMode, totalChapters, selectedApp]);
 
   const activeChapterLabel = useMemo(() => {
     const opt = chapterOptions.find(o => o.value === activeChapter);
@@ -219,7 +222,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   const renderContent = () => {
     if (isAdminViewVisible) {
-      // Admin view remains dark-themed for distinction
       return (
          <div className="space-y-4 p-4 rounded-xl shadow-neumorphic-inset bg-slate-800 text-slate-100">
             <div className="flex justify-between items-center pb-3 border-b border-slate-700">
@@ -266,7 +268,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         return (
             <div className="bg-neumorphic-bg rounded-2xl shadow-neumorphic-inset p-2 sm:p-4">
                 <div className="p-4 border-b border-neumorphic-shadow-dark/20">
-                    <h2 className="text-lg font-semibold text-neumorphic-text">{is2021Mode ? 'Question Bank - 2021 Past Questions' : `Question Bank - Chapter ${activeChapter}`}</h2>
+                    <h2 className="text-lg font-semibold text-neumorphic-text">{isOldQuestionMode ? `Question Bank - ${selectedApp} Past Questions` : `Question Bank - Chapter ${activeChapter}`}</h2>
                 </div>
                 <ul className="divide-y divide-neumorphic-shadow-dark/20 max-h-[70vh] overflow-y-auto">
                     {filteredData.map((card, index) => {
@@ -317,7 +319,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               <PencilIcon className="w-12 h-12 mx-auto text-slate-400" />
               <h3 className="mt-2 text-lg font-semibold text-slate-600">No Questions Available</h3>
               <p className="mt-1 text-sm text-slate-500">
-                  There are no questions in this chapter yet.
+                  There are no questions in this year yet.
               </p>
             </>
           )}
@@ -367,7 +369,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
        {showAdminLogin && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="w-full max-sm p-8 space-y-6 bg-slate-900 rounded-xl shadow-xl ring-1 ring-white/10">
-            {/* Admin Login remains dark themed */}
             <h2 className="text-xl font-bold text-center text-slate-100">Admin Access</h2>
             <form onSubmit={handleAdminLogin} className="space-y-4">
               <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} className="block w-full px-4 py-3 bg-slate-800 placeholder-gray-400 border border-slate-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm text-slate-100" placeholder="Enter Passcode" autoComplete="off" autoFocus />
@@ -378,6 +379,35 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </div>
             </form>
           </div>
+        </div>
+      )}
+
+      {showProfile && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowProfile(false)}>
+           <div className="w-full max-w-sm p-8 space-y-6 bg-neumorphic-bg rounded-2xl shadow-xl animate-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+              <div className="text-center">
+                  <div className="inline-block p-4 bg-neumorphic-bg rounded-full shadow-neumorphic-outset">
+                    <UsersIcon className="w-12 h-12 text-blue-600" />
+                  </div>
+                  <h2 className="mt-4 text-2xl font-bold text-slate-700">Account Details</h2>
+              </div>
+              <div className="p-4 bg-neumorphic-bg shadow-neumorphic-inset rounded-xl space-y-4">
+                  <div>
+                    <p className="text-xs font-bold text-slate-500 uppercase">Active Redeem Code</p>
+                    <p className="text-lg font-mono font-bold text-blue-600 tracking-wider mt-1">{user?.accessKey}</p>
+                  </div>
+                  <div className="pt-2 border-t border-slate-300/30">
+                    <p className="text-xs font-bold text-slate-500 uppercase">Status</p>
+                    <p className="text-sm font-semibold text-green-600 mt-1">Unlocked / Full Access</p>
+                  </div>
+              </div>
+              <button
+                onClick={() => setShowProfile(false)}
+                className="w-full px-4 py-3 text-sm font-bold text-slate-700 bg-neumorphic-bg rounded-xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
+              >
+                Close
+              </button>
+           </div>
         </div>
       )}
       
@@ -400,7 +430,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <LogoIcon className="w-6 h-6 text-neumorphic-text" />
               </div>
               <h1 className="text-xl font-bold text-slate-700 hidden sm:block">
-                {is2021Mode ? '2021年 過去問題' : '鉄骨技術者 試験対策'}
+                {isOldQuestionMode ? `${selectedApp}年 過去問題` : '鉄骨技術者 試験対策'}
               </h1>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
@@ -427,6 +457,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     title="Toggle Bookmarked"
                 >
                     <BookmarkIcon className="w-5 h-5" />
+                </button>
+                <button
+                    onClick={() => setShowProfile(true)}
+                    className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-blue-600 active:shadow-neumorphic-inset transition-all duration-200"
+                    title="Account Details"
+                >
+                    <UsersIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={toggleLanguage}
@@ -463,7 +500,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         value={activeChapter}
                         onChange={(val) => handleChapterChange(Number(val))}
                         ariaLabel="Select Chapter"
-                        disabled={is2021Mode}
+                        disabled={isOldQuestionMode}
                     />
                 </div>
                 <div className="flex gap-4 w-full sm:w-auto">
