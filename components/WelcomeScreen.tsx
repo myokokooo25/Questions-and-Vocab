@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon } from './Icons';
+import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon } from './Icons';
 
 interface WelcomeScreenProps {
   onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards') => void;
@@ -63,7 +63,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                 <PencilIcon className="w-6 h-6 text-green-600" />
                 <h2 className="text-lg font-bold text-slate-600 uppercase tracking-widest">Old Questions (過去問題)</h2>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
                 {oldYears.map(year => (
                     <button
                         key={year}
@@ -74,6 +74,31 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                         <span className="text-xs font-bold text-slate-400 uppercase">Year</span>
                     </button>
                 ))}
+            </div>
+            
+            {/* Resource Files Section */}
+            <div className="pt-6 border-t border-slate-300/30">
+                <a
+                  href="https://drive.google.com/drive/folders/1ylAMH4TR3VJOHF_njeHyLWQtTX2zXTZ4?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-6 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all duration-200 group"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-neumorphic-bg rounded-full shadow-neumorphic-inset text-amber-600">
+                        <FolderIcon className="w-7 h-7" />
+                    </div>
+                    <div>
+                        <h2 className="text-lg font-bold text-slate-700">Resource Files (လေ့လာရန်ဖိုင်များ)</h2>
+                        <p className="text-sm text-slate-500">Access supplementary study materials in Google Drive.</p>
+                    </div>
+                  </div>
+                  <div className="hidden sm:block p-2 rounded-full text-slate-400 group-hover:text-blue-600 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                      </svg>
+                  </div>
+                </a>
             </div>
         </div>
       </div>
