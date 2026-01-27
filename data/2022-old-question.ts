@@ -7,23 +7,23 @@ export const chapter2022Data: StudyCardData[] = [
     questionJP: "<ruby>図<rt>ず</rt></ruby>のような<ruby>片持梁<rt>かたもちばり</rt></ruby>と<ruby>単純梁<rt>たんじゅんばり</rt></ruby>に<ruby>鉛直荷重<rt>えんちょくかじゅう</rt></ruby>Pが<ruby>作用<rt>さよう</rt></ruby>している。<ruby>材料<rt>ざいりょう</rt></ruby>と<ruby>断面<rt>だんめん</rt></ruby>が<ruby>等<rt>ひと</rt></ruby>しいとき、<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ပုံတွင်ပြထားသည့် Cantilever Beam နှင့် Simple Beam တို့တွင် ဒေါင်လိုက်ဝန် P သက်ရောက်နေသည်။ ပစ္စည်းနှင့် မျက်နှာပြင်ဖြတ်ပိုင်းတူညီပါက၊ အောက်ပါဖော်ပြချက်များအနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>片持梁<rt>かたもちばり</rt></ruby>の<ruby>固定端<rt>こていたん</rt></ruby>の<ruby>鉛直反力<rt>えんちょくはんりょく</rt></ruby>の<ruby>大きさ<rt>おおきさ</rt></ruby>は、<ruby>単純梁<rt>たんじゅんばり</rt></ruby>の1つの<ruby>支点<rt>してん</rt></ruby>の2<ruby>倍<rt>ばい</rt></ruby>である。", textMY: "Cantilever beam ၏ အသေဖမ်းထားသောအစွန်းရှိ တုံ့ပြန်အားသည် Simple beam ၏ support တစ်ခုရှိ တုံ့ပြန်အား၏ ၂ ဆ ဖြစ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>片持梁<rt>かたもちばり</rt></ruby>の<ruby>上端<rt>じょうたん</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じる<ruby>材長方向<rt>ざいちょうほうこう</rt></ruby>の<ruby>応力度<rt>おうりょくど</rt></ruby>は<ruby>引張応力度<rt>ひっぱりおうりょくど</rt></ruby>、<ruby>単純梁<rt>たんじゅんばり</rt></ruby>のそれは<ruby>圧縮応力度<rt>あっしゅくおうりょくど</rt></ruby>である。", textMY: "Cantilever beam ၏ အပေါ်ဘက်တွင် ဆွဲအား (Tension) ဖြစ်ပေါ်ပြီး၊ Simple beam ၏ အပေါ်ဘက်တွင် ဖိအား (Compression) ဖြစ်ပေါ်သည်။" },
-      { id: 3, textJP: "(3) <ruby>梁<rt>はり</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じる<ruby>最大<rt>さいだい</rt></ruby>せん<ruby>断応力度<rt>だんおうりょくど</rt></ruby>の<ruby>大きさ<rt>おおきさ</rt></ruby>は、<ruby>片持梁<rt>かたもちばり</rt></ruby>のほうが<ruby>大きい<rt>おおきい</rt></ruby>。", textMY: "အမြင့်ဆုံး Shear Stress ပမာဏသည် Cantilever beam တွင် ပိုကြီးသည်။" },
-      { id: 4, textJP: "(4) <ruby>梁<rt>はり</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じる<ruby>最大曲げ<rt>さいだいまげ</rt></ruby>モーメントの<ruby>大きさ<rt>おおきさ</rt></ruby>は、いずれの<ruby>梁<rt>はり</rt></ruby>も<ruby>等しい<rt>ひとしい</rt></ruby>。", textMY: "အမြင့်ဆုံး Bending Moment ပမာဏသည် beam နှစ်ခုစလုံးတွင် တူညီကြသည်။" },
-      { id: 5, textJP: "(5) <ruby>片持梁<rt>かたもちばり</rt></ruby>の<ruby>先端<rt>せんたん</rt></ruby>の<ruby>鉛直方向<rt>えんちょくほうこう</rt></ruby>のたわみは、<ruby>単純梁<rt>たんじゅんばり</rt></ruby>の<ruby>中央<rt>ちゅうおう</rt></ruby>の<ruby>鉛直方向<rt>えんちょくほうこう</rt></ruby>のたわみの2<ruby>倍<rt>ばい</rt></ruby>である。", textMY: "Cantilever beam ၏ အစွန်းပိုင်း ဒေါင်လိုက်ကွေးညွှတ်မှု (Deflection) သည် Simple beam ၏ အလယ်ဗဟို ကွေးညွှတ်မှု၏ ၂ ဆ ဖြစ်သည်။" }
+      { id: 1, textJP: "(1) <ruby>片持梁<rt>かたもちばり</rt></ruby>の<ruby>固定端<rt>こていたん</rt></ruby>の<ruby>鉛直反力<rt>えんちょくはんりょく</rt></ruby>は、<ruby>単純梁<rt>たんゅんばり</rt></ruby>の1つの<ruby>支点<rt>してん</rt></ruby>の2<ruby>倍<rt>ばい</rt></ruby>である。", textMY: "Cantilever beam ၏ အသေဖမ်းထားသောအစွန်းရှိ တုံ့ပြန်အားသည် Simple beam ၏ support တစ်ခုရှိ တုံ့ပြန်အား၏ ၂ ဆ ဖြစ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>片持梁<rt>かたもちばり</rt></ruby>の<ruby>上端<rt>じょうたん</rt></ruby>に<ruby>生じる応力<rt>おうりょく</rt></ruby>は<ruby>引張<rt>ひっぱり</rt></ruby>、<ruby>単純梁<rt>たんじゅんばり</rt></ruby>は<ruby>圧縮<rt>あっしゅく</rt></ruby>である。", textMY: "Cantilever beam ၏ အပေါ်ဘက်တွင် ဆွဲအား (Tension) ဖြစ်ပေါ်ပြီး၊ Simple beam ၏ အပေါ်ဘက်တွင် ဖိအား (Compression) ဖြစ်ပေါ်သည်။" },
+      { id: 3, textJP: "(3) <ruby>最大<rt>さいだい</rt></ruby>せん<ruby>断応力度<rt>だんおうりょくど</rt></ruby>の<ruby>大きさ<rt>おおきさ</rt></ruby>は、<ruby>片持梁<rt>かたもちばり</rt></ruby>のほうが<ruby>大きい<rt>おおきい</rt></ruby>。", textMY: "အမြင့်ဆုံး Shear Stress ပမာဏသည် Cantilever beam တွင် ပိုကြီးသည်။" },
+      { id: 4, textJP: "(4) <ruby>最大<rt>さいだい</rt></ruby><ruby>曲げ<rt>まげ</rt></ruby>モーメントの<ruby>大きさ<rt>おおきさ</rt></ruby>は、いずれの<ruby>梁<rt>はり</rt></ruby>も<ruby>等しい<rt>ひとしい</rt></ruby>。", textMY: "အမြင့်ဆုံး Bending Moment ပမာဏသည် beam နှစ်ခုစလုံးတွင် တူညီကြသည်။" },
+      { id: 5, textJP: "(5) <ruby>片持梁<rt>かたもちばり</rt></ruby>の<ruby>先端<rt>せんたん</rt></ruby>のたわみは、<ruby>単純梁<rt>たんじゅんばり</rt></ruby>の<ruby>中央<rt>ちゅうおう</rt></ruby>のたわみの2<ruby>倍<rt>ばい</rt></ruby>である。", textMY: "Cantilever beam ၏ အစွန်းပိုင်း ကွေးညွှတ်မှု (Deflection) သည် Simple beam ၏ အလယ်ဗဟို ကွေးညွှတ်မှု၏ ၂ ဆ ဖြစ်သည်။" }
     ],
     correctOptionId: 5,
     explanation: {
       titleMY: "ရှင်းလင်းချက် - Deflection (たわみ)",
-      reasonMY: "အင်ဂျင်နီယာပုံသေနည်းအရ Cantilever ၏ အစွန်း deflection သည် PL³/3EI ဖြစ်ပြီး၊ Simple beam ၏ အလယ် deflection သည် PL³/48EI ဖြစ်သည်။ ထို့ကြောင့် Cantilever သည် ၁၆ ဆ ပိုမိုကွေးညွှတ်သည်။ ၂ ဆဟု ဆိုထားသော (၅) မှာ မှားယွင်းသည်။",
+      reasonMY: "ပုံသေနည်းအရ Cantilever ၏ အစွန်း deflection သည် PL³/3EI ဖြစ်ပြီး၊ Simple beam ၏ အလယ် deflection သည် PL³/48EI ဖြစ်သည်။ ထို့ကြောင့် Cantilever သည် ၁၆ ဆ ပိုမိုကွေးညွှတ်သည်။ ၂ ဆဟု ဆိုထားသော (၅) မှာ မှားယွင်းသည်။",
       memoryTipMY: "Cantilever သည် Simple beam ထက် များစွာ ပိုမို ကွေးညွှတ်လွယ်သည်။"
     }
   },
   {
     id: "2022-2",
-    questionJP: "<ruby>図<rt>ず</rt></ruby>のような<ruby>鉛直荷重<rt>えんちょくかじゅう</rt></ruby>Pを<ruby>受ける<rt>うける</rt></ruby>トラス<ruby>梁<rt>はり</rt></ruby>について、ア、イ、ウの<ruby>各部材<rt>かくぶざい</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じる<ruby>軸力<rt>じくりょく</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>組合せ<rt>くみあわせ</rt></ruby>のうち、<ruby>正しい<rt>ただしい</rt></ruby>ものはどれか。",
-    questionMY: "ပုံတွင်ပြထားသည့် ဒေါင်လိုက်ဝန် P သက်ရောက်နေသော Truss Beam ၏ (အ၊ ဣ၊ ဥ) member များတွင် ဖြစ်ပေါ်သော Axial Force ဆိုင်ရာ မှန်ကန်သော ပေါင်းစပ်မှုကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>図<rt>ず</rt></ruby>のようなトラス<ruby>梁<rt>はり</rt></ruby>について、ア、イ、ウの<ruby>各部材<rt>かくぶざい</rt></ruby>に<ruby>生じる軸力<rt>じくりょく</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>次<rt>つぎ</rt></ruby>の<ruby>組合せ<rt>くみあわせ</rt></ruby>のうち、<ruby>正しい<rt>正しい</rt></ruby>ものはどれか。",
+    questionMY: "ပုံတွင်ပြထားသည့် Truss Beam ၏ (အ၊ ဣ၊ ဥ) member များတွင် ဖြစ်ပေါ်သော Axial Force ဆိုင်ရာ မှန်ကန်သော ပေါင်းစပ်မှုကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) ア: <ruby>圧縮<rt>あっしゅく</rt></ruby>、イ: <ruby>圧縮<rt>あっしゅく</rt></ruby>、ウ: 0", textMY: "အ: ဖိအား (Compression)၊ ဣ: ဖိအား (Compression)၊ ဥ: သုည (0)" },
       { id: 2, textJP: "(2) ア: <ruby>圧縮<rt>あっしゅく</rt></ruby>、イ: <ruby>圧縮<rt>あっしゅく</rt></ruby>、ウ: <ruby>圧縮<rt>あっしゅく</rt></ruby>", textMY: "အ: ဖိအား၊ ဣ: ဖိအား၊ ဥ: ဖိအား" },
@@ -34,20 +34,20 @@ export const chapter2022Data: StudyCardData[] = [
     correctOptionId: 1,
     explanation: {
       titleMY: "ရှင်းလင်းချက် - Truss Member Forces",
-      reasonMY: "Truss ၏ ထိပ်ဘောင် (Top Chord) အစိတ်အပိုင်း (ア) သည် ဖိအား (Compression) ခံရသည်။ အလယ်ရှိ မျဉ်းစောင်း (イ) သည်လည်း ဝန်သက်ရောက်မှုအရ ဖိအားခံရသည်။ ဆုံမှတ်ရှိ အားမျှခြေအရ အလယ်အောက်ခြေ (ウ) တွင် အားမရှိသော Zero-force member ဖြစ်သွားသည်။",
+      reasonMY: "Truss ၏ ထိပ်ဘောင် (Top Chord) များသည် များသောအားဖြင့် ဖိအား (Compression) ခံရပြီး၊ ဝန်မရှိသော ဒေါင်လိုက် member အချို့သည် Zero-force member များ ဖြစ်တတ်သည်။ (၁) သည် ဤဖွဲ့စည်းပုံအတွက် အမှန်ကန်ဆုံး ပေါင်းစပ်မှု ဖြစ်သည်။",
       memoryTipMY: "Truss chord များ၏ သဘောတရားကို မှတ်သားပါ။ အပေါ်သည် ဖိအား၊ အောက်သည် ဆွဲအား ဖြစ်လေ့ရှိသည်။"
     }
   },
   {
     id: "2022-3",
-    questionJP: "<ruby>構造設計<rt>こうぞうせっけい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>構造設計<rt>こうぞうせっけい</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "တည်ဆောက်ပုံ ဒီဇိုင်း (Structural Design) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>構造設計<rt>こうぞうせっけい</rt></ruby>では<ruby>建物<rt>たてもの</rt></ruby>の<ruby>強度<rt>きょうど</rt></ruby>だけでなく、<ruby>日常的<rt>にちじょうてき</rt></ruby>に<ruby>作用<rt>さよう</rt></ruby>する<ruby>荷重<rt>かじゅう</rt></ruby>に<ruby>対<rt>たい</rt></ruby>する<ruby>振動<rt>しんどう</rt></ruby>について<ruby>考慮<rt>こうりょ</rt></ruby>することも<ruby>重要<rt>じゅうよう</rt></ruby>である。", textMY: "ခိုင်မာမှုအပြင် နေ့စဉ်ဝန်များကြောင့်ဖြစ်သော တုန်ခါမှုကိုလည်း ထည့်သွင်းစဉ်းစားရန် အရေးကြီးသည်။" },
-      { id: 2, textJP: "(2) <ruby>設計者<rt>せっけいしゃ</rt></ruby>は、<ruby>構造設計<rt>こうぞうせっけい</rt></ruby>の<ruby>段階<rt>だんかい</rt></ruby>から<ruby>柱梁仕口<rt>ちゅうりょうしぐち</rt></ruby><rt>等</rt>の<ruby>納<rt>おさ</rt></ruby>まりや<ruby>溶接施工<rt>ようせつせこう</rt></ruby>の<ruby>難易度<rt>なんいど</rt></ruby>を<ruby>考慮<rt>こうりょ</rt></ruby>して<ruby>部材断面<rt>ぶざいだんめん</rt></ruby>を<ruby>選択<rt>せんたく</rt></ruby>するよう<ruby>努<rt>つと</rt></ruby>めるべきである。", textMY: "ဒီဇိုင်းအဆင့်မှစ၍ အဆက်အစပ်များနှင့် ဂဟေဆက်ခြင်း၏ ခက်ခဲမှုကို ထည့်သွင်းစဉ်းစားသင့်သည်။" },
-      { id: 3, textJP: "(3) <ruby>鋼材<rt>こうざい</rt></ruby>はコンクリートや<ruby>木材<rt>もくざい</rt></ruby>に<ruby>比<rt>くら</rt></ruby>べて<ruby>比重<rt>ひじゅう</rt></ruby>の<ruby>大<rt>おお</rt></ruby>きい<ruby>材料<rt>ざいりょう</rt></ruby>であるが、<ruby>強度<rt>きょうど</rt></ruby>ははるかに<ruby>高<rt>たか</rt></ruby>いため、<ruby>軽量<rt>けいりょう</rt></ruby>で<ruby>強<rt>つよ</rt></ruby>い<ruby>構造物<rt>こうぞうぶつ</rt></ruby>ကို <ruby>造<rt>つく</rt></ruby>ることができる。", textMY: "သံမဏိသည် သိပ်သည်းဆကြီးသော်လည်း အလွန်ခိုင်ခံ့သဖြင့် ပေါ့ပါးပြီးခိုင်မာသော အဆောက်အဦများကို တည်ဆောက်နိုင်သည်။" },
-      { id: 4, textJP: "(4) <ruby>過去<rt>かこ</rt></ruby>の<ruby>地震被害<rt>じしんひがい</rt></ruby>において、<ruby>不適切<rt>ふてきせつ</rt></ruby>な<ruby>溶接接合部<rt>ようせつせつごうぶ</rt></ruby>の<ruby>設計<rt>せっけい</rt></ruby>や<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>品質管理<rt>ひんしつかんり</rt></ruby>が<ruby>原因<rt>げんいん</rt></ruby>と<ruby>考<rt>かんが</rt></ruby>えられる<ruby>鉄骨構造物<rt>てっこつこうぞうぶつ</rt></ruby>の<ruby>被害<rt>ひがい</rt></reason>က <ruby>多数観察<rt>たすうかんさつ</rt></ruby>されている。", textMY: "မသင့်လျော်သော ဂဟေအရည်အသွေး စီမံခန့်ခွဲမှုကြောင့် ပျက်စီးမှုဖြစ်ရသော သာဓကများစွာရှိသည်။" },
-      { id: 5, textJP: "(5) <ruby>鋼材<rt>こうざい</rt></ruby>သည် <ruby>材料自体<rt>ざいりょうじたい</rt></ruby>က <ruby>高<rt>たか</rt></ruby>い<ruby>靭性<rt>じんせい</rt></ruby>（ねばり<ruby>強<rt>づよ</rt></ruby>さ）を<ruby>有<rt>ゆう</rt></ruby>しているため、<ruby>溶接部<rt>ようせつぶ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>に<ruby>関<rt>かか</rt></ruby>わらず<ruby>常<rt>つね</rt></ruby>に<ruby>高<rt>たか</rt></ruby>い<ruby>耐震性能<rt>たいしんせいのう</rt></ruby>က <ruby>確保<rt>かくほ</rt></ruby>される。", textMY: "သံမဏိသည် toughness မြင့်မားသောကြောင့် ဂဟေအရည်အသွေး မည်သို့ပင်ရှိစေကာမူ ငလျင်ဒဏ်ခံနိုင်ရည် အမြဲရှိသည်။" }
+      { id: 1, textJP: "(1) <ruby>強度<rt>きょうど</rt></ruby>だけでなく、<ruby>日常的<rt>にちじょうてき</rt></ruby>な<ruby>荷重<rt>かじゅう</rt></ruby>に<ruby>対する振動<rt>たいするしんどう</rt></ruby>も<ruby>考慮<rt>こうりょ</rt></ruby>する。", textMY: "ခိုင်မာမှုအပြင် နေ့စဉ်ဝန်များကြောင့်ဖြစ်သော တုန်ခါမှုကိုလည်း ထည့်သွင်းစဉ်းစားရမည်။" },
+      { id: 2, textJP: "(2) <ruby>設計段階<rt>せっけいだんかい</rt></ruby>から<ruby>溶接施工<rt>ようせつせこう</rt></ruby>の<ruby>難易度<rt>なんいど</rt></ruby>を<ruby>考慮<rt>こうりょ</rt></ruby>する。", textMY: "ဒီဇိုင်းအဆင့်မှစ၍ ဂဟေဆက်ခြင်း၏ ခက်ခဲမှုကို ထည့်သွင်းစဉ်းစားသင့်သည်။" },
+      { id: 3, textJP: "(3) <ruby>鋼材<rt>こうざい</rt></ruby>သည် <ruby>比重<rt>ひじゅう</rt></ruby>က <ruby>大きい<rt>おおきい</rt></ruby>が、<ruby>軽量<rt>けいりょう</rt></ruby>で<ruby>強い<rt>つよい</rt></ruby><ruby>構造物<rt>こうぞうぶつ</rt></ruby>ကို <ruby>造れる<rt>つくれる</rt></ruby>。", textMY: "သံမဏိသည် သိပ်သည်းဆကြီးသော်လည်း အလွန်ခိုင်ခံ့သဖြင့် ပေါ့ပါးပြီးခိုင်မာသော အဆောက်အဦများကို တည်ဆောက်နိုင်သည်။" },
+      { id: 4, textJP: "(4) <ruby>不適切<rt>ふてきせつ</rt></ruby>な<ruby>溶接品質管理<rt>ようせつひんしつかんり</rt></ruby>က <ruby>原因<rt>げんいん</rt></ruby>で<ruby>被害<rt>ひがい</rt></ruby>က <ruby>出た<rt>でた</rt></ruby><ruby>例<rt>れい</rt></ruby>က <ruby>多い<rt>おおい</rt></ruby>。", textMY: "မသင့်လျော်သော ဂဟေအရည်အသွေး စီမံခန့်ခွဲမှုကြောင့် ပျက်စီးမှုဖြစ်ရသော သာဓကများစွာရှိသည်။" },
+      { id: 5, textJP: "(5) <ruby>鋼材<rt>こうざい</rt></ruby>သည် <ruby>靭性<rt>じんせい</rt></ruby>က <ruby>高い<rt>たかい</rt></ruby>ため、<ruby>品質<rt>ひんしつ</rt></ruby>に<ruby>関わらず<rt>かかわらず</rt></ruby><ruby>耐震性<rt>たいしんせい</rt></ruby>က <ruby>確保<rt>かくほ</rt></ruby>される。", textMY: "သံမဏိသည် toughness မြင့်မားသောကြောင့် အရည်အသွေး မည်သို့ပင်ရှိစေကာမူ ငလျင်ဒဏ်ခံနိုင်ရည် အမြဲရှိသည်။" }
     ],
     correctOptionId: 5,
     explanation: {
@@ -58,10 +58,10 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-4",
-    questionJP: "<ruby>鉄骨構造<rt>てっこつこうぞう</rt></ruby>の<ruby>構造形式<rt>こうぞうけいしき</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>鉄骨構造<rt>てっこつこうぞう</rt></ruby>の<ruby>構造形式<rt>こうぞうけいしき</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိတည်ဆောက်ပုံ၏ ဖွဲ့စည်းပုံပုံစံများနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>純<rt>じゅん</rt></ruby>ラーメン<ruby>構造<rt>こうぞう</rt></ruby>သည် <ruby>柱<rt>はしら</rt></ruby>နှင့်<ruby>梁<rt>はり</rt></ruby>ကို<ruby>剛<rt>ごう</rt></ruby>に<ruby>接合<rt>せつごう</rt></ruby>し、<ruby>曲げ<rt>まげ</rt></ruby>モーメントで<ruby>抵抗<rt>ていこう</rt></ruby>する<ruby>構造形式<rt>こうぞうけいしき</rt></ruby>である。", textMY: "Pure Frame Structure သည် bending moment ဖြင့် ဝန်ကိုခုခံပြီး ရုံးခန်းများတွင် အသုံးများသည်။" },
+      { id: 1, textJP: "(1) <ruby>純<rt>じゅん</rt></ruby>ラーメン<ruby>構造<rt>こうぞう</rt></ruby>သည် <ruby>曲げ<rt>まげ</rt></ruby>モーメントで<ruby>抵抗<rt>ていこう</rt></ruby>し、オフィスなどで<ruby>多用<rt>たよう</rt></ruby>される。", textMY: "Pure Frame Structure သည် bending moment ဖြင့် ဝန်ကိုခုခံပြီး ရုံးခန်းများတွင် အသုံးများသည်။" },
       { id: 2, textJP: "(2) ブレース<ruby>構造<rt>こうぞう</rt></ruby>သည် <ruby>高い水平剛性<rt>たかいすいへいごうせい</rt></ruby>ကို <ruby>確保<rt>かくほ</rt></ruby>できる。", textMY: "Brace Structure သည် မြင့်မားသော အလျားလိုက် တောင့်တင်းမှု (Horizontal Stiffness) ကို ရရှိစေသည်။" },
       { id: 3, textJP: "(3) <ruby>立体<rt>りったい</rt></ruby>トラスသည် <ruby>平面<rt>へいめん</rt></ruby>トラスよりトラスせいが<ruby>大<rt>おお</rt></ruby>きくなる<ruby>欠点<rt>けってん</rt></ruby>がある。", textMY: "Space Truss သည် Flat Truss ထက် truss height ပိုကြီးရမည်ဆိုသော အားနည်းချက်ရှိသည်။" },
       { id: 4, textJP: "(4) <ruby>免震構造<rt>めんしんこうぞう</rt></ruby>သည် <ruby>クリアランス<rt>くりあらんす</rt></ruby>က <ruby>必要<rt>ひつよう</rt></ruby>である。", textMY: "Seismic Isolation စနစ်တွင် လှုပ်ရှားရန်အတွက် ဘေးပတ်လည် ကွာဟချက် (Clearance) လိုအပ်သည်။" },
@@ -76,14 +76,14 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-5",
-    questionJP: "<ruby>鉄骨部材<rt>てっこつぶざい</rt></ruby>の<ruby>設計<rt>せっけい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>鉄骨部材<rt>てっこつぶざい</rt></ruby>の<ruby>設計<rt>せっけい</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိအစိတ်အပိုင်းများ ဒီဇိုင်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးအချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>梁<rt>はり</rt></ruby>の<ruby>横座屈<rt>よこざくつ</rt></ruby>ကို <ruby>防ぐ<rt>ふせぐ</rt></ruby>には、<ruby>鋼材<rt>こうざい</rt></ruby>ကို より<ruby>高強度<rt>こうきょうど</rt></ruby>にすればよい。", textMY: "Lateral buckling ကို ကာကွယ်ရန် ပိုမိုခိုင်မာသော သံမဏိကို ပြောင်းသုံးသင့်သည်။" },
-      { id: 2, textJP: "(2) <ruby>梁<rt>はり</rt></ruby>の<ruby>曲げ剛性<rt>まげごうせい</rt></ruby>က <ruby>不足<rt>ふそく</rt></ruby>したので、<ruby>鋼種<rt>こうしゅ</rt></ruby>ကို そのままとし<ruby>梁せい<rt>はりせい</rt></ruby>ကို <ruby>大<rt>おお</rt></ruby>きくすることで<ruby>剛性<rt>ごうせい</rt></ruby>ကို <ruby>向上<rt>こうじょう</rt></ruby>させた。", textMY: "Bending stiffness မလုံလောက်သဖြင့် beam depth ကို ကြီးအောင်လုပ်ပြီး stiffness ကို မြှင့်တင်ခဲ့သည်။" },
-      { id: 3, textJP: "(3) H<ruby>形鋼<rt>がたこう</rt></ruby>၏ <ruby>強軸方向<rt>きょうじくほうこう</rt></ruby>တွင် <ruby>座屈補剛材<rt>ざくつほごうざい</rt></ruby>ကို <ruby>設けた<rt>もうけた</rt></ruby>。", textMY: "Brace ၏ buckling strength ကို strong axis ဘက်သို့ အားဖြည့်ခဲ့သည်။" },
+      { id: 2, textJP: "(2) <ruby>梁<rt>はり</rt></ruby>の<ruby>曲げ剛性<rt>まげごうせい</rt></ruby>က <ruby>不足<rt>ふそく</rt></ruby>したので、<ruby>梁せい<rt>はりせい</rt></ruby>ကို <ruby>大<rt>おお</rt></ruby>きくして<ruby>剛性<rt>ごうせい</rt></ruby>ကို <ruby>向上<rt>こうじょう</rt></ruby>させた。", textMY: "Bending stiffness မလုံလောက်သဖြင့် beam depth ကို ကြီးအောင်လုပ်ပြီး stiffness ကို မြှင့်တင်ခဲ့သည်။" },
+      { id: 3, textJP: "(3) <ruby>筋かい<rt>すじかい</rt></ruby>の<ruby>座屈耐力<rt>ざくつたいりょく</rt></ruby>ကို <ruby>強軸方向<rt>きょうじくほうこう</rt></ruby>တွင် <ruby>補強<rt>ほきょう</rt></ruby>した。", textMY: "Brace ၏ buckling strength ကို strong axis ဘက်သို့ အားဖြည့်ခဲ့သည်။" },
       { id: 4, textJP: "(4) <ruby>局部座屈<rt>きょくぶざくつ</rt></ruby>ကို <ruby>防ぐ<rt>ふせぐ</rt></ruby>ために<ruby>幅厚比<rt>はばあつひ</rt></ruby>ကို <ruby>大<rt>おお</rt></ruby>きくした。", textMY: "Local buckling ကို ကာကွယ်ရန် width-to-thickness ratio ကို ကြီးအောင်လုပ်ခဲ့သည်။" },
-      { id: 5, textJP: "(5) <ruby>角形鋼管<rt>かくがたこうかん</rt></ruby>သည် <ruby>細長比<rt>ほそながひ</rt></ruby>ကို <ruby>考慮<rt>こうょ</rt></ruby>しなくてよい。", textMY: "ပိုက်/လေးထောင့်တိုင်များတွင် slenderness ratio ကို စဉ်းစားရန် မလိုပါ။" }
+      { id: 5, textJP: "(5) <ruby>閉断面部材<rt>へいだんめんぶざい</rt></ruby>သည် <ruby>細長比<rt>ほそながひ</rt></ruby>ကို <ruby>考慮<rt>こうりょ</rt></ruby>しなくてよい。", textMY: "ပိတ်ထားသော ဖြတ်ပိုင်းများတွင် slenderness ratio ကို စဉ်းစားရန် မလိုပါ။" }
     ],
     correctOptionId: 2,
     explanation: {
@@ -94,12 +94,12 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-6",
-    questionJP: "<ruby>高力ボルト接合<rt>こうりょくボルトせつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>高力ボルト接合<rt>こうりょくボルトせつごう</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "High-strength Bolt ဆက်သွယ်မှုနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>摩擦接合<rt>まさつせつごう</rt></ruby>နှင့် <ruby>引張接合<rt>ひっぱりせつごう</rt></ruby>သည် <ruby>併用<rt>へいよう</rt></ruby>できる。", textMY: "Friction Joint နှင့် Tension Joint တို့ကို တွဲသုံးနိုင်သည်။" },
-      { id: 2, textJP: "(2) <ruby>ねじ部<rt>ぶ</rt></ruby>に<ruby>さび<rt>さび</rt></ruby>က <ruby>付着<rt>ふちゃく</rt></ruby>するとボルト<ruby>張力<rt>ちょうりょく</rt></ruby>က <ruby>低下<rt>ていか</rt></ruby>する。", textMY: "ဝက်အူရစ်တွင် သံချေးတက်ပါက torque coefficient တက်လာပြီး bolt tension ကျသွားသည်။" },
-      { id: 3, textJP: "(3) <ruby>引張接合<rt>ひっぱりせつごう</rt></ruby>သည် <ruby>溶接<rt>ようせつ</rt></ruby>なしで<ruby>組立て<rt>くみたて</rt></ruby>られる。", textMY: "Tension joint သည် ဂဟေမပါဘဲ အဆက်များကို တပ်ဆင်နိုင်သည်။" },
+      { id: 2, textJP: "(2) <ruby>さび<rt>さび</rt></ruby>က <ruby>付着<rt>ふちゃく</rt></ruby>するとトルク<ruby>係数<rt>けいすう</rt></ruby>က <ruby>増大<rt>ぞうだい</rt></ruby>し、ボルト<ruby>張力<rt>ちょうりょく</rt></ruby>က <ruby>低下<rt>ていか</rt></ruby>する。", textMY: "သံချေးတက်ပါက torque coefficient တက်လာပြီး bolt tension ကျသွားသည်။" },
+      { id: 3, textJP: "(3) <ruby>引張接合<rt>ひっぱりせつごう</rt></ruby>သည် <ruby>溶接<rt>ようせつ</rt></ruby>なしで<ruby>組立て<rt>くみたて</rt></ruby>られる。", textMY: "Tension joint သည် ဂဟေမပါဘဲ တပ်ဆင်နိုင်သည်။" },
       { id: 4, textJP: "(4) <ruby>溶融亜鉛めっき<rt>ようゆうあえんめっき</rt></ruby>သည် JIS<ruby>規格<rt>きかく</rt></ruby>က ないため<ruby>使用不可<rt>しようふか</rt></ruby>である。", textMY: "သွပ်ရည်စိမ် HS Bolt များသည် JIS စံနှုန်းမရှိသောကြောင့် အသုံးမပြုနိုင်ပါ။" },
       { id: 5, textJP: "(5) <ruby>トルシア形<rt>とるしあがた</rt></ruby>သည် ピンテールの<ruby>破断<rt>はだん</rt></ruby>ဖြင့် トルク<ruby>管理<rt>かんり</rt></ruby>する。", textMY: "Torshear bolt ကို အမြီးပြတ်ခြင်းဖြင့် torque ကို စီမံသည်။" }
     ],
@@ -112,13 +112,13 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-7",
-    questionJP: "<ruby>溶接接合<rt>ようせつせつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>溶接接合<rt>ようせつせつごう</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဂဟေဆက်ခြင်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>溶接<rt>ようせつ</rt></ruby>သည် <ruby>技能者<rt>ぎのうしゃ</rt></ruby>の<ruby>技量<rt>ぎりょう</rt></ruby>に<ruby>依存<rt>いそん</rt></ruby>する。", textMY: "ဂဟေသည် ဂဟေဆော်သူ၏ ကျွမ်းကျင်မှုအပေါ် များစွာမူတည်သည်။" },
       { id: 2, textJP: "(2) <ruby>板厚<rt>いたあつ</rt></ruby>၏ <ruby>異なる<rt>ことなる</rt></ruby><ruby>完全溶込<rt>かんぜんようこみ</rt></ruby>みသည် <ruby>厚い方<rt>あついほう</rt></ruby>の<ruby>板厚<rt>いたあつ</rt></ruby>とする。", textMY: "အထူမတူသောပြားများကို အပြည့်အဝစိမ့်ဝင်ဂဟေဆက်ပါက အထူကြီးသောပြားအတိုင်း ယူရမည်။" },
       { id: 3, textJP: "(3) <ruby>残留応力<rt>ざんりゅうおうりょく</rt></ruby>သည် <ruby>耐力<rt>たいりょく</rt></ruby>ကို <ruby>低下<rt>ていか</rt></ruby>させる。", textMY: "Residual stress သည် ခိုင်မာမှုကို ကျဆင်းစေနိုင်သည်။" },
-      { id: 4, textJP: "(4) <ruby>隅肉溶接<rt>すみにくようせつ</rt></ruby>သည် サイズの2<ruby>倍<rt>ばい</rt></ruby>ကို <ruby>減じて<rt>げんじて</rt></ruby><ruby>計算<rt>けいさん</rt></ruby>する。", textMY: "Fillet weld တွက်ပါက size ၏ ၂ ဆကို နုတ်ရမည်။" },
+      { id: 4, textJP: "(4) <ruby>隅肉溶接<rt>すみにくようせつ</rt></ruby>သည် サイズの2<ruby>倍<rt>ばい</rt></ruby>を <ruby>減じて<rt>げんじて</rt></ruby><ruby>計算<rt>けいさん</rt></ruby>する。", textMY: "Fillet weld တွက်ပါက size ၏ ၂ ဆကို နုတ်ရမည်။" },
       { id: 5, textJP: "(5) <ruby>溶接<rt>ようせつ</rt></ruby>သည် <ruby>疲労寿命<rt>ひろうじゅみょう</rt></ruby>က <ruby>母材<rt>ぼざい</rt></ruby>より<ruby>劣る<rt>おとる</rt></ruby>ことがある。", textMY: "ဂဟေဆက်နေရာသည် base metal ထက် Fatigue life ပိုမိုနိမ့်ကျတတ်သည်။" }
     ],
     correctOptionId: 2,
@@ -148,14 +148,14 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-9",
-    questionJP: "<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>機械的性質<rt>きかいてきせいしつ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>機械的性質<rt>きかいてきせいしつ</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိ၏ စက်မှုဂုဏ်သတ္တိများနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>炭素<rt>たんそ</rt></ruby>(C)က <ruby>増加<rt>ぞうか</rt></ruby>すると<ruby>強度<rt>きょうど</rt></ruby>သည် <ruby>上昇<rt>じょうしょう</rt></ruby>するが、<ruby>溶接性<rt>ようせつせい</rt></ruby>သည် <ruby>低下<rt>ていか</rt></ruby>する。", textMY: "Carbon များလာပါက ခိုင်မာမှုတက်သော်လည်း ဂဟေဆက်နိုင်စွမ်းကျသည်။" },
       { id: 2, textJP: "(2) <ruby>降伏比<rt>こうふくひ</rt></ruby>သည် <ruby>強度<rt>きょうど</rt></ruby>က <ruby>高く<rt>たかく</rt></ruby>なるほど<ruby>大きく<rt>おおきく</rt></ruby>なる。", textMY: "Yield Ratio သည် ခိုင်မာမှုမြင့်လေ ကြီးမားလေဖြစ်သည်။" },
       { id: 3, textJP: "(3) Ce(炭素当量)သည် <ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>難易度<rt>なんいど</rt></ruby>ကို <ruby>表す<rt>あらわす</rt></ruby>。", textMY: "Carbon Equivalent (Ce) သည် ဂဟေဆက်ရန် ခက်ခဲမှုကို ဖော်ပြသည်။" },
       { id: 4, textJP: "(4) <ruby>降伏点以下<rt>こうふくてんいか</rt></ruby>で<ruby>破壊<rt>はかい</rt></ruby>する<ruby>現象<rt>げんしょう</rt></ruby>ကို <ruby>疲労<rt>ひろう</rt></ruby>と<ruby>呼ぶ<rt>よぶ</rt></ruby>。", textMY: "Yield point အောက်တွင်ပင် ပျက်စီးသွားခြင်းကို Fatigue ဟု ခေါ်သည်။" },
-      { id: 5, textJP: "(5) シャルピー<ruby>吸収エネルギー<rt>きゅうしゅうエネルギー</rt></ruby>သည် <ruby>低温<rt>ていおん</rt></ruby>になるとほど<ruby>大きく<rt>おおきく</rt></ruby>なる。", textMY: "Charpy absorbed energy သည် အပူချိန်နိမ့်လေလေ ကြီးမားလေလေ ဖြစ်သည်။" }
+      { id: 5, textJP: "(5) シャルピー<ruby>吸収エネルギー<rt>きゅうしゅうエネルギー</rt></ruby>သည် <ruby>低温度<rt>ていおんど</rt></ruby>になるほど<ruby>大きく<rt>おおきく</rt></ruby>なる。", textMY: "Charpy absorbed energy သည် အပူချိန်နိမ့်လေလေ ကြီးမားလေလေ ဖြစ်သည်။" }
     ],
     correctOptionId: 5,
     explanation: {
@@ -166,7 +166,7 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-10",
-    questionJP: "<ruby>製作計画<rt>せいさくけいかく</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>製作計画<rt>せいさくけいかく</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ထုတ်လုပ်မှုစီမံကိန်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>製作要領書<rt>せいさくようりょうしょ</rt></ruby>သည် <ruby>指定機関<rt>していきかん</rt></ruby>の<ruby>承認<rt>しょうにん</rt></ruby>ကို <ruby>受ける<rt>うける</rt></ruby>必要がある。", textMY: "ထုတ်လုပ်မှုလမ်းညွှန်ကို စစ်ဆေးရေးအဖွဲ့၏ အတည်ပြုချက် ရယူရမည်။" },
@@ -184,10 +184,10 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-11",
-    questionJP: "<ruby>作業標準<rt>さぎょうひょうじゅん</rt></ruby>の<ruby>目的<rt>もくてき</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>作業標準<rt>さぎょうひょうじゅん</rt></ruby>の<ruby>目的<rt>もくてき</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "လုပ်ငန်းစံနှုန်း (Work Standard) ၏ ရည်ရွယ်ချက်တွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>製品<rt>せいひん</rt></ruby>ကို <ruby>安価<rt>あんか</rt></ruby>に<ruby>製造<rt>せいぞう</rt></ruby>する。", textMY: "ထုတ်ကုန်ကို ဈေးအသက်သာဆုံး ထုတ်လုပ်ရန်။" },
+      { id: 1, textJP: "(1) <ruby>製品<rt>せいひん</rt></ruby><ruby>を安価に製造する<rt>をあんかにせいぞうする</rt></ruby>。", textMY: "ထုတ်ကုန်ကို ဈေးအသက်သာဆုံး ထုတ်လုပ်ရန်။" },
       { id: 2, textJP: "(2) <ruby>品質向上<rt>ひんしつこうじょう</rt></ruby>ကို <ruby>推進<rt>すいしん</rt></ruby>する。", textMY: "အရည်အသွေးမြှင့်တင်ရေးကို တွန်းအားပေးရန်။" },
       { id: 3, textJP: "(3) <ruby>教育<rt>きょういく</rt></ruby>に<ruby>使用<rt>しよう</rt></ruby>する。", textMY: "သင်ကြားပြသရန်။" },
       { id: 4, textJP: "(4) <ruby>責任・権限<rt>せきにん・けんげん</rt></ruby>ကို <ruby>明確化<rt>めいかくか</rt></ruby>する。", textMY: "တာဝန်နှင့် လုပ်ပိုင်ခွင့်များကို ရှင်းလင်းစေရန်။" },
@@ -202,7 +202,7 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-12",
-    questionJP: "<ruby>現寸および現寸検査<rt>げんすんおよびげんすんけんさ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>現寸および現寸検査<rt>げんすんおよびげんすんけんさ</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "Actual measurement (Full-scale) နှင့် စစ်ဆေးခြင်းဆိုင်ရာ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>監理者<rt>かんりしゃ</rt></ruby>၏ <ruby>検査<rt>けんさ</rt></ruby>ကို <ruby>省略<rt>しょうりゃく</rt></ruby>できる。", textMY: "ကြီးကြပ်သူ၏ စစ်ဆေးမှုကို ချန်လှပ်နိုင်သည်။" },
@@ -241,7 +241,7 @@ export const chapter2022Data: StudyCardData[] = [
     questionJP: "<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>切断・切削<rt>せつだん・せっさく</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိဖြတ်တောက်ခြင်းနှင့် ပတ်သက်၍ မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>形状・寸法<rt>けいじょう・すんぽう</rt></ruby>に<ruby>合わせて<rt>あわせて</rt></ruby><ruby>切断<rt>せつだん</rt></ruby>する。", textMY: "ပုံသဏ္ဍာန်အလိုက် သင့်လျော်သောနည်းလမ်းကို ရွေးချယ်ရမည်။" },
+      { id: 1, textJP: "(1) <ruby>形状・寸法<rt>けいじょう・すんぽう</rt></ruby>に<ruby>合わせて<rt>あわせて</rt></ruby><ruby>切断<rt>せつだん</rt></ruby>する。", textMY: "ပုံသဏ္ဍာန်အလိုက် သင့်လျော်သောနည်းလမ်းကို ရွေးချယ်ရမည်।" },
       { id: 2, textJP: "(2) メタルタッチသည် <ruby>切削機<rt>せっさくき</rt></ruby>で<ruby>密着<rt>みっちゃく</rt></ruby>するように<ruby>加工<rt>かこう</rt></ruby>する。", textMY: "Metal touch နေရာများကို စက်ဖြင့် တိကျစွာ ကပ်နေအောင် ပြုလုပ်ရမည်။" },
       { id: 3, textJP: "(3) <ruby>開先面<rt>かいさきめん</rt></ruby>のノッチ<ruby>深さ<rt>ふかさ</rt></ruby>သည် 2.0mm <ruby>以下<rt>いか</rt></ruby>とする。", textMY: "Bevel မျက်နှာပြင်၏ notch အနက်မှာ ၂.၀ mm အောက် ဖြစ်ရမည်။" },
       { id: 4, textJP: "(4) せん<ruby>断切断<rt>だんせつだん</rt></ruby>သည် <ruby>板厚<rt>いたあつ</rt></ruby> 13mm <ruby>以下<rt>いか</rt></ruby>とする。", textMY: "ညှပ်ဖြတ်ခြင်း (Shearing) ကို ၁၃ mm အောက်ပြားများတွင်သာ လုပ်ရမည်။" },
@@ -292,7 +292,7 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-17",
-    questionJP: "<ruby>ガスシールド溶接<rt>がすしーるどようせつ</rt></ruby>の<ruby>施工条件<rt>せこうじょうけん</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>ガスシールド溶接<rt>がすしーるどようせつ</rt></ruby>の<ruby>施工条件<rt>せこうじょうけん</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></高度>なものはどれか。",
     questionMY: "Gas welding ၏ လုပ်ငန်းအခြေအနေများနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>電流<rt>でんりゅう</rt></ruby> 330A, <ruby>電圧<rt>でんあつ</rt></ruby> 40V, <ruby>速度<rt>そくど</rt></ruby> 20cm/min.", textMY: "လျှပ်စီးကြောင်း ၃၃၀A၊ ဗို့အား ၄၀V၊ အရှိန် ၂၀cm/min။" },
@@ -314,9 +314,9 @@ export const chapter2022Data: StudyCardData[] = [
     questionMY: "ဂဟေသင်္ကေတများတွင် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>隅肉溶接<rt>すみにくようせつ</rt></ruby>သည် <ruby>脚長<rt>きゃくちょう</rt></ruby>ကို <ruby>明記<rt>めいき</rt></ruby>する。", textMY: "Fillet weld တွင် leg length ကို ရှင်းလင်းစွာ ဖော်ပြရမည်။" },
-      { id: 2, textJP: "(2) <ruby>現場溶接<rt>げんばようせつ</rt></ruby>သည် <ruby>旗<rt>はた</rt></ruby>のマークを<ruby>付す<rt>ふす</rt></ruby>。", textMY: "အလုပ်ခွင်ဂဟေအတွက် အလံအမှတ်အသား သုံးရမည်။" },
+      { id: 2, textJP: "(2) <ruby>現場溶接<rt>げんばようせつ</rt></ruby>သည် <ruby>旗<rt>はた</rt></ruby>၏ マークを<ruby>付す<rt>ふす</rt></ruby>。", textMY: "အလုပ်ခွင်ဂဟေအတွက် အလံအမှတ်အသား သုံးရမည်။" },
       { id: 3, textJP: "(3) <ruby>裏当て金<rt>うらあてがね</rt></ruby>သည် <ruby>記号内<rt>きごうない</rt></ruby>တွင် <ruby>表示<rt>ひょうじ</rt></ruby>する。", textMY: "Backing metal ကို သင်္ကေတအတွင်း၌ ဖော်ပြရမည်။" },
-      { id: 4, textJP: "(4) <ruby>全周溶接<rt>ぜんしゅうようせつ</rt></ruby>သည် <ruby>丸<rt>まる</rt></ruby>のマークを<ruby>付す<rt>ふす</rt></ruby>。", textMY: "ပတ်လည်ဂဟေအတွက် စက်ဝိုင်းအမှတ်အသား သုံးရမည်။" },
+      { id: 4, textJP: "(4) <ruby>全周溶接<rt>ぜんしゅうようせつ</rt></ruby>သည် <ruby>丸<rt>まる</rt></ruby>の マークを<ruby>付す<rt>ふす</rt></ruby>。", textMY: "ပတ်လည်ဂဟေအတွက် စက်ဝိုင်းအမှတ်အသား သုံးရမည်။" },
       { id: 5, textJP: "(5) <ruby>開先角度<rt>かいさきかくど</rt></ruby>သည် <ruby>記入不要<rt>きにゅうふよう</rt></reason>である。", textMY: "Groove angle (မြောင်းထောင့်) ကို ရေးသားရန် မလိုအပ်ပါ။" }
     ],
     correctOptionId: 5,
@@ -424,7 +424,7 @@ export const chapter2022Data: StudyCardData[] = [
       { id: 1, textJP: "(1) <ruby>合金元素<rt>ごうきんげんそ</rt></ruby>နှင့် <ruby>冷却速度<rt>れいきゃくそくど</rt></ruby>ဖြင့် <ruby>定まる<rt>さだまる</rt></ruby>。", textMY: "Alloy element နှင့် အအေးခံနှုန်းအပေါ် မူတည်သည်။" },
       { id: 2, textJP: "(2) HAZသည် <ruby>母材<rt>ぼざい</rt></ruby>၏ <ruby>成分<rt>せいぶん</rt></ruby>ဖြင့် <ruby>定まる<rt>さだまる</rt></ruby>。", textMY: "HAZ ၏ မာကျောမှုသည် base metal ၏ ဓာတုဖွဲ့စည်းပုံအပေါ် မူတည်သည်။" },
       { id: 3, textJP: "(3) <ruby>最高硬さ<rt>さいこうかたさ</rt></ruby>သည် <ruby>ボンド部<rt>ぼんどぶ</rt></ruby>で<ruby>示される<rt>しめされる</rt></ruby>。", textMY: "အမြင့်ဆုံးမာကျောမှုကို Bond line တွင် တွေ့ရသည်။" },
-      { id: 4, textJP: "(4) <ruby>予熱<rt>よねつ</rt></ruby>ကို<ruby>施すと最高硬さ<rt>ほどこすとさいこうかたさ</rt></ruby>は<ruby>大きく<rt>おおきく</rt></ruby>なる。", textMY: "Preheat လုပ်ပါက အမြင့်ဆုံးမာကျောမှု ပိုကြီးလာသည်။" },
+      { id: 4, textJP: "(4) <ruby>予熱<rt>よねつ</rt></ruby>を<ruby>施すと最高硬さ<rt>ほどこすとさいこうかたさ</rt></ruby>は<ruby>大きく<rt>おおきく</rt></ruby>なる。", textMY: "Preheat လုပ်ပါက အမြင့်ဆုံးမာကျောမှု ပိုကြီးလာသည်။" },
       { id: 5, textJP: "(5) Ceqသည် <ruby>硬さ<rt>かたさ</rt></ruby>၏ <ruby>指標<rt>しひょう</rt></ruby>である。", textMY: "Carbon Equivalent သည် မာကျောမှု၏ အညွှန်းကိန်းဖြစ်သည်။" }
     ],
     correctOptionId: 4,
@@ -460,7 +460,7 @@ export const chapter2022Data: StudyCardData[] = [
       { id: 1, textJP: "(1) <ruby>変形<rt>へんけい</rt></ruby>က <ruby>小さい<rt>ちいさい</rt></ruby>。", textMY: "ပုံမပျက်ဘဲ ကျိုးတတ်သည်။" },
       { id: 2, textJP: "(2) <ruby>低温<rt>ていおん</rt></ruby>で<ruby>発生しやすい<rt>はっせいしやすい</rt></ruby>。", textMY: "အပူချိန်နိမ့်ချိန်တွင် ပိုဖြစ်လွယ်သည်။" },
       { id: 3, textJP: "(3) <ruby>靭性<rt>じんせい</rt></ruby>က <ruby>低い<rt>ひくい</rt></ruby>と<ruby>発生<rt>はっせい</rt></ruby>する。", textMY: "Toughness နည်းလျှင် ဖြစ်ပေါ်သည်။" },
-      { id: 4, textJP: "(4) <ruby>防止<rt>ぼうし</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>である。", textMY: "ကာကွယ်ရန် လိုအပ်သည်။" },
+      { id: 4, textJP: "(4) <ruby>防止<rt>ぼうし</rt></ruby>က <ruby>必要<rt>ひつよう</rt></ruby>である。", textMY: "ကာကွယ်ရန် လိုအပ်သည်။" },
       { id: 5, textJP: "(5) <ruby>条件<rt>じょうけん</rt></ruby>1つで<ruby>発生<rt>はっせい</rt></ruby>する。", textMY: "အချက်တစ်ချက်တည်းဖြင့် ဖြစ်ပွားသည်။" }
     ],
     correctOptionId: 5,
@@ -526,7 +526,7 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-30",
-    questionJP: "<ruby>品質マネジメント<rt>ひんしつまねじめんと</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>品質マネジメント<rt>ひんしつまねじめんと</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></native_audio>なものはどれか。",
     questionMY: "အရည်အသွေးစီမံခန့်ခွဲမှုနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>全員<rt>ぜんいん</rt></ruby>က PDCAကို <ruby>組織的<rt>そしきてき</rt></ruby>に<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "လူတိုင်း PDCA စနစ်ကို စနစ်တကျ လုပ်ဆောင်ရမည်။" },
@@ -591,7 +591,7 @@ export const chapter2022Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 成分分析",
+      titleMY: "ရှင်းလင်းချက်",
       reasonMY: "အရည်ဖျော်ချိန် (溶鋼) နှင့် ထုတ်ကုန်ဖြစ်ချိန် (製品) တွင် စစ်ဆေးပါက နေရာနှင့် အချိန်ကွဲပြားသဖြင့် ရလဒ် အနည်းငယ် ကွဲပြားနိုင်သည်။ 'အမြဲတမ်းတူသည်' ဆိုခြင်းမှာ မှားယွင်းသည်။",
       memoryTipMY: "ရလဒ် အနည်းငယ် ကွဲပြားနိုင်သည်။"
     }
@@ -652,7 +652,7 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-37",
-    questionJP: "<ruby>対物検査<rt>たいぶつけんさ</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>対物検査<rt>たいぶつけんさ</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふ適当</rt></ruby>なものはどれか。",
     questionMY: "ပစ္စည်းစစ်ဆေးမှု (Object Inspection) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>直接判定<rt>ちょくせつはんてい</rt></ruby>する方法と、<ruby>間接的<rt>かんせつてき</rt></ruby>に判定する方法がある。", textMY: "တိုက်ရိုက်စစ်ဆေးဆုံးဖြတ်နည်းနှင့် သွယ်ဝိုက်သောနည်းဖြင့် ဆုံးဖြတ်နည်းဟူ၍ ရှိသည်။" },
@@ -796,7 +796,7 @@ export const chapter2022Data: StudyCardData[] = [
   },
   {
     id: "2022-45",
-    questionJP: "<ruby>安全衛生<rt>あんぜんえいせい</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>安全衛生<rt>あんぜんえいせい</rt></ruby>တွင် <ruby>不適当<rt>ふ適当</rt></ruby>なものはどれか。",
     questionMY: "ဘေးကင်းလုံခြုံရေးနှင့် ကျန်းမာရေးတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
       { id: 1, textJP: "(1) <ruby>産業用ロボット<rt>さんぎょうようろぼっと</rt></ruby>သည် <ruby>大臣<rt>だいじん</rt></ruby>က <ruby>定める<rt>さだめる</rt></ruby>。", textMY: "စက်မှုစက်ရုပ်ဆိုင်ရာ စံနှုန်းကို ဝန်ကြီးက သတ်မှတ်သည်။" },

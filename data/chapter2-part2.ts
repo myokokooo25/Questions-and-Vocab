@@ -1,274 +1,275 @@
+
 import { StudyCardData } from '../types';
 
 export const chapter2Part2Data: StudyCardData[] = [
-    {
+  {
     id: "2-16",
-    questionJP: "<ruby>高力<rt>こうりょく</rt></ruby>ボルトの<ruby>保管<rt>ほかん</rt></ruby>と<ruby>管理<rt>かんり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "High-strength bolt များ၏ သိုလှောင်ထိန်းသိမ်းမှုနှင့် စီမံခန့်ခွဲမှုဆိုင်ရာ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "「JASS 6」における<ruby>高力ボルト接合部<rt>こうりょくぼるとせつごうぶ</rt></ruby>の<ruby>摩擦面処理<rt>まさつめんしょり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "HS Bolt ၏ ပွတ်တိုက်မျက်နှာပြင် ပြုပြင်ခြင်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) ボルト、ナット、座金は、製造業者によって1セットとして<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>されており、<ruby>異<rt>こと</rt></ruby>なるセットのものを<ruby>混用<rt>こんよう</rt></ruby>してはならない。", textMY: "Bolt၊ nut နှင့် washer တို့ကို ထုတ်လုပ်သူက set တစ်ခုအဖြစ် အရည်အသွေးထိန်းချုပ်ထားပြီး၊ မတူညီသော set မှ အစိတ်အပိုင်းများကို ရောနှောအသုံးမပြုရ။" },
-        { id: 2, textJP: "(2) <ruby>製品<rt>せいひん</rt></ruby>は<ruby>雨露<rt>うろ</rt></ruby>のかからない<ruby>乾燥<rt>かんそう</rt></ruby>した<ruby>場所<rt>ばしょ</rt></ruby>に<ruby>保管<rt>ほかん</rt></ruby>し、<ruby>梱包<rt>こんぽう</rt></ruby>は<ruby>使用<rt>しよう</rt></ruby>する<ruby>直前<rt>ちょくぜん</rt></ruby>まで<ruby>開封<rt>かいふう</rt></ruby>しない。", textMY: "ထုတ်ကုန်များကို မိုးနှင့်နှင်း မထိတွေ့သော ခြောက်သွေ့သည့်နေရာတွင် သိုလှောင်ပြီး၊ အသုံးမပြုမီအထိ ထုပ်ပိုးမှုကို မဖွင့်ရ။" },
-        { id: 3, textJP: "(3) トルシア<ruby>形<rt>がた</rt></ruby><ruby>高力<rt>こうりょく</rt></ruby>ボルトのピンテール<ruby>部<rt>ぶ</rt></ruby>に<ruby>錆<rt>さび</rt></ruby>が<ruby>発生<rt>はっせい</rt></ruby>した<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>締付<rt>しめつ</rt></ruby>け<ruby>性能<rt>せいのう</rt></ruby>に<ruby>影響<rt>えいきょう</rt></ruby>するため<ruby>使用<rt>しよう</rt></ruby>してはならない。", textMY: "Torshear bolt ၏ pintail အပိုင်းတွင် သံချေးတက်ပါက၊ တပ်ဆင်မှုစွမ်းဆောင်ရည်ကို ထိခိုက်စေသောကြောင့် အသုံးမပြုရ။" },
-        { id: 4, textJP: "(4) <ruby>現場<rt>げんば</rt></ruby>での<ruby>保管<rt>ほかん</rt></ruby><ruby>期間<rt>きかん</rt></ruby>が<ruby>長<rt>なが</rt></ruby>くなる<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>定期的<rt>ていきてき</rt></ruby>に<ruby>製品<rt>せいひん</rt></ruby>の<ruby>状態<rt>じょうたい</rt></ruby>を<ruby>確認<rt>かくにん</rt></ruby>する。", textMY: "လုပ်ငန်းခွင်တွင် သိုလှောင်သည့်ကာလ ကြာမြင့်ပါက၊ ထုတ်ကုန်၏အခြေအနေကို ပုံမှန်စစ်ဆေးရမည်။" },
-        { id: 5, textJP: "(5) <ruby>一度<rt>いちど</rt></ruby><ruby>使用<rt>しよう</rt></ruby>した<ruby>高力<rt>こうりょく</rt></ruby>ボルトは、<ruby>原則<rt>げんそく</rt></ruby>として<ruby>再使用<rt>さいしよう</rt></ruby>してはならない。", textMY: "တစ်ကြိမ်အသုံးပြုပြီးသော high-strength bolt များကို အခြေခံအားဖြင့် ပြန်လည်အသုံးမပြုရ။" }
+      { id: 1, textJP: "(1) <ruby>摩擦面<rt>まさつめん</rt></ruby>には、クランプ<ruby>傷<rt>きず</rt></ruby>などの<ruby>凹凸<rt>おうとつ</rt></ruby>やスパッタの<ruby>付着<rt>ふちゃく</rt></ruby>があってはならない。", textMY: "ပွတ်တိုက်မျက်နှာပြင်တွင် ချိုင့်ခွက်များ သို့မဟုတ် ဂဟေအမှုန့်များ ကပ်ငြိမနေရပါ။" },
+      { id: 2, textJP: "(2) <ruby>薬剤発錆<rt>やくざいはっせい</rt></ruby>による<ruby>摩擦面処理<rt>まさつめんしょり</rt></ruby>には、<ruby>黒皮除去<rt>くろかわじょきょ</rt></ruby>も<ruby>同時<rt>どうじ</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う<ruby>薬剤<rt>やくざい</rt></ruby>は<ruby>使用<rt>しよう</rt></ruby>してはならない。", textMY: "Black scale ကိုပါ တစ်ပြိုင်နက် ဖယ်ရှားပေးသော ဓာတုဆေးများကို မသုံးရပါ။" },
+      { id: 3, textJP: "(3) <ruby>スプライスプレート<rt>すぷらいすぷれーと</rt></ruby>を<ruby>部材<rt>ぶざい</rt></ruby>に<ruby>仮固定<rt>かりこてい</rt></ruby>する<ruby>際<rt>さい</rt></ruby>には、<ruby>油分<rt>ゆぶん</rt></ruby>のない<ruby>仮ボルト<rt>かりぼると</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いる。", textMY: "ပစ္စည်းများကို ယာယီထိန်းထားရန် ဆီမပါသော ယာယီ bolt များကို သုံးရမည်။" },
+      { id: 4, textJP: "(4) <ruby>高力ボルト接合部<rt>こうりょくぼるとせつごうぶ</rt></ruby>をブラスト<ruby>処理<rt>しょり</rt></ruby>とする<ruby>場合<rt>ばあい</rt></ruby>、<ruby>ショットブラスト<rt>しょっとぶらすと</rt></ruby>および<ruby>グリットブラスト<rt>ぐりっとぶらすと</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>し、<ruby>表面粗さ<rt>ひょうめんあらさ</rt></ruby> 50μmRz <ruby>以上<rt>いじょう</rt></ruby>を<ruby>確保<rt>かくほ</rt></ruby>する。", textMY: "Blast ဖြင့်ပြင်ဆင်ပါက မျက်နှာပြင်ကြမ်းတမ်းမှု ၅၀ နှင့်အထက် ရှိရမည်။" },
+      { id: 5, textJP: "(5) <ruby>溶融亜鉛めっき<rt>ようゆうあえんめっき</rt></ruby>つき<ruby>高力ボルト接合<rt>こうりょくぼるとせつごう</rt></ruby>の<ruby>摩擦面<rt>まさつめん</rt></ruby>に、<ruby>特記<rt>とっき</rt></ruby>によりブラスト<ruby>処理<rt>しょり</rt></ruby>あるいは<ruby>りん酸塩処理以外<rt>さんえんしょりいがい</rt></ruby>の<ruby>特別<rt>とくべつ</rt></ruby>な<ruby>処理<rt>しょり</rt></ruby>を<ruby>施<rt>ほどこ</rt></ruby>す<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>原則<rt>げんそく</rt></ruby>としてすべり<ruby>耐力試験<rt>たいりょくしけん</rt></ruby>を<ruby>実施<rt>じっし</rt></ruby>する。", textMY: "Galvanized bolt များအတွက် အထူးပြုပြင်မှုလုပ်ပါက ပွတ်တိုက်အားစမ်းသပ်မှု လုပ်ဆောင်ရမည်။" }
     ],
-    correctOptionId: 3,
+    correctOptionId: 2,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (3) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Pintail သည် bolt ကို တင်းကျပ်စေရန် အသုံးပြုပြီးနောက် ကျိုးပြတ်သွားသော အစိတ်အပိုင်းဖြစ်သည်။ ၎င်း၏အပေါ်ယံတွင် သံချေးအနည်းငယ်တက်ခြင်းသည် bolt ၏ torque-tension ဆက်စပ်မှုကို မထိခိုက်ပါ။ အဓိကအရေးကြီးသည်မှာ ဝက်အူရစ် (thread) နှင့် nut/washer ထိတွေ့မျက်နှာပြင်များ ဖြစ်သည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Pintail က ဆွဲဖြုတ်လိုက်မဲ့ အပိုင်းမို့ နည်းနည်း သံချေးတက်တာ ပြဿနာမရှိဘူး။"
+      titleMY: "ရှင်းလင်းချက် - 薬剤発錆の薬剤",
+      reasonMY: "Black scale (黒皮) ကိုပါ တစ်ပြိုင်နက် ဖယ်ရှားပေးနိုင်သော ဓာတုပစ္စည်းများကို အသုံးပြုနိုင်သည်။ ၎င်းတို့ကို တားမြစ်ထားခြင်း မရှိပါ။",
+      memoryTipMY: "Black scale ဖယ်ရှားတဲ့ဆေး သုံးလို့ရပါတယ်။"
     }
   },
   {
     id: "2-17",
-    questionJP: "<ruby>高力<rt>こうりょく</rt></ruby>ボルトの<ruby>締付<rt>しめつ</rt></ruby>けに<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
-    questionMY: "High-strength bolt တပ်ဆင်ခြင်းနှင့်ပတ်သက်၍ အသင့်လျော်ဆုံးအချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "「JASS 6」における<ruby>高力ボルト接合部<rt>こうりょくぼるとせつごうぶ</rt></ruby>の<ruby>摩擦面処理<rt>まさつめんしょり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "HS Bolt ၏ ပွတ်တိုက်မျက်နှာပြင် ပြုပြင်ခြင်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>締付<rt>しめつ</rt></ruby>けは、<ruby>本締<rt>ほんじ</rt></ruby>め、<ruby>仮締<rt>かりじ</rt></ruby>め、<ruby>一次<rt>いちじ</rt></ruby><ruby>締<rt>じ</rt></ruby>めの<ruby>順<rt>じゅん</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>う。", textMY: "တပ်ဆင်ခြင်းကို final tightening, temporary tightening, pre-tightening အစီအစဉ်အတိုင်း ပြုလုပ်သည်။" },
-        { id: 2, textJP: "(2) 1つのボルト<ruby>群<rt>ぐん</rt></ruby>において、<ruby>締付<rt>しめつ</rt></ruby>けは<ruby>外周<rt>がいしゅう</rt></ruby>から<ruby>中央<rt>ちゅうおう</rt></ruby>に<ruby>向<rt>む</rt></ruby>かって<ruby>行<rt>おこな</rt></ruby>う。", textMY: "Bolt group တစ်ခုတွင်၊ တပ်ဆင်ခြင်းကို အပြင်ဘက်မှ အလယ်သို့ ပြုလုပ်သည်။" },
-        { id: 3, textJP: "(3) <ruby>本締<rt>ほんじ</rt></ruby>めは、<ruby>一次<rt>いちじ</rt></ruby><ruby>締<rt>じ</rt></ruby>め<ruby>完了後<rt>かんりょうご</rt></ruby>、24<ruby>時間<rt>じかん</rt></ruby><ruby>以内<rt>いない</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>わなければならない。", textMY: "Final tightening ကို pre-tightening ပြီးဆုံးပြီးနောက် ၂၄ နာရီအတွင်း ပြုလုပ်ရမည်။" },
-        { id: 4, textJP: "(4) トルクコントロール<ruby>法<rt>ほう</rt></ruby>では、ナットの<ruby>回転<rt>かいてん</rt></ruby><ruby>量<rt>りょう</rt></ruby>で<ruby>軸力<rt>じくりょく</rt></ruby>を<ruby>管理<rt>かんり</rt></ruby>する。", textMY: "Torque control method တွင်၊ nut ၏ လည်ပတ်သည့်ပမာဏဖြင့် axial force ကို ထိန်းချုပ်သည်။" },
-        { id: 5, textJP: "(5) <ruby>共回<rt>ともまわ</rt></ruby>りは、ナットとボルトが<ruby>同時<rt>どうじ</rt></ruby>に<ruby>回転<rt>かいてん</rt></ruby>する<ruby>現象<rt>げんしょう</rt></ruby>で、<ruby>品質<rt>ひんしつ</rt></ruby><ruby>上<rt>じょう</rt></ruby><ruby>問題<rt>もんだい</rt></ruby>はない。", textMY: "Co-rotation (共回り) သည် nut နှင့် bolt အတူတူလည်ပတ်ခြင်းဖြစ်ပြီး၊ အရည်အသွေးအတွက် ပြဿနာမရှိပါ။" }
+      { id: 1, textJP: "(1) すべり<ruby>係数<rt>けいすう</rt></ruby>が 0.45 <ruby>以上確保<rt>いじょうかくほ</rt></ruby>できる<ruby>摩擦面処理<rt>まさつめんしょり</rt></ruby>の<ruby>方法<rt>ほうほう</rt></ruby>は、<ruby>発錆（さび）処理<rt>はっせいしょり</rt></ruby>またはブラスト<ruby>処理<rt>しょり</rt></ruby>のいずれかの<ruby>方法<rt>ほうほう</rt></ruby>とする。", textMY: "Slip coefficient ၀.၄၅ ရရှိရန် သံချေးတက်စေခြင်း သို့မဟုတ် blast ပြုလုပ်ခြင်း နည်းလမ်းများကို သုံးရမည်။" },
+      { id: 2, textJP: "(2) <ruby>溶融亜鉛めっき<rt>ようゆうあえんめっき</rt></ruby>つき<ruby>高力ボルト接合<rt>こうりょくぼるとせつごう</rt></ruby>の<ruby>摩擦面<rt>まさつめん</rt></ruby>に、<ruby>特記<rt>とっき</rt></ruby>によりブラスト<ruby>処理<rt>しょり</rt></ruby>あるいは<ruby>りん酸塩処理以外<rt>さんえんしょりいがい</rt></ruby>の<ruby>特別<rt>とくべつ</rt></ruby>な<ruby>処理<rt>しょり</rt></ruby>を<ruby>施<rt>ほどこ</rt></ruby>す<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>原則<rt>げんそく</rt></ruby>としてすべり<ruby>係数試験<rt>けいすうしけん</rt></ruby>を<ruby>実施<rt>じっし</rt></ruby>する。", textMY: "Galvanized bolt အတွက် အထူးပြုပြင်မှုလုပ်လျှင် slip coefficient စမ်းသပ်မှု လုပ်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>摩擦面<rt>まさつめん</rt></ruby>の<ruby>処理<rt>しょり</rt></ruby>を<ruby>発錆（さび）処理<rt>はっせいしょり</rt></ruby>で<ruby>行う方法<rt>おこなうほうほう</rt></ruby>には、<ruby>自然発錆<rt>しぜんはっせい</rt></ruby>と<ruby>薬剤発錆<rt>やくざいはっせい</rt></ruby>がある。", textMY: "သံချေးတက်စေခြင်းတွင် သဘာဝနှင့် ဓာတုနည်းဟူ၍ ရှိသည်။" },
+      { id: 4, textJP: "(4) <ruby>接合部<rt>せつごうぶ</rt></ruby>の<ruby>肌すき<rt>はだすき</rt></ruby>に<ruby>挿入<rt>そうにゅう</rt></ruby>するフィラープレートには、<ruby>摩擦面処理<rt>まさつめんしょり</rt></ruby>は<ruby>不要<rt>ふよう</rt></ruby>である。", textMY: "ကွာဟချက်တွင် ထည့်သော Filler plate များအတွက် ပွတ်တိုက်မျက်နှာပြင် ပြုပြင်ရန် မလိုဟု ဆိုခြင်း။" },
+      { id: 5, textJP: "(5) <ruby>摩擦面<rt>まさつめん</rt></ruby>にはクランプ<ruby>傷<rt>きず</rt></ruby>などの<ruby>凹凸<rt>おうとつ</rt></ruby>やスパッタの<ruby>付着<rt>ふちゃく</rt></ruby>があってはならない。", textMY: "ပွတ်တိုက်မျက်နှာပြင်တွင် ချိုင့်ခွက်နှင့် ဂဟေအမှုန့်များ မရှိရပါ။" }
     ],
-    correctOptionId: 3,
+    correctOptionId: 4,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (3) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှန်ကန်ရခြင်း အကြောင်းရင်း: JASS 6 အရ၊ pre-tightening (一次締め) ပြီးနောက်တွင် final tightening (本締め) ကို ထိုနေ့တွင်ပင် (原則としてその日のうちに) ပြီးအောင်လုပ်ရမည်။ ၎င်းကို ၂၄ နာရီအတွင်းဟု အဓိပ္ပါယ်ဖွင့်ဆိုနိုင်သည်။ (1) 순서သည် 仮締め→一次締め→本締め ဖြစ်သည်။ (2) အလယ်မှ အပြင်သို့ (中央から外周へ) တပ်ဆင်ရမည်။ (4) Torque control method သည် torque တန်ဖိုးဖြင့် ထိန်းချုပ်သည်။ (5) 共回り သည် မှန်ကန်သော axial force မရရှိစေနိုင်သောကြောင့် ချို့ယွင်းချက်ဖြစ်သည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Bolt တပ်ဆင်ခြင်း၏ အဆင့်များ (一次締め -> 本締め) ကို တစ်နေ့တည်း/၂၄ နာရီအတွင်း ပြီးအောင်လုပ်ရမည်။"
+      titleMY: "ရှင်းလင်းချက် - フィラープレートの処理",
+      reasonMY: "Friction Joint တွင် အသုံးပြုသော Filler plate များ၏ 'နှစ်ဖက်လုံး' ကို ပင်မပစ္စည်းများကဲ့သို့ပင် ပွတ်တိုက်မျက်နှာပြင် ပြုပြင်ခြင်း (Friction Surface Treatment) မဖြစ်မနေ လုပ်ဆောင်ရမည်။",
+      memoryTipMY: "Filler plate နှစ်ဖက်လုံးကို Treatment လုပ်ရမည်။"
     }
   },
   {
     id: "2-18",
-    questionJP: "<ruby>建方<rt>たてかた</rt></ruby><ruby>精度<rt>せいど</rt></ruby>の<ruby>管理<rt>かんり</rt></ruby><ruby>許容差<rt>きょようさ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Erection accuracy ၏ ခွင့်ပြုလွဲချော်မှု (Tolerance) နှင့်ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "「JASS 6」における<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "JASS 6 အရ ယာယီဂဟေဆက်ခြင်း (Tack Welding) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>柱<rt>はしら</rt></ruby>の<ruby>倒<rt>たお</rt></ruby>れの<ruby>許容差<rt>きょようさ</rt></ruby>は、<ruby>柱<rt>はしら</rt></ruby>の<ruby>高<rt>たか</rt></ruby>さの 1/1,000 かつ 10mm <ruby>以下<rt>いか</rt></ruby>である。", textMY: "Column ၏ ဒေါင်လိုက်မှန်ကန်မှု (Plumbness) အတွက် ခွင့်ပြုလွဲချော်မှုသည် Column အမြင့်၏ 1/1,000 နှင့် 10mm အောက် ဖြစ်ရမည်။" },
-        { id: 2, textJP: "(2) <ruby>柱<rt>はしら</rt></ruby>の<ruby>通<rt>とお</rt></ruby>り<ruby>心<rt>しん</rt></ruby>からの<ruby>変位<rt>へんい</rt></ruby>の<ruby>許容差<rt>きょようさ</rt></ruby>は 5mm <ruby>以下<rt>いか</rt></ruby>である。", textMY: "Column ၏ grid line မှ ရွေ့လျားမှုအတွက် ခွင့်ပြုလွဲချော်မှုသည် 5mm အောက် ဖြစ်ရမည်။" },
-        { id: 3, textJP: "(3) <ruby>梁<rt>はり</rt></ruby>の<ruby>高<rt>たか</rt></ruby>さの<ruby>許容差<rt>きょようさ</rt></ruby>は、±5mm である。", textMY: "Beam ၏ အမြင့်အတွက် ခွင့်ပြုလွဲချော်မှုသည် ±5mm ဖြစ်သည်။" },
-        { id: 4, textJP: "(4) アンカーボルトの<ruby>位置<rt>いち</rt></ruby>の<ruby>許容差<rt>きょようさ</rt></ruby>は、<ruby>柱心<rt>ちゅうしん</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して ±5mm である。", textMY: "Anchor bolt ၏ တည်နေရာအတွက် ခွင့်ပြုလွဲချော်မှုသည် Column center line နှင့် နှိုင်းယှဉ်ပါက ±5mm ဖြစ်သည်။" },
-        { id: 5, textJP: "(5) <ruby>建方<rt>たてかた</rt></ruby><ruby>精度<rt>せいど</rt></ruby>の<ruby>測定<rt>そくてい</rt></ruby>は、<ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>自重<rt>じじゅう</rt></ruby>による<ruby>変形<rt>へんけい</rt></ruby>が<ruby>安定<rt>あんてい</rt></ruby>した<ruby>後<rt>あと</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う。", textMY: "Erection accuracy ကို တိုင်းတာခြင်းသည် သံမဏိ၏ ကိုယ်အလေးချိန်ကြောင့်ဖြစ်သော ပုံပျက်ခြင်း တည်ငြိမ်သွားပြီးနောက် ပြုလုပ်ရမည်။" }
+      { id: 1, textJP: "(1) <ruby>冷間成形角形鋼管<rt>れいかんせいけいかくがたこうかん</rt></ruby>の<ruby>角部<rt>かくぶ</rt></ruby>など、<ruby>大<rt>おお</rt></ruby>きな<ruby>冷間塑性加工<rt>れいかんそせいかこう</rt></ruby>を<ruby>受<rt>う</rt></ruby>けた<ruby>箇所<rt>かしょ</rt></ruby>への<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>は<ruby>避<rt>さ</rt></ruby>ける。", textMY: "သံလုံး/ပိုက် ၏ ထောင့်ချိုးနေရာများတွင် ယာယီဂဟေဆက်ခြင်းကို ရှောင်ရှားရမည်။" },
+      { id: 2, textJP: "(2) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>だけでは<ruby>突合せ継手<rt>つきあわせつぎて</rt></ruby>の<ruby>角変形<rt>かくへんけい</rt></ruby>や<ruby>隅肉溶接部材<rt>すみにくようせつぶざい</rt></ruby>の<ruby>倒<rt>たお</rt></ruby>れが<ruby>防止<rt>ぼうし</rt></ruby>できない<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>ストロングバック<rt>すとろんぐばっく</rt></ruby>などの<ruby>治具<rt>じぐ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>拘束<rt>こうそく</rt></ruby>する。", textMY: "ယာယီဂဟေဖြင့်သာ ပုံပျက်မှုကို မကာကွယ်နိုင်ပါက Strong-back ကဲ့သို့သော Jig များဖြင့် ထိန်းချုပ်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>板厚<rt>いたあつ</rt></ruby> 6mm を<ruby>超<rt>こ</rt></ruby>える<ruby>部材<rt>ぶざい</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>の<ruby>最小溶接長<rt>さいしょうようせつながさ</rt></ruby>さは 30mm、<ruby>脚長<rt>きゃくちょう</rt></ruby>は 4mm <ruby>以上<rt>いじょう</rt></ruby>とする。", textMY: "အထူ ၆ mm ကျော်သောပစ္စည်းများအတွက် ယာယီဂဟေအရှည် ၃၀ mm နှင့် leg length ၄ mm ရှိရမည်ဟု ဆိုခြင်း။" },
+      { id: 4, textJP: "(4) <ruby>引張強さ<rt>ひっぱりつよさ</rt></ruby> 490N/mm² <ruby>以上<rt>いじょう</rt></ruby>の<ruby>高張力鋼<rt>こうちょうりょくこう</rt></ruby>の<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>を<ruby>被覆アーク溶接<rt>ひふくあーくようせつ</rt></ruby>で<ruby>行う場合<rt>おこなうばあい</rt></ruby>には、<ruby>低水素系溶接棒<rt>ていすいそけいようせつぼう</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>する。", textMY: "490N အဆင့်မြင့်သံမဏိများအတွက် ယာယီဂဟေဆော်လျှင် low-hydrogen rod ကို သုံးရမည်။" },
+      { id: 5, textJP: "(5) <ruby>工事現場溶接<rt>こうじげんばようせつ</rt></ruby>などで、<ruby>裏当て金<rt>うらあてがね</rt></ruby>က <ruby>梁フランジ<rt>はりふらんじ</rt></ruby>の<ruby>外側<rt>そとがわ</rt></ruby>に<ruby>取付<rt>とりつ</rt></ruby>く<ruby>場合<rt>ばあい</rt></ruby>、<ruby>本溶接<rt>ほんようせつ</rt></ruby>によって<ruby>再溶融<rt>さいようゆう</rt></reason>されない<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>は、<ruby>梁<rt>はり</rt></ruby>フランジおよび<ruby>柱<rt>はしら</rt></ruby>フランジ<ruby>母材<rt>ぼざい</rt></ruby>に<ruby>直接行<rt>ちょくせつおこな</rt></ruby>ってはならない。", textMY: "အရည်ပြန်မပျော်မည့် ယာယီဂဟေများကို beam သို့မဟုတ် column ပေါ်တွင် တိုက်ရိုက် မလုပ်ဆောင်ရပါ။" }
     ],
     correctOptionId: 3,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (3) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: JASS 6 အရ၊ တည်ဆောက်ပြီးနောက် Beam ၏ အမြင့် (Level) အတွက် ခွင့်ပြုလွဲချော်မှုသည် ±10mm ဖြစ်သည်။ ±5mm သည် ပိုမိုတင်းကြပ်သော စံနှုန်းဖြစ်ပြီး၊ ပုံမှန်အားဖြင့် မလိုအပ်ပါ။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Site erection မှာ Beam level tolerance = ±10mm."
+      titleMY: "ရှင်းလင်းချက် - 組立て溶接の最小長さ",
+      reasonMY: "JASS 6 စံနှုန်းအရ အထူ 6mm ကျော်သော ပစ္စည်းများအတွက် ယာယီဂဟေ (Tack weld) ၏ အနည်းဆုံးအရှည်မှာ 40mm (၄၀ မီလီမီတာ) ဖြစ်ရမည်။ ၃၀ မီလီမီတာ မဟုတ်ပါ။",
+      memoryTipMY: "အထူ 6mm ကျော်ရင် Tack Weld အရှည် 40mm လိုအပ်သည်။"
     }
   },
-   {
+  {
     id: "2-19",
-    questionJP: "<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>自動<rt>じどう</rt></ruby><ruby>化<rt>か</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Welding Automation နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "「JASS 6」における<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "JASS 6 အရ ယာယီဂဟေဆက်ခြင်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>溶接<rt>ようせつ</rt></ruby>ロボットは、<ruby>品質<rt>ひんしつ</rt></ruby>の<ruby>安定化<rt>あんていか</rt></ruby>と<ruby>生産性<rt>せいさんせい</rt></ruby>の<ruby>向上<rt>こうじょう</rt></ruby>に<ruby>貢献<rt>こうけん</rt></ruby>する。", textMY: "Welding robot များသည် အရည်အသွေး တည်ငြိမ်မှုနှင့် ထုတ်လုပ်မှု စွမ်းဆောင်ရည် တိုးတက်မှုကို အထောက်အကူပြုသည်။" },
-        { id: 2, textJP: "(2) サブマージアーク<ruby>溶接<rt>ようせつ</rt></ruby>は、<ruby>厚板<rt>あついた</rt></ruby>の<ruby>突合<rt>つきあわ</rt></ruby>せ<ruby>溶接<rt>ようせつ</rt></ruby>に<ruby>適<rt>てき</rt></ruby>した<ruby>高能率<rt>こうのうりつ</rt></ruby>な<ruby>自動<rt>じどう</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby><ruby>方法<rt>ほうほう</rt></ruby>である。", textMY: "Submerged Arc Welding (SAW) သည် အထူကြီးသော plate များ၏ butt welding အတွက် သင့်လျော်သော စွမ်းဆောင်ရည်မြင့် automatic welding နည်းလမ်းဖြစ်သည်။" },
-        { id: 3, textJP: "(3) <ruby>自動<rt>じどう</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>採用<rt>さいよう</rt></ruby>すれば、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>技能者<rt>ぎのうしゃ</rt></ruby>の<ruby>資格<rt>しかく</rt></ruby>は<ruby>不要<rt>ふよう</rt></ruby>となる。", textMY: "Automatic welding ကို အသုံးပြုပါက welder ၏ အရည်အချင်း (qualification) မလိုအပ်တော့ပါ။" },
-        { id: 4, textJP: "(4) <ruby>溶接<rt>ようせつ</rt></ruby>ロボットのプログラミング(ティーチング)は、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>品質<rt>ひんしつ</rt></ruby>を<ruby>左右<rt>さゆう</rt></ruby>する<ruby>重要<rt>じゅうよう</rt></ruby>な<ruby>作業<rt>さぎょう</rt></ruby>である。", textMY: "Welding robot ၏ programming (teaching) သည် ဂဟေအရည်အသွေးကို ဆုံးဖြတ်ပေးသည့် အရေးကြီးသော လုပ်ငန်းစဉ်ဖြစ်သည်။" },
-        { id: 5, textJP: "(5) エレクトロスラグ<ruby>溶接<rt>ようせつ</rt></ruby>は、ボックス<ruby>柱<rt>ばしら</rt></ruby>の<ruby>ダイアフラム<ruby>溶接<rt>ようせつ</rt></ruby>などに<ruby>用<rt>もち</rt></ruby>いられる<ruby>立向<rt>たてむ</rt></ruby>き<ruby>自動<rt>じどう</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby>である。", textMY: "Electroslag welding သည် box column ၏ diaphragm welding ကဲ့သို့သော vertical automatic welding တွင် အသုံးပြုသည်။" }
+      { id: 1, textJP: "(1) <ruby>板厚<rt>いたあつ</rt></ruby> 6mm を<ruby>超<rt>こ</rt></ruby>える<ruby>部材<rt>ぶざい</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>の<ruby>溶接長さ<rt>ようせつながさ</rt></ruby>さは 40mm <ruby>以上<rt>いじょう</rt></ruby>、<ruby>脚長<rt>きゃくちょう</rt></ruby>は 4mm <ruby>以上<rt>いじょう</rt></ruby>とする。", textMY: "အထူ ၆ mm ကျော်သောပစ္စည်းများအတွက် ယာယီဂဟေအရှည် ၄၀ mm နှင့် leg length ၄ mm အနည်းဆုံး ရှိရမည်။" },
+      { id: 2, textJP: "(2) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>に<ruby>従事<rt>じゅうじ</rt></ruby>する<ruby>溶接技能者<rt>ようせつぎのうしゃ</rt></ruby>は、JIS Z 3801（<ruby>手溶接技術検定<rt>てようせつぎじゅつけんてい</rt></ruby>における<ruby>試験方法<rt>しけんほうほう</rt></ruby>および<ruby>判定基準<rt>はんていきじゅん</rt></ruby>）または JIS Z 3841（<ruby>半自動溶接技術検定<rt>はんじどうようせつぎじゅつけんてい</rt></ruby>における<ruby>試験方法<rt>しけんほうほう</rt></ruby>および<ruby>判定基準<rt>はんていきじゅん</rt></ruby>）の<ruby>少<rt>すく</rt></ruby>なくとも<ruby>基本級<rt>きほんきゅう</rt></ruby>となる<ruby>級<rt>きゅう</rt></ruby>の<ruby>試験<rt>しけん</rt></ruby>に<ruby>合格<rt>ごうかく</rt></ruby>した<ruby>有資格者<rt>ゆうしかくしゃ</rt></ruby>とする。", textMY: "ယာယီဂဟေလုပ်သူသည် အနည်းဆုံး အခြေခံအဆင့် (Basic level) လက်မှတ်ရှိသူ ဖြစ်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>板厚<rt>いたあつ</rt></ruby> 25mm の SN400 <ruby>材<rt>ざい</rt></ruby>に<ruby>被覆アーク溶接<rt>ひふくあーくようせつ</rt></ruby>で<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>を<ruby>行う場合<rt>おこなうばあい</rt></ruby>は、<ruby>低水素系<rt>ていすいそけい</rt></ruby>または<ruby>イルミナイト系<rt>いるみないとけい</rt></ruby>の<ruby>溶接棒<rt>ようせつぼう</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>する。", textMY: "အထူ ၂၅ mm ရှိသော SN400 ပြားအား ယာယီဂဟေဆက်လျှင် low-hydrogen သို့မဟုတ် ilmenite rod သုံးရမည်ဟု ဆိုခြင်း။" },
+      { id: 4, textJP: "(4) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>は、<ruby>組立て部材<rt>くみたてぶざい</rt></ruby>の<ruby>形状<rt>けいじょう</rt></ruby>を<ruby>保持<rt>ほじ</rt></ruby>し、かつ、<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>က <ruby>割<rt>わ</rt></ruby>れないように<ruby>配置<rt>はいち</rt></ruby>しなければならない。", textMY: "ယာယီဂဟေကို ပုံသဏ္ဍာန်မြဲစေရန်နှင့် အက်ကွဲမှုမဖြစ်စေရန် နေရာချထားရမည်။" },
+      { id: 5, textJP: "(5) <ruby>納まり上<rt>おさまりじょう</rt></ruby>、<ruby>開先内<rt>かいさきない</rt></ruby>に<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>わざるを<ruby>得<rt>え</rt></ruby>ない<ruby>場合<rt>ばあい</rt></ruby>には、<ruby>本溶接後<rt>ほんようせつご</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>က <ruby>十分確保<rt>じゅうぶんかくほ</rt></ruby>できる<ruby>方法<rt>ほうほう</rt></ruby>で<ruby>施工<rt>せこう</rt></ruby>しなければならない。", textMY: "အခြေအနေအရ မြောင်း (groove) ထဲတွင် ယာယီဂဟေဆက်ရပါက မူရင်းဂဟေ၏ အရည်အသွေးကို မထိခိုက်စေရန် လုပ်ဆောင်ရမည်။" }
     ],
     correctOptionId: 3,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (3) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Automatic welding သို့မဟုတ် robot welding ကို အသုံးပြုသည့်အခါတွင်ပင်၊ စက်ကို ထိန်းချုပ်ရန်၊ setting များကို ချိန်ညှိရန်၊ နှင့် အရည်အသွေးကို စစ်ဆေးရန်အတွက် အရည်အချင်းပြည့်မီသော welding operator သို့မဟုတ် နည်းပညာရှင် လိုအပ်သည်။ လုံးဝ အရည်အချင်းမလိုအပ်ဟု ဆိုခြင်းသည် မှားယွင်းသည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: စက် (Robot) သုံးရင်တောင်၊ စက်ကို ထိန်းတဲ့လူ (Operator) က အရည်အချင်းရှိရမယ်။"
+      titleMY: "ရှင်းလင်းချက် - 溶接棒の選定 (Welding Rod)",
+      reasonMY: "အထူ 25mm ရှိသော SN400 သံမဏိအတွက် ယာယီဂဟေ (Tack weld) လုပ်ဆောင်ရာတွင် အက်ကွဲမှု ကာကွယ်ရန် 'Low-hydrogen' (低水素系) ရော့ဒ်ကိုသာ သုံးရမည်။ Ilmenite (イルミナイト系) ကို အသုံးပြုရန် မသင့်လျော်ပါ။",
+      memoryTipMY: "အထူကြီးရင် Low-hydrogen rod ကိုသာ သုံးပါ။"
     }
   },
   {
     id: "2-20",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>工事<rt>こうじ</rt></ruby>における<ruby>検査<rt>けんさ</rt></ruby>と<ruby>試験<rt>しけん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "သံမဏိတည်ဆောက်ရေးလုပ်ငန်းရှိ စစ်ဆေးခြင်း (Inspection) နှင့် စမ်းသပ်ခြင်း (Testing) ဆိုင်ရာ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "「JASS 6」における<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "JASS 6 အရ ယာယီဂဟေဆက်ခြင်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>受入<rt>うけいれ</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>では、<ruby>納入<rt>のうにゅう</rt></ruby>された<ruby>材料<rt>ざいりょう</rt></ruby>が<ruby>発注<rt>はっちゅう</rt></ruby><ruby>仕様<rt>しよう</rt></ruby>と<ruby>一致<rt>いっち</rt></ruby>しているか、ミルシートと<ruby>照合<rt>しょうごう</rt></ruby>して<ruby>確認<rt>かくにん</rt></ruby>する。", textMY: "Receiving inspection တွင်၊ ရောက်ရှိလာသော ပစ္စည်းများသည် မှာကြားထားသည့် specification နှင့် ကိုက်ညီမှုရှိမရှိကို mill sheet ဖြင့် တိုက်ဆိုင်စစ်ဆေးရမည်။" },
-        { id: 2, textJP: "(2) <ruby>製品<rt>せいひん</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>は、<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>工場<rt>こうじょう</rt></ruby>から<ruby>製品<rt>せいひん</rt></ruby>を<ruby>出荷<rt>しゅっか</rt></ruby>する<ruby>前<rt>まえ</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う<ruby>最終<rt>さいしゅう</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>である。", textMY: "Product inspection သည် သံမဏိထုတ်လုပ်ရေးစက်ရုံမှ ထုတ်ကုန်များကို မတင်ပို့မီ ပြုလုပ်သော နောက်ဆုံးစစ်ဆေးမှုဖြစ်သည်။" },
-        { id: 3, textJP: "(3) <ruby>非破壊<rt>ひはかい</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>は、<ruby>溶接部<rt>ようせつぶ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>を<ruby>確認<rt>かくにん</rt></ruby>するために<ruby>行<rt>おこな</rt></ruby>われ、<ruby>抜取<rt>ぬきとり</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>が<ruby>原則<rt>げんそく</rt></ruby>である。", textMY: "NDT သည် ဂဟေအရည်အသွေးကို အတည်ပြုရန် ပြုလုပ်ပြီး၊ sampling inspection ကို အခြေခံမူအဖြစ် ပြုလုပ်သည်။" },
-        { id: 4, textJP: "(4) <ruby>高力<rt>こうりょく</rt></ruby>ボルトの<ruby>軸力<rt>じくりょく</rt></ruby><ruby>試験<rt>しけん</rt></ruby>は、<ruby>現場<rt>げんば</rt></ruby>で<ruby>使用<rt>しよう</rt></ruby>するロットごとに<ruby>行<rt>おこな</rt></ruby>い、<ruby>締付<rt>しめつ</rt></ruby>け<ruby>機械<rt>きかい</rt></ruby>の<ruby>性能<rt>せいのう</rt></ruby>を<ruby>確認<rt>かくにん</rt></ruby>する。", textMY: "High-strength bolt ၏ axial force test ကို လုပ်ငန်းခွင်တွင် အသုံးပြုမည့် lot တိုင်းအတွက် ပြုလုပ်ပြီး၊ တပ်ဆင်သည့်စက်၏ စွမ်းဆောင်ရည်ကို အတည်ပြုရမည်။" },
-        { id: 5, textJP: "(5) <ruby>柱<rt>はしら</rt></ruby>の<ruby>溶接<rt>ようせつ</rt></ruby><ruby>継手<rt>つぎて</rt></ruby>の<ruby>超音波<rt>ちょうおんぱ</rt></ruby><ruby>探傷<rt>たんしょう</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>は、<ruby>全数<rt>ぜんすう</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>とする<ruby>必要<rt>ひつよう</rt></ruby>はない。", textMY: "Column ၏ welding joint များအတွက် Ultrasonic Testing ကို 100% စစ်ဆေးရန် မလိုအပ်ပါ။" }
+      { id: 1, textJP: "(1) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>は、4mm <ruby>以上<rt>いじょう</rt></ruby>の<ruby>脚長<rt>きゃくちょう</rt></ruby>をもつビードを<ruby>適切<rt>てきせつ</rt></ruby>な<ruby>間隔<rt>かんかく</rt></ruby>で<ruby>配置<rt>はいち</rt></ruby>する。", textMY: "ယာယီဂဟေကို leg length ၄ mm နှင့်အထက်ရှိသော ဂဟေသားများဖြင့် သင့်လျော်သော အကွာအဝေးတွင် နေရာချရမည်။" },
+      { id: 2, textJP: "(2) <ruby>冷間成形角形鋼管<rt>れいかんせいけいかくがたこうかん</rt></ruby>の<ruby>角部<rt>かくぶ</rt></ruby>など、<ruby>大<rt>おお</rt></ruby>きな<ruby>冷間塑性加工<rt>れいかんそせいかこう</rt></ruby>を<ruby>受<rt>う</rt></ruby>けた<ruby>箇所<rt>かしょ</rt></ruby>への<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>は<ruby>避<rt>さ</rt></ruby>ける。", textMY: "လေးထောင့်ပိုက်၏ ထောင့်များတွင် ယာယီဂဟေဆက်ခြင်းကို ရှောင်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てる<ruby>材<rt>ざい</rt></ruby>の<ruby>厚<rt>あつ</rt></ruby>い<ruby>ほう<rt>ほう</rt></ruby>の<ruby>板厚<rt>いたあつ</rt></ruby>が 6mm <ruby>以下<rt>いか</rt></ruby>の<ruby>部材<rt>ぶざい</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>の<ruby>最小溶接長<rt>さいしょうようせつながさ</rt></ruby>さは 30mm とする。", textMY: "အထူ ၆ mm နှင့်အောက်ရှိလျှင် ယာယီဂဟေအရှည် အနည်းဆုံး ၃၀ mm ရှိရမည်။" },
+      { id: 4, textJP: "(4) <ruby>高張力鋼<rt>こうちょうりょくこう</rt></ruby>の<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>被覆アーク溶接<rt>ひふくあーくようせつ</rt></ruby>で<ruby>行う場合<rt>おこなうばあい</rt></ruby>には、<ruby>低水素系溶接棒<rt>ていすいそけいようせつぼう</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>する。", textMY: "ခိုင်မာမှုမြင့်သံမဏိများအတွက် low-hydrogen rod ကို သုံးရမည်။" },
+      { id: 5, textJP: "(5) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>の<ruby>位置<rt>いち</rt></ruby>は、<ruby>部材<rt>ぶざい</rt></ruby>の<ruby>角、端部<rt>かど、たんぶ</rt></ruby>など<ruby>強度上<rt>きょうどじょう</rt></ruby>および<ruby>工作上問題<rt>こうさくじょうもんだい</rt></ruby>とならない<ruby>箇所<rt>かしょ</rt></ruby>に<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ယာယီဂဟေကို ပစ္စည်း၏ ထောင့်စွန်း (Corner) များတွင် လုပ်ဆောင်ရမည်ဟု ဆိုခြင်း။" }
     ],
     correctOptionId: 5,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (5) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Column ၏ welding joint များသည် အဆောက်အဦ၏ တည်ငြိမ်မှုအတွက် အလွန်အရေးကြီးသော အစိတ်အပိုင်းများဖြစ်သည်။ ထို့ကြောင့် ဤနေရာများရှိ butt weld များအတွက် NDT (UT အပါအဝင်) ကို 100% (全数検査) ပြုလုပ်ရမည်ဟု JASS 6 တွင် သတ်မှတ်ထားသည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Column splice weld = အလွန်အရေးကြီး (Very Important) = 100% Inspection."
+      titleMY: "ရှင်းလင်းချက် - 組立て溶接の禁止箇所",
+      reasonMY: "ယာယီဂဟေ (Tack weld) ကို ပစ္စည်း၏ 'ထောင့်စွန်းများ' (Corner/End) တွင် လုံးဝ မလုပ်ဆောင်ရပါ။ ၎င်းနေရာများသည် အက်ကွဲမှု (Cracking) ဖြစ်ပေါ်ရန် အလွယ်ကူဆုံးနေရာများ ဖြစ်သောကြောင့် ဖြစ်သည်။ (Handwritten note: (5) ကို X ပြထားသည်)။",
+      memoryTipMY: "ထောင့်စွန်း (Corner) တွေမှာ ယာယီဂဟေ မဆော်ရပါ။"
     }
   },
   {
     id: "2-21",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby>における<ruby>マーキング<rt>まーきんぐ</rt></ruby>（<ruby>けがき<rt>けがき</rt></ruby>）に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "သံမဏိထုတ်လုပ်ခြင်းတွင် Marking (けがき) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "「JASS 6」における<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>加工<rt>かこう</rt></ruby>およびその<ruby>加熱温度<rt>かねつおんど</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "သံမဏိပြုပြင်ခြင်းနှင့် အပူပေးအပူချိန်ဆိုင်ရာ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) けがきは、<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>切断<rt>せつだん</rt></ruby>、<ruby>孔<rt>あな</rt></ruby>あけ、<ruby>組立<rt>くみたて</rt></ruby>の<ruby>基準<rt>きじゅん</rt></ruby>となる<ruby>線<rt>せん</rt></ruby>や<ruby>印<rt>しるし</rt></ruby>を<ruby>付<rt>つ</rt></ruby>ける<ruby>作業<rt>さぎょう</rt></ruby>である。", textMY: "Marking (けがき) သည် သံမဏိကို ဖြတ်တောက်ရန်၊ အပေါက်ဖောက်ရန်၊ နှင့် တပ်ဆင်ရန်အတွက် အခြေခံမျဉ်းများနှင့် အမှတ်အသားများ ပြုလုပ်သည့် လုပ်ငန်းစဉ်ဖြစ်သည်။" },
-        { id: 2, textJP: "(2) けがきに<ruby>用<rt>もち</rt></ruby>いる<ruby>工具<rt>こうぐ</rt></ruby>には、ポンチや<ruby>刻印<rt>こくいん</rt></ruby>があるが、<ruby>鋼材<rt>こうざい</rt></ruby><ruby>表面<rt>ひょうめん</rt></ruby>に<ruby>傷<rt>きず</rt></ruby>をつけないように<ruby>注意<rt>ちゅうい</rt></ruby>する。", textMY: "Marking အတွက် အသုံးပြုသည့် ကိရိယာများတွင် punch နှင့် stamp တို့ပါဝင်ပြီး၊ သံမဏိမျက်နှာပြင်ကို မထိခိုက်စေရန် သတိပြုရမည်။" },
-        { id: 3, textJP: "(3) <ruby>主要<rt>しゅよう</rt></ruby>な<ruby>構造<rt>こうぞう</rt></ruby><ruby>部材<rt>ぶざい</rt></ruby>においては、<ruby>応力<rt>おうりょく</rt></ruby>の<ruby>集中<rt>しゅうちゅう</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けるため、<ruby>切欠<rt>きりかき</rt></ruby>きとなるような<ruby>深<rt>ふか</rt></ruby>いポンチ<ruby>傷<rt>きず</rt></ruby>は<ruby>許容<rt>きょよう</rt></ruby>されない。", textMY: "အဓိက structural member များတွင်၊ stress concentration ကို ရှောင်ရှားရန်အတွက် notch ဖြစ်စေနိုင်သော နက်ရှိုင်းသည့် punch mark များကို ခွင့်မပြုပါ။" },
-        { id: 4, textJP: "(4) <ruby>自動化<rt>じどうか</rt></ruby>された<ruby>機械<rt>きかい</rt></ruby>では、インクジェットやレーザーによるマーキングが<ruby>行<rt>おこな</rt></ruby>われる。", textMY: "Automated machinery များတွင်၊ inkjet သို့မဟုတ် laser ဖြင့် marking ပြုလုပ်သည်။" },
-        { id: 5, textJP: "(5) <ruby>現場<rt>げんば</rt></ruby>での<ruby>組立<rt>くみたて</rt></ruby><ruby>後<rt>ご</rt></ruby>に<ruby>見<rt>み</rt></ruby>えなくなる<ruby>部分<rt>ぶぶん</rt></ruby>のけがき<ruby>線<rt>せん</rt></ruby>は、<ruby>消去<rt>しょうきょ</rt></ruby>する<ruby>必要<rt>ひつよう</rt></ruby>がある。", textMY: "လုပ်ငန်းခွင်တွင် တပ်ဆင်ပြီးနောက် မမြင်ရတော့မည့် marking line များကို ဖျက်ပစ်ရန် လိုအပ်သည်။" }
+      { id: 1, textJP: "(1) <ruby>鋼<rt>はがね</rt></ruby>は 200℃~400℃ <ruby>程度<rt>ていど</rt></ruby>の<ruby>範囲<rt>はんい</rt></ruby>では<ruby>常温<rt>じょうおん</rt></ruby>より<ruby>硬<rt>かた</rt></ruby>くかつ<ruby>脆<rt>もろ</rt></ruby>くなるので、この<ruby>温度範囲<rt>おんどはんい</rt></ruby>における<ruby>曲げ加工<rt>まげかこう</rt></ruby>は<ruby>避<rt>さ</rt></ruby>ける。", textMY: "၂၀၀ မှ ၄၀၀ ဒီဂရီအတွင်း သံမဏိမှာ ကြွပ်ဆတ်တတ်သဖြင့် ဤအပူချိန်တွင် ကွေးညွှတ်ခြင်းကို ရှောင်ရမည်။" },
+      { id: 2, textJP: "(2) <ruby>曲げ加工<rt>まげかこう</rt></ruby>を<ruby>加熱加工<rt>かねつかこう</rt></ruby>で<ruby>行う場合<rt>おこなうばあい</rt></ruby>は、<ruby>赤熱状態<rt>せきねつじょうたい</rt></ruby> (850℃~900℃) で<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "အပူပေးကွေးလိုပါက အနီရောင်တောက်နေသည့် ၈၅၀ မှ ၉၀၀ ဒီဂရီတွင် လုပ်ဆောင်ရမည်။" },
+      { id: 3, textJP: "(3) 400N/mm² <ruby>級鋼<rt>きゅうこう</rt></ruby>を<ruby>加熱矯正<rt>かねつきょうせい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>の<ruby>加熱温度<rt>かねつおんど</rt></ruby>は、<ruby>加熱後<rt>かねつご</rt></ruby>ただちに<ruby>水冷<rt>すいれい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>は 600℃~650℃ とする。", textMY: "400N အဆင့်သံမဏိကို အပူပေးဖြောင့်ပြီး ချက်ချင်းရေအေးစိမ်ပါက အပူချိန်မှာ ၆၀၀ မှ ၆၅၀ ဒီဂရီ ဖြစ်ရမည်။" },
+      { id: 4, textJP: "(4) 400N/mm² <ruby>級鋼<rt>きゅうこう</rt></ruby>を<ruby>加熱矯正<rt>かねつきょうせい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>の<ruby>加熱温度<rt>かねつおんど</rt></ruby>は、<ruby>加熱後空冷<rt>かねつごくうれい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>は 850℃~900℃ とする。", textMY: "အပူပေးဖြောင့်ပြီး လေဖြင့်အအေးခံပါက အပူချိန်မှာ ၈၅၀ မှ ၉၀၀ ဒီဂရီ ဖြစ်ရမည်။" },
+      { id: 5, textJP: "(5) 490N/mm² <ruby>級鋼<rt>きゅうこう</rt></ruby>を<ruby>加熱矯正<rt>かねつきょうせい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>の<ruby>加熱温度<rt>かねつおんど</rt></ruby>は、400N/mm² <ruby>級鋼<rt>きゅうこう</rt></ruby>を<ruby>加熱矯正<rt>かねつきょうせい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>より 100℃ <ruby>低い温度<rt>ひくいおんど</rt></ruby>としなければならない。", textMY: "490N အဆင့်သံမဏိကို ဖြောင့်ရာတွင် 400N အဆင့်ထက် ၁၀၀ ဒီဂရီ လျော့နည်းသော အပူချိန်ကို သုံးရမည်ဟု ဆိုခြင်း။" }
     ],
     correctOptionId: 5,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (5) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Marking line များသည် တပ်ဆင်မှုနှင့် စစ်ဆေးမှုများအတွက် အရေးကြီးသော အညွှန်းများဖြစ်သည်။ တပ်ဆင်ပြီးနောက် မမြင်ရတော့더라도၊ ၎င်းတို့ကို ဖျက်ပစ်ရန် မလိုအပ်ပါ။ ၎င်းတို့ကို ချန်ထားခြင်းသည် နောက်ပိုင်းတွင် စစ်ဆေးမှုများပြုလုပ်ရန် (လိုအပ်ပါက) အထောက်အကူပြုနိုင်သည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Marking line တွေက အရေးကြီးတယ်။ ဖျက်စရာမလိုဘူး။"
+      titleMY: "ရှင်းလင်းချက် - 加熱温度の基準 (Heating Temp)",
+      reasonMY: "490N/mm² အဆင့်ရှိ သံမဏိများ (ဥပမာ- SM490, SN490) သည်လည်း 400N အဆင့်များကဲ့သို့ပင် တူညီသော အပူချိန်အပိုင်းအခြားများ (၈၅၀-၉၀၀ ဒီဂရီ သို့မဟုတ် ၆၀၀-၆၅၀ ဒီဂရီ) ဖြင့်သာ လုပ်ဆောင်ရမည်ဖြစ်သည်။ ၁၀၀ ဒီဂရီ လျော့ရမည်ဆိုခြင်းမှာ မှားယွင်းသည်။",
+      memoryTipMY: "400N ရော 490N ရော အပူပေးအပူချိန် တူတူပါပဲ။"
     }
   },
   {
     id: "2-22",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>ガス<rt>がす</rt></ruby><ruby>切断<rt>せつだん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Gas cutting နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>次<rt>つぎ</rt></ruby>の<ruby>溶接継手<rt>ようせつつぎて</rt></ruby>の<ruby>実形<rt>じつけい</rt></ruby>とそれに対応する JIS <ruby>溶接記号<rt>ようせつきごう</rt></ruby>の<ruby>組合<rt>くみあわ</rt></ruby>せのうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်ပုံစံနှင့် JIS သင်္ကေတများ ပေါင်းစပ်မှုအနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) ガス<ruby>切断<rt>せつだん</rt></ruby>は、<ruby>鋼材<rt>こうざい</rt></ruby>を<ruby>高温<rt>こうおん</rt></ruby>に<ruby>加熱<rt>かねつ</rt></ruby>し、<ruby>高圧<rt>こうあつ</rt></ruby>の<ruby>酸素<rt>さんそ</rt></ruby>を<ruby>吹<rt>ふ</rt></ruby>きつけて<ruby>酸化<rt>さんか</rt></ruby>させ、<ruby>溶融<rt>ようゆう</rt></ruby>した<ruby>酸化<rt>さんか</rt></ruby><ruby>鉄<rt>てつ</rt></ruby>を<ruby>吹<rt>ふ</rt></ruby>き<ruby>飛<rt>と</rt></ruby>ばして<ruby>切断<rt>せつだん</rt></ruby>する<ruby>方法<rt>ほうほう</rt></ruby>である。", textMY: "Gas cutting သည် သံမဏိကို အပူချိန်မြင့်အောင် အပူပေးပြီး၊ high-pressure oxygen ဖြင့် မှုတ်ထုတ်၍ oxidize ဖြစ်စေကာ၊ အရည်ပျော်နေသော iron oxide ကို မှုတ်ထုတ်ဖယ်ရှားခြင်းဖြင့် ဖြတ်တောက်သောနည်းလမ်းဖြစ်သည်။" },
-        { id: 2, textJP: "(2) <ruby>切断<rt>せつだん</rt></ruby><ruby>面<rt>めん</rt></ruby>の<ruby>粗<rt>あら</rt></ruby>さは、<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>に<ruby>影響<rt>えいきょう</rt></ruby>するため、<ruby>規定<rt>きてい</rt></ruby>の<ruby>許容値<rt>きょようち</rt></ruby><ruby>内<rt>ない</rt></ruby>に<ruby>収<rt>おさ</rt></ruby>める<ruby>必要<rt>ひつよう</rt></ruby>がある。", textMY: "ဖြတ်တောက်ထားသော မျက်နှာပြင်၏ ကြမ်းတမ်းမှုသည် ဂဟေအရည်အသွေးကို ထိခိုက်စေနိုင်သောကြောင့်၊ သတ်မှတ်ထားသော ခွင့်ပြုတန်ဖိုးအတွင်း ရှိရမည်။" },
-        { id: 3, textJP: "(3) <ruby>切断<rt>せつだん</rt></ruby>による<ruby>熱<rt>ねつ</rt></ruby><ruby>影響<rt>えいきょう</rt></ruby>で<ruby>硬化<rt>こうか</rt></ruby>する<ruby>恐<rt>おそ</rt></ruby>れのある<ruby>鋼材<rt>こうざい</rt></ruby>は、<ruby>予熱<rt>よねつ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>って<ruby>切断<rt>せつだん</rt></ruby>することがある。", textMY: "ဖြတ်တောက်မှုကြောင့်ဖြစ်သော အပူကြောင့် မာကျောသွားနိုင်ခြေရှိသော သံမဏိများကို၊ preheating ပြုလုပ်ပြီးမှ ဖြတ်တောက်ရသည့် အခါများရှိသည်။" },
-        { id: 4, textJP: "(4) ガス<ruby>切断<rt>せつだん</rt></ruby><ruby>後<rt>ご</rt></ruby>の<ruby>自由<rt>じゆう</rt></ruby><ruby>縁<rt>えん</rt></ruby>となる<ruby>切断<rt>せつだん</rt></ruby><ruby>面<rt>めん</rt></ruby>は、グラインダー<ruby>仕上<rt>しあ</rt></ruby>げを<ruby>行<rt>おこな</rt></ruby>う<ruby>必要<rt>ひつよう</rt></ruby>はない。", textMY: "Gas cutting ပြီးနောက် free edge ဖြစ်လာမည့် ဖြတ်တောက်ထားသော မျက်နှာပြင်များကို grinder ဖြင့် ချောမွေ့အောင် ပြုလုပ်ရန် မလိုအပ်ပါ။" },
-        { id: 5, textJP: "(5) ノッチは<ruby>応力<rt>おうりょく</rt></ruby><ruby>集中<rt>しゅうちゅう</rt></ruby>の<ruby>原因<rt>げんいん</rt></ruby>となるため、<ruby>切断<rt>せつだん</rt></ruby><ruby>面<rt>めん</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じたノッチは<ruby>滑<rt>なめ</rt></ruby>らかに<ruby>除去<rt>じょきょ</rt></ruby>しなければならない。", textMY: "Notch သည် stress concentration ကို ဖြစ်စေသောကြောင့်၊ ဖြတ်တောက်ထားသော မျက်နှာပြင်ပေါ်တွင် ဖြစ်ပေါ်လာသော notch များကို ချောမွေ့အောင် ဖယ်ရှားရမည်။" }
+      { id: 1, textJP: "(1) K<ruby>形開先突合せ継手<rt>がたかいさきつきあわせつぎて</rt></ruby>", textMY: "K-shape butt joint (နှစ်ဖက်လျှာဖောက် အဆက်) သင်္ကေတ" },
+      { id: 2, textJP: "(2) V<ruby>形開先突合せ継手<rt>がたかいさきつきあわせつぎて</rt></ruby>", textMY: "V-shape butt joint (V ပုံစံလျှာဖောက် အဆက်) သင်္ကေတ" },
+      { id: 3, textJP: "(3) <ruby>裏当<rt>うらあ</rt></ruby>て<ruby>金付<rt>がねつ</rt></ruby>きレ<ruby>形開先<rt>がたかいさき</rt></ruby>T<ruby>継手<rt>つぎて</rt></ruby>", textMY: "Backing metal ပါသော Single-bevel T-joint သင်္ကေတ" },
+      { id: 4, textJP: "(4) K<ruby>形開先<rt>がたかいさき</rt></ruby>T<ruby>継手<rt>つぎて</rt></ruby>", textMY: "K-shape T-joint သင်္ကေတ" },
+      { id: 5, textJP: "(5) <ruby>連続隅肉<rt>れんぞくすみにく</rt></ruby>T<ruby>継手<rt>つぎて</rt></ruby>", textMY: "ဆက်တိုက် fillet weld T-joint သင်္ကေတ" }
     ],
-    correctOptionId: 4,
+    correctOptionId: 3,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (4) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Gas cutting မျက်နှာပြင်သည် ကြမ်းတမ်းပြီး၊ အပူကြောင့် မာကျောနေသော အလွှာ (Hardened layer) ရှိနေနိုင်သည်။ Free edge (ဥပမာ- beam ၏ flange အစွန်း) ဖြစ်လာမည့် နေရာများတွင်၊ အက်ကွဲကြောင်း (crack) စတင်နိုင်ခြေကို လျှော့ချရန်အတွက် grinder ဖြင့် ချောမွေ့အောင် ပြုလုပ်ရန် လိုအပ်သည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: ဖြတ်ထားတဲ့ အစွန်း (Free edge) က အက်ကွဲနိုင်ခြေများလို့ ချောမွေ့အောင် (Grinder) လုပ်ရမယ်။"
+      titleMY: "ရှင်းလင်းချက် - 溶接記号 (Welding Symbols)",
+      reasonMY: "သင်္ကေတ (၃) တွင် ပြထားသော လျှာပုံစံ (Bevel) နှင့် လက်တွေ့ပုံစံမှာ ကိုက်ညီမှု မရှိပါ။ JIS စံနှုန်းအရ မြှားဦးတည်ရာနှင့် bevel ဘက်ခြမ်း လွဲမှားနေခြင်း ဖြစ်သည်။ (Handwritten note: (3) ကို ဝိုင်းထားသည်)။",
+      memoryTipMY: "ဂဟေသင်္ကေတမှာ မြှားပြထားတဲ့ဘက်က လျှာဖောက်တဲ့ဘက် (Bevel side) ဖြစ်ရမယ်။"
     }
   },
-   {
+  {
     id: "2-23",
-    questionJP: "<ruby>孔<rt>あな</rt></ruby>あけ<ruby>加工<rt>かこう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "အပေါက်ဖောက်ခြင်း (Hole drilling) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>溶接技能者<rt>ようせつぎのうしゃ</rt></ruby>および<ruby>溶接<rt>ようせつ</rt></ruby>オペレータに<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆော်သူနှင့် စက်မောင်းသူများဆိုင်ရာ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>用<rt>よう</rt></ruby>の<ruby>孔<rt>あな</rt></ruby>は、ドリルあけを<ruby>原則<rt>げんそく</rt></ruby>とする。", textMY: "High-strength bolt အတွက် အပေါက်များကို drilling ဖြင့် ဖောက်ခြင်းကို အခြေခံမူအဖြစ် သတ်မှတ်သည်။" },
-        { id: 2, textJP: "(2) せん断<ruby>孔<rt>あな</rt></ruby>あけは、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>が13mm<ruby>以下<rt>いか</rt></ruby>の<ruby>二次<rt>にじ</rt></ruby><ruby>部材<rt>ぶざい</rt></ruby>に<ruby>限<rt>かぎ</rt></ruby>り<ruby>適用<rt>てきよう</rt></ruby>できる。", textMY: "Shear punching ဖြင့် အပေါက်ဖောက်ခြင်းကို အထူ 13mm သို့မဟုတ် ထို့ထက်နည်းသော secondary member များအတွက်သာ အသုံးပြုနိုင်သည်။" },
-        { id: 3, textJP: "(3) <ruby>孔<rt>あな</rt></ruby>の<ruby>縁<rt>ふち</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じた「かえり」(<ruby>バリ<rt>ばり</rt></ruby>)は、<ruby>除去<rt>じょきょ</rt></ruby>する<ruby>必要<rt>ひつよう</rt></ruby>がある。", textMY: "အပေါက်၏ အနားစောင်းတွင် ဖြစ်ပေါ်လာသော burr (かえり) များကို ဖယ်ရှားရန် လိုအပ်သည်။" },
-        { id: 4, textJP: "(4) <ruby>組立<rt>くみたて</rt></ruby><ruby>時<rt>じ</rt></ruby>に<ruby>孔<rt>あな</rt></ruby><ruby>位置<rt>いち</rt></ruby>がずれた<ruby>場合<rt>ばあい</rt></ruby>は、ガス<ruby>切断<rt>せつだん</rt></ruby>で<ruby>孔<rt>あな</rt></ruby>を<ruby>広<rt>ひろ</rt></ruby>げて<ruby>修正<rt>しゅうせい</rt></ruby>してよい。", textMY: "တပ်ဆင်သည့်အခါ အပေါက်နေရာ လွဲချော်ပါက၊ gas cutting ဖြင့် အပေါက်ကို ချဲ့၍ ပြင်ဆင်နိုင်သည်။" },
-        { id: 5, textJP: "(5) <ruby>孔径<rt>こうけい</rt></ruby>の<ruby>許容差<rt>きょようさ</rt></ruby>は、<ruby>孔<rt>あな</rt></ruby>の<ruby>種類<rt>しゅるい</rt></ruby>（ボルト<ruby>用<rt>よう</rt></ruby>、リベット<ruby>用<rt>よう</rt></ruby>など）によって<ruby>異<rt>こと</rt></ruby>なる。", textMY: "အပေါက်အချင်း၏ ခွင့်ပြုလွဲချော်မှုသည် အပေါက်အမျိုးအစား (bolt hole, rivet hole etc.) အလိုက် ကွဲပြားသည်။" }
+      { id: 1, textJP: "(1) <ruby>半自動溶接<rt>はんじどうようせつ</rt></ruby>に<ruby>従事<rt>じゅうじ</rt></ruby>できる<ruby>溶接技能者<rt>ようせつぎのうしゃ</rt></ruby>は、<ruby>溶接姿勢・板厚<rt>ようせつしせい・いたあつ</rt></ruby>に<ruby>応<rt>おう</rt></ruby>じた JIS Z 3841 の<ruby>試験<rt>しけん</rt></ruby>に<ruby>合格<rt>ごうかく</rt></ruby>した<ruby>有資格者<rt>ゆうしかくしゃ</rt></ruby>とする。", textMY: "Semi-automatic ဂဟေအတွက် JIS Z 3841 အောင်မြင်သူ ဖြစ်ရမည်။" },
+      { id: 2, textJP: "(2) <ruby>サブマージアーク溶接、エレクトロスラグ溶接、ガスシールドアーク溶接<rt>さぶまーじあーくようせつ、えれくとろすらぐようせつ、がすしーるどあーくようせつ</rt></ruby>などの<ruby>自動溶接装置<rt>じどうようせつそうち</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>行う溶接<rt>おこなうようせつ</rt></ruby>に<ruby>従事<rt>じゅうじ</rt></ruby>するオペレータは、JIS Z 3801 または JIS Z 3841 の<ruby>基本級<rt>きほんきゅう</rt></ruby>および<ruby>専門級<rt>せんもんきゅう</rt></ruby>の<ruby>合格者<rt>ごうかくしゃ</rt></ruby>とする。", textMY: "အလိုအလျောက်စက်မောင်းသူသည် အခြေခံနှင့် အထူးပြုအဆင့်များ အောင်မြင်ထားရမည်။" },
+      { id: 3, textJP: "(3) <ruby>ロボット溶接<rt>ろぼっとようせつ</rt></ruby>オペレータは、<ruby>少<rt>すく</rt></ruby>なくとも JIS Z 3841 の<ruby>基本級<rt>きほんきゅう</rt></ruby>となる<ruby>級<rt>きゅう</rt></ruby>の<ruby>試験<rt>しけん</rt></ruby>に<ruby>合格<rt>ごうかく</rt></ruby>した<ruby>有資格者<rt>ゆうしかくしゃ</rt></ruby>とする。", textMY: "စက်ရုပ်မောင်းသူသည် အနည်းဆုံး အခြေခံအဆင့် အောင်မြင်ထားသူ ဖြစ်ရမည်။" },
+      { id: 4, textJP: "(4) <ruby>技量付加試験<rt>ぎりょうふかしけん</rt></ruby>は、<ruby>被覆アーク溶接、半自動溶接<rt>ひふくあーくようせつ、はんじどうようせつ</rt></ruby>に<ruby>従事<rt>じゅうじ</rt></ruby>する JIS <ruby>有資格者<rt>ゆうしかくしゃ</rt></ruby>およびロボットオペレータを<ruby>対象<rt>たいしょう</rt></ruby>に、<ruby>工事件数<rt>こうじけんすう</rt></ruby>を<ruby>確認<rt>かくにん</rt></ruby>するために<ruby>原則<rt>げんそく</rt></ruby>として<ruby>実施<rt>じっし</rt></ruby>する。", textMY: "ကျွမ်းကျင်မှုထပ်တိုးစစ်ဆေးခြင်းကို လုပ်ငန်းအရေအတွက်ကို အတည်ပြုရန်အတွက် မူအရ လုပ်ဆောင်ရမည်ဟု ဆိုခြင်း။" },
+      { id: 5, textJP: "(5) <ruby>技量確認試験<rt>ぎりょうかくにんしけん</rt></ruby>は、<ruby>工事監理者<rt>こうじかんりしゃ</rt></reason>က JIS <ruby>等<rt>とう</rt></ruby>の<ruby>資格<rt>しかく</rt></ruby>を<ruby>有<rt>ゆう</rt></ruby>する<ruby>溶接技能者<rt>ようせつぎのうしゃ</rt></ruby>などの<ruby>技量<rt>ぎりょう</rt></ruby>に<ruby>疑問<rt>ぎもん</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じた<ruby>場合<rt>ばあい</rt></ruby>などに、その<ruby>技量<rt>ぎりょう</rt></ruby>を<ruby>確認<rt>かくにん</rt></ruby>するために<ruby>行う<rt>おこなう</rt></ruby><ruby>試験<rt>しけん</rt></ruby>である。", textMY: "ကြီးကြပ်သူက သံသယရှိပါက ကျွမ်းကျင်မှုစစ်ဆေးခြင်းကို လုပ်ဆောင်နိုင်သည်။" }
     ],
     correctOptionId: 4,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (4) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: အပေါက်နေရာလွဲချော်ပါက gas cutting ဖြင့် ချဲ့ခြင်းကို လုံးဝခွင့်မပြုပါ။ ၎င်းသည် အပေါက်၏ ပုံသဏ္ဍာန်ကို ပျက်စီးစေပြီး၊ အပူကြောင့် မျက်နှာပြင်ကို မာကျောစေကာ၊ stress concentration ဖြစ်စေနိုင်သည်။ ပြင်ဆင်ရန်အတွက် reamer ဖြင့် ချဲ့ခြင်းကဲ့သို့သော စက်မှုနည်းလမ်းများကိုသာ အသုံးပြုရမည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: အပေါက်လွဲရင် မီးနဲ့မချဲ့ရဘူး (No gas cutting for hole correction)။ Reamer သုံးရမယ်။"
+      titleMY: "ရှင်းလင်းချက် - 技量付加試験の目的",
+      reasonMY: "ကျွမ်းကျင်မှုထပ်တိုးစစ်ဆေးခြင်း (技量付加試験) ဆိုသည်မှာ လုပ်ငန်းအရေအတွက်ကို အတည်ပြုရန် မဟုတ်ဘဲ၊ သက်ဆိုင်ရာ 'လုပ်ငန်းခွင်အလိုက် လိုအပ်သော အထူးကျွမ်းကျင်မှု' (特有の技量) ရှိမရှိကို စစ်ဆေးရန် လုပ်ဆောင်ခြင်း ဖြစ်သည်။",
+      memoryTipMY: "စာမေးပွဲစစ်တာဟာ အလုပ်အရေအတွက်အတွက် မဟုတ်ဘူး၊ တကယ့်စွမ်းရည် (Skill) အတွက်ပါ။"
     }
   },
   {
     id: "2-24",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>曲<rt>ま</rt></ruby>げ<ruby>加工<rt>かこう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "သံမဏိ ကွေးခြင်း (Bending) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>溶接材料<rt>ようせつざいりょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်ပစ္စည်းများနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>冷間<rt>れいかん</rt></ruby><ruby>曲<rt>ま</rt></ruby>げ<ruby>加工<rt>かこう</rt></ruby>は、<ruby>常温<rt>じょうおん</rt></ruby>でプレスやローラーを<ruby>用<rt>もち</rt></ruby>いて<ruby>行<rt>おこな</rt></ruby>う。", textMY: "Cold bending ကို အခန်းအပူချိန်တွင် press သို့မဟုတ် roller များ အသုံးပြု၍ ပြုလုပ်သည်။" },
-        { id: 2, textJP: "(2) <ruby>熱間<rt>ねっかん</rt></ruby><ruby>曲<rt>ま</rt></ruby>げ<ruby>加工<rt>かこう</rt></ruby>は、<ruby>鋼材<rt>こうざい</rt></ruby>を<ruby>加熱<rt>かねつ</rt></ruby>して<ruby>行<rt>おこな</rt></ruby>うため、<ruby>加工<rt>かこう</rt></ruby><ruby>後<rt>ご</rt></ruby>の<ruby>材質<rt>ざいしつ</rt></ruby><ruby>変化<rt>へんか</rt></ruby>に<ruby>注意<rt>ちゅうい</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>である。", textMY: "Hot bending ကို သံမဏိကို အပူပေး၍ ပြုလုပ်သောကြောင့်၊ ပြုလုပ်ပြီးနောက် ပစ္စည်း၏ ဂုဏ်သတ္တိပြောင်းလဲမှုကို သတိပြုရန် လိုအပ်သည်။" },
-        { id: 3, textJP: "(3) <ruby>曲<rt>ま</rt></ruby>げ<ruby>加工<rt>かこう</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>うと、<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>伸<rt>の</rt></ruby>び<ruby>能力<rt>のうりょく</rt></ruby>が<ruby>低下<rt>ていか</rt></ruby>することがある。", textMY: "Bending ပြုလုပ်ခြင်းသည် သံမဏိ၏ elongation capacity ကို ကျဆင်းစေနိုင်သည်။" },
-        { id: 4, textJP: "(4) <ruby>曲<rt>ま</rt></ruby>げ<ruby>加工部<rt>かこうぶ</rt></ruby>の<ruby>内側<rt>うちがわ</rt></ruby><ruby>半径<rt>はんけい</rt></ruby>は、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>の2<ruby>倍<rt>ばい</rt></ruby><ruby>以上<rt>いじょう</rt></ruby>とすることが<ruby>望<rt>のぞ</rt></ruby>ましい。", textMY: "ကွေးထားသော အစိတ်အပိုင်း၏ အတွင်းဘက် radius သည် plate အထူ၏ ၂ ဆ သို့မဟုတ် ထို့ထက်ပို بودن 것이 바람직하다." },
-        { id: 5, textJP: "(5) <ruby>青熱<rt>せいねつ</rt></ruby>ぜい<ruby>性<rt>せい</rt></ruby><ruby>域<rt>いき</rt></ruby>(200～400℃)での<ruby>熱間<rt>ねっかん</rt></ruby><ruby>曲<rt>ま</rt></ruby>げ<ruby>加工<rt>かこう</rt></ruby>は、<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>靭性<rt>じんせい</rt></ruby>を<ruby>向上<rt>こうじょう</rt></ruby>させるため<ruby>推奨<rt>すいしょう</rt></ruby>される。", textMY: "Blue brittleness range (200-400°C) တွင် hot bending ပြုလုပ်ခြင်းသည် သံမဏိ၏ toughness ကို တိုးတက်စေသောကြောင့် အကြံပြုသည်။" }
-    ],
-    correctOptionId: 5,
-    explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (5) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Blue brittleness range (青熱ぜい性域) သည် သံမဏိ၏ toughness အလွန်ကျဆင်းပြီး ကြွပ်ဆတ် (brittle) ဖြစ်သွားသော အပူချိန်အပိုင်းအခြားဖြစ်သည်။ ဤအပူချိန်တွင် bending ကဲ့သို့သော plastic deformation ပြုလုပ်ပါက အက်ကွဲကြောင်းများ ဖြစ်ပေါ်နိုင်သောကြောင့် တင်းကြပ်စွာ တားမြစ်ထားသည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Blue Brittleness (青熱ぜい性) = ကြွပ်ဆတ် (Brittle) = Bending မလုပ်ရ။"
-    }
-  },
-    {
-    id: "2-25",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製品<rt>せいひん</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>監理者<rt>かんりしゃ</rt></ruby>が<ruby>立会<rt>たちあ</rt></ruby>いを<ruby>行<rt>おこな</rt></ruby>うことが<ruby>最<rt>もっと</rt></ruby>も<ruby>重要<rt>じゅうよう</rt></ruby>なものはどれか。",
-    questionMY: "သံမဏိထုတ်ကုန်စစ်ဆေးခြင်းနှင့်ပတ်သက်၍ ကြီးကြပ်သူ (Supervisor) တက်ရောက်စစ်ဆေးရန် အရေးကြီးဆုံးအချက်ကို ရွေးချယ်ပါ။",
-    options: [
-        { id: 1, textJP: "(1) <ruby>材料<rt>ざいりょう</rt></ruby>の<ruby>受入<rt>うけいれ</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>", textMY: "ပစ္စည်းလက်ခံစစ်ဆေးခြင်း (Material receiving inspection)" },
-        { id: 2, textJP: "(2) けがき<ruby>作業<rt>さぎょう</rt></ruby>の<ruby>検査<rt>けんさ</rt></ruby>", textMY: "Marking လုပ်ငန်းစဉ်စစ်ဆေးခြင်း" },
-        { id: 3, textJP: "(3) <ruby>組立<rt>くみたて</rt></ruby><ruby>後<rt>ご</rt></ruby>の<ruby>仮<rt>かり</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>検査<rt>けんさ</rt></ruby>", textMY: "တပ်ဆင်ပြီးနောက် tack weld စစ်ဆေးခြင်း" },
-        { id: 4, textJP: "(4) <ruby>寸法<rt>すんぽう</rt></ruby>・<ruby>外観<rt>がいかん</rt></ruby>の<ruby>最終<rt>さいしゅう</rt></ruby><ruby>製品<rt>せいひん</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>", textMY: "အတိုင်းအတာနှင့် အမြင်ပိုင်းဆိုင်ရာ နောက်ဆုံးထုတ်ကုန်စစ်ဆေးခြင်း" },
-        { id: 5, textJP: "(5) <ruby>塗装<rt>とそう</rt></ruby><ruby>前<rt>まえ</rt></ruby>の<ruby>素地<rt>そじ</rt></ruby><ruby>調整<rt>ちょうせい</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>", textMY: "ဆေးမသုတ်မီ မျက်နှာပြင်ပြင်ဆင်မှု စစ်ဆေးခြင်း" }
+      { id: 1, textJP: "(1) <ruby>被覆アーク溶接棒、溶接ワイヤ、フラックス<rt>ひふくあーくようせつぼう、ようせつわいや、ふらっくす</rt></ruby>などの<ruby>溶接材料<rt>ようせつざいりょう</rt></ruby>は JIS <ruby>規格適合品<rt>きかくてきごうひん</rt></ruby>の<ruby>中<rt>なか</rt></ruby>から、<ruby>使用<rt>しよう</rt></ruby>する<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>材質、継手形式<rt>ざいしつ、つぎてけいしき</rt></ruby>などに<ruby>適合<rt>てきごう</rt></ruby>するものを<ruby>選定<rt>せんてい</rt></ruby>する。", textMY: "ဂဟေပစ္စည်းများကို JIS စံနှုန်းကိုက်ညီသော ပစ္စည်းများထဲမှ သံမဏိအမျိုးအစားအလိုက် ရွေးချယ်ရမည်။" },
+      { id: 2, textJP: "(2) JIS <ruby>規格<rt>きかく</rt></ruby>では、<ruby>溶接材料素材<rt>ようせつざいりょうそざい</rt></ruby>の<ruby>化学成分<rt>かがくせいぶん</rt></ruby>および<ruby>溶着金属<rt>ようちゃくきんぞく</rt></ruby>の<ruby>引張強さ、降伏点<rt>ひっぱりつよさ、こうふくてん</rt></ruby>などの<ruby>機械的性質<rt>きかいてきせいしつ</rt></ruby>を<ruby>規定<rt>きてい</rt></ruby>している。", textMY: "JIS တွင် ဂဟေသား၏ ဓာတုဖွဲ့စည်းပုံနှင့် ခိုင်မာမှု (Mechanical properties) တို့ကို သတ်မှတ်ထားသည်။" },
+      { id: 3, textJP: "(3) <ruby>使用<rt>しよう</rt></ruby>する<ruby>溶接材料<rt>ようせつざいりょう</rt></ruby>は、<ruby>規格名、種類、銘柄、棒径<rt>きかくめい、しゅるい、めいがら、ぼうけい</rt></ruby>などを<ruby>製作要領書<rt>せいさくようりょうしょ</rt></ruby>に<ruby>記載<rt>きさい</rt></ruby>して<ruby>工事監理者<rt>こうじかんりしゃ</rt></reason>の<ruby>承認<rt>しょうにん</rt></ruby>を<ruby>受<rt>う</rt></ruby>けたものとする。", textMY: "အသုံးပြုမည့် ဂဟေပစ္စည်းအသေးစိတ်ကို ထုတ်လုပ်မှုလမ်းညွှန်တွင် ရေးသားပြီး ကြီးကြပ်သူ၏ အတည်ပြုချက် ရယူရမည်။" },
+      { id: 4, textJP: "(4) <ruby>ガスシールドアーク溶接<rt>がすしーるどあーくようせつ</rt></ruby>に<ruby>使用<rt>しよう</rt></ruby>する<ruby>炭酸ガス<rt>たんさんがす</rt></ruby>は、JIS K 1106「<ruby>液化二酸化炭素<rt>えきかにさんかたんそ</rt></ruby>」に<ruby>規定<rt>きてい</rt></ruby>する 3 <ruby>種規格品<rt>しゅきかくひん</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>しなければならない。", textMY: "Gas welding တွင်သုံးသော CO2 gas မှာ JIS K 1106 အရ အဆင့် ၃ (3-shu) ပစ္စည်း ဖြစ်ရမည်ဟု ဆိုခြင်း။" },
+      { id: 5, textJP: "(5) <ruby>溶接材料<rt>ようせつざいりょう</rt></ruby>は、<ruby>発注時、受入時、保管時<rt>はっちゅうじ、うけいれじ၊ ほかんじ</rt></ruby>などの<ruby>各段階<rt>かくだんかい</rt></ruby>において<ruby>管理<rt>かんり</rt></ruby>しなければならない。", textMY: "ဂဟေပစ္စည်းများကို မှာယူခြင်း၊ လက်ခံခြင်းနှင့် သိုလှောင်ခြင်း အဆင့်တိုင်းတွင် စနစ်တကျ စီမံရမည်။" }
     ],
     correctOptionId: 4,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (4) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှန်ကန်ရခြင်း အကြောင်းရင်း: ကြီးကြပ်သူ၏ အဓိကတာဝန်မှာ ထုတ်ကုန်သည် ဒီဇိုင်းပုံစံနှင့် သတ်မှတ်ချက်များနှင့် ကိုက်ညီမှုရှိမရှိကို နောက်ဆုံးအတည်ပြုရန်ဖြစ်သည်။ ထို့ကြောင့်၊ စက်ရုံမှ မတင်ပို့မီပြုလုပ်သော နောက်ဆုံးအတိုင်းအတာနှင့် အမြင်ပိုင်းဆိုင်ရာ စစ်ဆေးခြင်း (最終製品検査) သည် ကြီးကြပ်သူ တက်ရောက်ရန် အရေးကြီးဆုံးဖြစ်သည်။ အခြားအဆင့်များသည် ထုတ်လုပ်သူ၏ ကိုယ်ပိုင်စစ်ဆေးမှုများ (自主検査) ဖြစ်သော်လည်း၊ နောက်ဆုံးစစ်ဆေးမှုသည် ပေးပို့မည့်ထုတ်ကုန်၏ အရည်အသွေးကို အတည်ပြုခြင်းဖြစ်သည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: ကြီးကြပ်သူ (Supervisor) က Final check လုပ်ရမယ်။"
+      titleMY: "ရှင်းလင်းချက် - 炭酸ガスの規格",
+      reasonMY: "Gas Shielded Arc Welding တွင် အသုံးပြုရမည့် ကာဗွန်ဒိုင်အောက်ဆိုဒ် (CO2) ဓာတ်ငွေ့သည် JIS K 1106 အရ 'အဆင့် ၂' (2 種) နှင့်အထက် သတ်မှတ်ချက်နှင့် ကိုက်ညီရမည် ဖြစ်သည်။ အဆင့် ၃ မဟုတ်ပါ။",
+      memoryTipMY: "Gas Welding တွင် CO2 သည် အဆင့် ၂ (2-shu) ဖြစ်ရမည်။"
     }
   },
-   {
-    id: "2-26",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>工事<rt>こうじ</rt></ruby>の<ruby>錆止<rt>さびど</rt></ruby>め<ruby>塗装<rt>とそう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "သံမဏိတည်ဆောက်ရေးလုပ်ငန်းတွင် သံချေးကာဆေးသုတ်ခြင်း (Anti-rust painting) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+  {
+    id: "2-25",
+    questionJP: "<ruby>ガスシールドアーク溶接<rt>がすしーるどあーくようせつ</rt></ruby>で<ruby>施工<rt>せこう</rt></ruby>した<ruby>溶接作業<rt>ようせつさぎょう</rt></ruby>において<ruby>記録<rt>きろく</rt></ruby>された<ruby>次<rt>つぎ</rt></ruby>に<ruby>示す溶接施工条件<rt>しめすようせつせこうじょうけん</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "Gas Shielded Arc Welding လုပ်ငန်းမှတ်တမ်းပါ အခြေအနေများအနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>塗装<rt>とそう</rt></ruby>に<ruby>先立<rt>さきだ</rt></ruby>ち、<ruby>鋼材<rt>こうざい</rt></ruby><ruby>表面<rt>ひょうめん</rt></ruby>の<ruby>黒皮<rt>くろかわ</rt></ruby>、<ruby>錆<rt>さび</rt></ruby>、<ruby>油<rt>あぶら</rt></ruby>などを<ruby>除去<rt>じょきょ</rt></ruby>する<ruby>素地<rt>そじ</rt></ruby><ruby>調整<rt>ちょうせい</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>う。", textMY: "ဆေးမသုတ်မီ၊ သံမဏိမျက်နှာပြင်ပေါ်ရှိ mill scale၊ သံချေး၊ ဆီ စသည်တို့ကို ဖယ်ရှားသည့် မျက်နှာပြင်ပြင်ဆင်မှု (素地調整) ပြုလုပ်ရမည်။" },
-        { id: 2, textJP: "(2) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合部<rt>せつごうぶ</rt></ruby>の<ruby>摩擦面<rt>まさつめん</rt></ruby>には、<ruby>原則<rt>げんそく</rt></ruby>として<ruby>錆止<rt>さびど</rt></ruby>め<ruby>塗装<rt>とそう</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>わない。", textMY: "High-strength bolt friction joint ၏ ပွတ်တိုက်မျက်နှာပြင်ပေါ်တွင် အခြေခံအားဖြင့် သံချေးကာဆေး မသုတ်ရ။" },
-        { id: 3, textJP: "(3) コンクリートに<ruby>密着<rt>みっちゃく</rt></ruby>する<ruby>部分<rt>ぶぶん</rt></ruby>や<ruby>埋<rt>う</rt></ruby>め<ruby>込<rt>こ</rt></ruby>まれる<ruby>部分<rt>ぶぶん</rt></ruby>には、<ruby>錆止<rt>さびど</rt></ruby>め<ruby>塗装<rt>とそう</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>う。", textMY: "ကွန်ကရစ်နှင့် ထိတွေ့မည့် သို့မဟုတ် ကွန်ကရစ်ထဲတွင် မြှုပ်နှံမည့် အစိတ်အပိုင်းများတွင် သံချေးကာဆေး သုတ်ရမည်။" },
-        { id: 4, textJP: "(4) <ruby>現場<rt>げんば</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>う<ruby>部分<rt>ぶぶん</rt></ruby>およびその<ruby>周辺<rt>しゅうへん</rt></ruby>100mmの<ruby>範囲<rt>はんい</rt></ruby>は、<ruby>錆止<rt>さびど</rt></ruby>め<ruby>塗装<rt>とそう</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>わない。", textMY: "လုပ်ငန်းခွင်တွင် ဂဟေဆက်မည့်နေရာနှင့် ၎င်း၏ပတ်လည် 100mm အကွာအဝေးအတွင်း သံချေးကာဆေး မသုတ်ရ။" },
-        { id: 5, textJP: "(5) <ruby>塗装<rt>とそう</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby>は、<ruby>気温<rt>きおん</rt></ruby>5℃<ruby>以上<rt>いじょう</rt></ruby>、<ruby>湿度<rt>しつど</rt></ruby>85%<ruby>以下<rt>いか</rt></ruby>の<ruby>環境<rt>かんきょう</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>うことが<ruby>望<rt>のぞ</rt></ruby>ましい。", textMY: "ဆေးသုတ်ခြင်းလုပ်ငန်းကို အပူချိန် 5°C နှင့်အထက်၊ စိုထိုင်းဆ 85% နှင့်အောက် ပတ်ဝန်းကျင်တွင် ပြုလုပ်ရန် အကြံပြုသည်။" }
+      { id: 1, textJP: "(1) 400N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW11 / 330A / 40V / 20cm/min / 330℃", textMY: "400N, YGW11, 330A, 40V, 20cm/min, 330C" },
+      { id: 2, textJP: "(2) 400N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW11 / 300A / 40V / 30cm/min / 435℃", textMY: "400N, YGW11, 300A, 40V, 30cm/min, 435C" },
+      { id: 3, textJP: "(3) 400N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW18 / 300A / 40V / 20cm/min / 425℃", textMY: "400N, YGW18, 300A, 40V, 20cm/min, 425C" },
+      { id: 4, textJP: "(4) 490N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW11 / 300A / 40V / 30cm/min / 198℃", textMY: "490N, YGW11, 300A, 40V, 30cm/min, 198C" },
+      { id: 5, textJP: "(5) 490N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW18 / 330A / 40V / 20cm/min / 285℃", textMY: "490N, YGW18, 330A, 40V, 20cm/min, 285C" }
     ],
     correctOptionId: 3,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (3) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: ကွန်ကရစ်နှင့် ထိတွေ့မည့် သံမဏိမျက်နှာပြင်များတွင် သံချေးကာဆေးသုတ်ပါက သံမဏိနှင့် ကွန်ကရစ်ကြားရှိ ပေါင်းစပ်မှု (Bond) ကို အားနည်းစေနိုင်သည်။ ထို့ကြောင့်၊ ဤနေရာများတွင် အခြေခံအားဖြင့် ဆေးမသုတ်ရပါ။ (コンクリートに密着する部分・埋め込まれる部分は塗装しない).",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: ကွန်ကရစ်နဲ့ ထိမယ့်နေရာ ဆေးမသုတ်ရ (No paint where steel touches concrete)။"
+      titleMY: "ရှင်းလင်းချက် - 入熱量とパス間温度",
+      reasonMY: "ရွေးချယ်မှု (၃) တွင် ပါရှိသော အခြေအနေများ (300A, 40V, 20cm/min) ဖြင့် တွက်ချက်ပါက Heat Input မှာ 36 kJ/cm ဖြစ်သည်။ YGW18 (low hydrogen type) wire အတွက် အပူချိန်နှင့် အပူပေးမှု တွဲဖက်ပုံမှာ စံနှုန်းများနှင့် လွဲချော်နေသည်။ (Handwritten note 'P135' ကို ကြည့်ပါ)။",
+      memoryTipMY: "ဂဟေအခြေအနေ ဇယားပါ တန်ဖိုးများကို သတိပြုပါ။"
+    }
+  },
+  {
+    id: "2-26",
+    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>溶接<rt>ようせつ</rt></ruby>について、<ruby>製作工場<rt>せいさくこうじょう</rt></ruby>の<ruby>性能評価基準<rt>せいのうひょうかきじゅん</rt></ruby>に<ruby>定<rt>さだ</rt></ruby>められている<ruby>鋼材の種類、溶接材料、溶接入熱とパス間温度<rt>こうざいのしゅるい、ようせつざいりょう、ようせつにゅうねつとぱすかんおんど</rt></ruby>の<ruby>次<rt>つぎ</rt></ruby>の<ruby>組合<rt>くみあわ</rt></ruby>せにおいて、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "စက်ရုံစွမ်းဆောင်ရည် စံနှုန်းများအရ သံမဏိအမျိုးအစား၊ ဂဟေပစ္စည်း၊ အပူနှင့် အပူချိန် ပေါင်းစပ်မှုများအနက် မသင့်လျော်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    options: [
+      { id: 1, textJP: "(1) 400N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW11, 15 / 40 kJ/cm <ruby>以下<rt>いか</rt></ruby> / 350℃ <ruby>以下<rt>いか</rt></ruby>", textMY: "400N / YGW11 / 40kJ / 350C" },
+      { id: 2, textJP: "(2) 490N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW11, 15 / 30 kJ/cm <ruby>以下<rt>いか</rt></ruby> / 250℃ <ruby>以下<rt>いか</rt></ruby>", textMY: "490N / YGW11 / 30kJ / 250C" },
+      { id: 3, textJP: "(3) 490N/mm²<ruby>級鋼<rt>きゅうこう</rt></ruby> / YGW18, 19 / 40 kJ/cm <ruby>以下<rt>いか</rt></ruby> / 350℃ <ruby>以下<rt>いか</rt></ruby>", textMY: "490N / YGW18 / 40kJ / 350C" },
+      { id: 4, textJP: "(4) 400N/mm²<ruby>級<rt>きゅう</rt></ruby>の STKR・BCP・BCR / YGW11, 15 / 30 kJ/cm <ruby>以下<rt>いか</rt></ruby> / 250℃ <ruby>以下<rt>いか</rt></ruby>", textMY: "STKR/BCP / YGW11 / 30kJ / 250C" },
+      { id: 5, textJP: "(5) 490N/mm²<ruby>級<rt>きゅう</rt></ruby>の STKR・BCP / YGW11, 15 / 30 kJ/cm <ruby>以下<rt>いか</rt></ruby> / 250℃ <ruby>以下<rt>いか</rt></ruby>", textMY: "490N STKR/BCP / YGW11 / 30kJ / 250C" }
+    ],
+    correctOptionId: 5,
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - 鋼材種別と溶接材料",
+      reasonMY: "490N/mm² အဆင့်ရှိသော Square Tube (STKR, BCP) များအတွက် YGW11 သို့မဟုတ် 15 ကဲ့သို့သော သာမန် wire များကို သုံးခြင်းထက် ပိုမိုခိုင်မာသော သို့မဟုတ် low-hydrogen type wire များ လိုအပ်နိုင်သည်။ PDF စာမျက်နှာ ၁၄ ပါ လက်ရေးပြင်ဆင်ချက် '18, 19 ကောင်းတယ်' ဟုပါရှိသည့်အတိုင်း ဖြစ်သည်။",
+      memoryTipMY: "490N အဆင့် ပိုက်များအတွက် YGW18/19 wire သုံးခြင်းက ပိုသင့်လျော်သည်။"
     }
   },
   {
     id: "2-27",
-    questionJP: "<ruby>アンカーボルト<rt>あんかーぼると</rt></ruby>の<ruby>設置<rt>せっち</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Anchor bolt တပ်ဆင်ခြင်းနှင့်ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>鋼構造建築物<rt>こうこうぞうけんちくぶつ</rt></ruby>に<ruby>使用<rt>しよう</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>溶接法<rt>ようせつほう</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で、シールドガスの<ruby>供給<rt>きょうきゅう</rt></ruby>に<ruby>支障<rt>ししょう</rt></ruby>が<ruby>発生<rt>はっせい</rt></ruby>した<ruby>場合<rt>ばあい</rt></ruby>に<ruby>施工上問題<rt>せこうじょうもんだい</rt></ruby>က <ruby>生<rt>しょう</rt></ruby>じるものはどれか。",
+    questionMY: "ဂဟေနည်းလမ်းများအနက် အကာအကွယ်ဓာတ်ငွေ့ (Shield gas) ပြတ်တောက်သွားပါက လုပ်ငန်းတွင် ပြဿနာတက်နိုင်သော နည်းလမ်းမှာ အဘယ်နည်း။",
     options: [
-        { id: 1, textJP: "(1) アンカーボルトは、<ruby>柱<rt>はしら</rt></ruby>の<ruby>位置<rt>いち</rt></ruby>や<ruby>高<rt>たか</rt></ruby>さを<ruby>正確<rt>せいかく</rt></ruby>に<ruby>定<rt>さだ</rt></ruby>めるための<ruby>重要<rt>じゅうよう</rt></ruby>な<ruby>部材<rt>ぶざい</rt></ruby>である。", textMY: "Anchor bolt သည် column ၏ တည်နေရာနှင့် အမြင့်ကို တိကျစွာသတ်မှတ်ရန်အတွက် အရေးကြီးသော အစိတ်အပိုင်းဖြစ်သည်။" },
-        { id: 2, textJP: "(2) <ruby>設置<rt>せっち</rt></ruby><ruby>精度<rt>せいど</rt></ruby>を<ruby>確保<rt>かくほ</rt></ruby>するため、アンカーボルト<ruby>固定<rt>こてい</rt></ruby><ruby>用<rt>よう</rt></ruby>の<ruby>架台<rt>かだい</rt></ruby>(テンプレート)を<ruby>使用<rt>しよう</rt></ruby>する。", textMY: "တပ်ဆင်မှုတိကျမှုရရှိရန်၊ anchor bolt ကို ထိန်းထားရန်အတွက် template ကို အသုံးပြုသည်။" },
-        { id: 3, textJP: "(3) アンカーボルトの<ruby>出<rt>で</rt></ruby>の<ruby>高<rt>たか</rt></ruby>さは、ベースプレートの<ruby>下<rt>した</rt></ruby>に<ruby>敷<rt>し</rt></ruby>くモルタルの<ruby>厚<rt>あつ</rt></ruby>さも<ruby>考慮<rt>こうりょ</rt></ruby>して<ruby>決定<rt>けってい</rt></ruby>する。", textMY: "Anchor bolt ၏ ထွက်နေသောအမြင့်ကို၊ base plate အောက်တွင် ခင်းမည့် mortar အထူကိုပါ ထည့်သွင်းစဉ်းစား၍ ဆုံးဖြတ်သည်။" },
-        { id: 4, textJP: "(4) コンクリート<ruby>打設<rt>だせつ</rt></ruby><ruby>時<rt>じ</rt></ruby>にアンカーボルトが<ruby>移動<rt>いどう</rt></ruby>しないよう、<ruby>鉄筋<rt>てっきん</rt></ruby>に<ruby>軽<rt>かる</rt></ruby>く<ruby>溶接<rt>ようせつ</rt></ruby>して<ruby>固定<rt>こてい</rt></ruby>する。", textMY: "ကွန်ကရစ်လောင်းသည့်အခါ anchor bolt မရွေ့လျားစေရန်၊ rebar တွင် ယာယီဂဟေဆော်၍ ထိန်းထားသည်။" },
-        { id: 5, textJP: "(5) <ruby>埋込<rt>うめこ</rt></ruby>み<ruby>長<rt>なが</rt></ruby>さは、<ruby>柱脚<rt>ちゅうきゃく</rt></ruby>に<ruby>作用<rt>さよう</rt></ruby>する<ruby>力<rt>ちから</rt></ruby>を<ruby>基礎<rt>きそ</rt></ruby>に<ruby>伝達<rt>でんたつ</rt></ruby>するために<ruby>十分<rt>じゅうぶん</rt></ruby>な<ruby>長<rt>なが</rt></ruby>さを<ruby>確保<rt>かくほ</rt></ruby>する。", textMY: "Embedment length သည် column base ပေါ် သက်ရောက်သောအားကို foundation သို့ သယ်ဆောင်ရန်အတွက် လုံလောက်သောအရှည် ရှိရမည်။" }
+      { id: 1, textJP: "(1) <ruby>被覆アーク溶接<rt>ひふくあーくようせつ</rt></ruby>", textMY: "SMAW (ဒုတ်ဂဟေ)" },
+      { id: 2, textJP: "(2) <ruby>ガスシールドアーク溶接<rt>がすしーるどあーကようせつ</rt></ruby>", textMY: "Gas Shielded Arc Welding (GMAW/MAG)" },
+      { id: 3, textJP: "(3) <ruby>サブマージアーク溶接<rt>さぶまーじあーくようせつ</rt></ruby>", textMY: "Submerged Arc Welding (SAW)" },
+      { id: 4, textJP: "(4) <ruby>エレクトロスラグ溶接<rt>えれくとろすらぐようせつ</rt></ruby>", textMY: "Electroslag Welding (ESW)" },
+      { id: 5, textJP: "(5) <ruby>セルフシールドアーク溶接<rt>せるふしーるどあーくようせつ</rt></ruby>", textMY: "Self-Shielded Arc Welding" }
     ],
-    correctOptionId: 4,
+    correctOptionId: 2,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (4) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Anchor bolt ကို rebar တွင် ဂဟေဆော်ခြင်းသည် bolt ၏ သတ္တုဂုဏ်သတ္တိကို ပြောင်းလဲစေပြီး၊ ကြွပ်ဆတ် (brittle) ဖြစ်စေကာ၊ ၎င်း၏ ခံနိုင်အားကို သိသိသာသာ ကျဆင်းစေနိုင်သည်။ ဤလုပ်ဆောင်မှုကို တင်းကြပ်စွာ တားမြစ်ထားသည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Anchor bolt ကို ဘယ်တော့မှ ဂဟေမဆော်ရ (Never weld anchor bolts)။"
+      titleMY: "ရှင်းလင်းချက် - ガスシールド溶接",
+      reasonMY: "အမည်တွင်ပါရှိသည့်အတိုင်း 'Gas Shielded' နည်းလမ်းသည် ပြင်ပမှ Gas ဓာတ်ငွေ့ဖြင့်သာ ဂဟေသားကို အကာအကွယ်ပေးထားခြင်းဖြစ်သောကြောင့် ဓာတ်ငွေ့ပြတ်တောက်ပါက ဂဟေသား လုံးဝ မရနိုင်ပါ။",
+      memoryTipMY: "Gas shield နည်းမှာ Gas က အသက်ပဲ။"
     }
   },
-   {
+  {
     id: "2-28",
-    questionJP: "<ruby>建方<rt>たてかた</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Erection လုပ်ငန်းနှင့်ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>施工<rt>せこう</rt></ruby>する<ruby>際<rt>さい</rt></ruby>の<ruby>予熱<rt>よねつ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆော်ရာတွင် ကြိုတင်အပူပေးခြင်း (Preheating) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>建方<rt>たてかた</rt></ruby>に<ruby>先立<rt>さきだ</rt></ruby>ち、<ruby>建方<rt>たてかた</rt></ruby><ruby>計画書<rt>けいかくしょ</rt></ruby>を<ruby>作成<rt>さくせい</rt></ruby>し、クレーンの<ruby>機種<rt>きしゅ</rt></ruby>や<ruby>配置<rt>はいち</rt></ruby>、<ruby>作業<rt>さぎょう</rt></ruby><ruby>手順<rt>てじゅん</rt></ruby>などを<ruby>定<rt>さだ</rt></ruby>める。", textMY: "Erection မစတင်မီ၊ erection plan ကို ရေးဆွဲပြီး crane အမျိုးအစားနှင့် နေရာချထားမှု၊ လုပ်ငန်းအဆင့်ဆင့်တို့ကို သတ်မှတ်ရမည်။" },
-        { id: 2, textJP: "(2) <ruby>柱<rt>はしら</rt></ruby>の<ruby>吊<rt>つ</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げには、ワイヤーロープを<ruby>柱<rt>はしら</rt></ruby>に<ruby>直接<rt>ちょくせつ</rt></ruby><ruby>巻<rt>ま</rt></ruby>きつけず、<ruby>専用<rt>せんよう</rt></ruby>の<ruby>吊<rt>つ</rt></ruby>り<ruby>治具<rt>じぐ</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>することが<ruby>望<rt>のぞ</rt></ruby>ましい。", textMY: "Column ကို မတင်ရာတွင် wire rope ကို column တွင် တိုက်ရိုက်မပတ်ဘဲ၊ အထူး lifting jig ကို အသုံးပြုရန် အကြံပြုသည်။" },
-        { id: 3, textJP: "(3) <ruby>仮<rt>かり</rt></ruby>ボルトは、ボルト<ruby>一群<rt>いちぐん</rt></ruby>の 1/3 <ruby>程度<rt>ていど</rt></ruby>かつ 2 <ruby>本<rt>ほん</rt></ruby><ruby>以上<rt>いじょう</rt></ruby>を<ruby>バランス<rt>ばらんす</rt></ruby>よく<ruby>締<rt>し</rt></ruby>め<ruby>付<rt>つ</rt></ruby>ける。", textMY: "Temporary bolt များကို bolt group တစ်ခု၏ 1/3 ခန့်နှင့် အနည်းဆုံး ၂ ချောင်းကို မျှတအောင် တပ်ဆင်ရမည်။" },
-        { id: 4, textJP: "(4) <ruby>建<rt>た</rt></ruby>いれ<ruby>直<rt>なお</rt></ruby>しは、<ruby>建方<rt>たてかた</rt></ruby><ruby>クレーン<rt>くれーん</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>して<ruby>行<rt>おこな</rt></ruby>い、ワイヤーロープで<ruby>引<rt>ひ</rt></ruby>っ<ruby>張<rt>ぱ</rt></ruby>りながら<ruby>柱<rt>はしら</rt></ruby>の<ruby>傾<rt>かたむ</rt></ruby>きを<ruby>調整<rt>ちょうせい</rt></ruby>する。", textMY: "Plumb adjustment ကို erection crane ကို အသုံးပြု၍ ပြုလုပ်ပြီး၊ wire rope ဖြင့် ဆွဲငင်ကာ column ၏ စောင်းနေမှုကို ချိန်ညှိသည်။" },
-        { id: 5, textJP: "(5) <ruby>風速<rt>ふうそく</rt></ruby> 10m/s <ruby>以上<rt>いじょう</rt></ruby>の<ruby>強風<rt>きょうふう</rt></ruby><ruby>時<rt>じ</rt></ruby>には、<ruby>原則<rt>げんそく</rt></ruby>として<ruby>作業<rt>さぎょう</rt></ruby>を<ruby>中止<rt>ちゅうし</rt></ruby>する。", textMY: "လေတိုက်နှုန်း 10 m/s နှင့်အထက် လေပြင်းတိုက်ခတ်ချိန်တွင်၊ အခြေခံအားဖြင့် လုပ်ငန်းကို ရပ်ဆိုင်းရမည်။" }
+      { id: 1, textJP: "(1) <ruby>予熱<rt>よねつ</rt></ruby>は、<ruby>予定溶接線<rt>よていようせつせん</rt></ruby>を<ruby>中心<rt>ちゅうしん</rt></ruby>とした<ruby>表裏両側<rt>ひょうりりょうがわ</rt></ruby>の 100mm の<ruby>範囲<rt>はんい</rt></ruby>で<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "Preheat ကို ဂဟေဆက်မည့်လိုင်း၏ ဝဲယာ ၁၀၀ mm ပတ်လည်တွင် လုပ်ဆောင်ရမည်။" },
+      { id: 2, textJP: "(2) <ruby>予熱<rt>よねつ</rt></ruby>は、ガス<ruby>炎<rt>ほのお</rt></ruby>によって<ruby>可能<rt>かのう</rt></ruby>な<ruby>限<rt>かぎ</rt></ruby>り<ruby>均一<rt>きんいつ</rt></ruby>に<ruby>加熱<rt>かねつ</rt></ruby>する<ruby>方法<rt>ほうほう</rt></ruby>က <ruby>一般的<rt>いっぱんてき</rt></ruby>である。", textMY: "Preheat ကို gas မီးဖြင့် တတ်နိုင်သမျှ ညီညာစွာ အပူပေးခြင်းသည် ယေဘုယျဖြစ်သည်။" },
+      { id: 3, textJP: "(3) <ruby>予熱<rt>よねつ</rt></ruby>は、<ruby>高強度鋼<rt>こうきょうどこう</rt></ruby>など<ruby>予熱温度<rt>よねつおんど</rt></ruby>က <ruby>高い場合<rt>たかいばあい</rt></ruby>には、<ruby>電気抵抗線ヒーター<rt>でんきていこうせんひーたー</rt></ruby>や<ruby>高周波誘導加熱ヒーター<rt>こうしゅうはゆうどうかねつひーたー</rt></ruby>などを用いて<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "အပူချိန်မြင့်မြင့်ပေးရန် လိုအပ်ပါက လျှပ်စစ်ဟီတာများကို အသုံးပြုနိုင်သည်။" },
+      { id: 4, textJP: "(4) <ruby>予熱温度<rt>よねつおんど</rt></ruby>は<ruby>溶接法（被覆アーク溶接、ガスシールドアーク溶接、サブマージアーク溶接）、鋼種、板厚<rt>ようせつほう、こうしゅ、いたあつ</rt></ruby>に<ruby>応<rt>おう</rt></ruby>じて<ruby>標準温度<rt>ひょうじゅんおんど</rt></ruby>က <ruby>定<rt>さだ</rt></ruby>められている。", textMY: "Preheat အပူချိန်ကို ဂဟေဆက်နည်း၊ သံမဏိအမျိုးအစားနှင့် အထူအလိုက် သတ်မှတ်ထားသည်။" },
+      { id: 5, textJP: "(5) <ruby>溶接<rt>ようせつ</rt></ruby>する<ruby>部材相互<rt>ぶざいそうご</rt></ruby>の<ruby>板厚<rt>いたあつ</rt></ruby>や<ruby>鋼種<rt>こうしゅ</rt></ruby>の<ruby>組合<rt>くみあわ</rt></ruby>せが<ruby>異<rt>こと</rt></ruby>なる<ruby>場合<rt>ばあい</rt></ruby>、<ruby>予熱温度<rt>よねつおんど</rt></ruby>သည် <ruby>低い方<rt>ひくいほう</rt></ruby>の<ruby>温度<rt>おんど</rt></ruby>を<ruby>採用<rt>さいよう</rt></ruby>する。", textMY: "အထူမတူသော သံမဏိများကို ဆက်ပါက Preheat အပူချိန်ကို အနိမ့်ဆုံးဘက်က ယူရမည်ဟု ဆိုခြင်း။" }
     ],
-    correctOptionId: 4,
+    correctOptionId: 5,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (4) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Plumb adjustment (建入れ直し) သည် erection crane ကို အသုံးမပြုဘဲ၊ turnbuckle ပါသော wire rope သို့မဟုတ် အထူး hydraulic jack ကဲ့သို့သော ချိန်ညှိကိရိယာများကို အသုံးပြု၍ ပြုလုပ်ရမည်။ Crane သည် အလွန်ကြီးမားသော အားကို ဖြစ်ပေါ်စေနိုင်ပြီး၊ တိကျသော ချိန်ညှိမှုအတွက် မသင့်တော်သည့်အပြင် အန္တရာယ်လည်းရှိသည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Plumb adjustment (建入れ直し) ကို crane နဲ့မလုပ်ရဘူး၊ turnbuckle နဲ့လုပ်ရမယ်။"
+      titleMY: "ရှင်းလင်းချက် - 予熱温度の選定",
+      reasonMY: "အထူမတူသော သံမဏိများကို ဆက်ပါက အအေးခံနှုန်းကို ထိန်းချုပ်ရန်အတွက် 'အမြင့်ဆုံး လိုအပ်ချက်ရှိသော အပူချိန်' (高い方の温度) ကို ယူရမည်။ (Handwritten note: (5) ကို ဝိုင်းထားသည်)။",
+      memoryTipMY: "Preheat အပူချိန်ကို အမြင့်ဆုံး (Highest) အတိုင်း ယူရမည်။"
     }
   },
   {
     id: "2-29",
-    questionJP: "<ruby>柱脚<rt>ちゅうきゃく</rt></ruby>のグラウト<ruby>工事<rt>こうじ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Column base grouting လုပ်ငန်းနှင့်ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>溶接施工<rt>ようせつせこう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်လုပ်ငန်း ဆောင်ရွက်ခြင်းနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) グラウトは、ベースプレートと<ruby>基礎<rt>きそ</rt></ruby>コンクリートとの<ruby>間<rt>あいだ</rt></ruby>に<ruby>充填<rt>じゅうてん</rt></ruby>し、<ruby>柱<rt>はしら</rt></ruby>からの<ruby>力<rt>ちから</rt></ruby>を<ruby>基礎<rt>きそ</rt></ruby>に<ruby>均等<rt>きんとう</rt></ruby>に<ruby>伝達<rt>でんたつ</rt></ruby>させる<ruby>役割<rt>やくわり</rt></ruby>を<ruby>持<rt>も</rt></ruby>つ。", textMY: "Grout သည် base plate နှင့် foundation concrete ကြားတွင် ဖြည့်သွင်းပြီး၊ column မှ အားကို foundation သို့ ညီညာစွာ သယ်ဆောင်ပေးသည့် တာဝန်ရှိသည်။" },
-        { id: 2, textJP: "(2) <ruby>使用<rt>しよう</rt></ruby>するグラウト<ruby>材<rt>ざい</rt></ruby>は、<ruby>無<rt>む</rt></ruby><ruby>収縮<rt>しゅうしゅく</rt></ruby>モルタルを<ruby>用<rt>もち</rt></ruby>いることが<rt>一般<rt>いっぱん</rt></ruby><rt>的<rt>てき</rt></ruby>である。", textMY: "အသုံးပြုသည့် grout material သည် non-shrink mortar ဖြစ်ခြင်းသည် ယေဘုယျဖြစ်သည်။" },
-        { id: 3, textJP: "(3) グラウトの<ruby>充填<rt>じゅうてん</rt></ruby>は、ベースプレートの<ruby>片側<rt>かたがわ</rt></ruby>から<ruby>行<rt>おこな</rt></ruby>い、<ruby>空気<rt>くうき</rt></ruby>が<ruby>残<rt>のこ</rt></ruby>らないようにする。", textMY: "Grout ဖြည့်သွင်းခြင်းကို base plate ၏ တစ်ဖက်မှ ပြုလုပ်ပြီး၊ လေခိုကျန်ခြင်း မရှိအောင် ပြုလုပ်ရမည်။" },
-        { id: 4, textJP: "(4) グラウトの<ruby>強度<rt>きょうど</rt></ruby>は、<ruby>基礎<rt>きそ</rt></ruby>コンクリートの<ruby>設計<rt>せっけい</rt></ruby><ruby>基準<rt>きじゅん</rt></ruby><ruby>強度<rt>きょうど</rt></ruby>よりも<ruby>高<rt>たか</rt></ruby>くする<ruby>必要<rt>ひつよう</rt></ruby>がある。", textMY: "Grout ၏ strength သည် foundation concrete ၏ design strength ထက် ပိုမြင့်ရန် လိုအပ်သည်။" },
-        { id: 5, textJP: "(5) グラウト<ruby>充填<rt>じゅうてん</rt></ruby><ruby>後<rt>ご</rt></ruby>は、<ruby>急激<rt>きゅうげき</rt></ruby>な<ruby>乾燥<rt>かんそう</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けるため、<ruby>湿潤<rt>しつじゅん</rt></ruby><ruby>養生<rt>ようじょう</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>う。", textMY: "Grout ဖြည့်သွင်းပြီးနောက်၊ ရုတ်တရက် ခြောက်သွေ့ခြင်းကို ရှောင်ရှားရန်အတွက် wet curing ပြုလုပ်ရမည်။" }
+      { id: 1, textJP: "(1) <ruby>裏当て金<rt>うらあてがね</rt></ruby>は、<ruby>部材<rt>ぶざい</rt></ruby>を<ruby>片面<rt>かためん</rt></ruby>から<ruby>溶接<rt>ようせつ</rt></ruby>し、<ruby>部材断面<rt>ぶざいだんめん</rt></ruby>を<ruby>完全<rt>かんぜん</rt></ruby>に<ruby>溶融接合<rt>ようゆうせつごう</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>に、<ruby>初層<rt>しょそう</rt></ruby>の<ruby>溶落ち<rt>とけおち</rt></ruby>を<ruby>防止<rt>ぼうし</rt></ruby>し、<ruby>初層<rt>しょそう</rt></ruby>のビード<ruby>形成<rt>けいせい</rt></ruby>を<ruby>容易<rt>ようい</rt></ruby>にするために<ruby>裏面<rt>りめん</rt></ruby>に<ruby>取<rt>と</rt></ruby>り<ruby>付<rt>つ</rt></ruby>けるものである。", textMY: "Backing metal သည် တစ်ဖက်တည်းမှ ဂဟေဆက်ရာတွင် အရည်ပျော်ကျခြင်းကို ကာကွယ်ရန် နောက်ဘက်တွင် တပ်ဆင်ခြင်းဖြစ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>溶接部<rt>ようせつぶ</rt></ruby>において、アーク<ruby>開始点<rt>かいしてん</rt></ruby>および<ruby>終了点<rt>しゅうりょうてん</rt></ruby>に<ruby>発生<rt>はっせい</rt></ruby>する<ruby>欠陥<rt>けっかん</rt></ruby>を<ruby>減<rt>へ</rt></ruby>らすための<ruby>対策<rt>たいさく</rt></ruby>として、<ruby>溶接始終端<rt>ようせつしじゅうたん</rt></ruby>に<ruby>鋼製エンドタブ<rt>こうせいえんどたぶ</rt></ruby>または<ruby>固形エンドタブ<rt>こけいえんどたぶ</rt></ruby>を<ruby>取<rt>と</rt></ruby>り<ruby>付<rt>つ</rt></ruby>ける。", textMY: "ဂဟေအစနှင့် အဆုံးတွင် ချို့ယွင်းချက်နည်းစေရန် End Tab များကို တပ်ဆင်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>鋼製エンドタブ<rt>こうせいえんどたぶ</rt></ruby>の<ruby>長さ<rt>ながさ</rt></ruby>は、<ruby>溶接方法<rt>ようせつほうほう</rt></ruby>や<ruby>母材板厚<rt>ぼざいたあつ</rt></ruby>に<ruby>関わらず<rt>かかわらず</rt></ruby> 30~50mm の<ruby>範囲<rt>はんい</rt></ruby>で<ruby>統一<rt>とういつ</rt></ruby>するのが<ruby>一般的<rt>いっぱんてき</rt></ruby>である。", textMY: "End Tab ၏ အရှည်မှာ အထူနှင့်မဆိုင်ဘဲ ၃၀ မှ ၅၀ mm အတွင်း အမြဲတမ်းထားရှိရမည်ဟု ဆိုခြင်း။" },
+      { id: 4, textJP: "(4) <ruby>両面溶接<rt>りょうめんようせつ</rt></ruby>において、<ruby>部材断面<rt>ぶざいだんめん</rt></ruby>を<ruby>完全溶込み溶接<rt>かんぜんようこみようせつ</rt></ruby>するために<ruby>行<rt>おこな</rt></ruby>う<ruby>作業<rt>さぎょう</rt></ruby>က <ruby>裏はつり<rt>うらはつり</rt></ruby>である。<ruby>表面溶接部<rt>ひょうめんようせつぶ</rt></ruby>の<ruby>初層部<rt>しょそうぶ</rt></ruby>に<ruby>発生<rt>はっせい</rt></ruby>した<ruby>溶接欠陥<rt>ようせつけっかん</rt></ruby>を<ruby>除去<rt>じょきょ</rt></ruby>することと、<ruby>裏面<rt>りめん</rt></ruby>から<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>行う<rt>おこなう</rt></ruby>ための<ruby>開先<rt>かいさき</rt></ruby>を<ruby>整形<rt>せいけい</rt></ruby>することを<ruby>目的<rt>もくてき</rt></ruby>に<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "Back Gouging သည် ချို့ယွင်းချက်များကို ဖယ်ရှားပြီး နောက်ဘက်မှ ဂဟေပြန်ဆက်ရန် မြောင်းဖော်ခြင်း ဖြစ်သည်။" },
+      { id: 5, textJP: "(5) <ruby>溶接部<rt>ようせつぶ</rt></ruby>における<ruby>外観上<rt>がいかんじょう</rt></ruby>の<ruby>管理項目<rt>かんりこうもく</rt></ruby>および<ruby>許容差<rt>きょようさ</rt></ruby>は、<ruby>平成<rt>へいせい</rt></ruby> 12 <ruby>年建設省告示<rt>ねんけんせつしょうこくじ</rt></ruby> 1464 <ruby>号<rt>ごう</rt></ruby>および「JASS 6」<ruby>付則<rt>ふそく</rt></ruby> 6 「<ruby>鉄骨精度検査基準<rt>てっこつせいどけんさきじゅん</rt></ruby>」による。", textMY: "ဂဟေအပြင်ပန်းစံနှုန်းများကို ၂၀၀၀ ခုနှစ် ကြေညာချက်နှင့် JASS 6 စံနှုန်းများအတိုင်း လုပ်ဆောင်သည်။" }
     ],
-    correctOptionId: 4,
+    correctOptionId: 3,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (4) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှားယွင်းရခြင်း အကြောင်းရင်း: Grout ၏ strength သည် foundation concrete ၏ design strength နှင့် တူညီရန် သို့မဟုတ် ထို့ထက်မနည်းရန် (同等以上) လိုအပ်သော်လည်း၊ မဖြစ်မနေ ပိုမြင့်ရန် (高くする必要がある) မလိုအပ်ပါ။ အဓိကမှာ လုံလောက်သော strength ရှိရန်နှင့် non-shrink ဖြစ်ရန်ဖြစ်သည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: Grout strength ≥ Foundation strength. Grout က ပိုแข็งแรงする必要はない။"
+      titleMY: "ရှင်းလင်းချက် - エンドタブの長さ",
+      reasonMY: "End Tab ၏ အရှည်သည် ဂဟေဆက်ရမည့် ပစ္စည်း၏ အထူ (Plate Thickness) နှင့် ဂဟေဆက်နည်းစနစ် (Welding Method) အပေါ် မူတည်ပြီး ကွဲပြားနိုင်သည်။ 'အမြဲတမ်း ၃၀-၅၀ mm' ဟု ပုံသေသတ်မှတ်ထားခြင်း မရှိပါ။ (Handwritten note: (3) ကို ဝိုင်းထားသည်)။",
+      memoryTipMY: "End Tab အရှည်သည် အထူ (Thickness) ပေါ်မူတည်၍ ပြောင်းလဲနိုင်သည်။"
     }
   },
   {
     id: "2-30",
-    questionJP: "<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>入熱<rt>にゅうねつ</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
-    questionMY: "Welding heat input နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးအချက်ကို ရွေးချယ်ပါ။",
+    questionJP: "<ruby>溶接施工<rt>ようせつせこう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>（イ～ホ）のうち、<ruby>不適当<rt>ふてきとう</rt></ruby>な<ruby>記述<rt>きじゅつ</rt></ruby>の<ruby>組合<rt>くみあわ</rt></ruby>せはどれか。",
+    questionMY: "ဂဟေဆက်လုပ်ငန်း (ဣ မှ ဧ) ထဲမှ မသင့်လျော်သော အချက်များ ပေါင်းစပ်မှုကို ရွေးချယ်ပါ။",
     options: [
-        { id: 1, textJP: "(1) <ruby>入熱<rt>にゅうねつ</rt></ruby>が<ruby>大<rt>おお</rt></ruby>きすぎると、<ruby>溶接部<rt>ようせつぶ</rt></ruby>の<ruby>冷却<rt>れいきゃく</rt></ruby><ruby>速度<rt>そくど</rt></ruby>が<ruby>速<rt>はや</rt></ruby>くなり、<ruby>硬化<rt>こうか</rt></ruby>しやすくなる。", textMY: "Heat input အလွန်ကြီးမားပါက၊ weld ၏ cooling rate မြန်လာပြီး မာကျောလွယ်လာသည်။" },
-        { id: 2, textJP: "(2) <ruby>入熱<rt>にゅうねつ</rt></ruby>が<ruby>小<rt>ちい</rt></ruby>さすぎると、<ruby>溶<rt>と</rt></ruby>け<ruby>込<rt>こ</rt></ruby>み<ruby>不足<rt>ふそく</rt></ruby>の<ruby>原因<rt>げんいん</rt></ruby>となることがある。", textMY: "Heat input အလွန်နည်းပါးပါက၊ incomplete fusion ဖြစ်စေနိုင်သည်။" },
-        { id: 3, textJP: "(3) <ruby>溶接<rt>ようせつ</rt></ruby><ruby>速度<rt>そくど</rt></ruby>を<ruby>速<rt>はや</rt></ruby>くすると、<ruby>入熱<rt>にゅうねつ</rt></ruby>は<ruby>大<rt>おお</rt></ruby>きくなる。", textMY: "Welding speed ကို မြှင့်တင်ပါက၊ heat input ကြီးမားလာသည်။" },
-        { id: 4, textJP: "(4) <ruby>入熱<rt>にゅうねつ</rt></ruby>は、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>部<rt>ぶ</rt></ruby>の<ruby>変形<rt>へんけい</rt></ruby>には<ruby>影響<rt>えいきょう</rt></ruby>しない。", textMY: "Heat input သည် weld ၏ deformation ကို မထိခိုက်ပါ။" },
-        { id: 5, textJP: "(5) <ruby>厚板<rt>あついた</rt></ruby>の<ruby>溶接<rt>ようせつ</rt></ruby>では、<ruby>常<rt>つね</rt></ruby>に<ruby>入熱<rt>にゅうねつ</rt></ruby>をできるだけ<ruby>大<rt>おお</rt></ruby>きくするべきである。", textMY: "အထူကြီးသော plate များကို ဂဟေဆက်ရာတွင်၊ heat input ကို အမြဲတမ်း အတတ်နိုင်ဆုံး ကြီးမားအောင် ပြုလုပ်သင့်သည်။" }
+      { id: 1, textJP: "(1) イ、ホ", textMY: "ဣ၊ ဩ" },
+      { id: 2, textJP: "(2) イ、ロ", textMY: "ဣ၊ ဠ" },
+      { id: 3, textJP: "(3) ロ、ハ", textMY: "ဠ၊ ဥ" },
+      { id: 4, textJP: "(4) ハ、ニ", textMY: "ဥ၊ ဧ" },
+      { id: 5, textJP: "(5) ハ、ホ", textMY: "ဥ၊ ဩ" }
     ],
-    correctOptionId: 2,
+    correctOptionId: 5,
     explanation: {
-        titleMY: "ဘာကြောင့် အဖြေ (2) ကို ရွေးချယ်ရသလဲ၊ ဘယ်လို မှတ်သားရမလဲ",
-        reasonMY: "မှန်ကန်ရခြင်း အကြောင်းရင်း: Heat input သည် ဂဟေသားကို အရည်ပျော်စေရန်အတွက် လိုအပ်သော စွမ်းအင်ဖြစ်သည်။ ၎င်းအလွန်နည်းပါက၊ base metal ကို လုံလောက်စွာ အရည်မပျော်စေနိုင်ဘဲ၊ incomplete fusion (溶け込み不足) သို့မဟုတ် incomplete penetration ကဲ့သို့သော ချို့ယွင်းချက်များ ဖြစ်ပေါ်စေနိုင်သည်။ (1) Heat input ကြီးမားပါက cooling rate နှေးသွားသည်။ (3) Speed မြန်လျှင် heat input နည်းသွားသည်။ (4) Heat input သည် deformation ၏ အဓိကအကြောင်းရင်းဖြစ်သည်။ (5) Heat input ကို သင့်လျော်သော範囲အတွင်း ထိန်းချုပ်ရမည်။",
-        memoryTipMY: "ဘယ်လိုမှတ်ရမလဲ: မီးအား (Heat input) နည်းရင် မကျက်ဘူး (Incomplete fusion)။"
+      titleMY: "ရှင်းလင်းချက် - 溶接施工の組合せ",
+      reasonMY: "PDF စာမျက်နှာ ၁၆ ပါ လက်ရေးပြင်ဆင်ချက်များအရ (ハ) နှင့် (ホ) တို့သည် မသင့်လျော်ပါ။ (ハ) တွင် ဖော်ပြထားသော ဂဟေအမျိုးအစား ခွဲခြားမှုနှင့် (ホ) တွင် ဖော်ပြထားသော လေတိုက်နှုန်း ကန့်သတ်ချက် (5m/s ထက်ကျော်လျှင် gas သုံးဂဟေမှာ အန္တရာယ်ရှိသည်) တို့မှာ အချက်အလက်အရ လွဲမှားနေသည်။",
+      memoryTipMY: "Gas Welding မှာ လေတိုက်နှုန်းကို အထူးသတိထားရမည်။"
     }
   }
 ];
