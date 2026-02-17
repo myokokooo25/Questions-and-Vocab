@@ -11,7 +11,7 @@ export default [
   { jp: '不適当 (ふてきとう)', my: 'မသင့်လျော်သော', type: 'Adjective' },
   { jp: '支点 (してん)', my: 'အထောက်အမှတ်၊ Support', type: 'Noun' },
   { jp: '鉛直 (えんちょく)', my: 'ဒေါင်လိုက်', type: 'Noun/Adjective' },
-  { jp: '上向き (うわむき)', my: 'အပေါ်သို့ 향한', type: 'Noun' },
+  { jp: '上向き (うわむき)', my: 'အပေါ်သို့ ', type: 'Noun' },
   { jp: '反力 (はんりょく)', my: 'တုံ့ပြန်အား၊ Reaction Force', type: 'Noun' },
   { jp: '生じる (しょうじる)', my: 'ဖြစ်ပေါ်သည်', type: 'Verb' },
   { jp: '柱 (はしら)', my: 'တိုင်', type: 'Noun' },

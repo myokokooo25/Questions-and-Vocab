@@ -5,9 +5,9 @@ import { BookmarkIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, PencilIcon,
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import JapaneseText from './JapaneseText';
-import { GoogleGenAI } from "@google/genai";
 import { vocabularyData } from '../data/vocab';
 import ReportModal from './ReportModal';
+import { supabase } from '../lib/supabase';
 
 // Helper function to prepare text for TTS by removing furigana annotations.
 const stripHtml = (html: string): string => {
@@ -15,8 +15,6 @@ const stripHtml = (html: string): string => {
   const doc = new DOMParser().parseFromString(textWithoutFurigana, 'text/html');
   return doc.body.textContent || "";
 };
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
 // --- IndexedDB Caching Logic ---
 const DB_NAME = 'tts-cache';
@@ -64,7 +62,7 @@ const saveCachedAudio = async (text: string, data: Uint8Array): Promise<void> =>
     } catch (e) {}
 };
 
-function decode(base64: string) {
+function decodeBase64(base64: string) {
   const binaryString = atob(base64);
   const len = binaryString.length;
   const bytes = new Uint8Array(len);
@@ -110,13 +108,12 @@ const Card: React.FC<CardProps> = ({
     isSubmitted = false,
 }) => {
   const { language } = useLanguage();
-  const { bookmarkedIds, toggleBookmark } = useProgress(); // Use new progress hook
+  const { bookmarkedIds, toggleBookmark } = useProgress();
   const isBookmarked = bookmarkedIds.has(data.id);
   
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
-  const [showWaitMessage, setShowWaitMessage] = useState(false);
 
   const [activeTab, setActiveTab] = useState<'explanation' | 'vocab'>('explanation');
   const vocabData = vocabularyData[data.id] || [];
@@ -126,48 +123,37 @@ const Card: React.FC<CardProps> = ({
   const [hintError, setHintError] = useState<string | null>(null);
   
   const [audioLoadingId, setAudioLoadingId] = useState<string | null>(null);
-
   const [isReportOpen, setIsReportOpen] = useState(false);
 
+  // Clear states when question changes
   useEffect(() => {
     setAiExplanation(null);
     setIsAiLoading(false);
     setAiError(null);
-    setActiveTab('explanation');
     setHint(null);
     setIsHintLoading(false);
     setHintError(null);
     setAudioLoadingId(null);
-    setIsReportOpen(false);
   }, [data.id]);
 
-  useEffect(() => {
-    let timer: number;
-    if (isAiLoading) {
-      timer = window.setTimeout(() => {
-        setShowWaitMessage(true);
-      }, 5000);
-    } else {
-      setShowWaitMessage(false);
-    }
-    return () => clearTimeout(timer);
-  }, [isAiLoading]);
-  
   const handleGetHint = async () => {
     if (isHintLoading || hint) return;
     setIsHintLoading(true);
     setHintError(null);
 
-    const prompt = `expert teacher hint for MC question. Burmese only, 1 sentence, don't reveal answer. Q: ${data.questionMY}`;
-
     try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: prompt,
+      const { data: response, error } = await supabase.functions.invoke('gemini', {
+        body: { 
+          action: 'text', 
+          prompt: `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}` 
+        }
       });
+
+      if (error) throw error;
       setHint(response.text);
     } catch (err) {
-      setHintError("Error generating hint.");
+      setHintError("Hint ရယူ၍မရပါ။");
+      console.error(err);
     } finally {
       setIsHintLoading(false);
     }
@@ -179,55 +165,59 @@ const Card: React.FC<CardProps> = ({
     setAiExplanation(null);
 
     const correctOption = data.options.find(opt => opt.id === data.correctOptionId);
-    const prompt = `Simpler Burmese explanation for structural engineering. Q: ${data.questionMY}, Correct: ${correctOption?.textMY}`;
+    const prompt = `Explain why this is the correct answer in simple Burmese for a student. 
+    Question: ${data.questionMY}
+    Correct Answer: ${correctOption?.textMY}
+    Please use bullet points for clarity.`;
 
     try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: prompt,
+      const { data: response, error } = await supabase.functions.invoke('gemini', {
+        body: { action: 'text', prompt: prompt }
       });
+
+      if (error) throw error;
       setAiExplanation(response.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />'));
     } catch (err) {
-      setAiError("Error generating AI explanation.");
+      setAiError("AI ရှင်းလင်းချက် ရယူ၍မရပါ။");
+      console.error(err);
     } finally {
       setIsAiLoading(false);
     }
   };
 
-
   const handlePlayAudio = async (textToSpeak: string, id: string) => {
     if (audioLoadingId) return;
-    setAudioLoadingId(id);
     const cleanText = stripHtml(textToSpeak);
-    if (!cleanText.trim()) { setAudioLoadingId(null); return; }
+    if (!cleanText.trim()) return;
+
+    setAudioLoadingId(id);
 
     try {
-        const outputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({sampleRate: 24000});
-        if (outputAudioContext.state === 'suspended') await outputAudioContext.resume();
+        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+
         const cachedData = await getCachedAudio(cleanText);
-        let pcmData: Uint8Array;
+        let pcmBytes: Uint8Array;
+
         if (cachedData) {
-             pcmData = cachedData;
+            pcmBytes = cachedData;
         } else {
-             const response = await ai.models.generateContent({
-                model: "gemini-2.5-flash-preview-tts",
-                contents: [{ parts: [{ text: cleanText }] }],
-                config: {
-                    responseModalities: ['AUDIO'],
-                    speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } } },
-                },
+            const { data: response, error } = await supabase.functions.invoke('gemini', {
+                body: { action: 'tts', text: cleanText }
             });
-            const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-            if (!base64Audio) throw new Error("No audio data");
-            pcmData = decode(base64Audio);
-            await saveCachedAudio(cleanText, pcmData);
+
+            if (error || !response.audio) throw new Error("Audio generation failed");
+            pcmBytes = decodeBase64(response.audio);
+            await saveCachedAudio(cleanText, pcmBytes);
         }
-        const audioBuffer = await decodeAudioData(pcmData, outputAudioContext, 24000, 1);
-        const source = outputAudioContext.createBufferSource();
+
+        const audioBuffer = await decodeAudioData(pcmBytes, audioCtx, 24000, 1);
+        const source = audioCtx.createBufferSource();
         source.buffer = audioBuffer;
-        source.connect(outputAudioContext.destination);
+        source.connect(audioCtx.destination);
         source.start();
     } catch (error) {
+        console.error("Audio Playback Error:", error);
     } finally {
         setAudioLoadingId(null);
     }
@@ -238,7 +228,6 @@ const Card: React.FC<CardProps> = ({
       onClick={(e) => { e.stopPropagation(); handlePlayAudio(text, id); }}
       disabled={audioLoadingId !== null}
       className="p-2 text-slate-400 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all hover:text-blue-500 disabled:opacity-50"
-      aria-label="Play audio"
     >
       {audioLoadingId === id ? <LoadingSpinnerIcon className="w-4 h-4 text-blue-500" /> : <SpeakerIcon className="w-4 h-4" />}
     </button>
@@ -407,6 +396,7 @@ const Card: React.FC<CardProps> = ({
                             {isAiLoading ? 'Thinking...' : 'AI Simpler explanation'}
                         </button>
                       </div>
+                      {aiError && <p className="mt-4 text-sm text-red-500 font-bold text-center">{aiError}</p>}
                       {aiExplanation && (
                           <div className="mt-6 p-6 rounded-3xl bg-neumorphic-bg shadow-neumorphic-inset border-l-4 border-blue-500 animate-in zoom-in duration-300">
                               <h4 className="font-black text-blue-600 flex items-center uppercase text-xs tracking-widest mb-3"><SparkleIcon className="w-4 h-4 mr-2" /> AI Clarification</h4>
