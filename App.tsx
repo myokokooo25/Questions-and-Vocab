@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { ProgressProvider } from './contexts/ProgressContext';
 import AuthScreen from './components/Login';
 import Dashboard from './components/Dashboard';
 import WelcomeScreen from './components/WelcomeScreen';
@@ -72,11 +73,13 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <ThemeProvider>
-        <LanguageProvider>
-          <AppContent />
-        </LanguageProvider>
-      </ThemeProvider>
+      <ProgressProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <AppContent />
+          </LanguageProvider>
+        </ThemeProvider>
+      </ProgressProvider>
     </AuthProvider>
   );
 };

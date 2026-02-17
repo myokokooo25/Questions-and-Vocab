@@ -1,5 +1,5 @@
 {
   "name": "Japanese Structural Engineering Exam Study App",
-  "description": "A private web application for studying Japanese building codes with questions and explanations in both Japanese and Burmese. Access is protected by a simple passcode.",
+  "description": "ဤ App သည် ဂျပန်နိုင်ငံ၏ 鉄骨製作管理技術者 (Steel Frame Production Management Engineer) စာမေးပွဲဖြေဆိုရန် လေ့လာနေသူများအတွက် ရည်ရွယ်ပါသည်။ စာမေးပွဲမေးခွန်းဟောင်းများနှင့် ၎င်းတို့၏ ရှင်းလင်းချက်များ၊ သက်ဆိုင်ရာ ဝေါဟာရများကို စုစည်းပေးထားပါသည်။",
   "requestFramePermissions": []
 }

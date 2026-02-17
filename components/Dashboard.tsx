@@ -1,7 +1,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Card from './Card';
-import KanjiTooltip from './KanjiTooltip';
 import Dropdown from './Dropdown';
 import { studyDataByChapter, chapterCount } from '../data/content';
 import { chapter2021Data } from '../data/2021-old-question';
@@ -9,20 +8,23 @@ import { chapter2022Data } from '../data/2022-old-question';
 import { chapter2023Data } from '../data/2023-old-question';
 import { chapter2024Data } from '../data/2024-old-question';
 import { chapter2025Data } from '../data/2025-old-question';
-import { kanjiDictionary } from '../data/kanji';
-import { Kanji, StudyCardData } from '../types';
+import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, LogoIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon } from './Icons';
-import { useBookmarks } from '../hooks/useBookmarks';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon } from './Icons';
+import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
+import { kanjiDictionary } from '../data/kanji';
+import KanjiTooltip from './KanjiTooltip';
+import { supabase } from '../lib/supabase';
 
 interface HistoryEntry {
   deviceId: string;
   accessKey: string;
   timestamp: string;
   userAgent: string;
+  status?: 'success' | 'failure';
 }
 
 interface DashboardProps {
@@ -31,43 +33,147 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
-  const { user, logout } = useAuth();
+  const { user, logout, syncLocalKeys } = useAuth();
   const { language, toggleLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
-  const { bookmarkedIds } = useBookmarks();
+  const { bookmarkedIds, studyHistory, recordAnswer } = useProgress(); 
+  
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<string>('');
+
+  // Questions State
+  const [onlineQuestions, setOnlineQuestions] = useState<StudyCardData[]>([]);
+  const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
+
+  // Kanji Tooltip State
+  const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+
+  // --- Trial Timer Logic ---
+  useEffect(() => {
+    if (user?.type === 'trial' && user.trialExpiresAt) {
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const expires = new Date(user.trialExpiresAt!).getTime();
+        const distance = expires - now;
+
+        if (distance < 0) {
+          clearInterval(interval);
+          alert("Trial period expired (15 minutes). Please contact admin for full access.");
+          logout();
+        } else {
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          setTimeLeft(`${minutes}m ${seconds}s`);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [user, logout]);
+
 
   const isOldQuestionMode = ['2021', '2022', '2023', '2024', '2025'].includes(selectedApp);
 
-  const { dataByChapter, totalChapters } = useMemo(() => {
+  // Local fallback data calculation
+  const { localTotalChapters } = useMemo(() => {
     if (isOldQuestionMode) {
-      const oldDataMap: Record<string, StudyCardData[]> = {
-        '2021': chapter2021Data,
-        '2022': chapter2022Data,
-        '2023': chapter2023Data,
-        '2024': chapter2024Data,
-        '2025': chapter2025Data,
-      };
-      const yearData = oldDataMap[selectedApp] || [];
-      return { dataByChapter: { [selectedApp]: yearData }, totalChapters: 1 };
+      return { localTotalChapters: 1 };
     }
-    return { dataByChapter: studyDataByChapter, totalChapters: chapterCount };
+    return { localTotalChapters: chapterCount };
   }, [isOldQuestionMode, selectedApp]);
   
-  const chapterKeys = useMemo(() => Object.keys(dataByChapter).map(Number), [dataByChapter]);
-  
-  const [activeChapter, setActiveChapter] = useState(chapterKeys[0]);
+  // Chapter Selection State
+  const [activeChapter, setActiveChapter] = useState(1); // Default to 1
 
+  // Handle Initial Chapter for Old Questions
   useEffect(() => {
-    setActiveChapter(chapterKeys[0]);
-  }, [chapterKeys]);
+      if (isOldQuestionMode) {
+          setActiveChapter(parseInt(selectedApp));
+      } else {
+          // Reset to chapter 1 when switching back to main
+          // But only if we are currently on a "year" chapter
+          if (activeChapter > 100) setActiveChapter(1);
+      }
+  }, [selectedApp, isOldQuestionMode]);
+
+  // --- FETCH QUESTIONS FROM DB ---
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      setIsLoadingQuestions(true);
+      const category = isOldQuestionMode ? selectedApp : activeChapter.toString();
+
+      try {
+        const { data, error } = await supabase
+          .from('questions')
+          .select('*')
+          .eq('category', category);
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Map DB columns to StudyCardData interface
+          const mappedQuestions: StudyCardData[] = data.map((q: any) => ({
+            id: q.id,
+            questionJP: q.question_jp,
+            questionMY: q.question_my,
+            options: q.options,
+            correctOptionId: q.correct_option_id,
+            explanation: q.explanation
+          }));
+          
+          // Sort by ID to ensure order (optional, assumes ID is sortable)
+          // Simple sort:
+           mappedQuestions.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+
+          setOnlineQuestions(mappedQuestions);
+        } else {
+          // Fallback to local data if DB is empty for this chapter
+          console.log("No data in DB, using local fallback");
+          let localData: StudyCardData[] = [];
+          if (isOldQuestionMode) {
+             const oldDataMap: Record<string, StudyCardData[]> = {
+                '2021': chapter2021Data,
+                '2022': chapter2022Data,
+                '2023': chapter2023Data,
+                '2024': chapter2024Data,
+                '2025': chapter2025Data,
+              };
+              localData = oldDataMap[selectedApp] || [];
+          } else {
+              localData = studyDataByChapter[activeChapter] || [];
+          }
+          setOnlineQuestions(localData);
+        }
+      } catch (err) {
+        console.error("Error fetching questions:", err);
+        // Fallback on error
+         let localData: StudyCardData[] = [];
+          if (isOldQuestionMode) {
+             const oldDataMap: Record<string, StudyCardData[]> = {
+                '2021': chapter2021Data,
+                '2022': chapter2022Data,
+                '2023': chapter2023Data,
+                '2024': chapter2024Data,
+                '2025': chapter2025Data,
+              };
+              localData = oldDataMap[selectedApp] || [];
+          } else {
+              localData = studyDataByChapter[activeChapter] || [];
+          }
+          setOnlineQuestions(localData);
+      } finally {
+        setIsLoadingQuestions(false);
+      }
+    };
+
+    fetchQuestions();
+  }, [activeChapter, selectedApp, isOldQuestionMode]);
+
 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [studyAnswers, setStudyAnswers] = useState<{[key: string]: number}>({});
-  const [activeKanji, setActiveKanji] = useState<Kanji | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [view, setView] = useState<'study' | 'list' | 'quiz'>('study');
 
   // Admin View State
@@ -76,6 +182,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [adminLoginError, setAdminLoginError] = useState('');
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
+  const [syncStatus, setSyncStatus] = useState<string>('');
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [migrationStatus, setMigrationStatus] = useState('');
   
   const DEVICE_HISTORY_KEY = 'auth_device_history';
   const ADMIN_PASSCODE = '454879';
@@ -120,26 +229,90 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }
   };
 
+  const handleSyncKeys = async () => {
+      setIsSyncing(true);
+      setSyncStatus('Syncing...');
+      try {
+          const result = await syncLocalKeys();
+          setSyncStatus(result);
+      } catch (e) {
+          setSyncStatus('Sync Failed.');
+      } finally {
+          setIsSyncing(false);
+      }
+  };
+
+  // --- MIGRATION LOGIC ---
+  const handleMigrateDataToDB = async () => {
+      if (!window.confirm("This will upload all local content to Supabase. Continue?")) return;
+      
+      setMigrationStatus("Starting migration...");
+      setIsSyncing(true);
+
+      const allDataToUpload: {category: string, data: StudyCardData[]}[] = [];
+
+      // 1. Gather all local data
+      // Chapters 1-5
+      for (let i = 1; i <= 5; i++) {
+          if (studyDataByChapter[i]) {
+              allDataToUpload.push({ category: i.toString(), data: studyDataByChapter[i] });
+          }
+      }
+      // Years
+      allDataToUpload.push({ category: '2021', data: chapter2021Data });
+      allDataToUpload.push({ category: '2022', data: chapter2022Data });
+      allDataToUpload.push({ category: '2023', data: chapter2023Data });
+      allDataToUpload.push({ category: '2024', data: chapter2024Data });
+      allDataToUpload.push({ category: '2025', data: chapter2025Data });
+
+      let successCount = 0;
+      let failCount = 0;
+
+      for (const group of allDataToUpload) {
+          for (const q of group.data) {
+              const payload = {
+                  id: q.id,
+                  category: group.category,
+                  question_jp: q.questionJP,
+                  question_my: q.questionMY,
+                  options: q.options, // Supabase handles JSON automatically
+                  correct_option_id: q.correctOptionId,
+                  explanation: q.explanation
+              };
+
+              const { error } = await supabase.from('questions').upsert(payload);
+              if (error) {
+                  console.error("Migration error for", q.id, error);
+                  failCount++;
+              } else {
+                  successCount++;
+              }
+          }
+      }
+
+      setMigrationStatus(`Migration Complete. Success: ${successCount}, Failed: ${failCount}`);
+      setIsSyncing(false);
+  };
+
   const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => {
-    const kanjiData = kanjiDictionary[kanji];
-    if (kanjiData) {
+    const data = kanjiDictionary[kanji];
+    if (data) {
+      // Calculate position
       const rect = event.currentTarget.getBoundingClientRect();
-      setActiveKanji(kanjiData);
-      setTooltipPosition({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+      
+      setTooltipPos({
+        top: rect.bottom + scrollTop,
+        left: rect.left + scrollLeft
       });
+      setSelectedKanji(data);
     }
   };
 
-  const handleCloseTooltip = () => {
-    setActiveKanji(null);
-  };
-
-  const currentChapterData = useMemo(() => dataByChapter[activeChapter] || [], [activeChapter, dataByChapter]);
-
+  // Filter Logic
   const filteredData = useMemo(() => {
-    let data = currentChapterData;
+    let data = onlineQuestions;
     if (showOnlyBookmarked) {
       data = data.filter(item => bookmarkedIds.has(item.id));
     }
@@ -156,11 +329,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       });
     }
     return data;
-  }, [currentChapterData, showOnlyBookmarked, bookmarkedIds, searchQuery]);
+  }, [onlineQuestions, showOnlyBookmarked, bookmarkedIds, searchQuery]);
 
   useEffect(() => {
     setCurrentCardIndex(0);
-    setStudyAnswers({});
+    // Don't reset study answers on chapter change anymore
     setView('study');
   }, [activeChapter, showOnlyBookmarked, searchQuery]);
 
@@ -182,8 +355,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   };
   
   const handleOptionSelect = (cardId: string, optionId: number) => {
-    if (studyAnswers[cardId] !== undefined) return;
-    setStudyAnswers(prev => ({...prev, [cardId]: optionId}));
+    if (studyHistory[cardId] !== undefined) return;
+    recordAnswer(cardId, optionId);
   };
 
   const currentCard = filteredData[currentCardIndex];
@@ -192,11 +365,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     if (isOldQuestionMode) {
       return [{ value: Number(selectedApp), label: `${selectedApp}年 過去問題` }];
     }
-    return Array.from({ length: totalChapters }, (_, i) => ({
+    return Array.from({ length: localTotalChapters }, (_, i) => ({
       value: i + 1,
       label: `Chapter ${i + 1}`,
     }));
-  }, [isOldQuestionMode, totalChapters, selectedApp]);
+  }, [isOldQuestionMode, localTotalChapters, selectedApp]);
 
   const activeChapterLabel = useMemo(() => {
     const opt = chapterOptions.find(o => o.value === activeChapter);
@@ -205,48 +378,75 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   const answeredIDsInFilter = useMemo(() => {
     const filteredIds = new Set(filteredData.map(c => c.id));
-    return Object.keys(studyAnswers).filter(answeredId => filteredIds.has(answeredId));
-  }, [studyAnswers, filteredData]);
+    return Object.keys(studyHistory).filter(answeredId => filteredIds.has(answeredId));
+  }, [studyHistory, filteredData]);
   
   const answeredCount = answeredIDsInFilter.length;
 
   const correctCount = useMemo(() => {
     return answeredIDsInFilter.reduce((count, cardId) => {
       const card = filteredData.find(c => c.id === cardId);
-      if (card && studyAnswers[cardId] === card.correctOptionId) {
+      if (card && studyHistory[cardId] === card.correctOptionId) {
         return count + 1;
       }
       return count;
     }, 0);
-  }, [studyAnswers, filteredData, answeredIDsInFilter]);
+  }, [studyHistory, filteredData, answeredIDsInFilter]);
 
   const renderContent = () => {
     if (isAdminViewVisible) {
       return (
-         <div className="space-y-4 p-4 rounded-xl shadow-neumorphic-inset bg-slate-800 text-slate-100">
-            <div className="flex justify-between items-center pb-3 border-b border-slate-700">
+         <div className="space-y-4 p-6 rounded-[2rem] shadow-neumorphic-inset bg-slate-800 text-slate-100">
+            {/* Admin Dashboard content... */}
+             <div className="flex flex-col sm:flex-row justify-between items-center pb-4 border-b border-slate-700 gap-4">
                 <h2 className="text-2xl font-bold flex items-center gap-3">
                     <ClockIcon className="w-8 h-8 text-blue-400" />
-                    Admin Panel: Login History
+                    Admin Dashboard
                 </h2>
-                <button onClick={loadHistoryData} className="p-2 bg-slate-700 rounded-md hover:bg-slate-600" title="Refresh History">
-                    <RefreshIcon className="w-5 h-5" />
-                </button>
+                <div className='flex gap-3 flex-wrap'>
+                    <button onClick={handleMigrateDataToDB} disabled={isSyncing} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                         {isSyncing ? 'Migrating...' : 'Migrate Data to DB'}
+                    </button>
+                    <button onClick={handleSyncKeys} disabled={isSyncing} className="px-4 py-2 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                        {isSyncing ? 'Syncing...' : 'Sync Keys to DB'}
+                    </button>
+                    <button onClick={loadHistoryData} className="p-3 bg-slate-700 rounded-xl hover:bg-slate-600 transition-colors shadow-lg" title="Refresh History">
+                        <RefreshIcon className="w-5 h-5" />
+                    </button>
+                </div>
             </div>
-            <div className="max-h-[60vh] overflow-y-auto">
+            
+            {migrationStatus && (
+                <div className="p-3 bg-slate-700 rounded-xl text-center">
+                    <p className="text-sm font-mono text-green-400">{migrationStatus}</p>
+                </div>
+            )}
+
+            {/* ... rest of admin panel ... */}
+            <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
                 {historyData.length > 0 ? (
-                    <ul className="space-y-3">
-                        {historyData.slice().reverse().map((entry, index) => (
-                            <li key={index} className="p-3 bg-slate-900/70 rounded-lg text-sm">
-                                <p><strong>Key:</strong> {entry.accessKey}</p>
-                                <p><strong>Device ID:</strong> <span className="text-xs font-mono">{entry.deviceId}</span></p>
-                                <p><strong>Time:</strong> {new Date(entry.timestamp).toLocaleString()}</p>
-                                <p className="text-xs text-slate-400 mt-1"><strong>User Agent:</strong> {entry.userAgent}</p>
-                            </li>
-                        ))}
+                    <ul className="space-y-4">
+                        {historyData.slice().reverse().map((entry, index) => {
+                             const isFailure = entry.status === 'failure';
+                            return (
+                                <li key={index} className={`p-4 rounded-2xl border text-sm flex items-start justify-between gap-4 ${isFailure ? 'bg-red-900/20 border-red-500/50' : 'bg-slate-900/60 border-green-500/30'}`}>
+                                    <div className="space-y-1">
+                                      <p className="flex items-center gap-2">
+                                           {isFailure ? <span className="text-red-500 font-bold">Failed</span> : <span className="text-green-500 font-bold">Success</span>}
+                                          <span className="font-mono text-slate-300">{entry.accessKey}</span>
+                                      </p>
+                                      <p className="text-xs text-slate-400">ID: {entry.deviceId}</p>
+                                    </div>
+                                    <div className="text-right text-xs text-slate-400 whitespace-nowrap">
+                                        <p>{new Date(entry.timestamp).toLocaleDateString()}</p>
+                                        <p>{new Date(entry.timestamp).toLocaleTimeString()}</p>
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 ) : (
-                    <p className="text-center text-slate-400 py-8">No login history found.</p>
+                    <p className="text-center text-slate-400 py-12 font-medium">No login history found.</p>
                 )}
             </div>
         </div>
@@ -256,7 +456,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     if (view === 'quiz') {
       return (
         <ChapterQuiz 
-          questions={currentChapterData} 
+          questions={onlineQuestions} 
           chapterTitle={activeChapterLabel}
           onExit={() => setView('study')}
           onKanjiClick={handleKanjiClick}
@@ -266,25 +466,27 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     
     if (view === 'list') {
         return (
-            <div className="bg-neumorphic-bg rounded-2xl shadow-neumorphic-inset p-2 sm:p-4">
-                <div className="p-4 border-b border-neumorphic-shadow-dark/20">
-                    <h2 className="text-lg font-semibold text-neumorphic-text">{isOldQuestionMode ? `Question Bank - ${selectedApp} Past Questions` : `Question Bank - Chapter ${activeChapter}`}</h2>
+            <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-inset p-4 sm:p-6">
+                <div className="pb-4 mb-4 border-b border-slate-300/30">
+                    <h2 className="text-xl font-black text-slate-700">{isOldQuestionMode ? `${selectedApp} Past Questions` : `Chapter ${activeChapter} Questions`}</h2>
                 </div>
-                <ul className="divide-y divide-neumorphic-shadow-dark/20 max-h-[70vh] overflow-y-auto">
+                <ul className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
                     {filteredData.map((card, index) => {
-                        const isAnswered = studyAnswers[card.id] !== undefined;
-                        const isCorrect = isAnswered && studyAnswers[card.id] === card.correctOptionId;
+                        const isAnswered = studyHistory[card.id] !== undefined;
+                        const isCorrect = isAnswered && studyHistory[card.id] === card.correctOptionId;
                         return (
                              <li key={card.id}>
-                                <button onClick={() => handleQuestionSelect(index)} className="w-full text-left p-4 hover:bg-neumorphic-bg hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all duration-200 flex items-start justify-between gap-4 rounded-lg">
+                                <button onClick={() => handleQuestionSelect(index)} className="w-full text-left p-6 bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all duration-300 flex items-start justify-between gap-6 rounded-3xl group">
                                     <div className="flex-1">
-                                        <p className="font-semibold text-slate-600">Question {card.id}</p>
-                                        <p className="text-sm text-slate-500">
+                                        <p className="text-xs font-black text-blue-600 uppercase tracking-widest mb-1">Question {card.id}</p>
+                                        <p className="text-base font-bold text-slate-700 leading-snug group-hover:text-slate-900">
                                             {language === 'my' ? card.questionMY : card.questionJP.replace(/<[^>]+>/g, '')}
                                         </p>
                                     </div>
                                     {isAnswered && (
-                                        <CheckCircleSolidIcon className={`w-6 h-6 shrink-0 mt-0.5 ${isCorrect ? 'text-green-500' : 'text-red-500'}`} />
+                                        <div className={`p-2 rounded-full shadow-neumorphic-inset ${isCorrect ? 'text-green-500' : 'text-red-500'}`}>
+                                            <CheckCircleSolidIcon className="w-7 h-7 shrink-0" />
+                                        </div>
                                     )}
                                 </button>
                             </li>
@@ -295,31 +497,40 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         )
     }
 
+    if (isLoadingQuestions) {
+        return (
+             <div className="flex flex-col items-center justify-center py-20">
+                <LoadingSpinnerIcon className="w-12 h-12 text-blue-600 mb-4" />
+                <p className="text-slate-500 font-bold">Loading Questions...</p>
+             </div>
+        )
+    }
+
     if (filteredData.length === 0) {
       return (
-        <div className="text-center py-16 px-6 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset">
+        <div className="text-center py-20 px-8 bg-neumorphic-bg rounded-[3rem] shadow-neumorphic-outset">
           {searchQuery ? (
             <>
-              <SearchIcon className="w-12 h-12 mx-auto text-slate-400" />
-              <h3 className="mt-2 text-lg font-semibold text-slate-600">No Results Found</h3>
-              <p className="mt-1 text-sm text-slate-500">
-                Your search for "{searchQuery}" did not match any questions in this chapter.
+              <SearchIcon className="w-16 h-16 mx-auto text-slate-300 mb-4" />
+              <h3 className="text-xl font-black text-slate-700">No Results Found</h3>
+              <p className="mt-2 text-slate-500 font-medium italic">
+                Your search for "{searchQuery}" did not match any questions.
               </p>
             </>
           ) : showOnlyBookmarked ? (
             <>
-              <BookmarkIcon className="w-12 h-12 mx-auto text-slate-400" />
-              <h3 className="mt-2 text-lg font-semibold text-slate-600">No Bookmarked Questions</h3>
-              <p className="mt-1 text-sm text-slate-500">
-                No bookmarked questions found in this chapter.
+              <BookmarkIcon className="w-16 h-16 mx-auto text-slate-300 mb-4" />
+              <h3 className="text-xl font-black text-slate-700">No Bookmarks</h3>
+              <p className="mt-2 text-slate-500 font-medium italic">
+                No bookmarked questions in this chapter.
               </p>
             </>
           ) : (
              <>
-              <PencilIcon className="w-12 h-12 mx-auto text-slate-400" />
-              <h3 className="mt-2 text-lg font-semibold text-slate-600">No Questions Available</h3>
-              <p className="mt-1 text-sm text-slate-500">
-                  There are no questions in this year yet.
+              <FolderIcon className="w-16 h-16 mx-auto text-slate-300 mb-4" />
+              <h3 className="text-xl font-black text-slate-700">Database Empty</h3>
+              <p className="mt-2 text-slate-500 font-medium italic">
+                  This section currently has no data. (Try Syncing in Admin Panel)
               </p>
             </>
           )}
@@ -328,9 +539,30 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }
 
     return (
-      <div>
-        <p className="text-center mb-4 text-sm text-slate-500">
-          Showing question <span className="font-semibold text-slate-700">{currentCardIndex + 1}</span> of <span className="font-semibold text-slate-700">{filteredData.length}</span>
+      <div className="relative">
+        
+        {/* Floating Navigation - Left (Visible on large screens) */}
+        <button
+            onClick={goToPreviousCard}
+            disabled={currentCardIndex === 0}
+            className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex items-center justify-center w-16 h-16 bg-neumorphic-bg rounded-full shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all disabled:opacity-0 text-slate-500 hover:text-blue-600"
+            title="Previous Question"
+        >
+            <ChevronLeftIcon className="w-8 h-8" />
+        </button>
+
+        {/* Floating Navigation - Right (Visible on large screens) */}
+        <button
+            onClick={goToNextCard}
+            disabled={currentCardIndex === filteredData.length - 1}
+            className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex items-center justify-center w-16 h-16 bg-neumorphic-bg rounded-full shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all disabled:opacity-0 text-slate-500 hover:text-blue-600"
+            title="Next Question"
+        >
+            <ChevronLeftIcon className="w-8 h-8 rotate-180" />
+        </button>
+
+        <p className="text-center mb-6 text-sm font-bold text-slate-400 uppercase tracking-widest">
+          Question <span className="text-slate-700 px-1">{currentCardIndex + 1}</span> of <span className="text-slate-700 px-1">{filteredData.length}</span>
         </p>
 
         <Card 
@@ -339,22 +571,22 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           onKanjiClick={handleKanjiClick}
           mode="study"
           onOptionSelect={(optionId) => handleOptionSelect(currentCard.id, optionId)}
-          selectedOptionId={studyAnswers[currentCard.id]}
-          isSubmitted={studyAnswers[currentCard.id] !== undefined}
+          selectedOptionId={studyHistory[currentCard.id]}
+          isSubmitted={studyHistory[currentCard.id] !== undefined}
         />
         
-        <div className="flex items-center justify-between mt-6 gap-4">
+        <div className="flex items-center justify-between mt-8 gap-6">
           <button 
               onClick={goToPreviousCard}
               disabled={currentCardIndex === 0}
-              className="w-full px-6 py-2.5 text-sm font-semibold text-neumorphic-text bg-neumorphic-bg rounded-lg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-shadow duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 py-4 text-sm font-black uppercase tracking-widest text-slate-600 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
           >
-            Previous
+            Prev
           </button>
           <button 
               onClick={goToNextCard}
               disabled={currentCardIndex === filteredData.length - 1}
-              className="w-full px-6 py-2.5 text-sm font-semibold text-neumorphic-text bg-neumorphic-bg rounded-lg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-shadow duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 py-4 text-sm font-black uppercase tracking-widest text-blue-600 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
           >
             Next
           </button>
@@ -366,16 +598,25 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   return (
     <div className="min-h-screen bg-neumorphic-bg">
+       {/* Tooltip */}
+       {selectedKanji && (
+          <KanjiTooltip
+            kanjiData={selectedKanji}
+            position={tooltipPos}
+            onClose={() => setSelectedKanji(null)}
+          />
+        )}
+
        {showAdminLogin && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="w-full max-sm p-8 space-y-6 bg-slate-900 rounded-xl shadow-xl ring-1 ring-white/10">
-            <h2 className="text-xl font-bold text-center text-slate-100">Admin Access</h2>
-            <form onSubmit={handleAdminLogin} className="space-y-4">
-              <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} className="block w-full px-4 py-3 bg-slate-800 placeholder-gray-400 border border-slate-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm text-slate-100" placeholder="Enter Passcode" autoComplete="off" autoFocus />
-              {adminLoginError && <p className="text-sm text-center text-red-400">{adminLoginError}</p>}
-              <div className="flex gap-4 pt-2">
-                <button type="button" onClick={() => setShowAdminLogin(false)} className="w-full px-4 py-2 text-sm font-semibold bg-slate-600 text-slate-200 rounded-lg hover:bg-slate-500 transition-colors">Cancel</button>
-                <button type="submit" className="w-full px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">Login</button>
+        <div className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="w-full max-w-sm p-10 space-y-6 bg-slate-900 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10">
+            <h2 className="text-2xl font-black text-center text-slate-100 uppercase tracking-widest">Admin Access</h2>
+            <form onSubmit={handleAdminLogin} className="space-y-6">
+              <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} className="block w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-2xl shadow-inner text-center font-bold tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-100" placeholder="••••••" autoComplete="off" autoFocus />
+              {adminLoginError && <p className="text-sm text-center text-red-400 font-bold">{adminLoginError}</p>}
+              <div className="flex gap-4">
+                <button type="button" onClick={() => setShowAdminLogin(false)} className="flex-1 py-4 text-xs font-black uppercase bg-slate-700 text-slate-300 rounded-2xl hover:bg-slate-600">Cancel</button>
+                <button type="submit" className="flex-1 py-4 text-xs font-black uppercase text-white bg-blue-600 rounded-2xl hover:bg-blue-500">Login</button>
               </div>
             </form>
           </div>
@@ -383,27 +624,46 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       )}
 
       {showProfile && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowProfile(false)}>
-           <div className="w-full max-w-sm p-8 space-y-6 bg-neumorphic-bg rounded-2xl shadow-xl animate-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-md" onClick={() => setShowProfile(false)}>
+           <div className="w-full max-w-sm p-10 space-y-8 bg-neumorphic-bg rounded-[3rem] shadow-2xl animate-in zoom-in duration-300" onClick={e => e.stopPropagation()}>
               <div className="text-center">
-                  <div className="inline-block p-4 bg-neumorphic-bg rounded-full shadow-neumorphic-outset">
+                  <div className="inline-block p-6 bg-neumorphic-bg rounded-full shadow-neumorphic-outset">
                     <UsersIcon className="w-12 h-12 text-blue-600" />
                   </div>
-                  <h2 className="mt-4 text-2xl font-bold text-slate-700">Account Details</h2>
+                  <h2 className="mt-6 text-2xl font-black text-slate-700">Access Details</h2>
               </div>
-              <div className="p-4 bg-neumorphic-bg shadow-neumorphic-inset rounded-xl space-y-4">
+              <div className="p-6 bg-neumorphic-bg shadow-neumorphic-inset rounded-[2rem] space-y-5">
                   <div>
-                    <p className="text-xs font-bold text-slate-500 uppercase">Active Redeem Code</p>
-                    <p className="text-lg font-mono font-bold text-blue-600 tracking-wider mt-1">{user?.accessKey}</p>
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Active Code</p>
+                    <p className="text-xl font-mono font-black text-blue-600 tracking-wider mt-1">{user?.accessKey}</p>
                   </div>
-                  <div className="pt-2 border-t border-slate-300/30">
-                    <p className="text-xs font-bold text-slate-500 uppercase">Status</p>
-                    <p className="text-sm font-semibold text-green-600 mt-1">Unlocked / Full Access</p>
+                  
+                  {/* --- Type & Expiration Info --- */}
+                  <div className="pt-4 border-t border-slate-300/30">
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Type</p>
+                    <p className={`text-sm font-black mt-1 ${user?.type === 'trial' ? 'text-amber-500' : 'text-blue-600'}`}>
+                        {user?.type === 'trial' ? 'TRIAL ACCESS' : 'PERMANENT ACCESS'}
+                    </p>
+                  </div>
+
+                   {user?.type === 'trial' && timeLeft && (
+                      <div className="pt-4 border-t border-slate-300/30">
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Time Remaining</p>
+                        <p className="text-xl font-black text-red-500 mt-1 font-mono">{timeLeft}</p>
+                      </div>
+                   )}
+
+                  <div className="pt-4 border-t border-slate-300/30">
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Status</p>
+                    <p className="text-sm font-black text-green-600 mt-1 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        ACTIVE
+                    </p>
                   </div>
               </div>
               <button
                 onClick={() => setShowProfile(false)}
-                className="w-full px-4 py-3 text-sm font-bold text-slate-700 bg-neumorphic-bg rounded-xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
+                className="w-full py-4 text-sm font-black uppercase tracking-widest text-slate-700 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
               >
                 Close
               </button>
@@ -411,77 +671,78 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         </div>
       )}
       
-      <KanjiTooltip 
-        kanjiData={activeKanji}
-        position={tooltipPosition}
-        onClose={handleCloseTooltip}
-      />
-      <header className="sticky top-0 z-20 w-full bg-neumorphic-bg">
-        <div className="flex items-center justify-between h-16 max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-50 w-full bg-neumorphic-bg/80 backdrop-blur-md">
+        <div className="flex items-center justify-between h-20 max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center gap-3">
               <button
                 onClick={onGoBack}
-                className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200"
+                className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
                 title="Go Back"
               >
                 <ChevronLeftIcon className="w-6 h-6" />
               </button>
-              <div className="p-2 rounded-full shadow-neumorphic-outset hidden sm:block">
-                <LogoIcon className="w-6 h-6 text-neumorphic-text" />
-              </div>
-              <h1 className="text-xl font-bold text-slate-700 hidden sm:block">
+              <h1 className="text-xl font-black text-slate-700 hidden sm:block ml-2">
                 {isOldQuestionMode ? `${selectedApp}年 過去問題` : '鉄骨技術者 試験対策'}
               </h1>
             </div>
-            <div className="flex items-center gap-2 sm:gap-3">
-                 <div className="relative">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <SearchIcon className="w-5 h-5 text-slate-400" />
+            
+            {/* --- Trial Timer Display in Header --- */}
+            {user?.type === 'trial' && timeLeft && (
+                <div className="hidden sm:flex items-center px-4 py-2 bg-red-100 rounded-xl border border-red-200">
+                    <ClockIcon className="w-4 h-4 text-red-500 mr-2 animate-pulse" />
+                    <span className="text-xs font-black text-red-600 font-mono tracking-widest">{timeLeft}</span>
+                </div>
+            )}
+
+            <div className="flex items-center gap-3">
+                 <div className="relative group hidden sm:block">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                        <SearchIcon className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                     </div>
                     <input
                         type="text"
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-32 sm:w-48 pl-10 pr-3 py-2 text-sm bg-neumorphic-bg text-neumorphic-text placeholder-slate-500 rounded-lg shadow-neumorphic-inset border-2 border-transparent focus:outline-none focus:ring-0 transition-all"
+                        className="w-24 sm:w-48 pl-10 pr-4 py-2.5 text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
                     />
                 </div>
                  <button
                     onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
-                    className={`p-2.5 rounded-lg transition-all duration-200 ${
+                    className={`p-3 rounded-2xl transition-all ${
                     showOnlyBookmarked
-                        ? 'shadow-neumorphic-inset text-slate-700'
-                        : 'shadow-neumorphic-outset text-slate-500 hover:text-slate-700'
+                        ? 'shadow-neumorphic-inset text-blue-600'
+                        : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700'
                     }`}
-                    aria-pressed={showOnlyBookmarked}
-                    title="Toggle Bookmarked"
+                    title="Bookmarks"
                 >
                     <BookmarkIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={() => setShowProfile(true)}
-                    className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-blue-600 active:shadow-neumorphic-inset transition-all duration-200"
-                    title="Account Details"
+                    className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
+                    title="Account"
                 >
                     <UsersIcon className="w-5 h-5" />
+                    {user?.type === 'trial' && <span className="absolute top-2 right-2 w-2 h-2 bg-amber-500 rounded-full border border-white"></span>}
                 </button>
                 <button
                     onClick={toggleLanguage}
-                    className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200"
-                    title="Toggle Language"
+                    className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                    title="Language"
                 >
                     <GlobeIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={toggleTheme}
-                    className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200"
-                    title="Toggle Theme"
+                    className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                    title="Theme"
                 >
                     {theme === 'light' ? <MoonIcon className="w-5 h-5" /> : <SunIcon className="w-5 h-5" />}
                 </button>
                 <button
                 onClick={logout}
-                className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-red-500 active:shadow-neumorphic-inset transition-all duration-200"
+                className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all"
                 title="Logout"
                 >
                     <LogoutIcon className="w-5 h-5" />
@@ -489,12 +750,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             </div>
         </div>
       </header>
-      <main className="max-w-4xl p-4 mx-auto sm:p-6 lg:p-8">
+
+      <main className="max-w-4xl p-4 mx-auto sm:p-6 lg:p-8 pb-20">
         
        {!isAdminViewVisible && (
         <>
-            <div className="flex flex-col sm:flex-row items-center justify-between p-3 mb-6 bg-neumorphic-bg rounded-xl shadow-neumorphic-outset gap-4">
-                <div className="w-full sm:w-1/3">
+            <div className="flex flex-col sm:flex-row items-center justify-between p-4 mb-10 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset gap-6">
+                <div className="w-full sm:w-[45%]">
                     <Dropdown
                         options={chapterOptions}
                         value={activeChapter}
@@ -506,48 +768,48 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <div className="flex gap-4 w-full sm:w-auto">
                     <button
                         onClick={() => setView(view === 'study' ? 'list' : 'study')}
-                        className="flex-1 flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-neumorphic-text bg-neumorphic-bg rounded-lg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
+                        className="flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-wider text-slate-600 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
                     >
                         {view === 'list' ? <BookOpenIcon className="w-5 h-5 mr-2"/> : <ListBulletIcon className="w-5 h-5 mr-2"/>}
-                        {view === 'list' ? 'Study Mode' : 'Question Bank'}
+                        {view === 'list' ? 'Study' : 'Bank'}
                     </button>
                     <button
                         onClick={() => setView(view === 'quiz' ? 'study' : 'quiz')}
-                        className={`flex-1 flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-lg transition-all ${view === 'quiz' ? 'text-blue-600 shadow-neumorphic-inset' : 'text-neumorphic-text bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset'}`}
+                        className={`flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-wider rounded-2xl transition-all ${view === 'quiz' ? 'text-blue-600 shadow-neumorphic-inset' : 'text-slate-600 bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset'}`}
                     >
                         <AcademicCapIcon className="w-5 h-5 mr-2"/>
-                        {view === 'quiz' ? 'Exit Quiz' : 'Start Quiz'}
+                        {view === 'quiz' ? 'Exit' : 'Quiz'}
                     </button>
                 </div>
             </div>
 
             {view !== 'quiz' && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-neumorphic-bg p-4 rounded-xl shadow-neumorphic-outset flex items-center justify-between">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group">
                       <div>
-                          <p className="text-sm text-slate-500">Total</p>
-                          <p className="text-2xl font-bold text-slate-700">{filteredData.length}</p>
+                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Total</p>
+                          <p className="text-3xl font-black text-slate-700">{filteredData.length}</p>
                       </div>
-                      <div className="p-3 rounded-full shadow-neumorphic-inset">
-                          <BookOpenIcon className="w-6 h-6 text-slate-600"/>
+                      <div className="p-4 rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-blue-500 transition-colors">
+                          <BookOpenIcon className="w-8 h-8"/>
                       </div>
                   </div>
-                  <div className="bg-neumorphic-bg p-4 rounded-xl shadow-neumorphic-outset flex items-center justify-between">
+                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group">
                       <div>
-                          <p className="text-sm text-slate-500">Answered</p>
-                          <p className="text-2xl font-bold text-slate-700">{answeredCount}</p>
+                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Done</p>
+                          <p className="text-3xl font-black text-slate-700">{answeredCount}</p>
                       </div>
-                       <div className="p-3 rounded-full shadow-neumorphic-inset">
-                          <PencilIcon className="w-6 h-6 text-slate-600"/>
+                       <div className="p-4 rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-amber-500 transition-colors">
+                          <PencilIcon className="w-8 h-8"/>
                       </div>
                   </div>
-                  <div className="bg-neumorphic-bg p-4 rounded-xl shadow-neumorphic-outset flex items-center justify-between">
+                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group">
                       <div>
-                          <p className="text-sm text-slate-500">Correct</p>
-                          <p className="text-2xl font-bold text-slate-700">{correctCount}</p>
+                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Score</p>
+                          <p className="text-3xl font-black text-slate-700">{correctCount}</p>
                       </div>
-                       <div className="p-3 rounded-full shadow-neumorphic-inset">
-                          <CheckCircleSolidIcon className="w-6 h-6 text-slate-600"/>
+                       <div className="p-4 rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-green-500 transition-colors">
+                          <CheckCircleSolidIcon className="w-8 h-8"/>
                       </div>
                   </div>
               </div>

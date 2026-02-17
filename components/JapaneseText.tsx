@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 // A regex to identify Kanji characters.
@@ -23,7 +24,7 @@ const JapaneseText: React.FC<JapaneseTextProps> = ({ text, onKanjiClick }) => {
               e.stopPropagation(); // Prevent the parent button from being clicked
               onKanjiClick(part, e);
             }}
-            className="cursor-pointer hover:text-indigo-600 transition-colors"
+            className="cursor-pointer border-b border-dotted border-slate-400/50 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-600 transition-all duration-200"
           >
             {part}
           </span>

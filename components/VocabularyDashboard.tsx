@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { vocabularyData } from '../data/vocab';
 import { VocabItem, Kanji } from '../types';
@@ -6,14 +7,17 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { LogoutIcon, LogoIcon, SearchIcon, GlobeIcon, ChevronLeftIcon, AcademicCapIcon } from './Icons';
 import Dropdown from './Dropdown';
 import JapaneseText from './JapaneseText';
-import KanjiTooltip from './KanjiTooltip';
 import { kanjiDictionary } from '../data/kanji';
+import KanjiTooltip from './KanjiTooltip';
 
 const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   const { logout } = useAuth();
   const { toggleLanguage } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   
+  const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+
   const allVocab = useMemo(() => {
     const uniqueVocab = new Map<string, VocabItem>();
     Object.values(vocabularyData).flat().forEach(item => {
@@ -44,23 +48,19 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
 
   const [activeChapter, setActiveChapter] = useState<string | number>('all');
   
-  const [activeKanji, setActiveKanji] = useState<Kanji | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-
   const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => {
-    const kanjiData = kanjiDictionary[kanji];
-    if (kanjiData) {
+    const data = kanjiDictionary[kanji];
+    if (data) {
       const rect = event.currentTarget.getBoundingClientRect();
-      setActiveKanji(kanjiData);
-      setTooltipPosition({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+      
+      setTooltipPos({
+        top: rect.bottom + scrollTop,
+        left: rect.left + scrollLeft
       });
+      setSelectedKanji(data);
     }
-  };
-
-  const handleCloseTooltip = () => {
-    setActiveKanji(null);
   };
 
   const filteredVocab = useMemo(() => {
@@ -91,11 +91,14 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
 
   return (
     <div className="min-h-screen bg-neumorphic-bg">
-      <KanjiTooltip 
-        kanjiData={activeKanji}
-        position={tooltipPosition}
-        onClose={handleCloseTooltip}
-      />
+      {/* Tooltip */}
+      {selectedKanji && (
+        <KanjiTooltip
+          kanjiData={selectedKanji}
+          position={tooltipPos}
+          onClose={() => setSelectedKanji(null)}
+        />
+      )}
       <header className="sticky top-0 z-20 w-full bg-neumorphic-bg">
         <div className="flex items-center justify-between h-16 max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center gap-3">

@@ -1,3 +1,4 @@
+
 export interface StudyOption {
   id: number;
   textJP: string;
@@ -21,6 +22,9 @@ export interface StudyCardData {
 
 export interface User {
   accessKey: string;
+  type: 'permanent' | 'trial';
+  trialExpiresAt?: string | null; // ISO Date string for trial users
+  dbId?: number; // Added: The ID from the access_codes table
 }
 
 export interface Kanji {
@@ -34,7 +38,11 @@ export interface Kanji {
 export type Language = 'jp' | 'my' | 'jp-only';
 
 export interface VocabItem {
+  id: number; // Added id for consistency
+  category?: string;
   jp: string;
   my: string;
-  type: string;
+  reading?: string;
+  english?: string;
+  type?: string;
 }

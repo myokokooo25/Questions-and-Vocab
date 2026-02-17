@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { StudyCardData } from '../types';
-import { BookmarkIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, PencilIcon, AcademicCapIcon, CheckCircleSolidIcon, XCircleSolidIcon, LightBulbIcon, FlagIcon } from './Icons';
-import { useBookmarks } from '../hooks/useBookmarks';
+import { BookmarkIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, PencilIcon, AcademicCapIcon, CheckCircleSolidIcon, XCircleSolidIcon, LightBulbIcon, FlagIcon, BookOpenIcon } from './Icons';
+import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import JapaneseText from './JapaneseText';
 import { GoogleGenAI } from "@google/genai";
@@ -11,17 +11,11 @@ import ReportModal from './ReportModal';
 
 // Helper function to prepare text for TTS by removing furigana annotations.
 const stripHtml = (html: string): string => {
-  // This regex finds ruby tags and replaces the entire tag with only the base text.
-  // e.g., for <ruby>漢字<rt>かんじ</rt></ruby>, it becomes "漢字".
   const textWithoutFurigana = html.replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/g, '$1');
-  
-  // Strip any other remaining HTML tags that might exist.
   const doc = new DOMParser().parseFromString(textWithoutFurigana, 'text/html');
   return doc.body.textContent || "";
 };
 
-// Instantiate the AI client once at the module level.
-// This improves performance and reliability by reusing the same client instance.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
 // --- IndexedDB Caching Logic ---
@@ -53,7 +47,6 @@ const getCachedAudio = async (text: string): Promise<Uint8Array | null> => {
             request.onerror = () => reject(request.error);
         });
     } catch (e) {
-        console.error("Error reading from cache", e);
         return null;
     }
 };
@@ -68,13 +61,9 @@ const saveCachedAudio = async (text: string, data: Uint8Array): Promise<void> =>
             request.onsuccess = () => resolve();
             request.onerror = () => reject(request.error);
         });
-    } catch (e) {
-        console.error("Error saving to cache", e);
-    }
+    } catch (e) {}
 };
-// -------------------------------
 
-// Helper functions for Audio Decoding
 function decode(base64: string) {
   const binaryString = atob(base64);
   const len = binaryString.length;
@@ -107,7 +96,7 @@ async function decodeAudioData(
 interface CardProps {
   data: StudyCardData;
   onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void;
-  mode: 'study'; // Mode is now fixed to 'study'
+  mode: 'study';
   onOptionSelect?: (optionId: number) => void;
   selectedOptionId?: number;
   isSubmitted?: boolean;
@@ -116,13 +105,12 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ 
     data, 
     onKanjiClick,
-    mode,
     onOptionSelect,
     selectedOptionId,
     isSubmitted = false,
 }) => {
   const { language } = useLanguage();
-  const { bookmarkedIds, toggleBookmark } = useBookmarks();
+  const { bookmarkedIds, toggleBookmark } = useProgress(); // Use new progress hook
   const isBookmarked = bookmarkedIds.has(data.id);
   
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
@@ -158,60 +146,32 @@ const Card: React.FC<CardProps> = ({
     if (isAiLoading) {
       timer = window.setTimeout(() => {
         setShowWaitMessage(true);
-      }, 5000); // 5 seconds
+      }, 5000);
     } else {
       setShowWaitMessage(false);
     }
-
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, [isAiLoading]);
   
   const handleGetHint = async () => {
     if (isHintLoading || hint) return;
-
     setIsHintLoading(true);
     setHintError(null);
 
-    const prompt = `
-      You are an expert teacher for Japanese structural engineering exams.
-      A user has asked for a hint for the following multiple-choice question.
-
-      Your task is to provide a single, simple sentence in Burmese that gives a hint about the core concept needed to solve the problem.
-      - DO NOT reveal the answer.
-      - DO NOT mention the correct option number.
-      - DO NOT explain why other options are wrong.
-      - Just provide one guiding sentence in Burmese to help the user think in the right direction.
-
-      **Question Details:**
-      **Question (JP):** ${stripHtml(data.questionJP)}
-      **Question (MY):** ${data.questionMY}
-
-      **Options:**
-      ${data.options.map(opt => `- (${opt.id}) ${stripHtml(opt.textJP)} / ${opt.textMY}`).join('\n')}
-
-      **Correct Option ID:** ${data.correctOptionId}
-
-      **Your Hint (one simple sentence in Burmese):**
-    `;
+    const prompt = `expert teacher hint for MC question. Burmese only, 1 sentence, don't reveal answer. Q: ${data.questionMY}`;
 
     try {
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: prompt,
       });
-
       setHint(response.text);
-
     } catch (err) {
-      console.error("Error fetching AI hint:", err);
-      setHintError("Sorry, an error occurred while generating the hint. Please try again.");
+      setHintError("Error generating hint.");
     } finally {
       setIsHintLoading(false);
     }
   };
-
 
   const handleExplainAgain = async () => {
     setIsAiLoading(true);
@@ -219,52 +179,16 @@ const Card: React.FC<CardProps> = ({
     setAiExplanation(null);
 
     const correctOption = data.options.find(opt => opt.id === data.correctOptionId);
-    if (!correctOption) {
-      setAiError("Correct option details could not be found.");
-      setIsAiLoading(false);
-      return;
-    }
-
-    const prompt = `
-      You are a helpful AI assistant for Japanese structural engineering. A user didn't understand the original explanation for a quiz question.
-      Your task is to explain the concept again in a simpler way in Burmese.
-
-      **Instructions:**
-      1.  **Start your entire response with this exact Burmese phrase, without any changes or additions before it:** "မင်္ဂလာပါ ဒီမေးခွန်းနဲ့ ပတ်သက်ပြီး နားမလည်တာကို ကျွန်တော်က ပိုရှင်းလင်းအောင် ထပ်ရှင်းပြပေးပါမယ်နော်။"
-      2.  After the initial phrase, provide a clear explanation focusing on *why the correct answer is right* and *why the other options are wrong*.
-      3.  The entire response must be in Burmese.
-      4.  Use simple Markdown for formatting (e.g., bolding with **text**, lists with -).
-
-      **Question Details:**
-      **Question (JP):** ${stripHtml(data.questionJP)}
-      **Question (MY):** ${data.questionMY}
-
-      **Options:**
-      ${data.options.map(opt => `- (${opt.id}) ${stripHtml(opt.textJP)} / ${opt.textMY}`).join('\n')}
-
-      **Correct Answer:** (${data.correctOptionId}) ${stripHtml(correctOption.textJP)} / ${correctOption.textMY}
-
-      **Original Explanation:** ${stripHtml(data.explanation.reasonMY)}
-
-      **Your New, Simpler Explanation in Burmese:**
-    `;
+    const prompt = `Simpler Burmese explanation for structural engineering. Q: ${data.questionMY}, Correct: ${correctOption?.textMY}`;
 
     try {
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: prompt,
       });
-      
-      let formattedText = response.text;
-      // Basic markdown replacement
-      formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
-      formattedText = formattedText.replace(/\n/g, '<br />'); // Newlines
-      
-      setAiExplanation(formattedText);
-
+      setAiExplanation(response.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />'));
     } catch (err) {
-      console.error("Error fetching AI explanation:", err);
-      setAiError("Sorry, an error occurred while generating the explanation. Please try again.");
+      setAiError("Error generating AI explanation.");
     } finally {
       setIsAiLoading(false);
     }
@@ -272,66 +196,38 @@ const Card: React.FC<CardProps> = ({
 
 
   const handlePlayAudio = async (textToSpeak: string, id: string) => {
-    if (audioLoadingId) return; // Prevent multiple clicks
+    if (audioLoadingId) return;
     setAudioLoadingId(id);
-
     const cleanText = stripHtml(textToSpeak);
-    if (!cleanText.trim()) {
-        setAudioLoadingId(null);
-        return;
-    }
+    if (!cleanText.trim()) { setAudioLoadingId(null); return; }
 
     try {
-        // Create context only on user gesture to ensure playback
         const outputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({sampleRate: 24000});
-        
-        if (outputAudioContext.state === 'suspended') {
-            await outputAudioContext.resume();
-        }
-
-        // Check cache first
+        if (outputAudioContext.state === 'suspended') await outputAudioContext.resume();
         const cachedData = await getCachedAudio(cleanText);
         let pcmData: Uint8Array;
-
         if (cachedData) {
-             // Hit cache
              pcmData = cachedData;
         } else {
-             // Miss cache - fetch from AI
              const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash-preview-tts",
                 contents: [{ parts: [{ text: cleanText }] }],
                 config: {
                     responseModalities: ['AUDIO'],
-                    speechConfig: {
-                        voiceConfig: {
-                            prebuiltVoiceConfig: { voiceName: 'Kore' }, // 'Kore' is good for clear reading
-                        },
-                    },
+                    speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } } },
                 },
             });
-
             const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-            if (!base64Audio) throw new Error("No audio data received from AI");
-            
+            if (!base64Audio) throw new Error("No audio data");
             pcmData = decode(base64Audio);
-            // Save to cache
             await saveCachedAudio(cleanText, pcmData);
         }
-
-        const audioBuffer = await decodeAudioData(
-            pcmData,
-            outputAudioContext,
-            24000,
-            1,
-        );
+        const audioBuffer = await decodeAudioData(pcmData, outputAudioContext, 24000, 1);
         const source = outputAudioContext.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(outputAudioContext.destination);
         source.start();
-
     } catch (error) {
-        console.error("Error playing AI audio:", error);
     } finally {
         setAudioLoadingId(null);
     }
@@ -341,235 +237,220 @@ const Card: React.FC<CardProps> = ({
     <button
       onClick={(e) => { e.stopPropagation(); handlePlayAudio(text, id); }}
       disabled={audioLoadingId !== null}
-      className="p-1.5 text-slate-400 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all hover:text-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="p-2 text-slate-400 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all hover:text-blue-500 disabled:opacity-50"
       aria-label="Play audio"
-      title="Click to listen"
     >
-      {audioLoadingId === id ? (
-          <LoadingSpinnerIcon className="w-4 h-4 text-blue-500" />
-      ) : (
-          <SpeakerIcon className="w-4 h-4" />
-      )}
+      {audioLoadingId === id ? <LoadingSpinnerIcon className="w-4 h-4 text-blue-500" /> : <SpeakerIcon className="w-4 h-4" />}
     </button>
   );
 
   return (
-    <div className="bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset">
-      <ReportModal 
-        isOpen={isReportOpen} 
-        onClose={() => setIsReportOpen(false)} 
-        contextInfo={`Question ${data.id}: ${data.questionMY.substring(0, 30)}...`} 
-      />
-      <div className="p-6">
-        <div className='flex items-start justify-between mb-6'>
-            <div className="flex-1 pr-4">
-                <p className="mb-1 text-sm font-semibold text-slate-500">Question {data.id}</p>
+    <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset overflow-hidden">
+      <ReportModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} contextInfo={`Question ${data.id}`} />
+      <div className="p-8">
+        <div className='flex items-start justify-between mb-8'>
+            <div className="flex-1 pr-6">
+                <p className="mb-2 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Question {data.id}</p>
                  {language === 'my' ? (
                   <>
-                    <p className="text-lg font-semibold leading-relaxed text-slate-700">{data.questionMY}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <p className="font-mono text-base text-slate-500">
+                    <p className="text-xl font-bold leading-relaxed text-slate-700">{data.questionMY}</p>
+                    <div className="flex items-center gap-3 mt-4 w-full">
+                      <div className="flex-1 font-mono text-base text-slate-500 bg-neumorphic-bg shadow-neumorphic-inset px-6 py-4 rounded-2xl leading-relaxed">
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
-                      </p>
+                      </div>
                       <AudioButton text={data.questionJP} id={`q-${data.id}`} />
                     </div>
                   </>
-                ) : ( // Covers 'jp' and 'jp-only'
+                ) : (
                   <>
-                    <div className="flex items-center gap-2 mb-2">
-                      <p className="font-mono text-lg text-slate-700">
+                    <div className="flex items-center gap-4 mb-4 w-full">
+                      <div className="flex-1 font-mono text-xl font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-8 py-6 rounded-[2rem] leading-loose">
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
-                      </p>
+                      </div>
                       <AudioButton text={data.questionJP} id={`q-${data.id}`} />
                     </div>
                      {language === 'jp' && (
-                        <p className="text-base font-semibold leading-relaxed text-slate-500">{data.questionMY}</p>
+                        <p className="text-lg font-bold leading-relaxed text-slate-500 italic ml-2">{data.questionMY}</p>
                     )}
                   </>
                 )}
             </div>
-            <div className="flex items-center -mt-2 -mr-2 gap-1">
-                <button
-                    onClick={() => setIsReportOpen(true)}
-                    className="p-2.5 rounded-full shadow-neumorphic-outset text-slate-400 hover:text-red-500 transition-all duration-200 active:shadow-neumorphic-inset"
-                    aria-label="Report an error"
-                    title="Report error in this question"
+            <div className="flex flex-col gap-3">
+                 <button 
+                    onClick={() => toggleBookmark(data.id)}
+                    className={`p-3.5 rounded-full transition-all duration-300 ${isBookmarked ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-blue-500'}`}
                 >
-                    <FlagIcon className="w-5 h-5" />
+                  <BookmarkIcon className="w-6 h-6" />
                 </button>
                 <button
                     onClick={handleGetHint}
                     disabled={isHintLoading || !!hint || isSubmitted}
-                    className={`p-2.5 rounded-full transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed ${hint ? 'shadow-neumorphic-inset text-blue-600' : 'shadow-neumorphic-outset text-slate-400 hover:text-blue-600'}`}
-                    aria-label="Get a hint"
-                    title="Get a hint"
+                    className={`p-3.5 rounded-full transition-all duration-300 disabled:opacity-30 ${hint ? 'shadow-neumorphic-inset text-amber-600 bg-amber-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-amber-500'}`}
                 >
                     {isHintLoading ? <LoadingSpinnerIcon className="w-6 h-6" /> : <LightBulbIcon className="w-6 h-6" />}
                 </button>
-                 <button 
-                    onClick={() => toggleBookmark(data.id)}
-                    className={`p-2.5 rounded-full transition-all duration-200 ${isBookmarked ? 'shadow-neumorphic-inset text-slate-700' : 'shadow-neumorphic-outset text-slate-400'}`}
-                    aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
-                    title={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+                <button
+                    onClick={() => setIsReportOpen(true)}
+                    className="p-3.5 rounded-full shadow-neumorphic-outset text-slate-400 hover:text-red-500 transition-all duration-300 active:shadow-neumorphic-inset"
                 >
-                  <BookmarkIcon className="w-6 h-6" />
+                    <FlagIcon className="w-6 h-6" />
                 </button>
             </div>
         </div>
         
         { (hint || hintError) && (
-          <div className="mb-6 p-4 rounded-lg bg-neumorphic-bg shadow-neumorphic-inset">
-            <h4 className="font-semibold text-slate-600 flex items-center">
-              <LightBulbIcon className="w-5 h-5 mr-2 text-blue-600" /> အကူအညီ (Hint)
+          <div className="mb-8 p-6 rounded-[2rem] bg-neumorphic-bg shadow-neumorphic-inset border border-amber-400/20">
+            <h4 className="font-black text-amber-600 flex items-center uppercase text-xs tracking-widest mb-2">
+              <LightBulbIcon className="w-4 h-4 mr-2" /> အကူအညီ (Hint)
             </h4>
-            {hint && <div className="mt-2 text-sm text-slate-500">{hint}</div>}
-            {hintError && <div className="mt-2 text-sm text-red-500">{hintError}</div>}
+            {hint && <div className="text-sm font-bold text-slate-600 italic leading-relaxed">{hint}</div>}
+            {hintError && <div className="text-sm font-bold text-red-500">{hintError}</div>}
           </div>
         )}
 
-        <div className={`space-y-4`}>
+        <div className="grid grid-cols-1 gap-6">
           {data.options.map((option) => {
             const isSelected = selectedOptionId === option.id;
             const isCorrect = isSubmitted && option.id === data.correctOptionId;
             const isIncorrect = isSelected && isSubmitted && !isCorrect;
 
-            let shadowClass = 'shadow-neumorphic-outset';
-            if (isSelected) {
-              shadowClass = 'shadow-neumorphic-inset';
-            }
+            let cardStyle = 'shadow-neumorphic-outset';
+            if (isSelected) cardStyle = 'shadow-neumorphic-inset bg-slate-50/5';
             
-            const textColorClass = isCorrect ? 'text-green-600' : isIncorrect ? 'text-red-600' : 'text-neumorphic-text';
-            const cursorClass = isSubmitted ? 'cursor-default' : 'cursor-pointer';
+            const textStyle = isCorrect ? 'text-green-600' : isIncorrect ? 'text-red-600' : 'text-slate-600';
 
             return (
-              <div
+              <button
                 key={option.id}
                 onClick={!isSubmitted ? () => onOptionSelect && onOptionSelect(option.id) : undefined}
-                className={`w-full p-4 rounded-lg transition-all duration-200 flex items-start justify-between text-left ${shadowClass} ${cursorClass} ${textColorClass}`}
+                disabled={isSubmitted}
+                className={`w-full p-6 rounded-[2rem] transition-all duration-300 flex items-start justify-between text-left ${cardStyle} ${textStyle} group`}
               >
-                  <div className="flex-1 pr-4">
+                  <div className="flex-1 pr-6">
                      {language === 'my' ? (
                         <>
-                            <p className="font-medium">{option.textMY}</p>
-                            <div className="flex items-center gap-2 mt-1">
-                                <p className="font-mono text-sm text-slate-500">
+                            <p className="font-black text-lg mb-1">{option.textMY}</p>
+                            <div className="flex items-center gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity">
+                                <p className="font-mono text-sm font-bold">
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
                                 </p>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                         </>
-                    ) : ( // Covers 'jp' and 'jp-only'
+                    ) : (
                         <>
-                            <div className="flex items-center gap-2">
-                                <p className="font-mono font-medium">
+                            <div className="flex items-center gap-3">
+                                <p className="font-mono font-black text-lg">
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
                                 </p>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                              {language === 'jp' && (
-                                <p className="mt-1 text-sm text-slate-500">{option.textMY}</p>
+                                <p className="mt-2 text-sm font-bold opacity-60 italic">{option.textMY}</p>
                             )}
                         </>
                     )}
                   </div>
                   {isSubmitted && (
-                    <div className="w-6 h-6 flex items-center justify-center shrink-0">
-                        {isCorrect && <CheckCircleSolidIcon className="w-6 h-6 text-green-500"/>}
-                        {isIncorrect && <XCircleSolidIcon className="w-6 h-6 text-red-500"/>}
+                    <div className="pt-1">
+                        {isCorrect && <CheckCircleSolidIcon className="w-8 h-8 text-green-500 drop-shadow-sm"/>}
+                        {isIncorrect && <XCircleSolidIcon className="w-8 h-8 text-red-500 drop-shadow-sm"/>}
                     </div>
                   )}
-              </div>
+              </button>
             )
           })}
         </div>
         
         {language !== 'jp-only' && (
-          <div className="pt-6 mt-6">
-            <div className="flex mb-4 p-1 bg-neumorphic-bg rounded-lg shadow-neumorphic-inset">
+          <div className="pt-10 mt-4">
+            <div className="flex mb-6 p-2 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-inset">
               <button
                 onClick={() => setActiveTab('explanation')}
-                className={`flex-1 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md transition-all ${activeTab === 'explanation' ? 'text-slate-700 shadow-neumorphic-outset' : 'text-slate-500'}`}
+                className={`flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-widest rounded-[1.5rem] transition-all ${activeTab === 'explanation' ? 'text-slate-700 shadow-neumorphic-outset bg-neumorphic-bg' : 'text-slate-400'}`}
               >
-                <PencilIcon className="w-5 h-5 mr-2" /> ရှင်းလင်းချက်
+                <PencilIcon className="w-5 h-5 mr-2" /> Explanation
               </button>
               <button
                 onClick={() => setActiveTab('vocab')}
-                className={`flex-1 flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md transition-all ${activeTab === 'vocab' ? 'text-slate-700 shadow-neumorphic-outset' : 'text-slate-500'}`}
+                className={`flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-widest rounded-[1.5rem] transition-all ${activeTab === 'vocab' ? 'text-slate-700 shadow-neumorphic-outset bg-neumorphic-bg' : 'text-slate-400'}`}
               >
-                <AcademicCapIcon className="w-5 h-5 mr-2" /> ဝေါဟာရ
+                <AcademicCapIcon className="w-5 h-5 mr-2" /> Vocabulary
               </button>
             </div>
 
-            <div className="p-4 rounded-lg bg-neumorphic-bg shadow-neumorphic-inset">
+            <div className="p-8 rounded-[2.5rem] bg-neumorphic-bg shadow-neumorphic-inset min-h-[150px]">
               {activeTab === 'explanation' && (
                 <>
                   {isSubmitted ? (
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-700">
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+                      <h3 className="text-xl font-black text-slate-700 mb-6 border-b border-slate-300/30 pb-4">
                         <JapaneseText text={data.explanation.titleMY} onKanjiClick={onKanjiClick} />
                       </h3>
-                      <div className="mt-4 space-y-4 text-sm text-slate-600">
-                        <p><strong className="font-semibold text-red-600">အကြောင်းရင်း:</strong> <JapaneseText text={data.explanation.reasonMY} onKanjiClick={onKanjiClick} /></p>
-                        <p><strong className="font-semibold text-blue-600">မှတ်သားရန်:</strong> <JapaneseText text={data.explanation.memoryTipMY} onKanjiClick={onKanjiClick} /></p>
+                      <div className="space-y-6 text-base font-bold text-slate-600">
+                        <div className="flex gap-4">
+                            <span className="shrink-0 w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-xs font-black">!</span>
+                            <p className="pt-1"><JapaneseText text={data.explanation.reasonMY} onKanjiClick={onKanjiClick} /></p>
+                        </div>
+                        <div className="flex gap-4">
+                            <span className="shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-black">★</span>
+                            <p className="pt-1 italic"><JapaneseText text={data.explanation.memoryTipMY} onKanjiClick={onKanjiClick} /></p>
+                        </div>
                       </div>
-                      <div className="mt-6">
+                      <div className="mt-10">
                         <button 
                             onClick={handleExplainAgain}
                             disabled={isAiLoading}
-                            className="flex items-center justify-center w-full px-4 py-2 text-sm font-semibold text-neumorphic-text bg-neumorphic-bg rounded-lg shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-70 disabled:cursor-wait"
+                            className="flex items-center justify-center w-full py-4 text-sm font-black uppercase tracking-[0.2em] text-blue-600 bg-neumorphic-bg rounded-[1.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-50"
                         >
-                            {isAiLoading ? <LoadingSpinnerIcon className="w-5 h-5 mr-2" /> : <SparkleIcon className="w-5 h-5 mr-2" />}
-                            {isAiLoading ? 'စဉ်းစားနေသည်...' : '✨ ရှင်းလင်းချက်အသစ်တောင်းမည်'}
+                            {isAiLoading ? <LoadingSpinnerIcon className="w-5 h-5 mr-2 animate-spin" /> : <SparkleIcon className="w-5 h-5 mr-2" />}
+                            {isAiLoading ? 'Thinking...' : 'AI Simpler explanation'}
                         </button>
                       </div>
-
-                      {isAiLoading && showWaitMessage && (
-                        <p className="mt-4 text-sm text-center text-slate-500">
-                          စောင့်ရတာ အရမ်းကြာသွားရင် တောင်းပန်ပါတယ်...
-                        </p>
-                      )}
-                      
-                      {aiError && <div className="mt-4 p-4 text-center text-red-600 bg-red-100 rounded-lg">{aiError}</div>}
                       {aiExplanation && (
-                          <div className="mt-4 p-4 rounded-lg bg-neumorphic-bg shadow-neumorphic-inset">
-                              <h4 className="font-semibold text-slate-600 flex items-center"><SparkleIcon className="w-5 h-5 mr-2" /> AI မှ ရှင်းလင်းချက်</h4>
-                              <div className="mt-2 space-y-2 text-sm text-slate-500" dangerouslySetInnerHTML={{ __html: aiExplanation }}></div>
+                          <div className="mt-6 p-6 rounded-3xl bg-neumorphic-bg shadow-neumorphic-inset border-l-4 border-blue-500 animate-in zoom-in duration-300">
+                              <h4 className="font-black text-blue-600 flex items-center uppercase text-xs tracking-widest mb-3"><SparkleIcon className="w-4 h-4 mr-2" /> AI Clarification</h4>
+                              <div className="text-sm font-bold text-slate-500 leading-relaxed" dangerouslySetInnerHTML={{ __html: aiExplanation }}></div>
                           </div>
                       )}
                     </div>
                   ) : (
-                      <div className="text-center py-4">
-                          <p className="text-slate-500">ရှင်းလင်းချက်ကို ကြည့်ရှုရန် အဖြေတစ်ခုကို ရွေးချယ်ပေးပါ။</p>
+                      <div className="flex flex-col items-center justify-center py-10 opacity-40">
+                          <BookOpenIcon className="w-12 h-12 mb-2 text-slate-300" />
+                          <p className="font-bold text-slate-500 uppercase tracking-widest text-xs">Answer to see explanation</p>
                       </div>
                   )}
                 </>
               )}
               
               {activeTab === 'vocab' && (
-                  <div>
+                  <div className="animate-in fade-in duration-500">
                   {vocabData && vocabData.length > 0 ? (
                       <div className="overflow-x-auto">
-                      <table className="w-full text-sm text-left text-slate-600">
-                          <thead className="text-xs text-slate-500 uppercase">
+                      <table className="w-full text-left text-slate-600">
+                          <thead className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">
                           <tr>
-                              <th scope="col" className="px-4 py-2">Japanese</th>
-                              <th scope="col" className="px-4 py-2">Burmese</th>
-                              <th scope="col" className="px-4 py-2">Type</th>
+                              <th className="px-4 py-3">Term</th>
+                              <th className="px-4 py-3">Meaning</th>
                           </tr>
                           </thead>
-                          <tbody>
+                          <tbody className="font-bold text-sm">
                           {vocabData.map((item, index) => (
-                              <tr key={index} className="border-t border-neumorphic-shadow-dark/20">
-                              <td className="px-4 py-2 font-mono"><JapaneseText text={item.jp} onKanjiClick={onKanjiClick} /></td>
-                              <td className="px-4 py-2">{item.my}</td>
-                              <td className="px-4 py-2 text-slate-500">{item.type}</td>
+                              <tr key={index} className="border-t border-slate-300/20 group">
+                              <td className="px-4 py-4 font-mono text-slate-700 group-hover:text-blue-600 transition-colors">
+                                <JapaneseText text={item.jp} onKanjiClick={onKanjiClick} />
+                              </td>
+                              <td className="px-4 py-4">{item.my}</td>
                               </tr>
                           ))}
                           </tbody>
                       </table>
                       </div>
                   ) : (
-                      <p className="text-center text-slate-500 py-4">ဤမေးခွန်းအတွက် ဝေါဟာရ မရှိပါ။</p>
+                      <div className="text-center py-10 opacity-40">
+                          <AcademicCapIcon className="w-12 h-12 mb-2 text-slate-300" />
+                          <p className="font-bold text-slate-500 uppercase tracking-widest text-xs">No vocabulary for this item</p>
+                      </div>
                   )}
                   </div>
               )}
