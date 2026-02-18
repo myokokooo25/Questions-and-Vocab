@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -22,7 +23,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     } catch (error) {
       console.error("Could not read theme from localStorage", error);
     }
-    return 'light';
+    return 'dark'; // Default to dark
   });
 
   useEffect(() => {

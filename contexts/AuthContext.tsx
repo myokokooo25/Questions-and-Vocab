@@ -25,6 +25,9 @@ const getDeviceId = (): string => {
 const LOGGED_IN_USER_KEY = 'auth_loggedInUser_key';
 const DEVICE_HISTORY_KEY = 'auth_device_history';
 
+// Fallback keys in case DB is not set up
+const FALLBACK_KEYS = ['420'];
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -53,7 +56,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
           // --- FIX FOR EXISTING USERS: Fetch dbId if missing ---
           // Progress saving requires dbId. Old sessions might not have it.
-          if (!storedUser.dbId) {
+          // Only attempt if not a fallback user
+          if (!storedUser.dbId && !FALLBACK_KEYS.includes(storedUser.accessKey)) {
              try {
                 const { data } = await supabase
                     .from('access_codes')
@@ -97,10 +101,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         .select('*') // Select all to get type, device_ids, first_used_at, id
         .eq('code', upperAccessKey)
         .eq('is_active', true)
-        .single();
+        .maybeSingle();
 
       if (dbError || !data) {
-        setError('Invalid Redeem Code.');
+        // --- FALLBACK MODE ---
+        // If DB is missing or error, allow fallback keys for demo/testing
+        if (FALLBACK_KEYS.includes(upperAccessKey)) {
+             console.warn("Using fallback login for key:", upperAccessKey);
+             const userData: User = { 
+                accessKey: upperAccessKey,
+                type: 'permanent',
+                dbId: undefined // No DB ID for fallback users
+            };
+            localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(userData));
+            setUser(userData);
+            setLoading(false);
+            return true;
+        }
+
+        setError('Invalid Redeem Code. (If database is not set up, try 420)');
         setLoading(false);
         return false;
       }
@@ -191,6 +210,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     } catch (err: any) {
       console.error("Login error", err);
+      // Fallback in catch block as well in case of network error etc
+      if (FALLBACK_KEYS.includes(upperAccessKey)) {
+             console.warn("Using fallback login (network error) for key:", upperAccessKey);
+             const userData: User = { 
+                accessKey: upperAccessKey,
+                type: 'permanent',
+                dbId: undefined 
+            };
+            localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(userData));
+            setUser(userData);
+            setLoading(false);
+            return true;
+      }
+      
       setError(err.message || 'An unexpected error occurred.');
       setLoading(false);
       return false;

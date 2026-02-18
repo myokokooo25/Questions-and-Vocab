@@ -124,46 +124,34 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             explanation: q.explanation
           }));
           
-          // Sort by ID to ensure order (optional, assumes ID is sortable)
-          // Simple sort:
+          // Sort by ID to ensure order
            mappedQuestions.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
 
           setOnlineQuestions(mappedQuestions);
         } else {
-          // Fallback to local data if DB is empty for this chapter
-          console.log("No data in DB, using local fallback");
-          let localData: StudyCardData[] = [];
-          if (isOldQuestionMode) {
-             const oldDataMap: Record<string, StudyCardData[]> = {
-                '2021': chapter2021Data,
-                '2022': chapter2022Data,
-                '2023': chapter2023Data,
-                '2024': chapter2024Data,
-                '2025': chapter2025Data,
-              };
-              localData = oldDataMap[selectedApp] || [];
-          } else {
-              localData = studyDataByChapter[activeChapter] || [];
-          }
-          setOnlineQuestions(localData);
+          throw new Error("No data found in DB, triggering fallback");
         }
-      } catch (err) {
-        console.error("Error fetching questions:", err);
-        // Fallback on error
-         let localData: StudyCardData[] = [];
-          if (isOldQuestionMode) {
-             const oldDataMap: Record<string, StudyCardData[]> = {
-                '2021': chapter2021Data,
-                '2022': chapter2022Data,
-                '2023': chapter2023Data,
-                '2024': chapter2024Data,
-                '2025': chapter2025Data,
-              };
-              localData = oldDataMap[selectedApp] || [];
-          } else {
-              localData = studyDataByChapter[activeChapter] || [];
-          }
-          setOnlineQuestions(localData);
+      } catch (err: any) {
+        // Silent fallback for missing table or connection issues
+        // Only log if it's NOT the expected "table missing" error to keep console clean for user
+        if (err.code !== 'PGRST205' && err.message !== "No data found in DB, triggering fallback") {
+             console.warn("Using local data due to DB error:", err.message);
+        }
+        
+        let localData: StudyCardData[] = [];
+        if (isOldQuestionMode) {
+           const oldDataMap: Record<string, StudyCardData[]> = {
+              '2021': chapter2021Data,
+              '2022': chapter2022Data,
+              '2023': chapter2023Data,
+              '2024': chapter2024Data,
+              '2025': chapter2025Data,
+            };
+            localData = oldDataMap[selectedApp] || [];
+        } else {
+            localData = studyDataByChapter[activeChapter] || [];
+        }
+        setOnlineQuestions(localData);
       } finally {
         setIsLoadingQuestions(false);
       }

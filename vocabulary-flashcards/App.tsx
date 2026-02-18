@@ -11,83 +11,8 @@ import { ArrowLeftIcon, ArrowRightIcon, HomeIcon, SunIcon, MoonIcon } from './co
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useProgress } from '../contexts/ProgressContext';
-import { supabase } from '../lib/supabase';
-
-const DB_NAME = 'tts-cache';
-const STORE_NAME = 'audios';
-
-const openDB = (): Promise<IDBDatabase> => {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, 1);
-        request.onupgradeneeded = (event) => {
-            const db = (event.target as IDBOpenDBRequest).result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME);
-            }
-        };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-};
-
-const getCachedAudio = async (text: string): Promise<Uint8Array | null> => {
-    try {
-        const db = await openDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readonly');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.get(text);
-            request.onsuccess = () => resolve(request.result ? (request.result as Uint8Array) : null);
-            request.onerror = () => reject(request.error);
-        });
-    } catch (e) {
-        return null;
-    }
-};
-
-const saveCachedAudio = async (text: string, data: Uint8Array): Promise<void> => {
-    try {
-        const db = await openDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.put(data, text);
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
-        });
-    } catch (e) {}
-};
 
 type ViewMode = 'dashboard' | 'flashcard' | 'list' | 'study' | 'quiz';
-
-function decodeBase64(base64: string) {
-  const binaryString = atob(base64);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes;
-}
-
-async function decodeAudioData(
-  data: Uint8Array,
-  ctx: AudioContext,
-  sampleRate: number,
-  numChannels: number,
-): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
-  const frameCount = dataInt16.length / numChannels;
-  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
-
-  for (let channel = 0; channel < numChannels; channel++) {
-    const channelData = buffer.getChannelData(channel);
-    for (let i = 0; i < frameCount; i++) {
-      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
-    }
-  }
-  return buffer;
-}
 
 const App: React.FC = () => {
     const { user } = useAuth();
@@ -143,41 +68,26 @@ const App: React.FC = () => {
 
     useEffect(() => { if (viewMode === 'flashcard' && activeStudyDay !== null) recordStudyProgress(); }, [currentIndex, viewMode, activeStudyDay, recordStudyProgress]);
 
-    const playWordAudio = useCallback(async (word: VocabularyWord) => {
-        if (!word || loadingAudioId !== null) return;
-        setLoadingAudioId(word.id);
-        const text = word.reading || word.kanji;
+    const playWordAudio = useCallback((word: VocabularyWord) => {
+        if (!word) return;
+        if (!('speechSynthesis' in window)) return;
         
-        try {
-            const ctx = new (window.AudioContext || (window as any).webkitAudioContext)({sampleRate: 24000});
-            if (ctx.state === 'suspended') await ctx.resume();
-            
-            const cached = await getCachedAudio(text);
-            let pcm: Uint8Array;
+        window.speechSynthesis.cancel();
+        setLoadingAudioId(word.id);
 
-            if (cached) {
-                pcm = cached;
-            } else {
-                const { data: response, error } = await supabase.functions.invoke('gemini', {
-                    body: { action: 'tts', text: text }
-                });
+        const text = word.reading || word.kanji;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ja-JP';
+        
+        const voices = window.speechSynthesis.getVoices();
+        const jaVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP'));
+        if (jaVoice) utterance.voice = jaVoice;
 
-                if (error || !response.audio) throw new Error("Audio generation failed");
-                pcm = decodeBase64(response.audio); 
-                await saveCachedAudio(text, pcm);
-            }
-
-            const buf = await decodeAudioData(pcm, ctx, 24000, 1);
-            const src = ctx.createBufferSource(); 
-            src.buffer = buf; 
-            src.connect(ctx.destination); 
-            src.start();
-        } catch (e) {
-            console.error(e);
-        } finally { 
-            setLoadingAudioId(null); 
-        }
-    }, [loadingAudioId]);
+        utterance.onend = () => setLoadingAudioId(null);
+        utterance.onerror = () => setLoadingAudioId(null);
+        
+        window.speechSynthesis.speak(utterance);
+    }, []);
 
     const handlePlayPronunciation = useCallback(() => { if (filteredWords[currentIndex]) playWordAudio(filteredWords[currentIndex]); }, [filteredWords, currentIndex, playWordAudio]);
     const handleNext = useCallback(() => { setIsFlipped(false); setTimeout(() => setCurrentIndex(p => (p + 1) % filteredWords.length), 150); }, [filteredWords.length]);

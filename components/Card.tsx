@@ -16,81 +16,6 @@ const stripHtml = (html: string): string => {
   return doc.body.textContent || "";
 };
 
-// --- IndexedDB Caching Logic ---
-const DB_NAME = 'tts-cache';
-const STORE_NAME = 'audios';
-
-const openDB = (): Promise<IDBDatabase> => {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, 1);
-        request.onupgradeneeded = (event) => {
-            const db = (event.target as IDBOpenDBRequest).result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME);
-            }
-        };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-};
-
-const getCachedAudio = async (text: string): Promise<Uint8Array | null> => {
-    try {
-        const db = await openDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readonly');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.get(text);
-            request.onsuccess = () => resolve(request.result ? (request.result as Uint8Array) : null);
-            request.onerror = () => reject(request.error);
-        });
-    } catch (e) {
-        return null;
-    }
-};
-
-const saveCachedAudio = async (text: string, data: Uint8Array): Promise<void> => {
-    try {
-        const db = await openDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.put(data, text);
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
-        });
-    } catch (e) {}
-};
-
-function decodeBase64(base64: string) {
-  const binaryString = atob(base64);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes;
-}
-
-async function decodeAudioData(
-  data: Uint8Array,
-  ctx: AudioContext,
-  sampleRate: number,
-  numChannels: number,
-): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
-  const frameCount = dataInt16.length / numChannels;
-  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
-
-  for (let channel = 0; channel < numChannels; channel++) {
-    const channelData = buffer.getChannelData(channel);
-    for (let i = 0; i < frameCount; i++) {
-      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
-    }
-  }
-  return buffer;
-}
-
 interface CardProps {
   data: StudyCardData;
   onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void;
@@ -122,7 +47,7 @@ const Card: React.FC<CardProps> = ({
   const [isHintLoading, setIsHintLoading] = useState(false);
   const [hintError, setHintError] = useState<string | null>(null);
   
-  const [audioLoadingId, setAudioLoadingId] = useState<string | null>(null);
+  const [audioPlayingId, setAudioPlayingId] = useState<string | null>(null);
   const [isReportOpen, setIsReportOpen] = useState(false);
 
   // Clear states when question changes
@@ -133,7 +58,11 @@ const Card: React.FC<CardProps> = ({
     setHint(null);
     setIsHintLoading(false);
     setHintError(null);
-    setAudioLoadingId(null);
+    setAudioPlayingId(null);
+    // Cancel any ongoing speech when card changes
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
   }, [data.id]);
 
   const handleGetHint = async () => {
@@ -150,10 +79,12 @@ const Card: React.FC<CardProps> = ({
       });
 
       if (error) throw error;
+      if (response?.error) throw new Error(response.error);
+      
       setHint(response.text);
-    } catch (err) {
+    } catch (err: any) {
       setHintError("Hint ရယူ၍မရပါ။");
-      console.error(err);
+      console.error("Edge Function Error:", err);
     } finally {
       setIsHintLoading(false);
     }
@@ -176,60 +107,55 @@ const Card: React.FC<CardProps> = ({
       });
 
       if (error) throw error;
+      if (response?.error) throw new Error(response.error);
+
       setAiExplanation(response.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />'));
-    } catch (err) {
+    } catch (err: any) {
       setAiError("AI ရှင်းလင်းချက် ရယူ၍မရပါ။");
-      console.error(err);
+      console.error("Edge Function Error:", err);
     } finally {
       setIsAiLoading(false);
     }
   };
 
-  const handlePlayAudio = async (textToSpeak: string, id: string) => {
-    if (audioLoadingId) return;
+  const handlePlayAudio = (textToSpeak: string, id: string) => {
+    if (!('speechSynthesis' in window)) return;
+
+    // Stop current speech
+    window.speechSynthesis.cancel();
+
+    if (audioPlayingId === id) {
+      setAudioPlayingId(null);
+      return;
+    }
+
     const cleanText = stripHtml(textToSpeak);
     if (!cleanText.trim()) return;
 
-    setAudioLoadingId(id);
+    setAudioPlayingId(id);
 
-    try {
-        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-        if (audioCtx.state === 'suspended') await audioCtx.resume();
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.9; // Slightly slower for better clarity
+    
+    // Attempt to select a Japanese voice (optional improvement)
+    const voices = window.speechSynthesis.getVoices();
+    const jaVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP'));
+    if (jaVoice) utterance.voice = jaVoice;
 
-        const cachedData = await getCachedAudio(cleanText);
-        let pcmBytes: Uint8Array;
+    utterance.onend = () => setAudioPlayingId(null);
+    utterance.onerror = () => setAudioPlayingId(null);
 
-        if (cachedData) {
-            pcmBytes = cachedData;
-        } else {
-            const { data: response, error } = await supabase.functions.invoke('gemini', {
-                body: { action: 'tts', text: cleanText }
-            });
-
-            if (error || !response.audio) throw new Error("Audio generation failed");
-            pcmBytes = decodeBase64(response.audio);
-            await saveCachedAudio(cleanText, pcmBytes);
-        }
-
-        const audioBuffer = await decodeAudioData(pcmBytes, audioCtx, 24000, 1);
-        const source = audioCtx.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(audioCtx.destination);
-        source.start();
-    } catch (error) {
-        console.error("Audio Playback Error:", error);
-    } finally {
-        setAudioLoadingId(null);
-    }
+    window.speechSynthesis.speak(utterance);
   };
   
   const AudioButton = ({ text, id }: { text: string, id: string }) => (
     <button
       onClick={(e) => { e.stopPropagation(); handlePlayAudio(text, id); }}
-      disabled={audioLoadingId !== null}
-      className="p-2 text-slate-400 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all hover:text-blue-500 disabled:opacity-50"
+      className={`p-2 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all ${audioPlayingId === id ? 'text-blue-500 shadow-neumorphic-inset' : 'text-slate-400 hover:text-blue-500'}`}
+      aria-label="Play audio"
     >
-      {audioLoadingId === id ? <LoadingSpinnerIcon className="w-4 h-4 text-blue-500" /> : <SpeakerIcon className="w-4 h-4" />}
+      <SpeakerIcon className="w-4 h-4" />
     </button>
   );
 
