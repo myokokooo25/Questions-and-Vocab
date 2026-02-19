@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import Card from './Card';
 import Dropdown from './Dropdown';
@@ -46,6 +45,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   // Questions State
   const [onlineQuestions, setOnlineQuestions] = useState<StudyCardData[]>([]);
   const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
+  
+  // Mock Exam State
+  const [isMockExam, setIsMockExam] = useState(false);
+  const [mockQuestions, setMockQuestions] = useState<StudyCardData[]>([]);
 
   // Kanji Tooltip State
   const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
@@ -323,6 +326,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     setCurrentCardIndex(0);
     // Don't reset study answers on chapter change anymore
     setView('study');
+    setIsMockExam(false);
   }, [activeChapter, showOnlyBookmarked, searchQuery]);
 
   const goToNextCard = () => {
@@ -347,6 +351,33 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     recordAnswer(cardId, optionId);
   };
 
+  const startMockExam = () => {
+    // Gather all questions
+    let allQuestions: StudyCardData[] = [];
+    
+    // Add chapters 1-5
+    for (let i = 1; i <= 5; i++) {
+        if (studyDataByChapter[i]) {
+            allQuestions = [...allQuestions, ...studyDataByChapter[i]];
+        }
+    }
+    // Add old questions
+    allQuestions = [
+        ...allQuestions,
+        ...chapter2021Data,
+        ...chapter2022Data,
+        ...chapter2023Data,
+        ...chapter2024Data,
+        ...chapter2025Data
+    ];
+
+    // Shuffle and pick 40
+    const shuffled = allQuestions.sort(() => Math.random() - 0.5).slice(0, 40);
+    setMockQuestions(shuffled);
+    setIsMockExam(true);
+    setView('quiz');
+  };
+
   const currentCard = filteredData[currentCardIndex];
   
   const chapterOptions = useMemo(() => {
@@ -360,9 +391,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   }, [isOldQuestionMode, localTotalChapters, selectedApp]);
 
   const activeChapterLabel = useMemo(() => {
+    if (isMockExam) return "Mock Exam (40 Questions)";
     const opt = chapterOptions.find(o => o.value === activeChapter);
     return opt ? opt.label : '';
-  }, [activeChapter, chapterOptions]);
+  }, [activeChapter, chapterOptions, isMockExam]);
 
   const answeredIDsInFilter = useMemo(() => {
     const filteredIds = new Set(filteredData.map(c => c.id));
@@ -444,10 +476,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     if (view === 'quiz') {
       return (
         <ChapterQuiz 
-          questions={onlineQuestions} 
+          questions={isMockExam ? mockQuestions : onlineQuestions} 
           chapterTitle={activeChapterLabel}
-          onExit={() => setView('study')}
+          onExit={() => {
+              setView('study');
+              setIsMockExam(false);
+          }}
           onKanjiClick={handleKanjiClick}
+          isMockExam={isMockExam}
+          timeLimit={isMockExam ? 3600 : undefined} // 1 hour for mock exam
         />
       );
     }
@@ -791,21 +828,21 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                           <PencilIcon className="w-8 h-8"/>
                       </div>
                   </div>
-                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group">
+                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group cursor-pointer hover:scale-[1.02] transition-transform" onClick={startMockExam}>
                       <div>
-                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Score</p>
-                          <p className="text-3xl font-black text-slate-700">{correctCount}</p>
+                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Mock Exam</p>
+                          <p className="text-3xl font-black text-slate-700">Start</p>
                       </div>
                        <div className="p-4 rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-green-500 transition-colors">
-                          <CheckCircleSolidIcon className="w-8 h-8"/>
+                          <ClockIcon className="w-8 h-8"/>
                       </div>
                   </div>
               </div>
             )}
+
+            {renderContent()}
         </>
        )}
-
-        {renderContent()}
       </main>
     </div>
   );

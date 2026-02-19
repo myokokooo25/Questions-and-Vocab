@@ -105,7 +105,7 @@ const Quiz: React.FC<QuizProps> = ({ learnedWords, onQuizComplete, vocabulary })
         <p className="text-slate-500 mb-8">Here is how you performed:</p>
         
         <div className="relative inline-flex items-center justify-center mb-8">
-            <svg className="w-48 h-48 transform -rotate-90">
+            <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 192 192">
                 <circle
                     className="text-slate-200"
                     strokeWidth="12"
@@ -129,8 +129,8 @@ const Quiz: React.FC<QuizProps> = ({ learnedWords, onQuizComplete, vocabulary })
                 />
             </svg>
             <div className="absolute flex flex-col items-center">
-                <span className="text-5xl font-black text-slate-700">{score}/{questions.length}</span>
-                <span className="text-sm font-semibold text-slate-500 uppercase tracking-widest">{percentage}%</span>
+                <span className="text-3xl font-black text-slate-700">{score}/{questions.length}</span>
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{percentage}%</span>
             </div>
         </div>
 

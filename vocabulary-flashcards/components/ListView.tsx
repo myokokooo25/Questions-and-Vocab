@@ -2,6 +2,7 @@
 import React from 'react';
 import type { VocabularyWord } from '../types';
 import { CheckCircleIcon, SpeakerIcon } from './Icons';
+import JapaneseText from '../../components/JapaneseText';
 
 interface ListViewProps {
   words: VocabularyWord[];
@@ -12,6 +13,7 @@ interface ListViewProps {
   onToggleMarkedAsLearned: (id: number) => void;
   onPlayAudio: (word: VocabularyWord) => void;
   loadingAudioId: number | null;
+  onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void;
 }
 
 const ReadOnlyView: React.FC<{ 
@@ -19,8 +21,9 @@ const ReadOnlyView: React.FC<{
     markedAsLearned: Set<number>, 
     onToggleMarkedAsLearned: (id: number) => void,
     onPlayAudio: (word: VocabularyWord) => void,
-    loadingAudioId: number | null
-}> = ({ words, markedAsLearned, onToggleMarkedAsLearned, onPlayAudio, loadingAudioId }) => {
+    loadingAudioId: number | null,
+    onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void
+}> = ({ words, markedAsLearned, onToggleMarkedAsLearned, onPlayAudio, loadingAudioId, onKanjiClick }) => {
    if (words.length === 0) {
     return (
       <div className="w-full max-w-4xl h-full flex items-center justify-center bg-neumorphic-bg shadow-neumorphic-inset rounded-xl p-6">
@@ -70,7 +73,9 @@ const ReadOnlyView: React.FC<{
                         <SpeakerIcon isLoading={isAudioLoading} className="w-5 h-5" />
                     </button>
                 </div>
-                <p className="font-bold text-md sm:text-lg truncate self-center text-slate-700">{word.kanji}</p>
+                <div className="font-bold text-md sm:text-lg truncate self-center text-slate-700">
+                    <JapaneseText text={word.kanji} onKanjiClick={onKanjiClick} />
+                </div>
                 <p className="text-slate-600 text-sm sm:text-base truncate self-center">{word.reading}</p>
                 <p className="text-slate-600 text-sm sm:text-base self-center">{word.english}</p>
                 <p className="text-slate-600 text-sm sm:text-base self-center">{word.burmese}</p>
@@ -82,7 +87,7 @@ const ReadOnlyView: React.FC<{
   );
 };
 
-const EditView: React.FC<Omit<ListViewProps, 'isEditMode' | 'markedAsLearned' | 'onToggleMarkedAsLearned' | 'onPlayAudio' | 'loadingAudioId'>> = ({ words, setWords, categories }) => {
+const EditView: React.FC<Omit<ListViewProps, 'isEditMode' | 'markedAsLearned' | 'onToggleMarkedAsLearned' | 'onPlayAudio' | 'loadingAudioId' | 'onKanjiClick'>> = ({ words, setWords, categories }) => {
     
     const handleAddWord = () => {
         const newId = words.length > 0 ? Math.max(...words.map(w => w.id)) + 1 : 1;
@@ -163,11 +168,11 @@ const EditView: React.FC<Omit<ListViewProps, 'isEditMode' | 'markedAsLearned' | 
 };
 
 
-const ListView: React.FC<ListViewProps> = ({ words, isEditMode, setWords, categories, markedAsLearned, onToggleMarkedAsLearned, onPlayAudio, loadingAudioId }) => {
+const ListView: React.FC<ListViewProps> = ({ words, isEditMode, setWords, categories, markedAsLearned, onToggleMarkedAsLearned, onPlayAudio, loadingAudioId, onKanjiClick }) => {
   if (isEditMode) {
       return <EditView words={words} setWords={setWords} categories={categories} />;
   }
-  return <ReadOnlyView words={words} markedAsLearned={markedAsLearned} onToggleMarkedAsLearned={onToggleMarkedAsLearned} onPlayAudio={onPlayAudio} loadingAudioId={loadingAudioId} />;
+  return <ReadOnlyView words={words} markedAsLearned={markedAsLearned} onToggleMarkedAsLearned={onToggleMarkedAsLearned} onPlayAudio={onPlayAudio} loadingAudioId={loadingAudioId} onKanjiClick={onKanjiClick} />;
 };
 
 export default ListView;

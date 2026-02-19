@@ -6,11 +6,13 @@ import ListView from './components/ListView';
 import StudyPlan from './components/StudyPlan';
 import Quiz from './components/Quiz';
 import Dashboard from './components/Dashboard';
-import type { VocabularyWord } from './types';
+import type { VocabularyWord, Kanji } from './types';
 import { ArrowLeftIcon, ArrowRightIcon, HomeIcon, SunIcon, MoonIcon } from './components/Icons';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useProgress } from '../contexts/ProgressContext';
+import KanjiTooltip from '../components/KanjiTooltip';
+import { kanjiDictionary } from '../data/kanji';
 
 type ViewMode = 'dashboard' | 'flashcard' | 'list' | 'study' | 'quiz';
 
@@ -26,6 +28,10 @@ const App: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [viewMode, setViewMode] = useState<ViewMode>('dashboard');
     const [loadingAudioId, setLoadingAudioId] = useState<number | null>(null);
+
+    // Kanji Tooltip State
+    const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
+    const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
     
     const auth = useMemo(() => {
         if (!user) return null;
@@ -96,6 +102,22 @@ const App: React.FC = () => {
     const handleSelectDay = (i: number) => { setActiveStudyDay(i); setViewMode('flashcard'); };
     const getTabClass = (m: string) => viewMode === m && activeStudyDay === null ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' : 'text-slate-500 hover:text-slate-700';
 
+    const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => {
+        const data = kanjiDictionary[kanji];
+        if (data) {
+          // Calculate position
+          const rect = event.currentTarget.getBoundingClientRect();
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+          
+          setTooltipPos({
+            top: rect.bottom + scrollTop,
+            left: rect.left + scrollLeft
+          });
+          setSelectedKanji(data);
+        }
+    };
+
     if (!auth) return <div className="p-20 text-center font-bold text-slate-500">Access Denied. Please Login from main screen.</div>;
 
     if (isLoading) {
@@ -108,6 +130,13 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col items-center p-4 sm:p-8 bg-neumorphic-bg text-neumorphic-text">
+            {selectedKanji && (
+                <KanjiTooltip
+                    kanjiData={selectedKanji}
+                    position={tooltipPos}
+                    onClose={() => setSelectedKanji(null)}
+                />
+            )}
             <header className="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center mb-10 gap-6">
                  <div className="text-center sm:text-left">
                     <h1 className="text-3xl font-black text-slate-700 tracking-tight">Technical Vocabulary</h1>
@@ -130,8 +159,8 @@ const App: React.FC = () => {
                 {viewMode === 'dashboard' && <Dashboard totalWords={vocabulary.length} learnedWordsCount={allLearnedWords.length} studyProgress={flashcardData.progress} totalDays={TOTAL_STUDY_DAYS} onNavigate={setViewMode} />}
                 {viewMode === 'study' && <StudyPlan studyProgress={flashcardData.progress} onSelectDay={handleSelectDay} totalDays={TOTAL_STUDY_DAYS} wordsPerDay={WORDS_PER_DAY} />}
                 {viewMode === 'quiz' && <Quiz learnedWords={allLearnedWords} onQuizComplete={() => setViewMode('study')} vocabulary={vocabulary} />}
-                {viewMode === 'flashcard' && <Flashcard word={filteredWords[currentIndex]} isFlipped={isFlipped} onFlip={handleFlip} onPlayAudio={handlePlayPronunciation} isAudioLoading={loadingAudioId !== null} isMarkedAsLearned={markedAsLearnedSet.has(filteredWords[currentIndex]?.id)} onToggleMarkedAsLearned={() => filteredWords[currentIndex] && toggleFlashcardLearned(filteredWords[currentIndex].id)} />}
-                {viewMode === 'list' && <ListView words={filteredWords} isEditMode={false} setWords={setVocabulary} categories={categories.slice(1)} markedAsLearned={markedAsLearnedSet} onToggleMarkedAsLearned={toggleFlashcardLearned} onPlayAudio={playWordAudio} loadingAudioId={loadingAudioId} />}
+                {viewMode === 'flashcard' && <Flashcard word={filteredWords[currentIndex]} isFlipped={isFlipped} onFlip={handleFlip} onPlayAudio={handlePlayPronunciation} isAudioLoading={loadingAudioId !== null} isMarkedAsLearned={markedAsLearnedSet.has(filteredWords[currentIndex]?.id)} onToggleMarkedAsLearned={() => filteredWords[currentIndex] && toggleFlashcardLearned(filteredWords[currentIndex].id)} onKanjiClick={handleKanjiClick} />}
+                {viewMode === 'list' && <ListView words={filteredWords} isEditMode={false} setWords={setVocabulary} categories={categories.slice(1)} markedAsLearned={markedAsLearnedSet} onToggleMarkedAsLearned={toggleFlashcardLearned} onPlayAudio={playWordAudio} loadingAudioId={loadingAudioId} onKanjiClick={handleKanjiClick} />}
             </main>
             
             <footer className="w-full max-w-5xl mt-12 mb-8">

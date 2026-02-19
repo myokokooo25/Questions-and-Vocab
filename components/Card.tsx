@@ -7,7 +7,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import JapaneseText from './JapaneseText';
 import { vocabularyData } from '../data/vocab';
 import ReportModal from './ReportModal';
-import { supabase } from '../lib/supabase';
+import { GoogleGenAI } from "@google/genai";
 
 // Helper function to prepare text for TTS by removing furigana annotations.
 const stripHtml = (html: string): string => {
@@ -71,20 +71,17 @@ const Card: React.FC<CardProps> = ({
     setHintError(null);
 
     try {
-      const { data: response, error } = await supabase.functions.invoke('gemini', {
-        body: { 
-          action: 'text', 
-          prompt: `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}` 
-        }
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const response = await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}`,
       });
 
-      if (error) throw error;
-      if (response?.error) throw new Error(response.error);
-      
+      if (!response.text) throw new Error("No response from AI");
       setHint(response.text);
     } catch (err: any) {
       setHintError("Hint ရယူ၍မရပါ။");
-      console.error("Edge Function Error:", err);
+      console.error("AI Error:", err);
     } finally {
       setIsHintLoading(false);
     }
@@ -99,20 +96,26 @@ const Card: React.FC<CardProps> = ({
     const prompt = `Explain why this is the correct answer in simple Burmese for a student. 
     Question: ${data.questionMY}
     Correct Answer: ${correctOption?.textMY}
-    Please use bullet points for clarity.`;
+    Please use bullet points for clarity and make it easy to understand for a steel structure engineering student.`;
 
     try {
-      const { data: response, error } = await supabase.functions.invoke('gemini', {
-        body: { action: 'text', prompt: prompt }
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const response = await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: prompt,
       });
 
-      if (error) throw error;
-      if (response?.error) throw new Error(response.error);
-
-      setAiExplanation(response.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />'));
+      if (!response.text) throw new Error("No response from AI");
+      
+      // Basic formatting: bold and newlines
+      const formatted = response.text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br />');
+        
+      setAiExplanation(formatted);
     } catch (err: any) {
       setAiError("AI ရှင်းလင်းချက် ရယူ၍မရပါ။");
-      console.error("Edge Function Error:", err);
+      console.error("AI Error:", err);
     } finally {
       setIsAiLoading(false);
     }
@@ -136,9 +139,8 @@ const Card: React.FC<CardProps> = ({
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = 'ja-JP';
-    utterance.rate = 0.9; // Slightly slower for better clarity
+    utterance.rate = 0.9; 
     
-    // Attempt to select a Japanese voice (optional improvement)
     const voices = window.speechSynthesis.getVoices();
     const jaVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP'));
     if (jaVoice) utterance.voice = jaVoice;
@@ -235,29 +237,30 @@ const Card: React.FC<CardProps> = ({
             const textStyle = isCorrect ? 'text-green-600' : isIncorrect ? 'text-red-600' : 'text-slate-600';
 
             return (
-              <button
+              <div
                 key={option.id}
                 onClick={!isSubmitted ? () => onOptionSelect && onOptionSelect(option.id) : undefined}
-                disabled={isSubmitted}
-                className={`w-full p-6 rounded-[2rem] transition-all duration-300 flex items-start justify-between text-left ${cardStyle} ${textStyle} group`}
+                className={`w-full p-6 rounded-[2rem] transition-all duration-300 flex items-start justify-between text-left ${cardStyle} ${textStyle} group ${!isSubmitted ? 'cursor-pointer' : ''}`}
+                role="button"
+                aria-disabled={isSubmitted}
               >
                   <div className="flex-1 pr-6">
                      {language === 'my' ? (
                         <>
                             <p className="font-black text-lg mb-1">{option.textMY}</p>
                             <div className="flex items-center gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                <p className="font-mono text-sm font-bold">
+                                <div className="font-mono text-sm font-bold">
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
-                                </p>
+                                </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                         </>
                     ) : (
                         <>
                             <div className="flex items-center gap-3">
-                                <p className="font-mono font-black text-lg">
+                                <div className="font-mono font-black text-lg">
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
-                                </p>
+                                </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                              {language === 'jp' && (
@@ -272,7 +275,7 @@ const Card: React.FC<CardProps> = ({
                         {isIncorrect && <XCircleSolidIcon className="w-8 h-8 text-red-500 drop-shadow-sm"/>}
                     </div>
                   )}
-              </button>
+              </div>
             )
           })}
         </div>
