@@ -173,7 +173,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [adminLoginError, setAdminLoginError] = useState('');
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
-  const [syncStatus, setSyncStatus] = useState<string>('');
   const [isSyncing, setIsSyncing] = useState(false);
   const [migrationStatus, setMigrationStatus] = useState('');
   
@@ -218,19 +217,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     } else {
       setAdminLoginError('Incorrect Passcode.');
     }
-  };
-
-  const handleSyncKeys = async () => {
-      setIsSyncing(true);
-      setSyncStatus('Syncing...');
-      try {
-          const result = await syncLocalKeys();
-          setSyncStatus(result);
-      } catch (e) {
-          setSyncStatus('Sync Failed.');
-      } finally {
-          setIsSyncing(false);
-      }
   };
 
   // --- MIGRATION LOGIC ---

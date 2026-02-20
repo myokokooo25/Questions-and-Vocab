@@ -43,6 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Remove legacy keys that might expose sensitive data
       localStorage.removeItem('deviceKeys');
       localStorage.removeItem('auth_devices_by_key');
+      localStorage.removeItem('auth_trial_timestamps');
       // ------------------------
 
       try {
