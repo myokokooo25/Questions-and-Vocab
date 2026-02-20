@@ -38,6 +38,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const initializeAuth = async () => {
       setLoading(true);
+      
+      // --- SECURITY CLEANUP ---
+      // Remove legacy keys that might expose sensitive data
+      localStorage.removeItem('deviceKeys');
+      localStorage.removeItem('auth_devices_by_key');
+      // ------------------------
+
       try {
         const storedUserJSON = localStorage.getItem(LOGGED_IN_USER_KEY);
         if (storedUserJSON) {

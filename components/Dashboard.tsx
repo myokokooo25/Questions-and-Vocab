@@ -427,9 +427,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <button onClick={handleMigrateDataToDB} disabled={isSyncing} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
                          {isSyncing ? 'Migrating...' : 'Migrate Data to DB'}
                     </button>
-                    <button onClick={handleSyncKeys} disabled={isSyncing} className="px-4 py-2 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
-                        {isSyncing ? 'Syncing...' : 'Sync Keys to DB'}
-                    </button>
                     <button onClick={loadHistoryData} className="p-3 bg-slate-700 rounded-xl hover:bg-slate-600 transition-colors shadow-lg" title="Refresh History">
                         <RefreshIcon className="w-5 h-5" />
                     </button>
