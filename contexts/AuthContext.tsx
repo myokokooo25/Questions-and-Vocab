@@ -25,8 +25,8 @@ const getDeviceId = (): string => {
 const LOGGED_IN_USER_KEY = 'auth_loggedInUser_key';
 const DEVICE_HISTORY_KEY = 'auth_device_history';
 
-// Fallback keys in case DB is not set up
-const FALLBACK_KEYS = ['420', 'MANOEL'];
+// Fallback keys in case DB is not set up (Removed for production security)
+const FALLBACK_KEYS: string[] = [];
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -39,13 +39,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const initializeAuth = async () => {
       setLoading(true);
       
-      // --- SECURITY CLEANUP ---
-      // Remove legacy keys that might expose sensitive data
-      localStorage.removeItem('deviceKeys');
-      localStorage.removeItem('auth_devices_by_key');
-      localStorage.removeItem('auth_trial_timestamps');
-      // ------------------------
-
       try {
         const storedUserJSON = localStorage.getItem(LOGGED_IN_USER_KEY);
         if (storedUserJSON) {
@@ -68,6 +61,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             }
           }
           // ----------------------------
+
+          // --- SECURITY: Re-verify Admin Status from DB ---
+          // Don't trust LocalStorage for admin privileges
+          if (storedUser.isAdmin) {
+             const { data } = await supabase
+                .from('access_codes')
+                .select('code')
+                .eq('code', 'MANOEL')
+                .eq('is_active', true)
+                .maybeSingle();
+             
+             if (!data || storedUser.accessKey !== 'MANOEL') {
+                storedUser.isAdmin = false;
+                localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(storedUser));
+             }
+          }
+          // -----------------------------------------------
 
           // If trial user, check if expired on load
           if (storedUser.type === 'trial' && storedUser.trialExpiresAt) {
