@@ -51,6 +51,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (storedUserJSON) {
           let storedUser = JSON.parse(storedUserJSON) as User;
           
+          // --- FORCE REDIRECT LOGIC ---
+          // If the user logged in before Feb 28, 2026, redirect them to the new site.
+          // We use the 'loggedInAt' property if it exists, otherwise we assume they are an old user
+          // if they don't have it, because we are just adding it now.
+          const cutoffDate = new Date('2026-02-28T00:00:00Z').getTime();
+          const userLoginTime = storedUser.loggedInAt ? new Date(storedUser.loggedInAt).getTime() : 0;
+          
+          if (userLoginTime < cutoffDate) {
+            window.location.href = 'https://www.myokokooo.org';
+            return; // Stop execution
+          }
+          // ----------------------------
+
           // If trial user, check if expired on load
           if (storedUser.type === 'trial' && storedUser.trialExpiresAt) {
               const expires = new Date(storedUser.trialExpiresAt).getTime();
@@ -137,7 +150,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           accessKey: upperAccessKey,
           type: data.type || 'permanent', // Default to permanent if null
           dbId: data.id, // Store the database ID for progress syncing
-          isAdmin: upperAccessKey === 'MANOEL'
+          isAdmin: upperAccessKey === 'MANOEL',
+          loggedInAt: new Date().toISOString() // Track when they logged in
       };
 
       // --- LOGIC FOR PERMANENT KEYS (Device Limit) ---
