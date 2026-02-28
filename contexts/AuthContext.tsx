@@ -52,15 +52,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           let storedUser = JSON.parse(storedUserJSON) as User;
           
           // --- FORCE REDIRECT LOGIC ---
-          // If the user logged in before Feb 28, 2026, redirect them to the new site.
-          // We use the 'loggedInAt' property if it exists, otherwise we assume they are an old user
-          // if they don't have it, because we are just adding it now.
-          const cutoffDate = new Date('2026-02-28T00:00:00Z').getTime();
-          const userLoginTime = storedUser.loggedInAt ? new Date(storedUser.loggedInAt).getTime() : 0;
-          
-          if (userLoginTime < cutoffDate) {
-            window.location.href = 'https://www.myokokooo.org';
-            return; // Stop execution
+          // If the user doesn't have a loggedInAt timestamp, they are from the old version.
+          if (!storedUser.loggedInAt) {
+            // Prevent infinite loop if they are already on the target domain
+            if (!window.location.hostname.includes('myokokooo.org')) {
+              window.location.href = 'https://www.myokokooo.org';
+              return; // Stop execution
+            } else {
+              // If they are already on myokokooo.org but have an old session,
+              // log them out so they can start fresh and get the loggedInAt property.
+              localStorage.removeItem(LOGGED_IN_USER_KEY);
+              setUser(null);
+              setLoading(false);
+              return;
+            }
           }
           // ----------------------------
 
