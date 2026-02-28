@@ -25,6 +25,7 @@ export interface User {
   type: 'permanent' | 'trial';
   trialExpiresAt?: string | null; // ISO Date string for trial users
   dbId?: number; // Added: The ID from the access_codes table
+  isAdmin?: boolean; // Added: Admin flag
 }
 
 export interface Kanji {

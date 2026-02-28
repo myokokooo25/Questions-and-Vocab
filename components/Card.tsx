@@ -8,6 +8,18 @@ import JapaneseText from './JapaneseText';
 import { vocabularyData } from '../data/vocab';
 import ReportModal from './ReportModal';
 import { GoogleGenAI } from "@google/genai";
+import { supabase } from '../lib/supabase';
+
+// Helper function to safely get the API key in both AI Studio and Vercel/GitHub Pages environments
+const getApiKey = () => {
+  // 1. Try AI Studio injected environment variables
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY;
+    if (process.env.API_KEY) return process.env.API_KEY;
+  }
+  // 2. Try Vite environment variables (for Vercel/GitHub Pages)
+  return import.meta.env.VITE_GEMINI_API_KEY;
+};
 
 // Helper function to prepare text for TTS by removing furigana annotations.
 const stripHtml = (html: string): string => {
@@ -71,14 +83,28 @@ const Card: React.FC<CardProps> = ({
     setHintError(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}`,
-      });
+      const apiKey = getApiKey();
+      let responseText = '';
+      const prompt = `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}`;
 
-      if (!response.text) throw new Error("No response from AI");
-      setHint(response.text);
+      if (apiKey) {
+        const ai = new GoogleGenAI({ apiKey });
+        const response = await ai.models.generateContent({
+          model: 'gemini-3-flash-preview',
+          contents: prompt,
+        });
+        responseText = response.text || '';
+      } else {
+        // Fallback to Supabase Edge Function
+        const { data: funcData, error } = await supabase.functions.invoke('ask-gemini', {
+          body: { prompt }
+        });
+        if (error) throw error;
+        responseText = funcData?.text || '';
+      }
+
+      if (!responseText) throw new Error("No response from AI");
+      setHint(responseText);
     } catch (err: any) {
       setHintError("Hint ရယူ၍မရပါ။");
       console.error("AI Error:", err);
@@ -99,16 +125,29 @@ const Card: React.FC<CardProps> = ({
     Please use bullet points for clarity and make it easy to understand for a steel structure engineering student.`;
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: prompt,
-      });
+      const apiKey = getApiKey();
+      let responseText = '';
 
-      if (!response.text) throw new Error("No response from AI");
+      if (apiKey) {
+        const ai = new GoogleGenAI({ apiKey });
+        const response = await ai.models.generateContent({
+          model: 'gemini-3-flash-preview',
+          contents: prompt,
+        });
+        responseText = response.text || '';
+      } else {
+        // Fallback to Supabase Edge Function
+        const { data: funcData, error } = await supabase.functions.invoke('ask-gemini', {
+          body: { prompt }
+        });
+        if (error) throw error;
+        responseText = funcData?.text || '';
+      }
+
+      if (!responseText) throw new Error("No response from AI");
       
       // Basic formatting: bold and newlines
-      const formatted = response.text
+      const formatted = responseText
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br />');
         
@@ -226,7 +265,7 @@ const Card: React.FC<CardProps> = ({
         )}
 
         <div className="grid grid-cols-1 gap-6">
-          {data.options.map((option) => {
+          {(data.options || []).map((option) => {
             const isSelected = selectedOptionId === option.id;
             const isCorrect = isSubmitted && option.id === data.correctOptionId;
             const isIncorrect = isSelected && isSubmitted && !isCorrect;
@@ -303,17 +342,19 @@ const Card: React.FC<CardProps> = ({
                   {isSubmitted ? (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
                       <h3 className="text-xl font-black text-slate-700 mb-6 border-b border-slate-300/30 pb-4">
-                        <JapaneseText text={data.explanation.titleMY} onKanjiClick={onKanjiClick} />
+                        <JapaneseText text={typeof data.explanation === 'string' ? 'ရှင်းလင်းချက်' : data.explanation?.titleMY || 'Explanation'} onKanjiClick={onKanjiClick} />
                       </h3>
                       <div className="space-y-6 text-base font-bold text-slate-600">
                         <div className="flex gap-4">
                             <span className="shrink-0 w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-xs font-black">!</span>
-                            <p className="pt-1"><JapaneseText text={data.explanation.reasonMY} onKanjiClick={onKanjiClick} /></p>
+                            <p className="pt-1"><JapaneseText text={typeof data.explanation === 'string' ? data.explanation : data.explanation?.reasonMY || ''} onKanjiClick={onKanjiClick} /></p>
                         </div>
-                        <div className="flex gap-4">
-                            <span className="shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-black">★</span>
-                            <p className="pt-1 italic"><JapaneseText text={data.explanation.memoryTipMY} onKanjiClick={onKanjiClick} /></p>
-                        </div>
+                        {typeof data.explanation !== 'string' && data.explanation?.memoryTipMY && (
+                          <div className="flex gap-4">
+                              <span className="shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-black">★</span>
+                              <p className="pt-1 italic"><JapaneseText text={data.explanation.memoryTipMY} onKanjiClick={onKanjiClick} /></p>
+                          </div>
+                        )}
                       </div>
                       <div className="mt-10">
                         <button 

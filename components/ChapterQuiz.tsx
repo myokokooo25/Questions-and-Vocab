@@ -211,7 +211,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
         </div>
 
         <div className="space-y-4">
-          {currentQuestion.options.map((option) => {
+          {(currentQuestion.options || []).map((option) => {
             const isSelected = isMockExam ? userAnswers[currentIndex] === option.id : selectedOptionId === option.id;
             
             // Standard Mode Logic

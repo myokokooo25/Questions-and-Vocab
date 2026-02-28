@@ -11,7 +11,7 @@ import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon } from './Icons';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
@@ -132,12 +132,26 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
           setOnlineQuestions(mappedQuestions);
         } else {
-          throw new Error("No data found in DB, triggering fallback");
+          // If no data in DB, use local data
+          let localData: StudyCardData[] = [];
+          if (isOldQuestionMode) {
+             const oldDataMap: Record<string, StudyCardData[]> = {
+                '2021': chapter2021Data,
+                '2022': chapter2022Data,
+                '2023': chapter2023Data,
+                '2024': chapter2024Data,
+                '2025': chapter2025Data,
+              };
+              localData = oldDataMap[selectedApp] || [];
+          } else {
+              localData = studyDataByChapter[activeChapter] || [];
+          }
+          setOnlineQuestions(localData);
         }
       } catch (err: any) {
         // Silent fallback for missing table or connection issues
         // Only log if it's NOT the expected "table missing" error to keep console clean for user
-        if (err.code !== 'PGRST205' && err.message !== "No data found in DB, triggering fallback") {
+        if (err.code !== 'PGRST205') {
              console.warn("Using local data due to DB error:", err.message);
         }
         
@@ -168,16 +182,14 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [view, setView] = useState<'study' | 'list' | 'quiz'>('study');
 
   // Admin View State
-  const [showAdminLogin, setShowAdminLogin] = useState(false);
-  const [adminPassword, setAdminPassword] = useState('');
-  const [adminLoginError, setAdminLoginError] = useState('');
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
   const [migrationStatus, setMigrationStatus] = useState('');
+  const [bulkJson, setBulkJson] = useState('');
+  const [isBulkUploading, setIsBulkUploading] = useState(false);
   
   const DEVICE_HISTORY_KEY = 'auth_device_history';
-  const ADMIN_PASSCODE = '454879';
 
   const loadHistoryData = () => {
     try {
@@ -197,78 +209,130 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value.toLowerCase() === 'mkkocheck') {
-      setShowAdminLogin(true);
-      setAdminPassword('');
-      setAdminLoginError('');
-      setSearchQuery('');
-    } else {
-      if (isAdminViewVisible) setIsAdminViewVisible(false);
-      setSearchQuery(value);
-    }
-  };
-
-  const handleAdminLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (adminPassword === ADMIN_PASSCODE) {
-      setIsAdminViewVisible(true);
-      setShowAdminLogin(false);
-      setAdminPassword('');
-    } else {
-      setAdminLoginError('Incorrect Passcode.');
-    }
+    if (isAdminViewVisible) setIsAdminViewVisible(false);
+    setSearchQuery(value);
   };
 
   // --- MIGRATION LOGIC ---
   const handleMigrateDataToDB = async () => {
-      if (!window.confirm("This will upload all local content to Supabase. Continue?")) return;
-      
       setMigrationStatus("Starting migration...");
       setIsSyncing(true);
 
-      const allDataToUpload: {category: string, data: StudyCardData[]}[] = [];
+      try {
+          const allDataToUpload: {category: string, data: StudyCardData[]}[] = [];
 
-      // 1. Gather all local data
-      // Chapters 1-5
-      for (let i = 1; i <= 5; i++) {
-          if (studyDataByChapter[i]) {
-              allDataToUpload.push({ category: i.toString(), data: studyDataByChapter[i] });
-          }
-      }
-      // Years
-      allDataToUpload.push({ category: '2021', data: chapter2021Data });
-      allDataToUpload.push({ category: '2022', data: chapter2022Data });
-      allDataToUpload.push({ category: '2023', data: chapter2023Data });
-      allDataToUpload.push({ category: '2024', data: chapter2024Data });
-      allDataToUpload.push({ category: '2025', data: chapter2025Data });
-
-      let successCount = 0;
-      let failCount = 0;
-
-      for (const group of allDataToUpload) {
-          for (const q of group.data) {
-              const payload = {
-                  id: q.id,
-                  category: group.category,
-                  question_jp: q.questionJP,
-                  question_my: q.questionMY,
-                  options: q.options, // Supabase handles JSON automatically
-                  correct_option_id: q.correctOptionId,
-                  explanation: q.explanation
-              };
-
-              const { error } = await supabase.from('questions').upsert(payload);
-              if (error) {
-                  console.error("Migration error for", q.id, error);
-                  failCount++;
-              } else {
-                  successCount++;
+          // 1. Gather all local data
+          // Chapters 1-5
+          for (let i = 1; i <= 5; i++) {
+              if (studyDataByChapter[i]) {
+                  allDataToUpload.push({ category: i.toString(), data: studyDataByChapter[i] });
               }
           }
+          // Years
+          allDataToUpload.push({ category: '2021', data: chapter2021Data });
+          allDataToUpload.push({ category: '2022', data: chapter2022Data });
+          allDataToUpload.push({ category: '2023', data: chapter2023Data });
+          allDataToUpload.push({ category: '2024', data: chapter2024Data });
+          allDataToUpload.push({ category: '2025', data: chapter2025Data });
+
+          let successCount = 0;
+          let failCount = 0;
+          let lastError = '';
+
+          for (const group of allDataToUpload) {
+              for (const q of group.data) {
+                  const payload = {
+                      id: q.id,
+                      category: group.category,
+                      question_jp: q.questionJP,
+                      question_my: q.questionMY,
+                      options: q.options, // Supabase handles JSON automatically
+                      correct_option_id: q.correctOptionId,
+                      explanation: q.explanation
+                  };
+
+                  const { error } = await supabase.from('questions').upsert(payload);
+                  if (error) {
+                      console.error("Migration error for", q.id, error);
+                      lastError = error.message;
+                      failCount++;
+                  } else {
+                      successCount++;
+                  }
+              }
+          }
+
+          if (failCount > 0) {
+             setMigrationStatus(`Migration Finished. Success: ${successCount}, Failed: ${failCount}. Last Error: ${lastError}`);
+          } else {
+             setMigrationStatus(`Migration Complete. Successfully uploaded ${successCount} questions.`);
+          }
+      } catch (err: any) {
+          console.error("Fatal migration error:", err);
+          setMigrationStatus(`Fatal Error: ${err.message}`);
+      } finally {
+          setIsSyncing(false);
+      }
+  };
+
+  const handleBulkUpload = async () => {
+    if (!bulkJson.trim()) {
+      setMigrationStatus("Please paste JSON data first.");
+      return;
+    }
+    
+    setIsBulkUploading(true);
+    setMigrationStatus("Parsing JSON...");
+    
+    try {
+      const parsedData = JSON.parse(bulkJson);
+      if (!Array.isArray(parsedData)) {
+        throw new Error("JSON must be an array of questions.");
+      }
+      
+      setMigrationStatus(`Uploading ${parsedData.length} questions...`);
+      let successCount = 0;
+      let failCount = 0;
+      let lastError = '';
+
+      for (const q of parsedData) {
+        try {
+          const payload = {
+              id: q.id,
+              category: q.category,
+              question_jp: q.questionJP,
+              question_my: q.questionMY,
+              options: q.options,
+              correct_option_id: q.correctOptionId,
+              explanation: q.explanation
+          };
+
+          const { error } = await supabase.from('questions').upsert(payload);
+          if (error) {
+              console.error("Upload error for", q.id, error);
+              lastError = error.message;
+              failCount++;
+          } else {
+              successCount++;
+          }
+        } catch (e: any) {
+           lastError = e.message;
+           failCount++;
+        }
       }
 
-      setMigrationStatus(`Migration Complete. Success: ${successCount}, Failed: ${failCount}`);
-      setIsSyncing(false);
+      if (failCount > 0) {
+         setMigrationStatus(`Upload Finished. Success: ${successCount}, Failed: ${failCount}. Last Error: ${lastError}`);
+      } else {
+         setMigrationStatus(`Upload Complete. Successfully added ${successCount} questions.`);
+         setBulkJson(''); // Clear on success
+      }
+    } catch (err: any) {
+      console.error("Bulk upload error:", err);
+      setMigrationStatus(`Error: ${err.message}`);
+    } finally {
+      setIsBulkUploading(false);
+    }
   };
 
   const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => {
@@ -370,10 +434,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     if (isOldQuestionMode) {
       return [{ value: Number(selectedApp), label: `${selectedApp}年 過去問題` }];
     }
-    return Array.from({ length: localTotalChapters }, (_, i) => ({
+    const options = Array.from({ length: localTotalChapters }, (_, i) => ({
       value: i + 1,
       label: `Chapter ${i + 1}`,
     }));
+    
+    // Add generic "Test" category (e.g., category '6' or 'test')
+    options.push({ value: 6, label: 'Test Questions' });
+    
+    return options;
   }, [isOldQuestionMode, localTotalChapters, selectedApp]);
 
   const activeChapterLabel = useMemo(() => {
@@ -424,6 +493,43 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <p className="text-sm font-mono text-green-400">{migrationStatus}</p>
                 </div>
             )}
+
+            <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-700 space-y-4">
+                <h3 className="text-lg font-bold text-slate-200">Bulk Add Questions (JSON)</h3>
+                <p className="text-xs text-slate-400">Paste an array of question objects here. Make sure the format matches the standard JSON structure.</p>
+                <textarea 
+                    value={bulkJson}
+                    onChange={(e) => setBulkJson(e.target.value)}
+                    className="w-full h-48 bg-slate-800 border border-slate-600 rounded-xl p-4 text-sm font-mono text-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder={`[
+  {
+    "id": "new-1",
+    "category": "1",
+    "questionJP": "日本語の質問",
+    "questionMY": "မြန်မာလို မေးခွန်း",
+    "options": [
+      { "id": 1, "textJP": "選択肢 1", "textMY": "အဖြေ ၁" },
+      { "id": 2, "textJP": "選択肢 2", "textMY": "အဖြေ ၂" }
+    ],
+    "correctOptionId": 1,
+    "explanation": {
+      "titleMY": "ရှင်းလင်းချက်",
+      "reasonMY": "အဖြေမှန်ရတဲ့ အကြောင်းရင်း",
+      "memoryTipMY": "မှတ်သားရန်"
+    }
+  }
+]`}
+                />
+                <div className="flex justify-end">
+                    <button 
+                        onClick={handleBulkUpload} 
+                        disabled={isBulkUploading || !bulkJson.trim()} 
+                        className="px-6 py-3 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-sm font-bold uppercase tracking-wider disabled:opacity-50"
+                    >
+                        {isBulkUploading ? 'Uploading...' : 'Upload JSON'}
+                    </button>
+                </div>
+            </div>
 
             {/* ... rest of admin panel ... */}
             <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
@@ -615,22 +721,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           />
         )}
 
-       {showAdminLogin && (
-        <div className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="w-full max-w-sm p-10 space-y-6 bg-slate-900 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10">
-            <h2 className="text-2xl font-black text-center text-slate-100 uppercase tracking-widest">Admin Access</h2>
-            <form onSubmit={handleAdminLogin} className="space-y-6">
-              <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} className="block w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-2xl shadow-inner text-center font-bold tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-100" placeholder="••••••" autoComplete="off" autoFocus />
-              {adminLoginError && <p className="text-sm text-center text-red-400 font-bold">{adminLoginError}</p>}
-              <div className="flex gap-4">
-                <button type="button" onClick={() => setShowAdminLogin(false)} className="flex-1 py-4 text-xs font-black uppercase bg-slate-700 text-slate-300 rounded-2xl hover:bg-slate-600">Cancel</button>
-                <button type="submit" className="flex-1 py-4 text-xs font-black uppercase text-white bg-blue-600 rounded-2xl hover:bg-blue-500">Login</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
       {showProfile && (
         <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-md" onClick={() => setShowProfile(false)}>
            <div className="w-full max-w-sm p-10 space-y-8 bg-neumorphic-bg rounded-[3rem] shadow-2xl animate-in zoom-in duration-300" onClick={e => e.stopPropagation()}>
@@ -726,6 +816,19 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 >
                     <BookmarkIcon className="w-5 h-5" />
                 </button>
+                {user?.isAdmin && (
+                    <button
+                        onClick={() => setIsAdminViewVisible(!isAdminViewVisible)}
+                        className={`p-3 rounded-2xl transition-all ${
+                        isAdminViewVisible
+                            ? 'shadow-neumorphic-inset text-purple-600'
+                            : 'shadow-neumorphic-outset text-slate-400 hover:text-purple-600'
+                        }`}
+                        title="Admin Panel"
+                    >
+                        <SparkleIcon className="w-5 h-5" />
+                    </button>
+                )}
                 <button
                     onClick={() => setShowProfile(true)}
                     className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
@@ -822,10 +925,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                   </div>
               </div>
             )}
-
-            {renderContent()}
         </>
        )}
+       
+       {renderContent()}
       </main>
     </div>
   );

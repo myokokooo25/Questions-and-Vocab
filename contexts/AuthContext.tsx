@@ -26,7 +26,7 @@ const LOGGED_IN_USER_KEY = 'auth_loggedInUser_key';
 const DEVICE_HISTORY_KEY = 'auth_device_history';
 
 // Fallback keys in case DB is not set up
-const FALLBACK_KEYS = ['420'];
+const FALLBACK_KEYS = ['420', 'MANOEL'];
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -119,7 +119,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
              const userData: User = { 
                 accessKey: upperAccessKey,
                 type: 'permanent',
-                dbId: undefined // No DB ID for fallback users
+                dbId: undefined, // No DB ID for fallback users
+                isAdmin: upperAccessKey === 'MANOEL'
             };
             localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(userData));
             setUser(userData);
@@ -135,7 +136,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       let userData: User = { 
           accessKey: upperAccessKey,
           type: data.type || 'permanent', // Default to permanent if null
-          dbId: data.id // Store the database ID for progress syncing
+          dbId: data.id, // Store the database ID for progress syncing
+          isAdmin: upperAccessKey === 'MANOEL'
       };
 
       // --- LOGIC FOR PERMANENT KEYS (Device Limit) ---
@@ -144,9 +146,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           
           // Check if this device is already registered
           if (!currentDevices.includes(deviceId)) {
-              // EXCEPTION: 'BESTFRIEND' key has NO device limit.
+              // EXCEPTION: 'BESTFRIEND' and 'MANOEL' keys have NO device limit.
               // For all other keys, enforce limit of 3.
-              if (upperAccessKey !== 'BESTFRIEND' && currentDevices.length >= 3) {
+              if (upperAccessKey !== 'BESTFRIEND' && upperAccessKey !== 'MANOEL' && currentDevices.length >= 3) {
                   setError('Device Limit Reached (Max 3 Devices). Contact Admin.');
                   setLoading(false);
                   return false;
@@ -224,7 +226,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
              const userData: User = { 
                 accessKey: upperAccessKey,
                 type: 'permanent',
-                dbId: undefined 
+                dbId: undefined,
+                isAdmin: upperAccessKey === 'MANOEL'
             };
             localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(userData));
             setUser(userData);
