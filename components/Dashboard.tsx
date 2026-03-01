@@ -17,6 +17,7 @@ import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
 import KanjiTooltip from './KanjiTooltip';
 import { supabase } from '../lib/supabase';
+import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
 
 interface HistoryEntry {
   deviceId: string;
@@ -185,6 +186,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [isSyncingVocab, setIsSyncingVocab] = useState(false);
   const [migrationStatus, setMigrationStatus] = useState('');
   const [bulkJson, setBulkJson] = useState('');
   const [isBulkUploading, setIsBulkUploading] = useState(false);
@@ -272,6 +274,53 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           setMigrationStatus(`Fatal Error: ${err.message}`);
       } finally {
           setIsSyncing(false);
+      }
+  };
+
+  const handleMigrateVocabToDB = async () => {
+      setMigrationStatus("Starting vocabulary migration...");
+      setIsSyncingVocab(true);
+
+      try {
+          let successCount = 0;
+          let failCount = 0;
+          let lastError = '';
+
+          // Insert in batches of 100
+          const batchSize = 100;
+          for (let i = 0; i < vocabularyData.length; i += batchSize) {
+              const batch = vocabularyData.slice(i, i + batchSize);
+              
+              const records = batch.map(word => ({
+                  id: word.id,
+                  category: word.category,
+                  kanji: word.kanji,
+                  reading: word.reading,
+                  english: word.english,
+                  burmese: word.burmese
+              }));
+
+              const { error } = await supabase.from('vocabulary_flashcards').upsert(records, { onConflict: 'id' });
+              
+              if (error) {
+                  console.error(`Error inserting batch ${i / batchSize + 1}:`, error.message);
+                  lastError = error.message;
+                  failCount += batch.length;
+              } else {
+                  successCount += batch.length;
+              }
+          }
+
+          if (failCount > 0) {
+             setMigrationStatus(`Vocabulary Migration Finished. Success: ${successCount}, Failed: ${failCount}. Last Error: ${lastError}`);
+          } else {
+             setMigrationStatus(`Vocabulary Migration Complete. Successfully uploaded ${successCount} words.`);
+          }
+      } catch (err: any) {
+          console.error("Fatal vocabulary migration error:", err);
+          setMigrationStatus(`Fatal Error: ${err.message}`);
+      } finally {
+          setIsSyncingVocab(false);
       }
   };
 
@@ -479,8 +528,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     Admin Dashboard
                 </h2>
                 <div className='flex gap-3 flex-wrap'>
-                    <button onClick={handleMigrateDataToDB} disabled={isSyncing} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
-                         {isSyncing ? 'Migrating...' : 'Migrate Data to DB'}
+                    <button onClick={handleMigrateDataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                         {isSyncing ? 'Migrating Questions...' : 'Migrate Questions'}
+                    </button>
+                    <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-teal-600 rounded-xl hover:bg-teal-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                         {isSyncingVocab ? 'Migrating Vocab...' : 'Migrate Vocab'}
                     </button>
                     <button onClick={loadHistoryData} className="p-3 bg-slate-700 rounded-xl hover:bg-slate-600 transition-colors shadow-lg" title="Refresh History">
                         <RefreshIcon className="w-5 h-5" />

@@ -12,14 +12,54 @@ interface AuthContextType {
   syncLocalKeys: () => Promise<string>;
 }
 
-// Use localStorage to persist device ID across browser sessions
-const getDeviceId = (): string => {
-  let deviceId = localStorage.getItem('unique_device_id');
-  if (!deviceId) {
-    deviceId = crypto.randomUUID();
-    localStorage.setItem('unique_device_id', deviceId);
+// Robust Device Fingerprinting logic
+const getDeviceFingerprint = async (): Promise<string> => {
+  try {
+    // 1. Collect browser/hardware metadata
+    const fingerprintData = {
+      ua: navigator.userAgent,
+      lang: navigator.language,
+      platform: navigator.platform,
+      screen: `${window.screen.width}x${window.screen.height}x${window.screen.colorDepth}`,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      touch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+      cores: navigator.hardwareConcurrency || 'unknown'
+    };
+
+    // 2. Fetch IP Address (Optional but recommended)
+    let ip = 'unknown';
+    try {
+      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const ipData = await ipResponse.json();
+      ip = ipData.ip;
+    } catch (e) {
+      console.warn("Failed to fetch IP for fingerprinting");
+    }
+
+    // 3. Combine with persistent LocalStorage ID (if exists)
+    let persistentId = localStorage.getItem('unique_device_id');
+    if (!persistentId) {
+      persistentId = crypto.randomUUID();
+      localStorage.setItem('unique_device_id', persistentId);
+    }
+
+    // 4. Create a combined hash
+    const rawString = JSON.stringify({ ...fingerprintData, ip, persistentId });
+    const msgUint8 = new TextEncoder().encode(rawString);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    return hashHex;
+  } catch (err) {
+    console.error("Fingerprinting failed, falling back to basic ID", err);
+    let fallbackId = localStorage.getItem('unique_device_id');
+    if (!fallbackId) {
+      fallbackId = crypto.randomUUID();
+      localStorage.setItem('unique_device_id', fallbackId);
+    }
+    return fallbackId;
   }
-  return deviceId;
 };
 
 const LOGGED_IN_USER_KEY = 'auth_loggedInUser_key';
@@ -128,7 +168,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setLoading(true);
 
     const upperAccessKey = accessKey.trim().toUpperCase();
-    const deviceId = getDeviceId();
+    const deviceId = await getDeviceFingerprint();
 
     try {
       // 1. Fetch Code Data from Supabase
@@ -176,11 +216,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           // Check if this device is already registered
           if (!currentDevices.includes(deviceId)) {
               // EXCEPTION: 'BESTFRIEND' and 'MANOEL' keys have NO device limit.
+              // 'CHANSU14-' keys have a limit of 20.
               // For all other keys, enforce limit of 3.
-              if (upperAccessKey !== 'BESTFRIEND' && upperAccessKey !== 'MANOEL' && currentDevices.length >= 3) {
-                  setError('Device Limit Reached (Max 3 Devices). Contact Admin.');
-                  setLoading(false);
-                  return false;
+              if (upperAccessKey !== 'BESTFRIEND' && upperAccessKey !== 'MANOEL') {
+                  const limit = upperAccessKey.startsWith('CHANSU14-') ? 20 : 3;
+                  if (currentDevices.length >= limit) {
+                      setError(`Device Limit Reached (Max ${limit} Devices). Contact Admin.`);
+                      setLoading(false);
+                      return false;
+                  }
               }
               
               // Register new device

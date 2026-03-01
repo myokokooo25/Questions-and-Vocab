@@ -1,6 +1,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { vocabularyData } from './data/vocabulary';
+import { supabase } from '../lib/supabase';
 import Flashcard from './components/Flashcard';
 import ListView from './components/ListView';
 import StudyPlan from './components/StudyPlan';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
 
     const [vocabulary, setVocabulary] = useState<VocabularyWord[]>(vocabularyData);
+    const [isFetchingVocab, setIsFetchingVocab] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
     const [currentCategory, setCurrentCategory] = useState('All');
@@ -38,6 +40,36 @@ const App: React.FC = () => {
         const key = user.accessKey.trim().toUpperCase();
         return { key };
     }, [user]);
+
+    useEffect(() => {
+        const fetchVocabulary = async () => {
+            try {
+                setIsFetchingVocab(true);
+                const { data, error } = await supabase
+                    .from('vocabulary_flashcards')
+                    .select('*')
+                    .order('id', { ascending: true });
+                
+                if (error) {
+                    console.error('Error fetching vocabulary from Supabase:', error);
+                    // Fallback to local data
+                    setVocabulary(vocabularyData);
+                } else if (data && data.length > 0) {
+                    setVocabulary(data as VocabularyWord[]);
+                } else {
+                    // Fallback if table is empty
+                    setVocabulary(vocabularyData);
+                }
+            } catch (err) {
+                console.error('Failed to fetch vocabulary:', err);
+                setVocabulary(vocabularyData);
+            } finally {
+                setIsFetchingVocab(false);
+            }
+        };
+
+        fetchVocabulary();
+    }, []);
 
     const [activeStudyDay, setActiveStudyDay] = useState<number | null>(null);
     const TOTAL_STUDY_DAYS = 40;
@@ -120,7 +152,7 @@ const App: React.FC = () => {
 
     if (!auth) return <div className="p-20 text-center font-bold text-slate-500">Access Denied. Please Login from main screen.</div>;
 
-    if (isLoading) {
+    if (isLoading || isFetchingVocab) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-neumorphic-bg">
                 <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full border-t-indigo-600 animate-spin"></div>

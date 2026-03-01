@@ -5,6 +5,20 @@ import { SpeakerIcon, CheckCircleIcon, SparkleIcon, LoadingSpinnerIcon } from '.
 import ReportModal from '../../components/ReportModal';
 import JapaneseText from '../../components/JapaneseText';
 import { GoogleGenAI } from "@google/genai";
+import { supabase } from '../../lib/supabase';
+
+// Helper function to safely get the API key in both AI Studio and Vercel/GitHub Pages environments
+const getApiKey = () => {
+  // 1. Try Vite environment variables (for Vercel/GitHub Pages)
+  if (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
+    return import.meta.env.VITE_GEMINI_API_KEY;
+  }
+  // 2. Try AI Studio injected environment variables
+  if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
+    return process.env.GEMINI_API_KEY;
+  }
+  return null;
+};
 
 interface FlashcardProps {
   word: VocabularyWord | undefined;
@@ -38,27 +52,37 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
     setAiError(null);
     setAiExplanation(null);
 
+    // Prompt optimized for engineering students
     const prompt = `Explain the Japanese word "${word.kanji}" (${word.reading}) which means "${word.english}" / "${word.burmese}". 
     Explain its usage, nuance, and maybe break down the Kanji characters if applicable. 
-    Provide the explanation in simple Burmese language for a construction/engineering student.`;
+    Provide the explanation in simple Burmese language for a construction/engineering student. 
+    Use bullet points and bold text for key terms.`;
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = getApiKey();
+      let responseText = '';
+
+      if (!apiKey) {
+        throw new Error("VITE_GEMINI_API_KEY is missing in Vercel Environment Variables.");
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-2.5-flash',
         contents: prompt,
       });
+      responseText = response.text || '';
 
-      if (!response.text) throw new Error("No response from AI");
+      if (!responseText) throw new Error("No response from AI");
       
       // Basic formatting: bold and newlines
-      const formatted = response.text
+      const formatted = responseText
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br />');
         
       setAiExplanation(formatted);
     } catch (err: any) {
-      setAiError("AI ရှင်းလင်းချက် ရယူ၍မရပါ။");
+      setAiError(`AI ရှင်းလင်းချက် ရယူ၍မရပါ။ (${err.message || 'Unknown Error'})`);
       console.error("AI Error:", err);
     } finally {
       setIsAiLoading(false);

@@ -12,13 +12,15 @@ import { supabase } from '../lib/supabase';
 
 // Helper function to safely get the API key in both AI Studio and Vercel/GitHub Pages environments
 const getApiKey = () => {
-  // 1. Try AI Studio injected environment variables
-  if (typeof process !== 'undefined' && process.env) {
-    if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY;
-    if (process.env.API_KEY) return process.env.API_KEY;
+  // 1. Try Vite environment variables (for Vercel/GitHub Pages)
+  if (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
+    return import.meta.env.VITE_GEMINI_API_KEY;
   }
-  // 2. Try Vite environment variables (for Vercel/GitHub Pages)
-  return import.meta.env.VITE_GEMINI_API_KEY;
+  // 2. Try AI Studio injected environment variables
+  if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
+    return process.env.GEMINI_API_KEY;
+  }
+  return null;
 };
 
 // Helper function to prepare text for TTS by removing furigana annotations.
@@ -87,21 +89,16 @@ const Card: React.FC<CardProps> = ({
       let responseText = '';
       const prompt = `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}`;
 
-      if (apiKey) {
-        const ai = new GoogleGenAI({ apiKey });
-        const response = await ai.models.generateContent({
-          model: 'gemini-3-flash-preview',
-          contents: prompt,
-        });
-        responseText = response.text || '';
-      } else {
-        // Fallback to Supabase Edge Function
-        const { data: funcData, error } = await supabase.functions.invoke('ask-gemini', {
-          body: { prompt }
-        });
-        if (error) throw error;
-        responseText = funcData?.text || '';
+      if (!apiKey) {
+        throw new Error("VITE_GEMINI_API_KEY is missing in Vercel Environment Variables.");
       }
+
+      const ai = new GoogleGenAI({ apiKey });
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      });
+      responseText = response.text || '';
 
       if (!responseText) throw new Error("No response from AI");
       setHint(responseText);
@@ -128,21 +125,16 @@ const Card: React.FC<CardProps> = ({
       const apiKey = getApiKey();
       let responseText = '';
 
-      if (apiKey) {
-        const ai = new GoogleGenAI({ apiKey });
-        const response = await ai.models.generateContent({
-          model: 'gemini-3-flash-preview',
-          contents: prompt,
-        });
-        responseText = response.text || '';
-      } else {
-        // Fallback to Supabase Edge Function
-        const { data: funcData, error } = await supabase.functions.invoke('ask-gemini', {
-          body: { prompt }
-        });
-        if (error) throw error;
-        responseText = funcData?.text || '';
+      if (!apiKey) {
+        throw new Error("VITE_GEMINI_API_KEY is missing in Vercel Environment Variables.");
       }
+
+      const ai = new GoogleGenAI({ apiKey });
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      });
+      responseText = response.text || '';
 
       if (!responseText) throw new Error("No response from AI");
       
