@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Card from './Card';
 import Dropdown from './Dropdown';
-import { studyDataByChapter, chapterCount } from '../data/content';
+import { studyDataByChapter, studyDataByChapter2026, chapterCount } from '../data/content';
 import { chapter2021Data } from '../data/2021-old-question';
 import { chapter2022Data } from '../data/2022-old-question';
 import { chapter2023Data } from '../data/2023-old-question';
@@ -28,7 +28,7 @@ interface HistoryEntry {
 }
 
 interface DashboardProps {
-  selectedApp: 'main' | '2021' | '2022' | '2023' | '2024' | '2025';
+  selectedApp: 'main' | '2026' | '2021' | '2022' | '2023' | '2024' | '2025';
   onGoBack: () => void;
 }
 
@@ -107,7 +107,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       setIsLoadingQuestions(true);
-      const category = isOldQuestionMode ? selectedApp : activeChapter.toString();
+      const category = isOldQuestionMode 
+        ? selectedApp 
+        : selectedApp === '2026' 
+            ? `2026-${activeChapter}` 
+            : activeChapter.toString();
 
       try {
         const { data, error } = await supabase
@@ -144,6 +148,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 '2025': chapter2025Data,
               };
               localData = oldDataMap[selectedApp] || [];
+          } else if (selectedApp === '2026') {
+              localData = studyDataByChapter2026[activeChapter] || [];
           } else {
               localData = studyDataByChapter[activeChapter] || [];
           }
@@ -166,6 +172,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               '2025': chapter2025Data,
             };
             localData = oldDataMap[selectedApp] || [];
+        } else if (selectedApp === '2026') {
+            localData = studyDataByChapter2026[activeChapter] || [];
         } else {
             localData = studyDataByChapter[activeChapter] || [];
         }
@@ -185,6 +193,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   // Admin View State
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState<{key: string, userName: string, count: number}[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
   const [isSyncingVocab, setIsSyncingVocab] = useState(false);
   const [migrationStatus, setMigrationStatus] = useState('');
@@ -192,6 +201,45 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [isBulkUploading, setIsBulkUploading] = useState(false);
   
   const DEVICE_HISTORY_KEY = 'auth_device_history';
+
+  // --- REALTIME PRESENCE ---
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase.channel('online-users', {
+      config: {
+        presence: {
+          key: user.accessKey,
+        },
+      },
+    });
+
+    channel
+      .on('presence', { event: 'sync' }, () => {
+        const state = channel.presenceState();
+        const onlineList = Object.keys(state).map(key => {
+            const presences = state[key] as any[];
+            return {
+                key,
+                userName: presences[0]?.user_name || 'Unknown',
+                count: presences.length // Number of devices using this key
+            };
+        });
+        setOnlineUsers(onlineList);
+      })
+      .subscribe(async (status) => {
+        if (status === 'SUBSCRIBED') {
+          await channel.track({
+            user_name: user.userName || 'Unknown',
+            online_at: new Date().toISOString(),
+          });
+        }
+      });
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
 
   const loadHistoryData = () => {
     try {
@@ -228,6 +276,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           for (let i = 1; i <= 5; i++) {
               if (studyDataByChapter[i]) {
                   allDataToUpload.push({ category: i.toString(), data: studyDataByChapter[i] });
+              }
+              if (studyDataByChapter2026[i]) {
+                  allDataToUpload.push({ category: `2026-${i}`, data: studyDataByChapter2026[i] });
               }
           }
           // Years
@@ -459,6 +510,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         if (studyDataByChapter[i]) {
             allQuestions = [...allQuestions, ...studyDataByChapter[i]];
         }
+        if (studyDataByChapter2026[i]) {
+            allQuestions = [...allQuestions, ...studyDataByChapter2026[i]];
+        }
     }
     // Add old questions
     allQuestions = [
@@ -483,13 +537,14 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     if (isOldQuestionMode) {
       return [{ value: Number(selectedApp), label: `${selectedApp}年 過去問題` }];
     }
+    const prefix = selectedApp === '2026' ? '2026 ' : '2022-2025 ';
     const options = Array.from({ length: localTotalChapters }, (_, i) => ({
       value: i + 1,
-      label: `Chapter ${i + 1}`,
+      label: `${prefix}Chapter ${i + 1}`,
     }));
     
     // Add generic "Test" category (e.g., category '6' or 'test')
-    options.push({ value: 6, label: 'Test Questions' });
+    options.push({ value: 6, label: `${prefix}Test Questions` });
     
     return options;
   }, [isOldQuestionMode, localTotalChapters, selectedApp]);
@@ -582,12 +637,43 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     </button>
                 </div>
             </div>
+            
+            <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-700 space-y-4">
+                <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-bold text-slate-200 flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        Online Users (Realtime)
+                    </h3>
+                    <span className="text-xs font-bold bg-slate-800 px-3 py-1 rounded-full text-slate-300">
+                        {onlineUsers.length} Active Keys
+                    </span>
+                </div>
+                
+                {onlineUsers.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        {onlineUsers.map((ou) => (
+                            <div key={ou.key} className="p-3 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
+                                <div className="flex flex-col">
+                                    <span className="font-bold text-sm text-slate-200">{ou.userName}</span>
+                                    <span className="font-mono text-xs text-blue-400">{ou.key}</span>
+                                </div>
+                                <span className="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded-md">
+                                    {ou.count} {ou.count === 1 ? 'device' : 'devices'}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-center text-slate-400 py-6 font-medium text-sm">No other users online right now.</p>
+                )}
+            </div>
 
-            {/* ... rest of admin panel ... */}
-            <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
-                {historyData.length > 0 ? (
-                    <ul className="space-y-4">
-                        {historyData.slice().reverse().map((entry, index) => {
+            <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-700 space-y-4">
+                <h3 className="text-lg font-bold text-slate-200">Local Login History</h3>
+                <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
+                    {historyData.length > 0 ? (
+                        <ul className="space-y-4">
+                            {historyData.slice().reverse().map((entry, index) => {
                              const isFailure = entry.status === 'failure';
                             return (
                                 <li key={index} className={`p-4 rounded-2xl border text-sm flex items-start justify-between gap-4 ${isFailure ? 'bg-red-900/20 border-red-500/50' : 'bg-slate-900/60 border-green-500/30'}`}>
@@ -605,10 +691,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                                 </li>
                             );
                         })}
-                    </ul>
-                ) : (
-                    <p className="text-center text-slate-400 py-12 font-medium">No login history found.</p>
-                )}
+                        </ul>
+                    ) : (
+                        <p className="text-center text-slate-400 py-12 font-medium">No login history found.</p>
+                    )}
+                </div>
             </div>
         </div>
       );
@@ -634,7 +721,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         return (
             <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-inset p-4 sm:p-6">
                 <div className="pb-4 mb-4 border-b border-slate-300/30">
-                    <h2 className="text-xl font-black text-slate-700">{isOldQuestionMode ? `${selectedApp} Past Questions` : `Chapter ${activeChapter} Questions`}</h2>
+                    <h2 className="text-xl font-black text-slate-700">
+                        {isOldQuestionMode 
+                            ? `${selectedApp} Past Questions` 
+                            : `${activeChapterLabel} Questions`}
+                    </h2>
                 </div>
                 <ul className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
                     {filteredData.map((card, index) => {
@@ -784,6 +875,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </div>
               <div className="p-6 bg-neumorphic-bg shadow-neumorphic-inset rounded-[2rem] space-y-5">
                   <div>
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest">User Name</p>
+                    <p className="text-xl font-bold text-slate-700 mt-1">{user?.userName || 'Unknown'}</p>
+                  </div>
+                  <div className="pt-4 border-t border-slate-300/30">
                     <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Active Code</p>
                     <p className="text-xl font-mono font-black text-blue-600 tracking-wider mt-1">{user?.accessKey}</p>
                   </div>
@@ -810,6 +905,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         ACTIVE
                     </p>
                   </div>
+
+                  {user && onlineUsers.find(ou => ou.key === user.accessKey) && (
+                      <div className="pt-4 border-t border-slate-300/30">
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Active Devices</p>
+                        <p className="text-sm font-black text-blue-600 mt-1 flex items-center gap-2">
+                            {onlineUsers.find(ou => ou.key === user.accessKey)?.count} Device(s) Currently Online
+                        </p>
+                      </div>
+                  )}
               </div>
               <button
                 onClick={() => setShowProfile(false)}
@@ -841,6 +945,16 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <div className="hidden sm:flex items-center px-4 py-2 bg-red-100 rounded-xl border border-red-200">
                     <ClockIcon className="w-4 h-4 text-red-500 mr-2 animate-pulse" />
                     <span className="text-xs font-black text-red-600 font-mono tracking-widest">{timeLeft}</span>
+                </div>
+            )}
+
+            {/* --- Device Count Display --- */}
+            {user && onlineUsers.find(ou => ou.key === user.accessKey) && (
+                <div className="hidden sm:flex items-center px-4 py-2 bg-blue-50 rounded-xl border border-blue-100 shadow-sm">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse mr-2"></span>
+                    <span className="text-xs font-bold text-blue-700">
+                        {onlineUsers.find(ou => ou.key === user.accessKey)?.count} Device(s) Active
+                    </span>
                 </div>
             )}
 
@@ -883,10 +997,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 )}
                 <button
                     onClick={() => setShowProfile(true)}
-                    className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
+                    className="flex items-center gap-2 p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
                     title="Account"
                 >
                     <UsersIcon className="w-5 h-5" />
+                    <span className="hidden md:block text-xs font-bold text-slate-600 max-w-[80px] truncate">
+                        {user?.userName || 'Profile'}
+                    </span>
                     {user?.type === 'trial' && <span className="absolute top-2 right-2 w-2 h-2 bg-amber-500 rounded-full border border-white"></span>}
                 </button>
                 <button

@@ -7,8 +7,7 @@ interface WelcomeScreenProps {
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
-  // Temporarily hiding 2021 and 2025 as requested
-  const oldYears = ['2022', '2023', '2024'] as const;
+  const oldYears = ['2021', '2022', '2023', '2024', '2025'] as const;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-neumorphic-bg">
@@ -26,33 +25,48 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
 
       <div className="w-full max-w-5xl space-y-10">
         {/* Main Categories */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <button
             onClick={() => onSelectApp('main')}
-            className="p-10 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
           >
-            <div className="flex items-center gap-6">
-              <div className="p-5 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform">
-                  <BookOpenIcon className="w-10 h-10" />
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform">
+                  <BookOpenIcon className="w-8 h-8" />
               </div>
               <div>
-                  <h2 className="text-2xl font-black text-slate-700">Chapter Study</h2>
-                  <p className="mt-1 text-slate-500 font-medium italic">Practice questions by chapter.</p>
+                  <h2 className="text-xl font-black text-slate-700">2022-2025 Chapter Study</h2>
+                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Practice questions by chapter.</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => onSelectApp('2026')}
+            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-emerald-600 group-hover:scale-110 transition-transform">
+                  <BookOpenIcon className="w-8 h-8" />
+              </div>
+              <div>
+                  <h2 className="text-xl font-black text-slate-700">2026 Chapter Study</h2>
+                  <p className="mt-1 text-sm text-slate-500 font-medium italic">New practice questions.</p>
               </div>
             </div>
           </button>
 
           <button
             onClick={() => onSelectApp('flashcards')}
-            className="p-10 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
           >
-            <div className="flex items-center gap-6">
-              <div className="p-5 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-purple-600 group-hover:scale-110 transition-transform">
-                  <AcademicCapIcon className="w-10 h-10" />
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-purple-600 group-hover:scale-110 transition-transform">
+                  <AcademicCapIcon className="w-8 h-8" />
               </div>
               <div>
-                  <h2 className="text-2xl font-black text-slate-700">Vocabulary Cards</h2>
-                  <p className="mt-1 text-slate-500 font-medium italic">Practice technical vocabulary.</p>
+                  <h2 className="text-xl font-black text-slate-700">Vocabulary Cards</h2>
+                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Practice technical vocabulary.</p>
               </div>
             </div>
           </button>
@@ -64,15 +78,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                 <PencilIcon className="w-7 h-7 text-green-600" />
                 <h2 className="text-xl font-black text-slate-600 uppercase tracking-[0.2em]">Old Questions (過去問題)</h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 mb-10">
                 {oldYears.map(year => (
                     <button
                         key={year}
                         onClick={() => onSelectApp(year)}
-                        className="p-8 text-center bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+                        className="p-6 sm:p-8 text-center bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
                     >
-                        <span className="block text-4xl font-black text-slate-700 group-hover:text-green-600 transition-colors">{year}</span>
-                        <span className="text-xs font-black text-slate-400 uppercase tracking-widest mt-1 block">Year</span>
+                        <span className="block text-2xl sm:text-4xl font-black text-slate-700 group-hover:text-green-600 transition-colors">{year}</span>
+                        <span className="text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest mt-1 block">Year</span>
                     </button>
                 ))}
             </div>

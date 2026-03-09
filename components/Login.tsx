@@ -5,6 +5,7 @@ import { LogoIcon } from './Icons';
 
 const AuthScreen: React.FC = () => {
   const [accessKey, setAccessKey] = useState('');
+  const [userName, setUserName] = useState('');
   const { login, error: authError, loading } = useAuth();
   const [formError, setFormError] = useState('');
 
@@ -15,7 +16,11 @@ const AuthScreen: React.FC = () => {
       setFormError('Please enter your Redeem Code.');
       return;
     }
-    await login(accessKey);
+    if (!userName.trim()) {
+      setFormError('Please enter your Name.');
+      return;
+    }
+    await login(accessKey, userName.trim());
   };
 
   return (
@@ -47,6 +52,17 @@ const AuthScreen: React.FC = () => {
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <div className="mt-1">
+              <input
+                id="user-name"
+                name="user-name"
+                type="text"
+                autoComplete="off"
+                required
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="block w-full px-6 py-4 bg-neumorphic-bg placeholder-slate-400 rounded-2xl shadow-neumorphic-inset appearance-none border-2 border-transparent focus:outline-none focus:ring-0 text-center font-bold text-slate-700 mb-4"
+                placeholder="ENTER YOUR NAME"
+              />
               <input
                 id="redeem-code"
                 name="redeem-code"

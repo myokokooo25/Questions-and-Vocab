@@ -22,6 +22,7 @@ export interface StudyCardData {
 
 export interface User {
   accessKey: string;
+  userName?: string;
   type: 'permanent' | 'trial';
   trialExpiresAt?: string | null; // ISO Date string for trial users
   dbId?: number; // Added: The ID from the access_codes table

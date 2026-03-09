@@ -14,4 +14,13 @@ export const studyDataByChapter: { [key: number]: StudyCardData[] } = {
   5: chapter5Data,
 };
 
+// Placeholder for 2026 data. You can replace these with actual imports when ready.
+export const studyDataByChapter2026: { [key: number]: StudyCardData[] } = {
+  1: [],
+  2: [],
+  3: [],
+  4: [],
+  5: [],
+};
+
 export const chapterCount = Object.keys(studyDataByChapter).length;

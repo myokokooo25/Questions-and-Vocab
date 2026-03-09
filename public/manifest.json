@@ -1,0 +1,21 @@
+{
+  "name": "鉄骨製作管理技術者 試験対策",
+  "short_name": "鉄骨試験",
+  "description": "鉄骨製作管理技術者 試験対策アプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "https://api.dicebear.com/7.x/shapes/svg?seed=steel&backgroundColor=0ea5e9",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "https://api.dicebear.com/7.x/shapes/svg?seed=steel&backgroundColor=0ea5e9",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

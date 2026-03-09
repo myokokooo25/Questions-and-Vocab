@@ -7,7 +7,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (accessKey: string) => Promise<boolean>;
+  login: (accessKey: string, userName?: string) => Promise<boolean>;
   logout: () => void;
   syncLocalKeys: () => Promise<string>;
 }
@@ -163,7 +163,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     initializeAuth();
   }, []);
 
-  const login = async (accessKey: string): Promise<boolean> => {
+  const login = async (accessKey: string, userName: string = ''): Promise<boolean> => {
     setError(null);
     setLoading(true);
 
@@ -186,6 +186,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
              console.warn("Using fallback login for key:", upperAccessKey);
              const userData: User = { 
                 accessKey: upperAccessKey,
+                userName: userName || 'Unknown',
                 type: 'permanent',
                 dbId: undefined, // No DB ID for fallback users
                 isAdmin: upperAccessKey === 'MANOEL'
@@ -203,6 +204,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       let userData: User = { 
           accessKey: upperAccessKey,
+          userName: userName || 'Unknown',
           type: data.type || 'permanent', // Default to permanent if null
           dbId: data.id, // Store the database ID for progress syncing
           isAdmin: upperAccessKey === 'MANOEL',

@@ -10,7 +10,7 @@ import WelcomeScreen from './components/WelcomeScreen';
 import FlashcardApp from './vocabulary-flashcards/App';
 import { ChevronLeftIcon } from './components/Icons';
 
-type AppMode = 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards';
+type AppMode = 'main' | '2026' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards';
 
 const FlashcardAppWrapper: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   return (
@@ -64,7 +64,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      { (selectedApp === 'main' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as any} onGoBack={handleGoBack} /> }
+      { (selectedApp === 'main' || selectedApp === '2026' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as any} onGoBack={handleGoBack} /> }
       { selectedApp === 'flashcards' && <FlashcardAppWrapper onGoBack={handleGoBack} /> }
     </div>
   );
