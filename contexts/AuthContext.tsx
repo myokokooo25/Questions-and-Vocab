@@ -204,7 +204,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       let userData: User = { 
           accessKey: upperAccessKey,
-          userName: userName || 'Unknown',
+          userName: userName || data.user_name || 'Unknown',
           type: data.type || 'permanent', // Default to permanent if null
           dbId: data.id, // Store the database ID for progress syncing
           isAdmin: upperAccessKey === 'MANOEL',
@@ -229,16 +229,40 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                   }
               }
               
-              // Register new device
-              const { error: updateError } = await supabase
+              // Register new device and update user_name
+              let { error: updateError } = await supabase
                   .from('access_codes')
-                  .update({ device_ids: [...currentDevices, deviceId] })
+                  .update({ 
+                      device_ids: [...currentDevices, deviceId],
+                      user_name: userName || data.user_name // Save the username to Supabase
+                  })
                   .eq('id', data.id);
+
+              // Fallback if user_name column doesn't exist yet
+              if (updateError && updateError.message.includes('user_name')) {
+                  console.warn("user_name column might be missing, retrying without it");
+                  const fallbackUpdate = await supabase
+                      .from('access_codes')
+                      .update({ device_ids: [...currentDevices, deviceId] })
+                      .eq('id', data.id);
+                  updateError = fallbackUpdate.error;
+              }
 
               if (updateError) {
                   setError('Failed to register device. Try again.');
                   setLoading(false);
                   return false;
+              }
+          } else {
+              // Device already registered, but we might want to update the user_name if it was empty
+              if (userName && data.user_name !== userName) {
+                  const { error: nameUpdateError } = await supabase
+                      .from('access_codes')
+                      .update({ user_name: userName })
+                      .eq('id', data.id);
+                  if (nameUpdateError) {
+                      console.warn("Failed to update user_name in Supabase:", nameUpdateError);
+                  }
               }
           }
       } 
@@ -248,18 +272,42 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           let firstUsed = data.first_used_at ? new Date(data.first_used_at) : null;
 
           if (!firstUsed) {
-              // First time use: Set timestamp in DB
-              const { error: updateError } = await supabase
+              // First time use: Set timestamp and user_name in DB
+              let { error: updateError } = await supabase
                   .from('access_codes')
-                  .update({ first_used_at: now.toISOString() })
+                  .update({ 
+                      first_used_at: now.toISOString(),
+                      user_name: userName || data.user_name
+                  })
                   .eq('id', data.id);
               
+              // Fallback if user_name column doesn't exist yet
+              if (updateError && updateError.message.includes('user_name')) {
+                  console.warn("user_name column might be missing, retrying without it");
+                  const fallbackUpdate = await supabase
+                      .from('access_codes')
+                      .update({ first_used_at: now.toISOString() })
+                      .eq('id', data.id);
+                  updateError = fallbackUpdate.error;
+              }
+
               if (updateError) {
                    setError('Failed to start trial. Try again.');
                    setLoading(false);
                    return false;
               }
               firstUsed = now;
+          } else {
+              // Trial already started, update user_name if needed
+              if (userName && data.user_name !== userName) {
+                  const { error: nameUpdateError } = await supabase
+                      .from('access_codes')
+                      .update({ user_name: userName })
+                      .eq('id', data.id);
+                  if (nameUpdateError) {
+                      console.warn("Failed to update user_name in Supabase:", nameUpdateError);
+                  }
+              }
           }
 
           // Calculate Expiration (15 minutes)
