@@ -196,34 +196,38 @@ const Card: React.FC<CardProps> = ({
     <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset overflow-hidden">
       <ReportModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} contextInfo={`Question ${data.id}`} />
       <div className="p-8">
-        <div className='flex items-start justify-between mb-8'>
-            <div className="flex-1 pr-6">
+        <div className='flex flex-col sm:flex-row items-start justify-between mb-8 gap-6 sm:gap-0'>
+            <div className="flex-1 pr-0 sm:pr-6 w-full">
                 <p className="mb-2 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Question {data.id}</p>
                  {language === 'my' ? (
                   <>
-                    <p className="text-xl font-bold leading-relaxed text-slate-700">{data.questionMY}</p>
-                    <div className="flex items-center gap-3 mt-4 w-full">
-                      <div className="flex-1 font-mono text-base text-slate-500 bg-neumorphic-bg shadow-neumorphic-inset px-6 py-4 rounded-2xl leading-relaxed">
+                    <p className="text-lg sm:text-xl font-bold leading-relaxed text-slate-700">{data.questionMY}</p>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 w-full">
+                      <div className="flex-1 w-full font-mono text-sm sm:text-base text-slate-500 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-4 rounded-2xl leading-relaxed">
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
                       </div>
-                      <AudioButton text={data.questionJP} id={`q-${data.id}`} />
+                      <div className="self-end sm:self-auto">
+                        <AudioButton text={data.questionJP} id={`q-${data.id}`} />
+                      </div>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="flex items-center gap-4 mb-4 w-full">
-                      <div className="flex-1 font-mono text-xl font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-8 py-6 rounded-[2rem] leading-loose">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 w-full">
+                      <div className="flex-1 w-full font-mono text-lg sm:text-xl font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-6 sm:px-8 py-4 sm:py-6 rounded-[2rem] leading-loose">
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
                       </div>
-                      <AudioButton text={data.questionJP} id={`q-${data.id}`} />
+                      <div className="self-end sm:self-auto">
+                        <AudioButton text={data.questionJP} id={`q-${data.id}`} />
+                      </div>
                     </div>
                      {language === 'jp' && (
-                        <p className="text-lg font-bold leading-relaxed text-slate-500 italic ml-2">{data.questionMY}</p>
+                        <p className="text-base sm:text-lg font-bold leading-relaxed text-slate-500 italic ml-2">{data.questionMY}</p>
                     )}
                   </>
                 )}
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-row sm:flex-col gap-3 w-full sm:w-auto justify-end sm:justify-start">
                  <button 
                     onClick={() => toggleBookmark(data.id)}
                     className={`p-3.5 rounded-full transition-all duration-300 ${isBookmarked ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-blue-500'}`}

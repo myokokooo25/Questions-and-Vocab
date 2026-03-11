@@ -112,20 +112,26 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     const fetchQuestions = async () => {
       setIsLoadingQuestions(true);
       const category = isOldQuestionMode 
-        ? (selectedApp === '2021' ? `2021-${activeChapter}` : selectedApp)
+        ? (selectedApp === '2021' ? '2021' : selectedApp)
         : selectedApp === '2026' 
             ? `2026-${activeChapter}` 
             : activeChapter.toString();
 
       try {
-        const { data, error } = await supabase
-          .from('questions')
-          .select('*')
-          .eq('category', category);
+        let query = supabase.from('questions').select('*');
+        
+        if (selectedApp === '2021') {
+           // Fetch all parts for 2021
+           query = query.like('category', '2021-%');
+        } else {
+           query = query.eq('category', category);
+        }
+
+        const { data, error } = await query;
 
         if (error) throw error;
 
-        if (data && data.length > 0) {
+        if (data && data.length > 0 && !(selectedApp === '2021' && data.length < 50)) {
           // Map DB columns to StudyCardData interface
           const mappedQuestions: StudyCardData[] = data.map((q: any) => ({
             id: q.id,
@@ -947,7 +953,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             <div className="flex items-center gap-3">
               <button
                 onClick={onGoBack}
-                className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
                 title="Go Back"
               >
                 <ChevronLeftIcon className="w-6 h-6" />
@@ -975,9 +981,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </div>
             )}
 
-            <div className="flex items-center gap-3">
-                 <div className="relative group hidden sm:block">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+            <div className="flex items-center gap-2 sm:gap-3">
+                 <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <SearchIcon className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                     </div>
                     <input
@@ -985,12 +991,12 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-24 sm:w-48 pl-10 pr-4 py-2.5 text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
+                        className="w-24 sm:w-48 pl-9 pr-3 py-2.5 text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
                     />
                 </div>
                  <button
                     onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
-                    className={`p-3 rounded-2xl transition-all ${
+                    className={`p-2 sm:p-3 rounded-2xl transition-all ${
                     showOnlyBookmarked
                         ? 'shadow-neumorphic-inset text-blue-600'
                         : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700'
@@ -1002,7 +1008,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 {user?.isAdmin && (
                     <button
                         onClick={() => setIsAdminViewVisible(!isAdminViewVisible)}
-                        className={`p-3 rounded-2xl transition-all ${
+                        className={`p-2 sm:p-3 rounded-2xl transition-all ${
                         isAdminViewVisible
                             ? 'shadow-neumorphic-inset text-purple-600'
                             : 'shadow-neumorphic-outset text-slate-400 hover:text-purple-600'
@@ -1014,7 +1020,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 )}
                 <button
                     onClick={() => setShowProfile(true)}
-                    className="flex items-center gap-2 p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
+                    className="flex items-center gap-2 p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
                     title="Account"
                 >
                     <UsersIcon className="w-5 h-5" />
@@ -1025,21 +1031,21 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </button>
                 <button
                     onClick={toggleLanguage}
-                    className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
                     title="Language"
                 >
                     <GlobeIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={toggleTheme}
-                    className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
                     title="Theme"
                 >
                     {theme === 'light' ? <MoonIcon className="w-5 h-5" /> : <SunIcon className="w-5 h-5" />}
                 </button>
                 <button
                 onClick={logout}
-                className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all"
+                className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all"
                 title="Logout"
                 >
                     <LogoutIcon className="w-5 h-5" />
