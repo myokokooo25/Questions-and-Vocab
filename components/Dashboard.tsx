@@ -145,7 +145,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           let localData: StudyCardData[] = [];
           if (isOldQuestionMode) {
              if (selectedApp === '2021') {
-                 localData = chapter2021Parts[activeChapter] || [];
+                 localData = chapter2021Data;
              } else {
                  const oldDataMap: Record<string, StudyCardData[]> = {
                     '2022': chapter2022Data,
@@ -172,7 +172,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         let localData: StudyCardData[] = [];
         if (isOldQuestionMode) {
            if (selectedApp === '2021') {
-               localData = chapter2021Parts[activeChapter] || [];
+               localData = chapter2021Data;
            } else {
                const oldDataMap: Record<string, StudyCardData[]> = {
                   '2022': chapter2022Data,
@@ -549,9 +549,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     if (isOldQuestionMode) {
       if (selectedApp === '2021') {
         return [
-          { value: 1, label: '2021年 過去問題 (Part 1)' },
-          { value: 2, label: '2021年 過去問題 (Part 2)' },
-          { value: 3, label: '2021年 過去問題 (Part 3)' },
+          { value: 1, label: '2021年 過去問題 (全50問)' },
         ];
       }
       return [{ value: Number(selectedApp), label: `${selectedApp}年 過去問題` }];
