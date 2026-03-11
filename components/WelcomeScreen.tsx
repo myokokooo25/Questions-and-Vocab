@@ -3,7 +3,7 @@ import React from 'react';
 import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon } from './Icons';
 
 interface WelcomeScreenProps {
-  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards') => void;
+  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | 'flashcards') => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {

@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Card from './Card';
 import Dropdown from './Dropdown';
 import { studyDataByChapter, studyDataByChapter2026, chapterCount } from '../data/content';
-import { chapter2021Data } from '../data/2021-old-question';
+import { chapter2021Data, chapter2021Parts } from '../data/2021-old-question';
 import { chapter2022Data } from '../data/2022-old-question';
 import { chapter2023Data } from '../data/2023-old-question';
 import { chapter2024Data } from '../data/2024-old-question';
@@ -95,7 +95,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   // Handle Initial Chapter for Old Questions
   useEffect(() => {
       if (isOldQuestionMode) {
-          setActiveChapter(parseInt(selectedApp));
+          if (selectedApp === '2021') {
+              setActiveChapter(1); // Default to Part 1 for 2021
+          } else {
+              setActiveChapter(parseInt(selectedApp));
+          }
       } else {
           // Reset to chapter 1 when switching back to main
           // But only if we are currently on a "year" chapter
@@ -108,7 +112,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     const fetchQuestions = async () => {
       setIsLoadingQuestions(true);
       const category = isOldQuestionMode 
-        ? selectedApp 
+        ? (selectedApp === '2021' ? `2021-${activeChapter}` : selectedApp)
         : selectedApp === '2026' 
             ? `2026-${activeChapter}` 
             : activeChapter.toString();
@@ -140,14 +144,17 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           // If no data in DB, use local data
           let localData: StudyCardData[] = [];
           if (isOldQuestionMode) {
-             const oldDataMap: Record<string, StudyCardData[]> = {
-                '2021': chapter2021Data,
-                '2022': chapter2022Data,
-                '2023': chapter2023Data,
-                '2024': chapter2024Data,
-                '2025': chapter2025Data,
-              };
-              localData = oldDataMap[selectedApp] || [];
+             if (selectedApp === '2021') {
+                 localData = chapter2021Parts[activeChapter] || [];
+             } else {
+                 const oldDataMap: Record<string, StudyCardData[]> = {
+                    '2022': chapter2022Data,
+                    '2023': chapter2023Data,
+                    '2024': chapter2024Data,
+                    '2025': chapter2025Data,
+                  };
+                  localData = oldDataMap[selectedApp] || [];
+             }
           } else if (selectedApp === '2026') {
               localData = studyDataByChapter2026[activeChapter] || [];
           } else {
@@ -164,14 +171,17 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         
         let localData: StudyCardData[] = [];
         if (isOldQuestionMode) {
-           const oldDataMap: Record<string, StudyCardData[]> = {
-              '2021': chapter2021Data,
-              '2022': chapter2022Data,
-              '2023': chapter2023Data,
-              '2024': chapter2024Data,
-              '2025': chapter2025Data,
-            };
-            localData = oldDataMap[selectedApp] || [];
+           if (selectedApp === '2021') {
+               localData = chapter2021Parts[activeChapter] || [];
+           } else {
+               const oldDataMap: Record<string, StudyCardData[]> = {
+                  '2022': chapter2022Data,
+                  '2023': chapter2023Data,
+                  '2024': chapter2024Data,
+                  '2025': chapter2025Data,
+                };
+                localData = oldDataMap[selectedApp] || [];
+           }
         } else if (selectedApp === '2026') {
             localData = studyDataByChapter2026[activeChapter] || [];
         } else {
@@ -282,7 +292,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               }
           }
           // Years
-          allDataToUpload.push({ category: '2021', data: chapter2021Data });
+          if (chapter2021Parts[1]) allDataToUpload.push({ category: '2021-1', data: chapter2021Parts[1] });
+          if (chapter2021Parts[2]) allDataToUpload.push({ category: '2021-2', data: chapter2021Parts[2] });
+          if (chapter2021Parts[3]) allDataToUpload.push({ category: '2021-3', data: chapter2021Parts[3] });
           allDataToUpload.push({ category: '2022', data: chapter2022Data });
           allDataToUpload.push({ category: '2023', data: chapter2023Data });
           allDataToUpload.push({ category: '2024', data: chapter2024Data });
@@ -535,6 +547,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   
   const chapterOptions = useMemo(() => {
     if (isOldQuestionMode) {
+      if (selectedApp === '2021') {
+        return [
+          { value: 1, label: '2021年 過去問題 (Part 1)' },
+          { value: 2, label: '2021年 過去問題 (Part 2)' },
+          { value: 3, label: '2021年 過去問題 (Part 3)' },
+        ];
+      }
       return [{ value: Number(selectedApp), label: `${selectedApp}年 過去問題` }];
     }
     const prefix = selectedApp === '2026' ? '2026 ' : '2022-2025 ';
@@ -722,7 +741,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-inset p-4 sm:p-6">
                 <div className="pb-4 mb-4 border-b border-slate-300/30">
                     <h2 className="text-xl font-black text-slate-700">
-                        {isOldQuestionMode 
+                        {isOldQuestionMode && selectedApp !== '2021'
                             ? `${selectedApp} Past Questions` 
                             : `${activeChapterLabel} Questions`}
                     </h2>
@@ -1042,7 +1061,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         value={activeChapter}
                         onChange={(val) => handleChapterChange(Number(val))}
                         ariaLabel="Select Chapter"
-                        disabled={isOldQuestionMode}
+                        disabled={isOldQuestionMode && selectedApp !== '2021'}
                     />
                 </div>
                 <div className="flex gap-4 w-full sm:w-auto">

@@ -16,7 +16,7 @@ const Dashboard: React.FC<DashboardProps> = ({ totalWords, learnedWordsCount, st
   const totalStudiedDays = Object.values(studyProgress).filter(day => Array.isArray(day) && day.length > 0).length;
   const progressPercentage = totalDays > 0 ? Math.round((totalStudiedDays / totalDays) * 100) : 0;
 
-  const NavCard = ({ icon, title, description, onClick }) => (
+  const NavCard = ({ icon, title, description, onClick }: { icon: React.ReactNode, title: string, description: string, onClick: () => void }) => (
     <button
       onClick={onClick}
       className="bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset p-6 rounded-xl text-left w-full h-full flex flex-col transition-all duration-200 hover:scale-[1.02]"
