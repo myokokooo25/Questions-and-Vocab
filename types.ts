@@ -19,6 +19,7 @@ export interface StudyCardData {
   options: StudyOption[];
   explanation: Explanation;
   correctOptionId: number;
+  ai_explanation?: string;
 }
 
 export interface User {

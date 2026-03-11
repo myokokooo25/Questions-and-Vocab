@@ -139,7 +139,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             questionMY: q.question_my,
             options: q.options,
             correctOptionId: q.correct_option_id,
-            explanation: q.explanation
+            explanation: q.explanation,
+            ai_explanation: q.ai_explanation
           }));
           
           // Sort by ID to ensure order
@@ -319,7 +320,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                       question_my: q.questionMY,
                       options: q.options, // Supabase handles JSON automatically
                       correct_option_id: q.correctOptionId,
-                      explanation: q.explanation
+                      explanation: q.explanation,
+                      ai_explanation: q.ai_explanation
                   };
 
                   const { error } = await supabase.from('questions').upsert(payload);
@@ -422,7 +424,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               question_my: q.questionMY,
               options: q.options,
               correct_option_id: q.correctOptionId,
-              explanation: q.explanation
+              explanation: q.explanation,
+              ai_explanation: q.ai_explanation
           };
 
           const { error } = await supabase.from('questions').upsert(payload);

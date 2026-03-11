@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { StudyCardData } from '../types';
-import { BookmarkIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, PencilIcon, AcademicCapIcon, CheckCircleSolidIcon, XCircleSolidIcon, LightBulbIcon, FlagIcon, BookOpenIcon } from './Icons';
+import { BookmarkIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, PencilIcon, AcademicCapIcon, CheckCircleSolidIcon, XCircleSolidIcon, LightBulbIcon, FlagIcon, BookOpenIcon, RefreshIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import JapaneseText from './JapaneseText';
@@ -66,7 +66,7 @@ const Card: React.FC<CardProps> = ({
 
   // Clear states when question changes
   useEffect(() => {
-    setAiExplanation(typeof data.explanation !== 'string' && data.explanation?.aiExplanationMY ? data.explanation.aiExplanationMY : null);
+    setAiExplanation(data.ai_explanation || null);
     setIsAiLoading(false);
     setAiError(null);
     setHint(null);
@@ -77,7 +77,7 @@ const Card: React.FC<CardProps> = ({
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
-  }, [data.id, data.explanation]);
+  }, [data.id, data.ai_explanation]);
 
   const handleGetHint = async () => {
     if (isHintLoading || hint) return;
@@ -111,8 +111,8 @@ const Card: React.FC<CardProps> = ({
   };
 
   const handleExplainAgain = async (forceNew: boolean = false) => {
-    if (!forceNew && typeof data.explanation !== 'string' && data.explanation?.aiExplanationMY) {
-      setAiExplanation(data.explanation.aiExplanationMY);
+    if (!forceNew && data.ai_explanation) {
+      setAiExplanation(data.ai_explanation);
       return;
     }
 
@@ -151,27 +151,16 @@ const Card: React.FC<CardProps> = ({
       setAiExplanation(formatted);
 
       // Save to Supabase
-      let updatedExplanation;
-      if (typeof data.explanation === 'string') {
-        updatedExplanation = { titleMY: 'ရှင်းလင်းချက်', reasonMY: data.explanation, memoryTipMY: '', aiExplanationMY: formatted };
-      } else {
-        updatedExplanation = { ...data.explanation, aiExplanationMY: formatted };
-      }
-
       const { error } = await supabase
         .from('questions')
-        .update({ explanation: updatedExplanation })
+        .update({ ai_explanation: formatted })
         .eq('id', data.id);
         
       if (error) {
         console.error("Failed to save AI explanation to DB:", error);
       } else {
         // Update local reference so it doesn't refetch if clicked again without forceNew
-        if (typeof data.explanation === 'string') {
-            (data as any).explanation = updatedExplanation;
-        } else {
-            data.explanation.aiExplanationMY = formatted;
-        }
+        data.ai_explanation = formatted;
       }
 
     } catch (err: any) {
