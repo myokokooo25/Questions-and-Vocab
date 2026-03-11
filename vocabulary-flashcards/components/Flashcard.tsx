@@ -39,15 +39,20 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
 
   // Reset AI state when word changes
   React.useEffect(() => {
-    setAiExplanation(null);
+    setAiExplanation(word?.ai_explanation || null);
     setIsAiLoading(false);
     setAiError(null);
   }, [word]);
 
-  const handleExplain = async (e: React.MouseEvent) => {
+  const handleExplain = async (e: React.MouseEvent, forceNew: boolean = false) => {
     e.stopPropagation();
     if (!word) return;
     
+    if (!forceNew && word.ai_explanation) {
+      setAiExplanation(word.ai_explanation);
+      return;
+    }
+
     setIsAiLoading(true);
     setAiError(null);
     setAiExplanation(null);
@@ -81,6 +86,18 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
         .replace(/\n/g, '<br />');
         
       setAiExplanation(formatted);
+
+      // Save to Supabase
+      const { error } = await supabase
+        .from('vocabulary_flashcards')
+        .update({ ai_explanation: formatted })
+        .eq('id', word.id);
+        
+      if (error) {
+        console.error("Failed to save AI explanation to DB:", error);
+      } else {
+        word.ai_explanation = formatted;
+      }
     } catch (err: any) {
       setAiError(`AI ရှင်းလင်းချက် ရယူ၍မရပါ။ (${err.message || 'Unknown Error'})`);
       console.error("AI Error:", err);
@@ -201,7 +218,7 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
             <div className="pt-4">
                 {!aiExplanation && !isAiLoading && (
                     <button 
-                        onClick={handleExplain}
+                        onClick={(e) => handleExplain(e, false)}
                         className="flex items-center justify-center w-full py-3 text-xs font-black uppercase tracking-widest text-blue-600 bg-neumorphic-bg rounded-xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
                     >
                         <SparkleIcon className="w-4 h-4 mr-2" /> AI Explain
@@ -216,9 +233,18 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
                 )}
 
                 {aiExplanation && (
-                    <div className="mt-2 p-4 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset border-l-4 border-blue-500 animate-in zoom-in duration-300 text-left cursor-auto" onClick={e => e.stopPropagation()}>
-                        <h4 className="font-black text-blue-600 flex items-center uppercase text-[0.65rem] tracking-widest mb-2"><SparkleIcon className="w-3 h-3 mr-1" /> AI Explanation</h4>
-                        <div className="text-sm font-bold text-slate-500 leading-relaxed" dangerouslySetInnerHTML={{ __html: aiExplanation }}></div>
+                    <div className="flex flex-col gap-3 mt-2">
+                        <div className="p-4 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset border-l-4 border-blue-500 animate-in zoom-in duration-300 text-left cursor-auto" onClick={e => e.stopPropagation()}>
+                            <h4 className="font-black text-blue-600 flex items-center uppercase text-[0.65rem] tracking-widest mb-2"><SparkleIcon className="w-3 h-3 mr-1" /> AI Explanation</h4>
+                            <div className="text-sm font-bold text-slate-500 leading-relaxed" dangerouslySetInnerHTML={{ __html: aiExplanation }}></div>
+                        </div>
+                        <button 
+                            onClick={(e) => handleExplain(e, true)}
+                            disabled={isAiLoading}
+                            className="flex items-center justify-center w-full py-2 text-[0.65rem] font-black uppercase tracking-widest text-slate-500 bg-neumorphic-bg rounded-xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-50"
+                        >
+                            <SparkleIcon className="w-3 h-3 mr-2" /> Regenerate AI Explanation
+                        </button>
                     </div>
                 )}
                 

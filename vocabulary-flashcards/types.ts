@@ -6,6 +6,7 @@ export interface VocabularyWord {
   reading: string;
   english: string;
   burmese: string;
+  ai_explanation?: string;
 }
 
 export interface Kanji {

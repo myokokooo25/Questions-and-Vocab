@@ -9,6 +9,7 @@ export interface Explanation {
   titleMY: string;
   reasonMY: string;
   memoryTipMY: string;
+  aiExplanationMY?: string;
 }
 
 export interface StudyCardData {

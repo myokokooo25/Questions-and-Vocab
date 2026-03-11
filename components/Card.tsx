@@ -66,7 +66,7 @@ const Card: React.FC<CardProps> = ({
 
   // Clear states when question changes
   useEffect(() => {
-    setAiExplanation(null);
+    setAiExplanation(typeof data.explanation !== 'string' && data.explanation?.aiExplanationMY ? data.explanation.aiExplanationMY : null);
     setIsAiLoading(false);
     setAiError(null);
     setHint(null);
@@ -77,7 +77,7 @@ const Card: React.FC<CardProps> = ({
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
-  }, [data.id]);
+  }, [data.id, data.explanation]);
 
   const handleGetHint = async () => {
     if (isHintLoading || hint) return;
@@ -110,7 +110,12 @@ const Card: React.FC<CardProps> = ({
     }
   };
 
-  const handleExplainAgain = async () => {
+  const handleExplainAgain = async (forceNew: boolean = false) => {
+    if (!forceNew && typeof data.explanation !== 'string' && data.explanation?.aiExplanationMY) {
+      setAiExplanation(data.explanation.aiExplanationMY);
+      return;
+    }
+
     setIsAiLoading(true);
     setAiError(null);
     setAiExplanation(null);
@@ -144,6 +149,31 @@ const Card: React.FC<CardProps> = ({
         .replace(/\n/g, '<br />');
         
       setAiExplanation(formatted);
+
+      // Save to Supabase
+      let updatedExplanation;
+      if (typeof data.explanation === 'string') {
+        updatedExplanation = { titleMY: 'ရှင်းလင်းချက်', reasonMY: data.explanation, memoryTipMY: '', aiExplanationMY: formatted };
+      } else {
+        updatedExplanation = { ...data.explanation, aiExplanationMY: formatted };
+      }
+
+      const { error } = await supabase
+        .from('questions')
+        .update({ explanation: updatedExplanation })
+        .eq('id', data.id);
+        
+      if (error) {
+        console.error("Failed to save AI explanation to DB:", error);
+      } else {
+        // Update local reference so it doesn't refetch if clicked again without forceNew
+        if (typeof data.explanation === 'string') {
+            (data as any).explanation = updatedExplanation;
+        } else {
+            data.explanation.aiExplanationMY = formatted;
+        }
+      }
+
     } catch (err: any) {
       setAiError("AI ရှင်းလင်းချက် ရယူ၍မရပါ။");
       console.error("AI Error:", err);
@@ -353,22 +383,33 @@ const Card: React.FC<CardProps> = ({
                         )}
                       </div>
                       <div className="mt-10">
-                        <button 
-                            onClick={handleExplainAgain}
-                            disabled={isAiLoading}
-                            className="flex items-center justify-center w-full py-4 text-sm font-black uppercase tracking-[0.2em] text-blue-600 bg-neumorphic-bg rounded-[1.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-50"
-                        >
-                            {isAiLoading ? <LoadingSpinnerIcon className="w-5 h-5 mr-2 animate-spin" /> : <SparkleIcon className="w-5 h-5 mr-2" />}
-                            {isAiLoading ? 'Thinking...' : 'AI Simpler explanation'}
-                        </button>
+                        {!aiExplanation ? (
+                          <button 
+                              onClick={() => handleExplainAgain(false)}
+                              disabled={isAiLoading}
+                              className="flex items-center justify-center w-full py-4 text-sm font-black uppercase tracking-[0.2em] text-blue-600 bg-neumorphic-bg rounded-[1.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-50"
+                          >
+                              {isAiLoading ? <LoadingSpinnerIcon className="w-5 h-5 mr-2 animate-spin" /> : <SparkleIcon className="w-5 h-5 mr-2" />}
+                              {isAiLoading ? 'Thinking...' : 'AI Simpler explanation'}
+                          </button>
+                        ) : (
+                          <div className="flex flex-col gap-4">
+                            <div className="p-6 rounded-3xl bg-neumorphic-bg shadow-neumorphic-inset border-l-4 border-blue-500 animate-in zoom-in duration-300">
+                                <h4 className="font-black text-blue-600 flex items-center uppercase text-xs tracking-widest mb-3"><SparkleIcon className="w-4 h-4 mr-2" /> AI Clarification</h4>
+                                <div className="text-sm font-bold text-slate-500 leading-relaxed" dangerouslySetInnerHTML={{ __html: aiExplanation }}></div>
+                            </div>
+                            <button 
+                                onClick={() => handleExplainAgain(true)}
+                                disabled={isAiLoading}
+                                className="flex items-center justify-center w-full py-3 text-xs font-black uppercase tracking-[0.2em] text-slate-500 bg-neumorphic-bg rounded-[1.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-50"
+                            >
+                                {isAiLoading ? <LoadingSpinnerIcon className="w-4 h-4 mr-2 animate-spin" /> : <RefreshIcon className="w-4 h-4 mr-2" />}
+                                {isAiLoading ? 'Regenerating...' : 'Regenerate AI Explanation'}
+                            </button>
+                          </div>
+                        )}
                       </div>
                       {aiError && <p className="mt-4 text-sm text-red-500 font-bold text-center">{aiError}</p>}
-                      {aiExplanation && (
-                          <div className="mt-6 p-6 rounded-3xl bg-neumorphic-bg shadow-neumorphic-inset border-l-4 border-blue-500 animate-in zoom-in duration-300">
-                              <h4 className="font-black text-blue-600 flex items-center uppercase text-xs tracking-widest mb-3"><SparkleIcon className="w-4 h-4 mr-2" /> AI Clarification</h4>
-                              <div className="text-sm font-bold text-slate-500 leading-relaxed" dangerouslySetInnerHTML={{ __html: aiExplanation }}></div>
-                          </div>
-                      )}
                     </div>
                   ) : (
                       <div className="flex flex-col items-center justify-center py-10 opacity-40">
