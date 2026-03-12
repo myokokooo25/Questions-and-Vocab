@@ -57,10 +57,9 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
     setAiError(null);
     setAiExplanation(null);
 
-    // Prompt optimized for engineering students
     const prompt = `Explain the Japanese word "${word.kanji}" (${word.reading}) which means "${word.english}" / "${word.burmese}". 
     Explain its usage, nuance, and maybe break down the Kanji characters if applicable. 
-    Provide the explanation in simple Burmese language for a construction/engineering student. 
+    Provide the explanation in simple, natural Burmese language. 
     Use bullet points and bold text for key terms.`;
 
     try {
