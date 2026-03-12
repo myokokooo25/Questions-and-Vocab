@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BookOpenIcon, PencilSquareIcon, ListBulletIcon, RectangleStackIcon } from './Icons';
+import { supabase } from '../../lib/supabase';
+import { vocabularyData } from '../data/vocabulary';
 
 type ViewMode = 'dashboard' | 'flashcard' | 'list' | 'study' | 'quiz';
 
@@ -12,9 +14,54 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ totalWords, learnedWordsCount, studyProgress, totalDays, onNavigate }) => {
+  const [isMigrating, setIsMigrating] = useState(false);
+  const [migrationStatus, setMigrationStatus] = useState<string | null>(null);
+
   // FIX: Add Array.isArray check to ensure `day` is an array before accessing .length
   const totalStudiedDays = Object.values(studyProgress).filter(day => Array.isArray(day) && day.length > 0).length;
   const progressPercentage = totalDays > 0 ? Math.round((totalStudiedDays / totalDays) * 100) : 0;
+
+  const handleMigrate = async () => {
+    setIsMigrating(true);
+    setMigrationStatus("Uploading vocabulary to database...");
+    let successCount = 0;
+    let failCount = 0;
+    let lastError = "";
+
+    try {
+      for (const word of vocabularyData) {
+        const payload = {
+          id: word.id,
+          category: word.category || 'general',
+          kanji: word.kanji,
+          reading: word.reading,
+          english: word.english,
+          burmese: word.burmese,
+          ai_explanation: word.ai_explanation || null
+        };
+
+        const { error } = await supabase.from('vocabulary_flashcards').upsert(payload);
+        if (error) {
+          console.error("Upload error for", word.id, error);
+          lastError = error.message;
+          failCount++;
+        } else {
+          successCount++;
+        }
+      }
+
+      if (failCount > 0) {
+        setMigrationStatus(`Upload Finished. Success: ${successCount}, Failed: ${failCount}. Last Error: ${lastError}`);
+      } else {
+        setMigrationStatus(`Upload Complete. Successfully added ${successCount} words.`);
+      }
+    } catch (err: any) {
+      console.error("Fatal migration error:", err);
+      setMigrationStatus(`Fatal Error: ${err.message}`);
+    } finally {
+      setIsMigrating(false);
+    }
+  };
 
   const NavCard = ({ icon, title, description, onClick }: { icon: React.ReactNode, title: string, description: string, onClick: () => void }) => (
     <button
@@ -77,6 +124,21 @@ const Dashboard: React.FC<DashboardProps> = ({ totalWords, learnedWordsCount, st
             description="Freely flip through all available words in flashcard mode."
             onClick={() => onNavigate('flashcard')}
         />
+      </div>
+
+      {/* Admin / Migration Section */}
+      <div className="mt-12 pt-8 border-t border-slate-200/50">
+        <h3 className="text-xl font-bold text-slate-700 mb-4">Admin Tools</h3>
+        <button
+          onClick={handleMigrate}
+          disabled={isMigrating}
+          className="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-neumorphic-outset active:shadow-neumorphic-inset disabled:opacity-50"
+        >
+          {isMigrating ? 'Uploading...' : 'Upload All Vocabulary to Database'}
+        </button>
+        {migrationStatus && (
+          <p className="mt-4 text-sm font-medium text-slate-600">{migrationStatus}</p>
+        )}
       </div>
     </div>
   );

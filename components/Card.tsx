@@ -153,7 +153,7 @@ const Card: React.FC<CardProps> = ({
       // Save to Supabase
       const payload = {
         id: data.id,
-        category: data.category || data.id.split('-').slice(0, -1).join('-') || 'unknown',
+        category: data.category || `chapter${data.id.split('-')[0]}` || 'unknown',
         question_jp: data.questionJP,
         question_my: data.questionMY,
         options: data.options,
@@ -168,13 +168,14 @@ const Card: React.FC<CardProps> = ({
         
       if (error) {
         console.error("Failed to save AI explanation to DB:", error);
+        setAiError(`Database Error: ${error.message} (Please check Supabase RLS policies or column names)`);
       } else {
         // Update local reference so it doesn't refetch if clicked again without forceNew
         data.ai_explanation = formatted;
       }
 
     } catch (err: any) {
-      setAiError("AI ရှင်းလင်းချက် ရယူ၍မရပါ။");
+      setAiError(`Error: ${err.message || 'Unknown error'}`);
       console.error("AI Error:", err);
     } finally {
       setIsAiLoading(false);

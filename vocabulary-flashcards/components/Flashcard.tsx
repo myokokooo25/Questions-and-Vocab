@@ -91,11 +91,10 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
       const payload = {
         id: word.id,
         category: word.category || 'general',
-        jp: word.jp,
-        my: word.my,
+        kanji: word.kanji,
         reading: word.reading,
         english: word.english,
-        type: word.type,
+        burmese: word.burmese,
         ai_explanation: formatted
       };
 
@@ -105,11 +104,12 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
         
       if (error) {
         console.error("Failed to save AI explanation to DB:", error);
+        setAiError(`Database Error: ${error.message} (Please check Supabase RLS policies or column names)`);
       } else {
         word.ai_explanation = formatted;
       }
     } catch (err: any) {
-      setAiError(`AI ရှင်းလင်းချက် ရယူ၍မရပါ။ (${err.message || 'Unknown Error'})`);
+      setAiError(`Error: ${err.message || 'Unknown Error'}`);
       console.error("AI Error:", err);
     } finally {
       setIsAiLoading(false);

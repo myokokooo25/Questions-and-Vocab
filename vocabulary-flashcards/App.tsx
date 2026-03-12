@@ -55,7 +55,12 @@ const App: React.FC = () => {
                     // Fallback to local data
                     setVocabulary(vocabularyData);
                 } else if (data && data.length > 0) {
-                    setVocabulary(data as VocabularyWord[]);
+                    // Merge DB data with local data so we don't lose words that aren't in DB yet
+                    const mergedData = vocabularyData.map(localWord => {
+                        const dbWord = data.find((w: any) => w.id === localWord.id);
+                        return dbWord ? { ...localWord, ...dbWord } : localWord;
+                    });
+                    setVocabulary(mergedData as VocabularyWord[]);
                 } else {
                     // Fallback if table is empty
                     setVocabulary(vocabularyData);
