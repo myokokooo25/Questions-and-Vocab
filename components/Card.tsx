@@ -151,10 +151,20 @@ const Card: React.FC<CardProps> = ({
       setAiExplanation(formatted);
 
       // Save to Supabase
+      const payload = {
+        id: data.id,
+        category: data.category || data.id.split('-').slice(0, -1).join('-') || 'unknown',
+        question_jp: data.questionJP,
+        question_my: data.questionMY,
+        options: data.options,
+        correct_option_id: data.correctOptionId,
+        explanation: data.explanation,
+        ai_explanation: formatted
+      };
+
       const { error } = await supabase
         .from('questions')
-        .update({ ai_explanation: formatted })
-        .eq('id', data.id);
+        .upsert(payload);
         
       if (error) {
         console.error("Failed to save AI explanation to DB:", error);

@@ -135,6 +135,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           // Map DB columns to StudyCardData interface
           const mappedQuestions: StudyCardData[] = data.map((q: any) => ({
             id: q.id,
+            category: q.category,
             questionJP: q.question_jp,
             questionMY: q.question_my,
             options: q.options,

@@ -14,6 +14,7 @@ export interface Explanation {
 
 export interface StudyCardData {
   id: string;
+  category?: string;
   questionJP: string;
   questionMY: string;
   options: StudyOption[];

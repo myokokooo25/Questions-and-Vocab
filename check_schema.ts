@@ -5,7 +5,7 @@ const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function check() {
-  const { data, error } = await supabase.from('questions').select('explanation').limit(1);
+  const { data, error } = await supabase.from('questions').select('*').limit(1);
   console.log('Error:', error);
   console.log('Data:', JSON.stringify(data, null, 2));
 }

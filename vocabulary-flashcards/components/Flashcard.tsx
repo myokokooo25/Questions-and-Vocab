@@ -88,10 +88,20 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
       setAiExplanation(formatted);
 
       // Save to Supabase
+      const payload = {
+        id: word.id,
+        category: word.category || 'general',
+        jp: word.jp,
+        my: word.my,
+        reading: word.reading,
+        english: word.english,
+        type: word.type,
+        ai_explanation: formatted
+      };
+
       const { error } = await supabase
         .from('vocabulary_flashcards')
-        .update({ ai_explanation: formatted })
-        .eq('id', word.id);
+        .upsert(payload);
         
       if (error) {
         console.error("Failed to save AI explanation to DB:", error);
