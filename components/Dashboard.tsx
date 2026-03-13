@@ -207,6 +207,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [view, setView] = useState<'study' | 'list' | 'quiz'>('study');
+  const [currentSessionAnswer, setCurrentSessionAnswer] = useState<number | null>(null);
 
   // Admin View State
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
@@ -496,6 +497,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   useEffect(() => {
     setCurrentCardIndex(0);
+    setCurrentSessionAnswer(null);
     // Don't reset study answers on chapter change anymore
     setView('study');
     setIsMockExam(false);
@@ -503,10 +505,12 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   const goToNextCard = () => {
     setCurrentCardIndex(prev => Math.min(prev + 1, filteredData.length - 1));
+    setCurrentSessionAnswer(null);
   };
   
   const goToPreviousCard = () => {
     setCurrentCardIndex(prev => Math.max(prev - 1, 0));
+    setCurrentSessionAnswer(null);
   };
   
   const handleChapterChange = (chapter: number) => {
@@ -515,11 +519,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   const handleQuestionSelect = (index: number) => {
     setCurrentCardIndex(index);
+    setCurrentSessionAnswer(null);
     setView('study');
   };
   
   const handleOptionSelect = (cardId: string, optionId: number) => {
-    if (studyHistory[cardId] !== undefined) return;
+    if (currentSessionAnswer !== null) return; // Prevent changing answer in current session view
+    setCurrentSessionAnswer(optionId);
     recordAnswer(cardId, optionId);
   };
 
@@ -729,9 +735,29 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }
 
     if (view === 'quiz') {
+      const quizQuestions = isMockExam ? mockQuestions : onlineQuestions.filter(q => studyHistory[q.id] !== undefined);
+
+      if (!isMockExam && quizQuestions.length === 0) {
+        return (
+          <div className="flex flex-col items-center justify-center p-12 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset text-center">
+            <AcademicCapIcon className="w-16 h-16 text-slate-300 mb-4" />
+            <h3 className="text-xl font-black text-slate-700">No Learnt Questions</h3>
+            <p className="mt-2 text-slate-500 font-medium">
+              You haven't answered any questions in this chapter yet. Please study some questions first to take a quiz.
+            </p>
+            <button
+              onClick={() => setView('study')}
+              className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-sm font-bold uppercase tracking-wider"
+            >
+              Go to Study
+            </button>
+          </div>
+        );
+      }
+
       return (
         <ChapterQuiz 
-          questions={isMockExam ? mockQuestions : onlineQuestions} 
+          questions={quizQuestions} 
           chapterTitle={activeChapterLabel}
           onExit={() => {
               setView('study');
@@ -855,8 +881,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           onKanjiClick={handleKanjiClick}
           mode="study"
           onOptionSelect={(optionId) => handleOptionSelect(currentCard.id, optionId)}
-          selectedOptionId={studyHistory[currentCard.id]}
-          isSubmitted={studyHistory[currentCard.id] !== undefined}
+          selectedOptionId={currentSessionAnswer !== null ? currentSessionAnswer : undefined}
+          isSubmitted={currentSessionAnswer !== null}
         />
         
         <div className="flex items-center justify-between mt-8 gap-6">
