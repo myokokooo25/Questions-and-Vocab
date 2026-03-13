@@ -4,6 +4,7 @@ import { StudyCardData } from '../types';
 import { BookmarkIcon, SpeakerIcon, LoadingSpinnerIcon, SparkleIcon, PencilIcon, AcademicCapIcon, CheckCircleSolidIcon, XCircleSolidIcon, LightBulbIcon, FlagIcon, BookOpenIcon, RefreshIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTheme } from '../contexts/ThemeContext';
 import JapaneseText from './JapaneseText';
 import { vocabularyData } from '../data/vocab';
 import ReportModal from './ReportModal';
@@ -48,7 +49,29 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const { language } = useLanguage();
   const { bookmarkedIds, toggleBookmark } = useProgress();
+  const { fontSize } = useTheme();
   const isBookmarked = bookmarkedIds.has(data.id);
+
+  const getFontSizeClass = (baseSize: 'sm' | 'base' | 'lg' | 'xl') => {
+    if (fontSize === 'small') {
+      if (baseSize === 'sm') return 'text-xs sm:text-sm';
+      if (baseSize === 'base') return 'text-sm sm:text-base';
+      if (baseSize === 'lg') return 'text-base sm:text-lg';
+      if (baseSize === 'xl') return 'text-lg sm:text-xl';
+    }
+    if (fontSize === 'large') {
+      if (baseSize === 'sm') return 'text-base sm:text-lg';
+      if (baseSize === 'base') return 'text-lg sm:text-xl';
+      if (baseSize === 'lg') return 'text-xl sm:text-2xl';
+      if (baseSize === 'xl') return 'text-2xl sm:text-3xl';
+    }
+    // medium (default)
+    if (baseSize === 'sm') return 'text-sm sm:text-base';
+    if (baseSize === 'base') return 'text-base sm:text-lg';
+    if (baseSize === 'lg') return 'text-lg sm:text-xl';
+    if (baseSize === 'xl') return 'text-xl sm:text-2xl';
+    return '';
+  };
   
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
@@ -231,9 +254,9 @@ const Card: React.FC<CardProps> = ({
                 <p className="mb-2 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Question {data.id}</p>
                  {language === 'my' ? (
                   <>
-                    <p className="text-lg sm:text-xl font-bold leading-relaxed text-slate-700">{data.questionMY}</p>
+                    <p className={`${getFontSizeClass('lg')} font-bold leading-relaxed text-slate-700`}>{data.questionMY}</p>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 w-full">
-                      <div className="flex-1 w-full font-mono text-sm sm:text-base text-slate-500 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-4 rounded-2xl leading-relaxed">
+                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('sm')} text-slate-500 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-4 rounded-2xl leading-relaxed`}>
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
                       </div>
                       <div className="self-end sm:self-auto">
@@ -244,7 +267,7 @@ const Card: React.FC<CardProps> = ({
                 ) : (
                   <>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 w-full">
-                      <div className="flex-1 w-full font-mono text-lg sm:text-xl font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-6 sm:px-8 py-4 sm:py-6 rounded-[2rem] leading-loose">
+                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('lg')} font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-6 sm:px-8 py-4 sm:py-6 rounded-[2rem] leading-loose`}>
                         <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
                       </div>
                       <div className="self-end sm:self-auto">
@@ -252,7 +275,7 @@ const Card: React.FC<CardProps> = ({
                       </div>
                     </div>
                      {language === 'jp' && (
-                        <p className="text-base sm:text-lg font-bold leading-relaxed text-slate-500 italic ml-2">{data.questionMY}</p>
+                        <p className={`${getFontSizeClass('base')} font-bold leading-relaxed text-slate-500 italic ml-2`}>{data.questionMY}</p>
                     )}
                   </>
                 )}
@@ -312,9 +335,9 @@ const Card: React.FC<CardProps> = ({
                   <div className="flex-1 pr-6">
                      {language === 'my' ? (
                         <>
-                            <p className="font-black text-lg mb-1">{option.textMY}</p>
+                            <p className={`font-black ${getFontSizeClass('lg')} mb-1`}>{option.textMY}</p>
                             <div className="flex items-center gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                <div className="font-mono text-sm font-bold">
+                                <div className={`font-mono ${getFontSizeClass('sm')} font-bold`}>
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
                                 </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
@@ -323,13 +346,13 @@ const Card: React.FC<CardProps> = ({
                     ) : (
                         <>
                             <div className="flex items-center gap-3">
-                                <div className="font-mono font-black text-lg">
+                                <div className={`font-mono font-black ${getFontSizeClass('lg')}`}>
                                     <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
                                 </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                              {language === 'jp' && (
-                                <p className="mt-2 text-sm font-bold opacity-60 italic">{option.textMY}</p>
+                                <p className={`mt-2 ${getFontSizeClass('sm')} font-bold opacity-60 italic`}>{option.textMY}</p>
                             )}
                         </>
                     )}

@@ -2,10 +2,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark';
+type FontSize = 'small' | 'medium' | 'large';
 
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
+  fontSize: FontSize;
+  setFontSize: (size: FontSize) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -26,6 +29,18 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     return 'dark'; // Default to dark
   });
 
+  const [fontSize, setFontSizeState] = useState<FontSize>(() => {
+    try {
+      const storedFontSize = localStorage.getItem('app_font_size');
+      if (storedFontSize === 'small' || storedFontSize === 'medium' || storedFontSize === 'large') {
+        return storedFontSize;
+      }
+    } catch (error) {
+      console.error("Could not read font size from localStorage", error);
+    }
+    return 'medium'; // Default to medium
+  });
+
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
@@ -37,11 +52,20 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
   }, [theme]);
 
+  const setFontSize = (size: FontSize) => {
+    setFontSizeState(size);
+    try {
+      localStorage.setItem('app_font_size', size);
+    } catch (error) {
+      console.error("Failed to save font size to localStorage", error);
+    }
+  };
+
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  const value = { theme, toggleTheme };
+  const value = { theme, toggleTheme, fontSize, setFontSize };
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

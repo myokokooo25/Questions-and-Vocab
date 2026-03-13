@@ -4,6 +4,7 @@ import { StudyCardData } from '../types';
 import { CheckCircleSolidIcon, XCircleSolidIcon, LoadingSpinnerIcon, RefreshIcon, ChevronLeftIcon, AcademicCapIcon, ClockIcon } from './Icons';
 import JapaneseText from './JapaneseText';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface ChapterQuizProps {
   questions: StudyCardData[];
@@ -16,6 +17,19 @@ interface ChapterQuizProps {
 
 const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onExit, onKanjiClick, isMockExam = false, timeLimit }) => {
   const { language } = useLanguage();
+  const { fontSize } = useTheme();
+
+  const getFontSizeClass = (baseSize: 'sm' | 'base' | 'lg' | 'xl') => {
+    switch (fontSize) {
+        case 'small':
+            return baseSize === 'sm' ? 'text-xs' : baseSize === 'base' ? 'text-sm' : baseSize === 'lg' ? 'text-base' : 'text-lg';
+        case 'large':
+            return baseSize === 'sm' ? 'text-base' : baseSize === 'base' ? 'text-lg' : baseSize === 'lg' ? 'text-xl' : 'text-2xl';
+        default: // medium
+            return `text-${baseSize}`;
+    }
+  };
+
   const [shuffledQuestions, setShuffledQuestions] = useState<StudyCardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   
@@ -198,7 +212,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
         </div>
 
         <div className="mb-10 min-h-[120px] flex flex-col justify-center text-center sm:text-left">
-           <div className="text-xl md:text-2xl font-bold text-slate-700 leading-relaxed">
+           <div className={`font-bold text-slate-700 leading-relaxed ${getFontSizeClass('xl')}`}>
               {language === 'my' ? currentQuestion.questionMY : (
                 <div className="font-mono">
                   <JapaneseText text={currentQuestion.questionJP} onKanjiClick={onKanjiClick} />
@@ -206,7 +220,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
               )}
            </div>
            {language === 'jp' && (
-              <p className="mt-4 text-slate-500 font-medium">{currentQuestion.questionMY}</p>
+              <p className={`mt-4 text-slate-500 font-medium ${getFontSizeClass('base')}`}>{currentQuestion.questionMY}</p>
            )}
         </div>
 
@@ -235,7 +249,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
                 disabled={!isMockExam && isAnswered}
                 className={`w-full p-5 rounded-2xl text-left transition-all duration-300 flex items-center justify-between group ${btnClass}`}
               >
-                <span className="font-bold text-lg">
+                <span className={`font-bold ${getFontSizeClass('lg')}`}>
                    {language === 'my' ? option.textMY : (
                      <div className="font-mono">
                         <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />

@@ -4,7 +4,8 @@ import { vocabularyData } from '../data/vocab';
 import { VocabItem, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { LogoutIcon, LogoIcon, SearchIcon, GlobeIcon, ChevronLeftIcon, AcademicCapIcon } from './Icons';
+import { useTheme } from '../contexts/ThemeContext';
+import { LogoutIcon, LogoIcon, SearchIcon, GlobeIcon, ChevronLeftIcon, AcademicCapIcon, TextSizeIcon } from './Icons';
 import Dropdown from './Dropdown';
 import JapaneseText from './JapaneseText';
 import { kanjiDictionary } from '../data/kanji';
@@ -13,10 +14,28 @@ import KanjiTooltip from './KanjiTooltip';
 const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   const { logout } = useAuth();
   const { toggleLanguage } = useLanguage();
+  const { fontSize, setFontSize } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   
   const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+
+  const toggleFontSize = () => {
+    if (fontSize === 'small') setFontSize('medium');
+    else if (fontSize === 'medium') setFontSize('large');
+    else setFontSize('small');
+  };
+
+  const getFontSizeClass = (baseSize: 'sm' | 'base' | 'lg' | 'xl' | '2xl') => {
+    switch (fontSize) {
+        case 'small':
+            return baseSize === 'sm' ? 'text-xs' : baseSize === 'base' ? 'text-sm' : baseSize === 'lg' ? 'text-base' : baseSize === 'xl' ? 'text-lg' : 'text-xl';
+        case 'large':
+            return baseSize === 'sm' ? 'text-base' : baseSize === 'base' ? 'text-lg' : baseSize === 'lg' ? 'text-xl' : baseSize === 'xl' ? 'text-2xl' : 'text-3xl';
+        default: // medium
+            return `text-${baseSize}`;
+    }
+  };
 
   const allVocab = useMemo(() => {
     const uniqueVocab = new Map<string, VocabItem>();
@@ -130,6 +149,13 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
                     />
                 </div>
                 <button
+                    onClick={toggleFontSize}
+                    className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200"
+                    title="Font Size"
+                >
+                    <TextSizeIcon className="w-5 h-5" />
+                </button>
+                <button
                     onClick={toggleLanguage}
                     className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200"
                     title="Toggle Language"
@@ -174,11 +200,11 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
                 <tbody>
                     {filteredVocab.map((item, index) => (
                         <tr key={`${item.jp}-${index}`} className="border-t border-neumorphic-shadow-dark/20">
-                            <td className="px-4 py-3 font-mono font-medium">
+                            <td className={`px-4 py-3 font-mono font-medium ${getFontSizeClass('base')}`}>
                                 <JapaneseText text={item.jp} onKanjiClick={handleKanjiClick} />
                             </td>
-                            <td className="px-4 py-3">{item.my}</td>
-                            <td className="px-4 py-3 text-slate-500 hidden sm:table-cell">{item.type}</td>
+                            <td className={`px-4 py-3 ${getFontSizeClass('base')}`}>{item.my}</td>
+                            <td className={`px-4 py-3 text-slate-500 hidden sm:table-cell ${getFontSizeClass('sm')}`}>{item.type}</td>
                         </tr>
                     ))}
                 </tbody>

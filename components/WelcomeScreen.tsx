@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon } from './Icons';
+import React, { useState } from 'react';
+import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon } from './Icons';
 
 interface WelcomeScreenProps {
   onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | 'flashcards') => void;
@@ -8,9 +8,52 @@ interface WelcomeScreenProps {
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
   const oldYears = ['2021', '2022', '2023', '2024', '2025'] as const;
+  const [showInstallInfo, setShowInstallInfo] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-neumorphic-bg">
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-neumorphic-bg relative">
+      <button
+        onClick={() => setShowInstallInfo(true)}
+        className="absolute top-6 right-6 p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
+        title="iOS Install Guide"
+      >
+        <InfoIcon className="w-6 h-6" />
+      </button>
+
+      {showInstallInfo && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+           <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset p-8 max-w-md w-full animate-in zoom-in-95 duration-300">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="p-4 bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl">
+                  <InfoIcon className="w-8 h-8 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-black text-slate-700">iOS Install Guide</h2>
+                  <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Add to Home Screen</p>
+                </div>
+              </div>
+              <div className="p-6 bg-neumorphic-bg shadow-neumorphic-inset rounded-[2rem] space-y-4 text-sm text-slate-600 leading-relaxed max-h-[60vh] overflow-y-auto">
+                  <p className="font-bold text-slate-700">iOS (iPhone/iPad) မှာ ဒီ App ကို Home Screen ပေါ်မှာ Profile (App တစ်ခုလို) Install လုပ်ချင်တယ်ဆိုရင် အောက်ပါအဆင့်တွေအတိုင်း လုပ်ဆောင်နိုင်ပါတယ်။</p>
+                  <p>ဒီ App ကို iOS အတွက် လိုအပ်တဲ့ Settings တွေ ထည့်သွင်းပေးထားပြီးဖြစ်လို့ Install လုပ်လိုက်တာနဲ့ Safari Address Bar တွေမပါတော့ဘဲ သာမန် App တစ်ခုလို Full-screen အသုံးပြုနိုင်မှာ ဖြစ်ပါတယ်။</p>
+                  <p className="font-bold text-slate-700 mt-4">လုပ်ဆောင်ရမည့် အဆင့်များ -</p>
+                  <ol className="list-decimal pl-5 space-y-3">
+                    <li>သင့် iPhone သို့မဟုတ် iPad ရှိ <strong>Safari Browser</strong> ဖြင့် ဒီ App ရဲ့ Link ကို ဖွင့်ပါ။ (မှတ်ချက် - Chrome သို့မဟုတ် Facebook/Messenger in-app browser များဖြင့် လုပ်ဆောင်၍မရပါ၊ Safari ဖြင့်သာ ဖွင့်ရန် လိုအပ်ပါသည်။)</li>
+                    <li>Safari ရဲ့ အောက်ခြေ မျက်နှာပြင်မှာရှိတဲ့ <strong>Share Button</strong> (လေးထောင့်ကွက်ထဲမှ မြှားအပေါ်သို့ ထွက်နေသော ပုံ) ကို နှိပ်ပါ။</li>
+                    <li>ပေါ်လာတဲ့ Menu ကို အောက်ဘက်သို့ နည်းနည်း ဆွဲချ (Scroll down) လိုက်ပြီး <strong>"Add to Home Screen"</strong> ဆိုတဲ့ စာသားလေးကို ရွေးချယ်နှိပ်ပါ။</li>
+                    <li>App ရဲ့ နာမည်ကို လိုအပ်ရင် ပြင်ဆင်နိုင်ပါတယ်။ ပြီးရင် ညာဘက် အပေါ်ထောင့်မှာရှိတဲ့ <strong>"Add"</strong> ကို နှိပ်လိုက်ပါ။</li>
+                  </ol>
+                  <p className="mt-4">ဒါဆိုရင်တော့ သင့်ဖုန်းရဲ့ Home Screen ပေါ်မှာ App Icon လေး ရောက်ရှိသွားပြီဖြစ်ပြီး အဲဒီကနေတစ်ဆင့် သာမန် App တွေလိုပဲ အလွယ်တကူ ဝင်ရောက်အသုံးပြုနိုင်ပြီ ဖြစ်ပါတယ်။</p>
+              </div>
+              <button
+                onClick={() => setShowInstallInfo(false)}
+                className="w-full py-4 mt-6 text-sm font-black uppercase tracking-widest text-slate-700 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
+              >
+                Close
+              </button>
+           </div>
+        </div>
+      )}
+
       <div className="text-center mb-12">
         <div className="inline-block p-6 bg-neumorphic-bg rounded-full shadow-neumorphic-outset mb-6">
           <LogoIcon className="w-16 h-16 text-blue-600" />

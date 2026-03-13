@@ -11,7 +11,7 @@ import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon } from './Icons';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
@@ -35,7 +35,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const { user, logout, syncLocalKeys } = useAuth();
   const { language, toggleLanguage } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, fontSize, setFontSize } = useTheme();
   const { bookmarkedIds, studyHistory, recordAnswer } = useProgress(); 
   
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
@@ -55,6 +55,16 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   // Kanji Tooltip State
   const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+
+  // Touch State for Swiping
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const toggleFontSize = () => {
+    if (fontSize === 'small') setFontSize('medium');
+    else if (fontSize === 'medium') setFontSize('large');
+    else setFontSize('small');
+  };
 
   // --- Trial Timer Logic ---
   useEffect(() => {
@@ -606,6 +616,31 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }, 0);
   }, [studyHistory, filteredData, answeredIDsInFilter]);
 
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && currentCardIndex < filteredData.length - 1) {
+      goToNextCard();
+    }
+    if (isRightSwipe && currentCardIndex > 0) {
+      goToPreviousCard();
+    }
+  };
+
   const renderContent = () => {
     if (isAdminViewVisible) {
       return (
@@ -876,15 +911,22 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           Question <span className="text-slate-700 px-1">{currentCardIndex + 1}</span> of <span className="text-slate-700 px-1">{filteredData.length}</span>
         </p>
 
-        <Card 
-          key={currentCard.id} 
-          data={currentCard}
-          onKanjiClick={handleKanjiClick}
-          mode="study"
-          onOptionSelect={(optionId) => handleOptionSelect(currentCard.id, optionId)}
-          selectedOptionId={currentSessionAnswer !== null ? currentSessionAnswer : undefined}
-          isSubmitted={currentSessionAnswer !== null}
-        />
+        <div 
+          className="touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <Card 
+            key={currentCard.id} 
+            data={currentCard}
+            onKanjiClick={handleKanjiClick}
+            mode="study"
+            onOptionSelect={(optionId) => handleOptionSelect(currentCard.id, optionId)}
+            selectedOptionId={currentSessionAnswer !== null ? currentSessionAnswer : undefined}
+            isSubmitted={currentSessionAnswer !== null}
+          />
+        </div>
         
         <div className="flex items-center justify-between mt-8 gap-6">
           <button 
@@ -1100,6 +1142,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     title="Language"
                 >
                     <GlobeIcon className="w-5 h-5" />
+                </button>
+                <button
+                    onClick={toggleFontSize}
+                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                    title="Font Size"
+                >
+                    <TextSizeIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={toggleTheme}
