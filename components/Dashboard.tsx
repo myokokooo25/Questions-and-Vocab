@@ -56,15 +56,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
 
-  // Touch State for Swiping
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  const toggleFontSize = () => {
-    if (fontSize === 'small') setFontSize('medium');
-    else if (fontSize === 'medium') setFontSize('large');
-    else setFontSize('small');
-  };
+  const [showFontSizeMenu, setShowFontSizeMenu] = useState(false);
 
   // --- Trial Timer Logic ---
   useEffect(() => {
@@ -616,31 +608,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }, 0);
   }, [studyHistory, filteredData, answeredIDsInFilter]);
 
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe && currentCardIndex < filteredData.length - 1) {
-      goToNextCard();
-    }
-    if (isRightSwipe && currentCardIndex > 0) {
-      goToPreviousCard();
-    }
-  };
-
   const renderContent = () => {
     if (isAdminViewVisible) {
       return (
@@ -911,22 +878,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           Question <span className="text-slate-700 px-1">{currentCardIndex + 1}</span> of <span className="text-slate-700 px-1">{filteredData.length}</span>
         </p>
 
-        <div 
-          className="touch-pan-y"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
-          <Card 
-            key={currentCard.id} 
-            data={currentCard}
-            onKanjiClick={handleKanjiClick}
-            mode="study"
-            onOptionSelect={(optionId) => handleOptionSelect(currentCard.id, optionId)}
-            selectedOptionId={currentSessionAnswer !== null ? currentSessionAnswer : undefined}
-            isSubmitted={currentSessionAnswer !== null}
-          />
-        </div>
+        <Card 
+          key={currentCard.id} 
+          data={currentCard}
+          onKanjiClick={handleKanjiClick}
+          mode="study"
+          onOptionSelect={(optionId) => handleOptionSelect(currentCard.id, optionId)}
+          selectedOptionId={currentSessionAnswer !== null ? currentSessionAnswer : undefined}
+          isSubmitted={currentSessionAnswer !== null}
+        />
         
         <div className="flex items-center justify-between mt-8 gap-6">
           <button 
@@ -1143,13 +1103,40 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 >
                     <GlobeIcon className="w-5 h-5" />
                 </button>
-                <button
-                    onClick={toggleFontSize}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
-                    title="Font Size"
-                >
-                    <TextSizeIcon className="w-5 h-5" />
-                </button>
+                <div className="relative">
+                    <button
+                        onClick={() => setShowFontSizeMenu(!showFontSizeMenu)}
+                        className={`p-2 sm:p-3 rounded-2xl transition-all ${showFontSizeMenu ? 'shadow-neumorphic-inset text-slate-700' : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset'}`}
+                        title="Font Size"
+                    >
+                        <TextSizeIcon className="w-5 h-5" />
+                    </button>
+                    {showFontSizeMenu && (
+                        <>
+                            <div className="fixed inset-0 z-40" onClick={() => setShowFontSizeMenu(false)}></div>
+                            <div className="absolute right-0 mt-2 w-32 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset z-50 p-2 flex flex-col gap-2">
+                                <button
+                                    onClick={() => { setFontSize('small'); setShowFontSizeMenu(false); }}
+                                    className={`px-4 py-2 text-sm text-left rounded-xl transition-all ${fontSize === 'small' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
+                                >
+                                    Small
+                                </button>
+                                <button
+                                    onClick={() => { setFontSize('medium'); setShowFontSizeMenu(false); }}
+                                    className={`px-4 py-2 text-sm text-left rounded-xl transition-all ${fontSize === 'medium' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
+                                >
+                                    Medium
+                                </button>
+                                <button
+                                    onClick={() => { setFontSize('large'); setShowFontSizeMenu(false); }}
+                                    className={`px-4 py-2 text-sm text-left rounded-xl transition-all ${fontSize === 'large' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
+                                >
+                                    Large
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
                 <button
                     onClick={toggleTheme}
                     className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"

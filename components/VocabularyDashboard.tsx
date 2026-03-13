@@ -20,11 +20,7 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
   const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
 
-  const toggleFontSize = () => {
-    if (fontSize === 'small') setFontSize('medium');
-    else if (fontSize === 'medium') setFontSize('large');
-    else setFontSize('small');
-  };
+  const [showFontSizeMenu, setShowFontSizeMenu] = useState(false);
 
   const getFontSizeClass = (baseSize: 'sm' | 'base' | 'lg' | 'xl' | '2xl') => {
     switch (fontSize) {
@@ -148,13 +144,40 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
                         className="w-32 sm:w-48 pl-10 pr-3 py-2 text-sm bg-neumorphic-bg text-neumorphic-text placeholder-slate-500 rounded-lg shadow-neumorphic-inset border-2 border-transparent focus:outline-none focus:ring-0 transition-all"
                     />
                 </div>
-                <button
-                    onClick={toggleFontSize}
-                    className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200"
-                    title="Font Size"
-                >
-                    <TextSizeIcon className="w-5 h-5" />
-                </button>
+                <div className="relative">
+                    <button
+                        onClick={() => setShowFontSizeMenu(!showFontSizeMenu)}
+                        className={`p-2.5 rounded-lg transition-all duration-200 ${showFontSizeMenu ? 'shadow-neumorphic-inset text-slate-700' : 'shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset'}`}
+                        title="Font Size"
+                    >
+                        <TextSizeIcon className="w-5 h-5" />
+                    </button>
+                    {showFontSizeMenu && (
+                        <>
+                            <div className="fixed inset-0 z-40" onClick={() => setShowFontSizeMenu(false)}></div>
+                            <div className="absolute right-0 mt-2 w-32 bg-neumorphic-bg rounded-xl shadow-neumorphic-outset z-50 p-2 flex flex-col gap-1">
+                                <button
+                                    onClick={() => { setFontSize('small'); setShowFontSizeMenu(false); }}
+                                    className={`px-4 py-2 text-sm text-left rounded-lg transition-all ${fontSize === 'small' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
+                                >
+                                    Small
+                                </button>
+                                <button
+                                    onClick={() => { setFontSize('medium'); setShowFontSizeMenu(false); }}
+                                    className={`px-4 py-2 text-sm text-left rounded-lg transition-all ${fontSize === 'medium' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
+                                >
+                                    Medium
+                                </button>
+                                <button
+                                    onClick={() => { setFontSize('large'); setShowFontSizeMenu(false); }}
+                                    className={`px-4 py-2 text-sm text-left rounded-lg transition-all ${fontSize === 'large' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
+                                >
+                                    Large
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
                 <button
                     onClick={toggleLanguage}
                     className="p-2.5 rounded-lg shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all duration-200"
