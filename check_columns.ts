@@ -1,14 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
-import * as fs from 'fs';
+import dotenv from 'dotenv';
 
-const env = fs.readFileSync('.env', 'utf8').split('\n').reduce((acc, line) => {
-  const [key, value] = line.split('=');
-  if (key && value) acc[key] = value;
-  return acc;
-}, {} as Record<string, string>);
+dotenv.config();
 
-const supabaseUrl = env.VITE_SUPABASE_URL || 'https://kdulrcovfiqbsenevowc.supabase.co';
-const supabaseKey = env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://kdulrcovfiqbsenevowc.supabase.co';
+const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function check() {

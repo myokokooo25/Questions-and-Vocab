@@ -60,11 +60,13 @@ const AppContent: React.FC = () => {
     return <WelcomeScreen onSelectApp={handleSelectApp} />;
   }
 
-  const isOldQuestionMode = ['2021', '2022', '2023', '2024', '2025'].includes(selectedApp);
+  const isOldQuestionMode = typeof selectedApp === 'string' 
+    && /^\d{4}$/.test(selectedApp) 
+    && selectedApp !== '2026';
 
   return (
     <div className="min-h-screen">
-      { (selectedApp === 'main' || selectedApp === '2026' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as any} onGoBack={handleGoBack} /> }
+      { (selectedApp === 'main' || selectedApp === '2026' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as 'main' | '2026' | '2021' | '2022' | '2023' | '2024' | '2025'} onGoBack={handleGoBack} /> }
       { selectedApp === 'flashcards' && <FlashcardAppWrapper onGoBack={handleGoBack} /> }
     </div>
   );
