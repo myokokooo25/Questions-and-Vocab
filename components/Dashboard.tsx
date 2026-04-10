@@ -989,21 +989,39 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                   <InfoIcon className="w-8 h-8 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black text-slate-700">iOS Install Guide</h2>
-                  <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Add to Home Screen</p>
+                  <h2 className="text-2xl font-black text-slate-700 leading-tight">သင့် iPhone သို့မဟုတ် iPad တွင် App အဖြစ် ထည့်သွင်းအသုံးပြုနည်း</h2>
+                  <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mt-2">Add to Home Screen</p>
                 </div>
               </div>
               <div className="p-6 bg-neumorphic-bg shadow-neumorphic-inset rounded-[2rem] space-y-4 text-sm text-slate-600 leading-relaxed max-h-[60vh] overflow-y-auto">
-                  <p className="font-bold text-slate-700">iOS (iPhone/iPad) မှာ ဒီ App ကို Home Screen ပေါ်မှာ Profile (App တစ်ခုလို) Install လုပ်ချင်တယ်ဆိုရင် အောက်ပါအဆင့်တွေအတိုင်း လုပ်ဆောင်နိုင်ပါတယ်။</p>
-                  <p>ဒီ App ကို iOS အတွက် လိုအပ်တဲ့ Settings တွေ ထည့်သွင်းပေးထားပြီးဖြစ်လို့ Install လုပ်လိုက်တာနဲ့ Safari Address Bar တွေမပါတော့ဘဲ သာမန် App တစ်ခုလို Full-screen အသုံးပြုနိုင်မှာ ဖြစ်ပါတယ်။</p>
-                  <p className="font-bold text-slate-700 mt-4">လုပ်ဆောင်ရမည့် အဆင့်များ -</p>
-                  <ol className="list-decimal pl-5 space-y-3">
-                    <li>သင့် iPhone သို့မဟုတ် iPad ရှိ <strong>Safari Browser</strong> ဖြင့် ဒီ App ရဲ့ Link ကို ဖွင့်ပါ။ (မှတ်ချက် - Chrome သို့မဟုတ် Facebook/Messenger in-app browser များဖြင့် လုပ်ဆောင်၍မရပါ၊ Safari ဖြင့်သာ ဖွင့်ရန် လိုအပ်ပါသည်။)</li>
-                    <li>Safari ရဲ့ အောက်ခြေ မျက်နှာပြင်မှာရှိတဲ့ <strong>Share Button</strong> (လေးထောင့်ကွက်ထဲမှ မြှားအပေါ်သို့ ထွက်နေသော ပုံ) ကို နှိပ်ပါ။</li>
-                    <li>ပေါ်လာတဲ့ Menu ကို အောက်ဘက်သို့ နည်းနည်း ဆွဲချ (Scroll down) လိုက်ပြီး <strong>"Add to Home Screen"</strong> ဆိုတဲ့ စာသားလေးကို ရွေးချယ်နှိပ်ပါ။</li>
-                    <li>App ရဲ့ နာမည်ကို လိုအပ်ရင် ပြင်ဆင်နိုင်ပါတယ်။ ပြီးရင် ညာဘက် အပေါ်ထောင့်မှာရှိတဲ့ <strong>"Add"</strong> ကို နှိပ်လိုက်ပါ။</li>
-                  </ol>
-                  <p className="mt-4">ဒါဆိုရင်တော့ သင့်ဖုန်းရဲ့ Home Screen ပေါ်မှာ App Icon လေး ရောက်ရှိသွားပြီဖြစ်ပြီး အဲဒီကနေတစ်ဆင့် သာမန် App တွေလိုပဲ အလွယ်တကူ ဝင်ရောက်အသုံးပြုနိုင်ပြီ ဖြစ်ပါတယ်။</p>
+                  <p>ဤ App ကို သင့်စက်ပစ္စည်း၏ Home Screen ပေါ်တွင် ပုံမှန် App တစ်ခုကဲ့သို့ ထည့်သွင်းအသုံးပြုနိုင်ပါသည်။ ဤသို့ပြုလုပ်ခြင်းဖြင့် Safari Address Bar များမပါဝင်ဘဲ Full-screen (မျက်နှာပြင်အပြည့်) စနစ်ဖြင့် ပိုမိုရှင်းလင်းလွယ်ကူစွာ အသုံးပြုနိုင်မည်ဖြစ်ပါသည်။</p>
+                  
+                  <p className="font-bold text-slate-700 mt-4">လုပ်ဆောင်ရမည့် အဆင့်များ</p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-bold text-slate-700">အဆင့် (၁) - Safari ဖြင့် ဝင်ရောက်ခြင်း</p>
+                      <p>သင့် iPhone/iPad ရှိ Safari Browser ကိုအသုံးပြု၍ ဤ App ၏ Link ကို ဖွင့်ပါ။<br/>
+                      <span className="text-xs text-slate-500">(မှတ်ချက် - Chrome၊ Facebook သို့မဟုတ် Messenger In-app Browser များဖြင့် အသုံးပြု၍မရပါ။ Safari Browser တစ်ခုတည်းဖြင့်သာ လုပ်ဆောင်နိုင်ပါသည်။)</span></p>
+                    </div>
+                    
+                    <div>
+                      <p className="font-bold text-slate-700">အဆင့် (၂) - Share Button ကို နှိပ်ခြင်း</p>
+                      <p>Safari Browser ၏ အောက်ခြေ (သို့မဟုတ် အပေါ်ဘက်) တွင်ရှိသော Share Button (လေးထောင့်ကွက်ထဲမှ မြှားအပေါ်သို့ ထွက်နေသောပုံ) ကို နှိပ်ပါ။</p>
+                    </div>
+
+                    <div>
+                      <p className="font-bold text-slate-700">အဆင့် (၃) - Add to Home Screen ကို ရွေးချယ်ခြင်း</p>
+                      <p>ပေါ်လာသော Menu Options များထဲမှ အောက်ဘက်သို့ အနည်းငယ်ဆွဲချ (Scroll down) ပြီး "Add to Home Screen" ဆိုသည့် စာသားကို ရွေးချယ်ပါ။</p>
+                    </div>
+
+                    <div>
+                      <p className="font-bold text-slate-700">အဆင့် (၄) - အတည်ပြု၍ ထည့်သွင်းခြင်း</p>
+                      <p>App အမည်ကို မိမိစိတ်ကြိုက် ပြင်ဆင်နိုင်ပြီးနောက် ညာဘက်အပေါ်ထောင့်ရှိ "Add" ကို နှိပ်ပါ။</p>
+                    </div>
+                  </div>
+
+                  <p className="mt-4">ယခုဆိုလျှင် သင့်ဖုန်း၏ Home Screen ပေါ်တွင် App Icon လေး ရောက်ရှိသွားပြီဖြစ်၍ နောက်နောင်တွင် အခြား Application များကဲ့သို့ပင် တိုက်ရိုက်နှိပ်၍ အလွယ်တကူ ဝင်ရောက်အသုံးပြုနိုင်ပြီ ဖြစ်ပါသည်။</p>
               </div>
               <button
                 onClick={() => setShowInstallInfo(false)}
