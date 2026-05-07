@@ -4,21 +4,7 @@ import type { VocabularyWord } from '../types';
 import { SpeakerIcon, CheckCircleIcon, SparkleIcon, LoadingSpinnerIcon } from './Icons';
 import ReportModal from '../../components/ReportModal';
 import JapaneseText from '../../components/JapaneseText';
-import { GoogleGenAI } from "@google/genai";
 import { supabase } from '../../lib/supabase';
-
-// Helper function to safely get the API key in both AI Studio and Vercel/GitHub Pages environments
-const getApiKey = () => {
-  // 1. Try AI Studio injected environment variables (Primary)
-  if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
-    return process.env.GEMINI_API_KEY;
-  }
-  // 2. Try Vite environment variables (Fallback for external hosting)
-  if (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
-    return import.meta.env.VITE_GEMINI_API_KEY;
-  }
-  return null;
-};
 
 interface FlashcardProps {
   word: VocabularyWord | undefined;
@@ -63,19 +49,19 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
     Use bullet points and bold text for key terms.`;
 
     try {
-      const apiKey = getApiKey();
-      let responseText = '';
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
 
-      if (!apiKey) {
-        throw new Error("Gemini API key is not configured in environment variables.");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate explanation");
       }
 
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: prompt,
-      });
-      responseText = response.text || '';
+      const responseData = await response.json();
+      const responseText = responseData.text;
 
       if (!responseText) throw new Error("No response from AI");
       

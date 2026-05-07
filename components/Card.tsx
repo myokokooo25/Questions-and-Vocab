@@ -8,21 +8,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import JapaneseText from './JapaneseText';
 import { vocabularyData } from '../data/vocab';
 import ReportModal from './ReportModal';
-import { GoogleGenAI } from "@google/genai";
 import { supabase } from '../lib/supabase';
-
-// Helper function to safely get the API key in both AI Studio and Vercel/GitHub Pages environments
-const getApiKey = () => {
-  // 1. Try AI Studio injected environment variables (Primary)
-  if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
-    return process.env.GEMINI_API_KEY;
-  }
-  // 2. Try Vite environment variables (Fallback for external hosting)
-  if (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
-    return import.meta.env.VITE_GEMINI_API_KEY;
-  }
-  return null;
-};
 
 // Helper function to prepare text for TTS by removing furigana annotations.
 const stripHtml = (html: string): string => {
@@ -108,25 +94,26 @@ const Card: React.FC<CardProps> = ({
     setHintError(null);
 
     try {
-      const apiKey = getApiKey();
-      let responseText = '';
       const prompt = `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}`;
 
-      if (!apiKey) {
-        throw new Error("Gemini API key is not configured in environment variables.");
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate hint");
       }
 
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: prompt,
-      });
-      responseText = response.text || '';
+      const responseData = await response.json();
+      const responseText = responseData.text;
 
       if (!responseText) throw new Error("No response from AI");
       setHint(responseText);
     } catch (err: any) {
-      setHintError("Hint ရယူ၍မရပါ။");
+      setHintError("Hint ရယူ၍မရပါ။ " + (err.message || ''));
       console.error("AI Error:", err);
     } finally {
       setIsHintLoading(false);
@@ -150,19 +137,19 @@ const Card: React.FC<CardProps> = ({
     Please use bullet points for clarity and make it easy to understand for a steel structure engineering student.`;
 
     try {
-      const apiKey = getApiKey();
-      let responseText = '';
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
 
-      if (!apiKey) {
-        throw new Error("Gemini API key is not configured in environment variables.");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate explanation");
       }
 
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: prompt,
-      });
-      responseText = response.text || '';
+      const responseData = await response.json();
+      const responseText = responseData.text;
 
       if (!responseText) throw new Error("No response from AI");
       
