@@ -56,17 +56,30 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to generate explanation");
+        let errorMessage = "Failed to generate explanation";
+        const errorText = await response.text();
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || errorMessage;
+        } catch (e) {
+          errorMessage = `Server Error (${response.status}): ${errorText.slice(0, 50)}... Make sure Vercel APIs are deployed.`;
+        }
+        throw new Error(errorMessage);
       }
 
-      const responseData = await response.json();
-      const responseText = responseData.text;
+      const responseTextRaw = await response.text();
+      let responseData;
+      try {
+        responseData = JSON.parse(responseTextRaw);
+      } catch (e) {
+        throw new Error(`Invalid JSON response: ${responseTextRaw.slice(0, 50)}...`);
+      }
+      const responseTextValue = responseData.text;
 
-      if (!responseText) throw new Error("No response from AI");
+      if (!responseTextValue) throw new Error("No response from AI");
       
       // Basic formatting: bold and newlines
-      const formatted = responseText
+      const formatted = responseTextValue
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br />');
         
