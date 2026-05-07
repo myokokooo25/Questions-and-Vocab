@@ -13,7 +13,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 組立て溶接の位置は、部材の角、端部など強度上および工作上問題とならない箇所に行う。", textMY: "အစမ်းဂဟေဆက်သည့်နေရာသည် အစိတ်အပိုင်း၏ ထောင့်၊ အစွန်းများကဲ့သို့ ခိုင်ခံ့မှုနှင့် လုပ်ငန်းစဉ်တွင် ပြဿနာမရှိမည့်နေရာများတွင် ဖြစ်ရမည်။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "JASS 6 အရ အထူ ၆ မီလီမီတာကျော်သော ပစ္စည်းများအတွက် အစမ်းဂဟေ၏ အနည်းဆုံးအရှည်မှာ ၅၀ မီလီမီတာ (၄၀ မီလီမီတာ မဟုတ်) ဖြစ်ရမည်။", memoryTipMY: "အထူ ၆ မီလီမီတာကျော်ရင် ၅၀ မီလီမီတာအရှည်လို့ မှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-17",
@@ -27,7 +31,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 溶接材料 YGW 11, 15 (490N/mm² の STKR, BCP)", textMY: "ဂဟေပစ္စည်း YGW 11, 15 (490N/mm² grade STKR, BCP)" }
     ],
     correctOptionId: 2,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "490N/mm² grade steel အတွက် Pass-to-pass အပူချိန်သည် ၃၅၀ ဒီဂရီစင်တီဂရိတ်အောက်သာ ဖြစ်ရမည်။ ၄၅၀ ဒီဂရီစင်တီဂရိတ်သည် မြင့်မားလွန်းသည်။", memoryTipMY: "490 grade အတွက် ၃၅၀ ဒီဂရီစင်တီဂရိတ်အောက်လို့ မှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-18",
@@ -41,7 +49,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 溶接部における外観上の管理項目および許容差は、平成12年建設省告示1464号および「JASS 6」付則6「鉄骨精度検査基準」による。", textMY: "ဂဟေဆက်နေရာ၏ အပြင်ပန်းစစ်ဆေးမှုသည် သက်ဆိုင်ရာ စံနှုန်းများနှင့်အညီ ဖြစ်ရမည်။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "End tab အရှည်သည် ဂဟေဆက်နည်းနှင့် ပစ္စည်းအထူပေါ်မူတည်၍ ကွဲပြားနိုင်သည်။ ၃၀-၅၀ မီလီမီတာဟု အမြဲတမ်း သတ်မှတ်၍မရပါ။", memoryTipMY: "End tab အရှည်က အခြေအနေပေါ်မူတည်ပြီး ပြောင်းလဲနိုင်တယ်လို့ မှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-19",
@@ -55,7 +67,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) ハ、ホ", textMY: "ဂ, ဟ" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "ハ (ဂ) - ဂဟေဆက်သူသည် ကိုယ်ပိုင်ဆုံးဖြတ်ချက်ဖြင့် မလုပ်ရပါ။ ဒီဇိုင်းပုံစံအတိုင်း လိုက်နာရမည်။ ホ (ဟ) - လေတိုက်နှုန်း ၅ မီတာ/စက္ကန့်ထက်ကျော်လျှင် ဂဟေဆက်ခြင်းကို ရပ်တန့်ရမည် သို့မဟုတ် ကာကွယ်ရမည်။", memoryTipMY: "ဂဟေဆက်ခြင်းသည် စည်းကမ်းချက်များကို တိကျစွာ လိုက်နာရသော လုပ်ငန်းဖြစ်သည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-20",
@@ -69,7 +85,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 下向姿勢", textMY: "အောက်ဘက်သို့အနေအထား (Flat)" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "SA-3F နှင့် SA-3H သည် အလျားလိုက်အနေအထား (Horizontal) ကို မပါဝင်ပါ။", memoryTipMY: "SA-3F/H သည် အလျားလိုက် (Horizontal) မပါဘူးလို့ မှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-21",
@@ -83,7 +103,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 溶接金属中の拡散性水素量が少ない。", textMY: "ဂဟေဆက်ထားသော သတ္တုအတွင်း ဟိုက်ဒရိုဂျင်ဓာတ်ငွေ့ ပမာဏ နည်းခြင်း။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "ဟိုက်ဒရိုဂျင်ဓာတ်ငွေ့ ပမာဏ များပြားခြင်းက Cold Cracking ဖြစ်စေသည့် အဓိကအကြောင်းရင်းဖြစ်သည်။", memoryTipMY: "ဟိုက်ဒရိုဂျင် များရင် Cold Cracking ဖြစ်တယ်လို့ မှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-22",
@@ -97,7 +121,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) ロボット溶接オペレータは、少なくともJIS Z 3841の基本となる級(下向溶接)の溶接技術検定試験に合格した有資格者とする。", textMY: "Robot အော်ပရေတာသည် အနည်းဆုံး JIS Z 3841 အောင်မြင်သူ ဖြစ်ရမည်။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Robot အော်ပရေတာသည် အထူးသဖြင့် ဂဟေဆက်သူ (Welder) ဖြစ်ရန် မလိုပါ။ Robot ကို ထိန်းချုပ်နိုင်သူ ဖြစ်ရမည်။", memoryTipMY: "Robot အော်ပရေတာက ဂဟေဆရာ မဟုတ်လည်း ရပါတယ်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-23",
@@ -111,7 +139,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) エレクトロスラグ溶接は、溶融スラグと溶接金属が溶接部から流れ出ないように開先部を鋼製または銅製の当て金で囲み、電極ワイヤと溶融スラグ間にアークを発生させ、溶接ワイヤを連続的に送給し開先部を充填する溶接法である。", textMY: "Electroslag Welding သည် Slag ကိုသုံး၍ ဂဟေဆက်ခြင်းဖြစ်သည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Submerged Arc Welding သည် Flux မှထွက်သော Gas ကိုသုံးခြင်းမဟုတ်ဘဲ၊ 粒状フラックス (Granular Flux) ကို အသုံးပြု၍ အークကို ဖုံးအုပ်ခြင်းဖြစ်သည်။", memoryTipMY: "Submerged Arc က Flux အမှုန့်နဲ့ ဖုံးအုပ်တာလို့ မှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-24",
@@ -125,7 +157,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) ビード幅に対する溶込み深さは、溶融池内の溶融金属の対流の影響を受ける。", textMY: "Bead အကျယ်နှင့် အနက်သည် အရည်ပျော်နေသော သတ္တု၏ လှုပ်ရှားမှုပေါ် မူတည်သည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "လျှပ်စီးများပြီး မြန်လျှင် Undercut ဖြစ်လွယ်သည်မှာ မှန်သော်လည်း၊ အဓိကအချက်မှာ အပူချိန်နှင့် အမြန်နှုန်း မျှတမှုဖြစ်သည်။ (၄) သည် အခြေအနေပေါ်မူတည်၍ မှားယွင်းနိုင်ပါသည်။", memoryTipMY: "ဂဟေဆက်ခြင်းတွင် အမြန်နှုန်းနှင့် လျှပ်စီး မျှတမှုရှိရမည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-25",
@@ -139,7 +175,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 炭素当量(Ceq)は、最高硬さに及ぼす鋼の化学成分の影響について、炭素と合金元素の影響を炭素含有量に置き換えて指標化したものである。", textMY: "Carbon Equivalent သည် မာကျောမှုကို တိုင်းတာသော အညွှန်းကိန်းဖြစ်သည်။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Carbon Equivalent သည် မာကျောမှုအပြင် ဂဟေဆက်နိုင်စွမ်း (Weldability) ကို တိုင်းတာသည့် အညွှန်းကိန်းဖြစ်သည်။", memoryTipMY: "Ceq သည် Weldability ကို တိုင်းတာသည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-26",
@@ -153,7 +193,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 溶接金属強度を母材の規格値より大きくするために、溶接入熱・パス間温度の条件が決められている。", textMY: "ဂဟေဆက်ထားသော သတ္တု၏ ခိုင်ခံ့မှုကို ထိန်းရန် အပူချိန်ကို သတ်မှတ်သည်။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Root gap ပြောင်းလဲပါက ဂဟေဆက်ရမည့် ပမာဏပြောင်းလဲသွားသဖြင့် အပူဝင်ရောက်မှုအပေါ် သက်ရောက်မှုရှိသည်။", memoryTipMY: "Root gap က အပူဝင်ရောက်မှုအပေါ် သက်ရောက်မှုရှိသည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-27",
@@ -167,7 +211,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 回転変形に対する対応は、回転の大きさに対応できるサイズと長さの組立て溶接の配置、ルート間隔を拘束するための裏当て金の取り付け、強力な拘束治具を利用した部材拘束などがある。" , textMY: "လည်ပတ်ပုံပျက်ခြင်းအတွက် ခိုင်ခံ့သော Jig ကို သုံးသည်။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "လည်ပတ်ပုံပျက်ခြင်း (Rotational distortion) အတွက် အဓိကမှာ ဂဟေဆက်သည့် အစီအစဉ်နှင့် နေရာချထားမှုဖြစ်သည်။ Jig များဖြင့်သာ အမြဲတမ်း မရနိုင်ပါ။", memoryTipMY: "ဂဟေဆက်သည့် အစီအစဉ်က ပိုအရေးကြီးသည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-28",
@@ -181,7 +229,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 素地調整後の鋼材面は活性化しているので、24時間以内に塗装を行う。", textMY: "မျက်နှာပြင် ပြင်ဆင်ပြီး ၂၄ နာရီအတွင်း ဆေးသုတ်ရမည်။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "မျက်နှာပြင် ပြင်ဆင်ပြီးနောက် ၄ နာရီအတွင်း (၂၄ နာရီ မဟုတ်ပါ) ဆေးသုတ်ရမည်။ အချိန်ကြာလျှင် သံချေးပြန်တက်နိုင်သည်။", memoryTipMY: "၄ နာရီအတွင်း ဆေးသုတ်ရမည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-29",
@@ -195,7 +247,11 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) めっき後の寸法精度検査は、梁の曲がり、柱の曲がり、ウェブの曲がりを対象に行う。", textMY: "Galvanizing ပြီးနောက် တိုင်းတာမှုစစ်ဆေးခြင်းကို ပြုလုပ်ရမည်။" }
     ],
     correctOptionId: 1,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "HDZ55 ဆိုသည်မှာ ၁ စတုရန်းမီတာလျှင် ၅၅၀ ဂရမ် (၅၅ ဂရမ် မဟုတ်ပါ) ဖြစ်သည်။", memoryTipMY: "HDZ55 သည် ၅၅၀ ဂရမ်ဖြစ်သည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-30",
@@ -209,6 +265,10 @@ export const chapter2021Part2Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 鉄骨工事の品質マネジメントを有効なものとするためには、設計者と施工者が密に連携を取り合い、鉄骨製作業者がその指示どおりの製品の製作に集中することが重要である。", textMY: "ဒီဇိုင်းဆွဲသူနှင့် တည်ဆောက်သူတို့ ပူးပေါင်းဆောင်ရွက်ရမည်။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "အရည်အသွေးစီမံခန့်ခွဲမှုသည် ဒီဇိုင်းဆွဲသူ၊ တည်ဆောက်သူနှင့် စက်ရုံတို့၏ ပူးပေါင်းဆောင်ရွက်မှုသာမက၊ စက်ရုံ၏ ကိုယ်ပိုင်တာဝန်ယူမှုနှင့် စဉ်ဆက်မပြတ် တိုးတက်မှု (Continuous Improvement) ကိုလည်း အလေးပေးသည်။", memoryTipMY: "အရည်အသွေးသည် အားလုံး၏ တာဝန်ဖြစ်သည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   }
 ];

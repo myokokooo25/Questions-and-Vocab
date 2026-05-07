@@ -13,13 +13,13 @@ import { supabase } from '../lib/supabase';
 
 // Helper function to safely get the API key in both AI Studio and Vercel/GitHub Pages environments
 const getApiKey = () => {
-  // 1. Try Vite environment variables (for Vercel/GitHub Pages)
-  if (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
-    return import.meta.env.VITE_GEMINI_API_KEY;
-  }
-  // 2. Try AI Studio injected environment variables
+  // 1. Try AI Studio injected environment variables (Primary)
   if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
     return process.env.GEMINI_API_KEY;
+  }
+  // 2. Try Vite environment variables (Fallback for external hosting)
+  if (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
+    return import.meta.env.VITE_GEMINI_API_KEY;
   }
   return null;
 };
@@ -113,12 +113,12 @@ const Card: React.FC<CardProps> = ({
       const prompt = `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}`;
 
       if (!apiKey) {
-        throw new Error("VITE_GEMINI_API_KEY is missing in Vercel Environment Variables.");
+        throw new Error("Gemini API key is not configured in environment variables.");
       }
 
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-flash-preview',
         contents: prompt,
       });
       responseText = response.text || '';
@@ -154,12 +154,12 @@ const Card: React.FC<CardProps> = ({
       let responseText = '';
 
       if (!apiKey) {
-        throw new Error("VITE_GEMINI_API_KEY is missing in Vercel Environment Variables.");
+        throw new Error("Gemini API key is not configured in environment variables.");
       }
 
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-flash-preview',
         contents: prompt,
       });
       responseText = response.text || '';

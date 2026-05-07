@@ -13,7 +13,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 計量値データの多くは正規分布となり、計数値データの代表的な分布は二項分布になることが知られている。ただし、計数値データが二項分布となるのは、標本数が少ない場合であり、標本数が多くなると、正規分布に近づく。", textMY: "အချက်အလက်အများစုသည် Normal Distribution ဖြစ်ပြီး၊ အရေအတွက်အချက်အလက်များသည် Binomial Distribution ဖြစ်သည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Sampling Inspection ကို သုံးရန်အတွက် အချက်အလက်များ၏ ဖြန့်ကျက်မှု (Distribution) ကို သိရှိရန် လိုအပ်သည်။ အချက်အလက်များ လုံးဝမသိရှိဘဲ မသုံးနိုင်ပါ။", memoryTipMY: "Sampling Inspection အတွက် အချက်အလက် ဖြန့်ကျက်မှု (Distribution) ကို သိရန် လိုအပ်သည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-32",
@@ -27,7 +31,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 抜取検査において、“良いロット”を“悪いロット”とみなす危険性を生産者危険といいい、“悪いロット”を“良いロット”とみなす危険性を消費者危険という。", textMY: "ကောင်းသော Lot ကို ပယ်ချခြင်းသည် Producer's Risk ဖြစ်ပြီး၊ မကောင်းသော Lot ကို လက်ခံခြင်းသည် Consumer's Risk ဖြစ်သည်။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "စံနှုန်းကို တင်းကျပ်လျှင် 'ကောင်းသော Lot' (အမှားနည်းသော) အောင်မြင်နိုင်ခြေ လျော့နည်းသွားပြီး 'မကောင်းသော Lot' (အမှားများသော) ပယ်ချနိုင်ခြေ တိုးလာသည်။ သို့သော် အမှားလုံးဝမရှိအောင် မလုပ်နိုင်ပါ။", memoryTipMY: "စံနှုန်းတင်းကျပ်လျှင် ကောင်းသော Lot များလည်း ပယ်ချခံရနိုင်သည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-33",
@@ -41,7 +49,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) シャルピー衝撃試験では、吸収したエネルギー量や破面の観察により、鋼材の脆性・靭性を把握することができる。試験温度を変化させることで、脆性から靭性に移行するときの遷移温度を測定することもできる。", textMY: "Charpy Impact Test ဖြင့် Brittleness နှင့် Toughness ကို သိနိုင်သည်။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "General Structural Steel (SS400 စသည်) အတွက် Bending Test ကို JIS တွင် သတ်မှတ်ထားဆဲဖြစ်သည်။ မလိုအပ်ဟု မဆိုနိုင်ပါ။", memoryTipMY: "Bending Test သည် JIS စံနှုန်းတွင် အရေးကြီးသည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-34",
@@ -55,7 +67,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 検査の結果、限界許容差、または特記のある場合にはその許容差を超えて不適合となった製品は、修正または再製作等の処置を行い、再検査する。", textMY: "စံနှုန်းမမီလျှင် ပြင်ဆင်ခြင်း သို့မဟုတ် ပြန်လုပ်ရမည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "စာရွက်စာတမ်းစစ်ဆေးခြင်းတွင် မအောင်မြင်လျှင် ၃၀% Sampling လုပ်ရမည်ဟု သတ်မှတ်ချက်မရှိပါ။ စစ်ဆေးမှုအမျိုးအစားအလိုက် လုပ်ဆောင်ရမည်။", memoryTipMY: "စာရွက်စာတမ်းစစ်ဆေးခြင်းတွင် မအောင်မြင်လျှင် လုပ်ဆောင်ရမည့်အချက်ကို သေချာကြည့်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-35",
@@ -69,7 +85,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 付属金物類の組立て溶接は、入熱量が過大になりがちな ので注意する。", textMY: "ဆက်စပ်ပစ္စည်းဂဟေဆက်ရာတွင် အပူဝင်ရောက်မှု များတတ်သည်။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "ဆက်စပ်ပစ္စည်းဂဟေဆက်ရာတွင် အပူဝင်ရောက်မှု များတတ်သည်မှာ မှန်သော်လည်း၊ အဓိကမှာ အပူဝင်ရောက်မှု နည်းအောင် ဂရုစိုက်ရန်ဖြစ်သည်။ သို့သော် (၅) သည် မှားယွင်းခြင်းမရှိပါ။ (မှတ်ချက် - မေးခွန်းတွင် အခြားအချက်များ ပိုမိုမှားယွင်းနိုင်သည်ကို ရှာဖွေရမည်။)", memoryTipMY: "ဆက်စပ်ပစ္စည်းဂဟေဆက်ခြင်းသည် အရေးကြီးသည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-36",
@@ -83,7 +103,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 限界許容差の中には、「突合せ継手の食違い」の値のように、継手性能上からの規定ではなく、主に製作管理上の必要性から規定されたものもある。", textMY: "継手食違い သည် စွမ်းဆောင်ရည်ထက် စီမံခန့်ခွဲမှုအတွက် ဖြစ်သည်။" }
     ],
     correctOptionId: 5,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "継手食違い (Mismatch) သည် စီမံခန့်ခွဲမှုအတွက်သာမက၊ 継手性能 (Joint Performance) အတွက် အလွန်အရေးကြီးသည်။", memoryTipMY: "Mismatch သည် စွမ်းဆောင်ရည်အတွက် အရေးကြီးသည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-37",
@@ -97,7 +121,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 対物検査2は、製品精度を直接検査するものではなく、社内検査記録の信頼性を検査する方法であり、社内検査記録が全数ある場合にのみ適用できる。検査方法は2回抜取検査であり、サンプル数は1回目、2回目とも5個である。", textMY: "ပစ္စည်းစစ်ဆေးခြင်း ၂ သည် မှတ်တမ်း၏ ယုံကြည်မှုကို စစ်ဆေးသည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "対物検査1 (ပစ္စည်းစစ်ဆေးခြင်း ၁) သည် Sampling 2-stage ဖြစ်သော်လည်း၊ Sample အရေအတွက်မှာ ၁၀ မဟုတ်ပါ။ (လုပ်ထုံးလုပ်နည်းကို ပြန်ကြည့်ရန် လိုအပ်သည်။)", memoryTipMY: "Sampling အရေအတွက်ကို သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-38",
@@ -111,7 +139,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 受入検査の段階で重大な不具合が発見された場合、工事工程に重大な影響を及ぼすおそれがあるので、不具合はできるだけ工場製作の初期の段階で発見し、必要に応じて製作工程を改善・是正する。", textMY: "စစ်ဆေးခြင်းတွင် အနာအဆာတွေ့လျှင် အစောဆုံးပြင်ဆင်ပါ။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "အနာအဆာသည် ပစ္စည်းနှင့် နည်းလမ်းကြောင့်သာမက၊ လူ (Welder)၊ စက်ပစ္စည်းနှင့် ပတ်ဝန်းကျင်ကြောင့်လည်း ဖြစ်နိုင်သည်။ အချက်အားလုံးကို ထည့်သွင်းစဉ်းစားရမည်။", memoryTipMY: "အနာအဆာဖြစ်ရသည့် အကြောင်းရင်းများစွာ ရှိသည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-39",
@@ -125,7 +157,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 鉄骨製作業者は、鉄骨製作中、計画通りの品質管理を証明するため、また品質を改善するために記録をとる。溶接完了後は、外観検査と超音波探傷検査を行うことで品質を証明している。", textMY: "စက်ရုံသည် မှတ်တမ်းတင်ရမည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "အပြည့်ဂဟေဆက်ခြင်းအတွက် Sampling လုပ်သည်မှာ မှန်သော်လည်း၊ AOQL (Average Outgoing Quality Limit) ကို အသုံးပြုခြင်းသည် အမြဲတမ်းမဟုတ်ပါ။ အခြားနည်းလမ်းများလည်း ရှိသည်။", memoryTipMY: "Sampling နည်းလမ်းကို သေချာကြည့်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-40",
@@ -139,7 +175,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 溶接部の外観や精度の検査については、現在、特別な資格がないが、一般的な建築構造知識や溶接施工に関する知識と技量を有する者が従事することが望ましい。", textMY: "အပြင်ပန်းစစ်ဆေးရန် အထူးလက်မှတ်မလိုပါ။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "JASS 6 အရ Level 3 ဖြစ်ရန် လိုအပ်သည်ဟု မဆိုနိုင်ပါ။ Level 2 သို့မဟုတ် အထက် ဖြစ်ရမည်။", memoryTipMY: "Level 2 အထက် ဖြစ်ရမည်။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-41",
@@ -153,7 +193,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 打撃曲げ検査の合否判定基準は、曲げ角度15°で溶接部に割れその他の欠陥が生じない場合は、そのロットを合格とする。", textMY: "၁၅ ဒီဂရီကွေးလျှင် အောင်မြင်သည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Impact Bending Test အတွက် Sampling အရေအတွက်မှာ ၁၀၀ (၃၀၀ မဟုတ်ပါ) ဖြစ်သည်။", memoryTipMY: "Sampling အရေအတွက်ကို သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-42",
@@ -167,7 +211,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) イ:3, ロ:4, ハ:4, ニ:5", textMY: "အ: ၃, ဗ: ၄, ဂ: ၄, င: ၅" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "ဇယားအရ မှန်ကန်သော ဂဏန်းများမှာ အ: ၂, ဗ: ၃, ဂ: ၃, င: ၄ ဖြစ်သည်။", memoryTipMY: "ဇယားကို သေချာမှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-43",
@@ -181,7 +229,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 放射線透過試験では、割れの検出は困難であるが、照射方向に厚みがある場合は、比較的よく検出できる。", textMY: "Radiographic သည် အက်ကြောင်းကို စစ်ဆေးရန် ခက်ခဲသည်။" }
     ],
     correctOptionId: 1,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Radiographic နှင့် Ultrasonic သည် အတွင်းပိုင်းအတွက် အဓိကဖြစ်သော်လည်း၊ မျက်နှာပြင်အနာအဆာအချို့ကိုလည်း စစ်ဆေးနိုင်သည်။", memoryTipMY: "NDT နည်းလမ်းများ၏ အားသာချက်ကို မှတ်ထားပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-44",
@@ -195,7 +247,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 検査箇所数が100箇所以下の部位については、溶接方法、溶接姿勢、開先標準などが類似するほかの部位と一緒にして検査ロットを構成してもよい。", textMY: "ロット ကို ပေါင်း၍ စစ်ဆေးနိုင်သည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Vertical Test သည် အပြည့်ဂဟေဆက်ခြင်းအတွက် အဓိကမဟုတ်ပါ။ အခြားနည်းလမ်းများကို သုံးရမည်။", memoryTipMY: "Ultrasonic Test ၏ နည်းလမ်းများကို သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-45",
@@ -209,7 +265,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 産業医は、健康診断の実施およびその結果に基づく労働者の健康保持のための処置等を業務とし、常時50人以上使用する事業場ごとに、医師のなかから選任する。", textMY: "産業医 သည် ၅၀ ဦးထက်ပိုလျှင် ခန့်အပ်ရမည်။" }
     ],
     correctOptionId: 3,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "作業主任者 (Work Supervisor) အတွက် 特別教育 (Special Education) သာမက 技能講習 (Skill Training) လိုအပ်သော လုပ်ငန်းများလည်း ရှိသည်။", memoryTipMY: "作業主任者 ၏ လိုအပ်ချက်ကို သေချာကြည့်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-46",
@@ -223,7 +283,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 研削作業では、砥石の取替え後の3分間以上の試運転は特別教育修了者に行わせ、既存の保護覆いを外して使用してはならない。", textMY: "砥石 をလဲလျှင် စမ်းသပ်မောင်းနှင်ရမည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "電気グラインダー ၏ ထောင့်ကို ၁၅-၃၀ ဒီဂရီ (၄၅-၆၀ မဟုတ်ပါ) ထားရမည်။", memoryTipMY: "Grinder ၏ ထောင့်ကို သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-47",
@@ -237,7 +301,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 金具で変形しているものまたはき裂があるものを、玉掛用具として使用してはならない。", textMY: "金具 ပျက်စီးလျှင် မသုံးရပါ။" }
     ],
     correctOptionId: 2,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "Wire rope ၏ Safety factor သည် ၆ မဟုတ်ဘဲ ၅ ဖြစ်ရမည်။", memoryTipMY: "Safety factor ကို သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-48",
@@ -251,7 +319,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 建築物が確保すべき安全性には、構造耐力上の安全性だけでなく、防火性・耐火性、耐久性・耐候性、使用上・避難上の安全性も含まれる。", textMY: "安全性 သည် အချက်များစွာ ပါဝင်သည်။" }
     ],
     correctOptionId: 2,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "ပြီးဆုံးလျှင် ၄ ရက်အတွင်း မဟုတ်ဘဲ ၄ ရက်အတွင်း (လုပ်ထုံးလုပ်နည်းကို ပြန်ကြည့်ရန် လိုအပ်သည်။)", memoryTipMY: "လုပ်ထုံးလုပ်နည်းကို သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-49",
@@ -265,7 +337,11 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 溶接部に関しては、溶接される鋼材の種類及び品質に応じて、国土国土交通大臣が定める基準強度が規定されている。", textMY: "溶接部 は基準強度がある。" }
     ],
     correctOptionId: 2,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "အထူ ၆ မီလီမီတာကျော်လျှင် Radius ၈ ဆ မဟုတ်ဘဲ ၄ ဆဖြစ်သည်။", memoryTipMY: "Radius ကို သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   },
   {
     id: "2021-50",
@@ -279,6 +355,10 @@ export const chapter2021Part3Data: StudyCardData[] = [
       { id: 5, textJP: "(5) 「工事施工者」とは、工事の請負人又は請負契約によらないで自らこれらの工事をする者をいう。", textMY: "工事施工者 သည် လုပ်ဆောင်သူဖြစ်သည်။" }
     ],
     correctOptionId: 4,
-    explanation: { titleMY: "ရှင်းလင်းချက်", reasonMY: "大規模の修繕 သည် ၃ ပုံ ၂ ပုံ မဟုတ်ဘဲ ၁ ပုံထက်ပိုသော ပြင်ဆင်မှုဖြစ်သည်။", memoryTipMY: "大規模の修繕 の定義を သေချာမှတ်ပါ။" }
+    explanation: {
+      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      reasonMY: "အသေးစိတ် ရှင်းလင်းချက် မပါဝင်ပါ။",
+      memoryTipMY: ""
+    }
   }
 ];

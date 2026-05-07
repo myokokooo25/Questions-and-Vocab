@@ -94,19 +94,19 @@ export const chapter1Data: StudyCardData[] = [
   {
     id: "1-6",
     questionJP: "<ruby>図<rt>ず</rt></ruby>のような<ruby>荷重<rt>かじゅう</rt></ruby>を<ruby>受<rt>う</rt></ruby>けるトラス<ruby>梁<rt>はり</rt></ruby>について、ア、イ、ウの<ruby>各部材<rt>かくぶざい</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じる<ruby>軸力<rt>じくりょく</rt></ruby>の<ruby>組合<rt>くみあわ</rt></ruby>せのうち、<ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
-    questionMY: "ပုံတွင်ပြထားသည့် Truss Beam ၏ အစိတ်အပိုင်း (အ၊ ဣ၊ ဥ) များတွင် ဖြစ်ပေါ်သော အားများ၏ မှန်ကန်သော ပေါင်းစပ်မှုကို ရွေးချယ်ပါ။",
+    questionMY: "ပုံတွင်ပြထားသည့်အတိုင်း ဝန် (Load) သက်ရောက်နေသော Truss Beam ရှိ အစိတ်အပိုင်း (ア၊ イ၊ ウ) တို့တွင် အသီးသီးဖြစ်ပေါ်နေသော ဝင်ရိုးအား (Axial Force) များ၏ မှန်ကန်သော ပေါင်းစပ်မှုကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：0、ウ：<ruby>引張<rt>ひっぱり</rt></ruby>", textMY: "အ: ဖိအား (Compression)၊ ဣ: သုည (0)၊ ဥ: ဆွဲအား (Tension)" },
-      { id: 2, textJP: "(2) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：0、ウ：<ruby>圧縮<rt>あっしゅく</rt></ruby>", textMY: "အ: ဖိအား၊ ဣ: သုည၊ ဥ: ဖိအား" },
-      { id: 3, textJP: "(3) ア：<ruby>引張<rt>ひっぱり</rt></ruby>、イ：0、ウ：<ruby>引張<rt>ひっぱり</rt></ruby>", textMY: "အ: ဆွဲအား၊ ဣ: သုည၊ ဥ: ဆွဲအား" },
-      { id: 4, textJP: "(4) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：<ruby>圧縮<rt>あっしゅく</rt></ruby>、ウ：<ruby>引張<rt>ひっぱり</rt></ruby>", textMY: "အ: ဖိအား၊ ဣ: ဖိအား၊ ဥ: ဆွဲအား" },
-      { id: 5, textJP: "(5) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：<ruby>圧縮<rt>あっしゅく</rt></ruby>、ウ：<ruby>圧縮<rt>あっしゅく</rt></ruby>", textMY: "အ: ဖိအား၊ ဣ: ဖိအား၊ ဥ: ဖိအား" }
+      { id: 1, textJP: "(1) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：0、ウ：<ruby>引張<rt>ひっぱり</rt></ruby>", textMY: "ア (အ): ဖိအား (Compression)၊ イ (အီ): သုည (0)၊ ウ (အု): ဆွဲအား (Tension)" },
+      { id: 2, textJP: "(2) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：0、ウ：<ruby>圧縮<rt>あっしゅく</rt></ruby>", textMY: "ア (အ): ဖိအား၊ イ (အီ): သုည၊ ウ (အု): ဖိအား" },
+      { id: 3, textJP: "(3) ア：<ruby>引張<rt>ひっぱり</rt></ruby>、イ：0、ウ：<ruby>引張<rt>ひっぱり</rt></ruby>", textMY: "ア (အ): ဆွဲအား၊ イ (အီ): သုည၊ ウ (အု): ဆွဲအား" },
+      { id: 4, textJP: "(4) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：<ruby>圧縮<rt>あっしゅく</rt></ruby>、ウ：<ruby>引張<rt>ひっぱり</rt></ruby>", textMY: "ア (အ): ဖိအား၊ イ (အီ): ဖိအား၊ ウ (အု): ဆွဲအား" },
+      { id: 5, textJP: "(5) ア：<ruby>圧縮<rt>あっしゅく</rt></ruby>、イ：<ruby>圧縮<rt>あっしゅく</rt></ruby>、ウ：<ruby>圧縮<rt>あっしゅく</rt></ruby>", textMY: "ア (အ): ဖိအား၊ イ (အီ): ဖိအား၊ ウ (အု): ဖိအား" }
     ],
     correctOptionId: 1,
     explanation: {
       titleMY: "ရှင်းလင်းချက် - Truss Member Forces",
-      reasonMY: "Truss ဖွဲ့စည်းပုံတွင် အပေါ်ဘက် Member များသည် များသောအားဖြင့် ဖိအား (Compression) ခံရပြီး၊ အောက်ဘက် Member များသည် ဆွဲအား (Tension) ခံရလေ့ရှိသည်။ Member (イ) သည် ဤအခြေအနေတွင် အားမရှိသော member (Zero-force member) ဖြစ်သည်။",
-      memoryTipMY: "Truss: အပေါ်ဘက် -> 圧縮 (Compression)၊ အောက်ဘက် -> 引張 (Tension)။"
+      reasonMY: "Truss ဖွဲ့စည်းပုံတွင် အပေါ်ဘက် Member များသည် များသောအားဖြင့် ဖိအား (Compression) ခံရပြီး၊ အောက်ဘက် Member များသည် ဆွဲအား (Tension) ခံရလေ့ရှိသည်။ Member (イ) သည် ဤအခြေအနေတွင် အားမသက်ရောက်သော (Zero-force member) ဖြစ်သည်။",
+      memoryTipMY: "Truss: အပေါ်ဘက် -> 圧縮 (Compression) ခံရသည်၊ အောက်ဘက် -> 引張 (Tension) ခံရသည်။"
     }
   },
   {

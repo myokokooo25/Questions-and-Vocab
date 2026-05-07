@@ -14,7 +14,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 反力 (Reaction Force)",
       reasonMY: "支点E (ထောက်ကန်အမှတ် E) သည် ရိုလာထောက်ကန် (Roller Support) သို့မဟုတ် ပင်ထောက်ကန် (Pin Support) ဖြစ်နိုင်ပြီး၊ ဒေါင်လိုက်တန်ပြန်သက်ရောက်မှု (V_E) သာရှိသည်ဟု ဖော်ပြထားသော်လည်း၊ ပုံမှန်အားဖြင့် အဆောက်အဦတစ်ခုလုံး၏ တည်ငြိမ်မှုအတွက် အလျားလိုက်ရွေ့လျားမှုကို ထိန်းချုပ်ထားလေ့ရှိသည်။ သို့သော် ဤမေးခွန်း၏ ရည်ရွယ်ချက်အရ ထောက်ကန်အမှတ်များသည် အောက်ခြေတွင် ခိုင်မြဲစွာတပ်ဆင်ထားသည်ဟု ယူဆရမည်ဖြစ်ရာ၊ ညာဘက်သို့ ရွေ့လျားခြင်းမရှိပါ။",
       memoryTipMY: "ထောက်ကန်အမှတ် (Support) တွေက အလွယ်တကူ မရွေ့ဘူးလို့ မှတ်ထားပါ။"
     }
@@ -32,7 +32,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 1,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - トラス骨組 (Truss Frame)",
       reasonMY: "Truss အဆောက်အဦများတွင် အပေါ်ဘက်ရှိ အစိတ်အပိုင်းများ (Top Chords) သည် ဖိအား (Compression) ကို ခံရလေ့ရှိပြီး၊ အောက်ဘက်ရှိ အစိတ်အပိုင်းများ (Bottom Chords) သည် ဆွဲအား (Tension) ကို ခံရလေ့ရှိသည်။ ဒေါင်လိုက်တိုင် (Vertical Member) 'ဣ' သည် ဤပုံစံတွင် ဝန်မရှိသော (Zero Force Member) ဖြစ်သည်။",
       memoryTipMY: "Truss မှာ အပေါ်က ဖိ (Compression)၊ အောက်က ဆွဲ (Tension) လို့ မှတ်ထားပါ။"
     }
@@ -50,7 +50,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 鉄骨造とRC造 (Steel vs RC)",
       reasonMY: "သံမဏိအဆောက်အဦ (Steel Structure) များသည် သံကူကွန်ကရစ်အဆောက်အဦ (RC Structure) များထက် ကိုယ်အလေးချိန် (Self-weight) ပိုမိုပေါ့ပါးသည်။ ထို့ကြောင့် ငလျင်လှုပ်သောအခါ သက်ရောက်မည့် ငလျင်ဒီဇိုင်းဝန် (Seismic Design Load) သည် RC အဆောက်အဦများထက် ပိုနည်းပါသည်။",
       memoryTipMY: "Steel က RC ထက် ပေါ့တယ်၊ ဒါကြောင့် ငလျင်ဒဏ်လည်း သက်သာတယ်။"
     }
@@ -68,7 +68,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 3,
     explanation: {
-        titleMY: "ရှင်းလင်းချက်",
+        titleMY: "ရှင်းလင်းချက် - 露出柱脚 (Exposed Column Base)",
         reasonMY: "Exposed Type Column Base တွင် တိုင်ပေါ်သို့ သက်ရောက်သော ဖြတ်အား (Shear Force) ကို အဓိကအားဖြင့် Base Plate နှင့် Foundation ကြားရှိ ပွတ်တိုက်အား (Friction) ဖြင့် သယ်ဆောင်သည်။ Anchor Bolt များသည် အဓိကအားဖြင့် ဆွဲအား (Tension Force) ကို သယ်ဆောင်ရန် ဒီဇိုင်းထုတ်ထားခြင်းဖြစ်သည်။",
         memoryTipMY: "Shear Force ကို Friction က သယ်တယ်၊ Anchor Bolt က Tension ကို သယ်တယ်လို့ မှတ်ထားပါ။"
     }
@@ -86,7 +86,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 2,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 単純梁の曲げモーメント (Simple Beam Bending Moment)",
       reasonMY: "အလယ်တွင် အမှတ်ဝန် (Point Load) သက်ရောက်နေသော Simple Beam ၏ Bending Moment Diagram သည် တြိဂံပုံစံဖြစ်ပြီး၊ ဝန်သက်ရောက်သည့်နေရာ (အလယ်မှတ်) တွင် အများဆုံး Bending Moment ရှိသည်။",
       memoryTipMY: "အလယ်မှာ Point Load ဆိုရင် တြိဂံပုံ Bending Moment လို့ မှတ်ထားပါ။"
     }
@@ -104,7 +104,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 木材の含水率 (Timber Moisture Content)",
       reasonMY: "သစ်သား၏ ရေပါဝင်မှုနှုန်း (Moisture Content) မြင့်မားလေ၊ သစ်သား၏ ခံနိုင်ရည် (Strength) ကျဆင်းလေဖြစ်သည်။ သစ်သားခြောက်သွေ့လေ ခံနိုင်ရည် ပိုကောင်းလေဖြစ်သည်။",
       memoryTipMY: "သစ်သားက စိုနေရင် ပျော့တယ်၊ ခြောက်မှ မာတယ်လို့ မှတ်ထားပါ။"
     }
@@ -122,7 +122,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 溶接接合 (Welded Joint)",
       reasonMY: "ဂဟေဆက်ခြင်း (Welding) သည် ပုံမှန်အားဖြင့် ဘိုလ်တိုင် (Bolt) ဖြင့်ဆက်ခြင်းထက် သံထည်ပမာဏကို လျှော့ချပေးနိုင်ပြီး အဆောက်အဦကို ပိုမိုပေါ့ပါးစေသည်။ အကြောင်းမှာ ဆက်ကြောင်းပြား (Splice Plate) များနှင့် ဘိုလ်တိုင်များ မလိုအပ်သောကြောင့်ဖြစ်သည်။",
       memoryTipMY: "ဂဟေဆက်ရင် ပိုပေါ့တယ် (Weight reduction) လို့ မှတ်ထားပါ။"
     }
@@ -140,7 +140,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 2,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - SN材 (SN Steel)",
       reasonMY: "SN-A သံမဏိသည် ဂဟေဆက်နိုင်စွမ်း (Weldability) ကို အာမခံချက်မပေးထားသလို၊ ပလတ်စတစ်အသွင်ပြောင်းလဲမှု (Plasticization) ဖြစ်မည့်နေရာများတွင် သုံးရန်မသင့်တော်ပါ။ ၎င်းကို အဓိကမဟုတ်သော အစိတ်အပိုင်းများ (Non-structural members) တွင်သာ သုံးရမည်။",
       memoryTipMY: "SN-A က Weldability မရှိဘူး၊ အဓိကနေရာမှာ မသုံးရဘူးလို့ မှတ်ထားပါ။"
     }
@@ -158,7 +158,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - シャルピー衝撃試験 (Charpy Impact Test)",
       reasonMY: "Charpy Impact Test သည် သံ၏ ကြွပ်ဆတ်မှုကို တိုင်းတာခြင်းဖြစ်ပြီး၊ အပူချိန်နိမ့်သောအခါ သံသည် ပိုမိုကြွပ်ဆတ်လာသောကြောင့် ၎င်းကိုချိုးရန်လိုအပ်သော စွမ်းအင် (Absorbed Energy) သည် လျော့နည်းသွားသည်။",
       memoryTipMY: "အေးရင် သံက ကြွပ်တယ် (Charpy energy drops) လို့ မှတ်ထားပါ။"
     }
@@ -176,7 +176,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 1,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 社内検査 (In-house Inspection)",
       reasonMY: "JASS 6 အရ 'In-house Inspection (社内検査)' ဆိုသည်မှာ စက်ရုံမှ မိမိအစီအစဉ်ဖြင့် မိမိတာဝန်ယူမှုဖြင့် ပြုလုပ်သော စစ်ဆေးမှုအားလုံးကို ခြုံငုံခေါ်ဆိုခြင်းဖြစ်သည်။ ၎င်းသည် အချောသတ်ပြီးသော ပစ္စည်းများသာမက လုပ်ငန်းစဉ်တစ်လျှောက်လုံးရှိ စစ်ဆေးမှုများကိုလည်း အကျုံးဝင်သည်။",
       memoryTipMY: "社内検査 က စက်ရုံကလုပ်တဲ့ စစ်ဆေးမှုအားလုံးကို ခြုံခေါ်တာလို့ မှတ်ထားပါ။"
     }
@@ -194,7 +194,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 製作要領書 (Fabrication Procedure Manual)",
       reasonMY: "ထုတ်လုပ်မှုလုပ်ငန်းလမ်းညွှန် (Fabrication Procedure Manual) သည် သက်ဆိုင်ရာ ပရောဂျက်တစ်ခုချင်းစီ၏ သီးခြားသတ်မှတ်ချက် (Special Specifications) များကို ထင်ဟပ်စေရမည်။ ယေဘုယျစံနှုန်းများကိုသာ တိုက်ရိုက်သုံး၍ မရပါ။",
       memoryTipMY: "ပရောဂျက်တစ်ခုချင်းစီအတွက် သီးသန့်လုပ်ရမယ်လို့ မှတ်ထားပါ။"
     }
@@ -212,7 +212,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 工作図 (Shop Drawings)",
       reasonMY: "အလုပ်ပုံစံ (Shop Drawings) ရေးဆွဲရန် တာဝန်မှာ ထုတ်လုပ်သူ (Fabricator) သို့မဟုတ် တည်ဆောက်သူ (Contractor) တွင်သာ ရှိသည်။ ကြီးကြပ်သူ (Supervisor) သည် ပုံစံများကို စစ်ဆေးပြီး ခွင့်ပြုပေးရန်သာ တာဝန်ရှိသည်။",
       memoryTipMY: "ပုံဆွဲရမှာက စက်ရုံ (Fabricator) ရဲ့ တာဝန်ပါလို့ မှတ်ထားပါ။"
     }
@@ -230,7 +230,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 切断・切削加工 (Cutting & Machining)",
       reasonMY: "သံဖြတ်ပြီးသား မျက်နှာပြင်အားလုံးကို အချောကိုင်စက်ဖြင့် ပြုပြင်ရန် မလိုပါ။ ဂတ်စ်ဖြင့်ဖြတ်ခြင်း သို့မဟုတ် ဖြတ်စက်ဖြင့်ဖြတ်ခြင်းတို့သည် သတ်မှတ်ထားသော တိကျမှုနှင့် ကြမ်းတမ်းမှုဘောင်အတွင်း ရှိနေပါက တိုက်ရိုက်သုံးနိုင်သည်။",
       memoryTipMY: "အကုန်လုံးကို အချောကိုင်စက်နဲ့ လုပ်စရာမလိုဘူးလို့ မှတ်ထားပါ။"
     }
@@ -248,7 +248,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 摩擦面処理 (Friction Surface Treatment)",
       reasonMY: "လက်ဖြင့်ပွတ်သော ဝါယာဘရပ် (Hand Wire Brush) သည် ပွတ်တိုက်မျက်နှာပြင်အတွက် လိုအပ်သော ကြမ်းတမ်းမှုကို မပေးနိုင်ပါ။ ထို့ကြောင့် စက်ဖြင့်ပွတ်ခြင်း (Power Tool) သို့မဟုတ် Blast Cleaning ကိုသာ သုံးရမည်။",
       memoryTipMY: "လက်နဲ့ပွတ်တာ (Hand brush) မရဘူးလို့ မှတ်ထားပါ။"
     }
@@ -266,7 +266,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက်",
+      titleMY: "ရှင်းလင်းချက် - 孔あけ加工 (Hole Drilling)",
       reasonMY: "အပေါက်နေရာ မှားသွားပါက ဂဟေဖြင့် ပြန်ပိတ်ပြီး ပြန်ဖောက်ခြင်းကို ယေဘုယျအားဖြင့် ခွင့်မပြုပါ။ ၎င်းသည် သံ၏ ကြံ့ခိုင်မှုကို ထိခိုက်စေနိုင်သောကြောင့် အစိတ်အပိုင်းကို အသစ်လဲလှယ်ခြင်း သို့မဟုတ် အထူးခွင့်ပြုချက်ဖြင့်သာ ပြုပြင်ခြင်း ပြုလုပ်ရမည်။",
       memoryTipMY: "အပေါက်မှားရင် ဂဟေနဲ့ပိတ်ပြီး ပြန်ဖောက်လို့ မရဘူးလို့ မှတ်ထားပါ။"
     }
