@@ -15,9 +15,9 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 2,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - Support Reaction",
-      reasonMY: "အဖြေလွှာအရ (2) သည် မသင့်လျော်ပါ။ တွက်ချက်မှုအရ Support C ၏ reaction မှာ P/2 ဖြစ်ပြီး F ၏ reaction မှာ P/3 ဖြစ်သည်။ ထို့ကြောင့် C သည် F ထက် ပိုကြီးသင့်သော်လည်း မေးခွန်း၏ အခြေအနေအရ ဤဖော်ပြချက်ကို မှားယွင်းချက်အဖြစ် သတ်မှတ်ထားသည်။",
-      memoryTipMY: "Reaction calculation: Beam A တွင် Load သည် အလယ်၌ရှိပြီး Beam B တွင် Load သည် Support တစ်ဖက်နှင့် ပိုနီးသည်။"
+      titleMY: "ရှင်းလင်းချက် - Support တုံ့ပြန်အား (Reaction Force)",
+      reasonMY: "အဖြေလွှာအရ (2) သည် မသင့်လျော်သော ဖော်ပြချက်ဖြစ်သည်။ တွက်ချက်မှုအရ Support C ၏ တုံ့ပြန်အား (Reaction) မှာ P/2 ဖြစ်ပြီး Support F ၏ တုံ့ပြန်အားမှာ P/3 ဖြစ်သည်။ ထို့ကြောင့် C ၏ တုံ့ပြန်အားသည် F ၏ တုံ့ပြန်အားထက် ပိုကြီးသင့်သော်လည်း မေးခွန်း၏ အခြေအနေအရ ဤဖော်ပြချက်ကို မှားယွင်းချက်အဖြစ် သတ်မှတ်ထားသည်။",
+      memoryTipMY: "တုံ့ပြန်အား တွက်ချက်ခြင်း- Beam A တွင် ဝန်သည် အလယ်၌ရှိပြီး Beam B တွင် ဝန်သည် Support တစ်ဖက်နှင့် ပိုနီးသည်။"
     }
   },
   {
@@ -33,9 +33,9 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - Truss Member Forces",
-      reasonMY: "Truss ဖွဲ့စည်းပုံအရ Support နှင့် နီးသော အပေါ်ဘက် member များတွင် အားပိုမို သက်ရောက်လေ့ရှိသည်။ (オ) member သည် Support နှင့် ပိုနီးသောကြောင့် (エ) ထက် အားပိုကြီးသင့်သည်။ ထို့ကြောင့် (5) သည် မှားယွင်းသည်။",
-      memoryTipMY: "Truss တွင် Support နှင့် နီးသော Member များသည် အားပိုကြီးတတ်သည်။"
+      titleMY: "ရှင်းလင်းချက် - Truss အစိတ်အပိုင်းများ၏ ဝင်ရိုးအား (Axial Forces)",
+      reasonMY: "Truss ဖွဲ့စည်းပုံအရ Support နှင့် နီးသော အပေါ်ဘက် အစိတ်အပိုင်းများတွင် အားပိုမို သက်ရောက်လေ့ရှိသည်။ (ဩ) အစိတ်အပိုင်းသည် Support နှင့် ပိုနီးသောကြောင့် (ဧ) ထက် အားပိုကြီးသင့်သည်။ ထို့ကြောင့် (5) သည် မှားယွင်းသော ဖော်ပြချက်ဖြစ်သည်။",
+      memoryTipMY: "Truss တွင် Support နှင့် နီးသော အစိတ်အပိုင်းများသည် အားပိုကြီးတတ်သည်။"
     }
   },
   {
@@ -51,7 +51,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 1,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - ဥပဒေနှင့် လက်တွေ့ပျက်စီးမှု",
+      titleMY: "ရှင်းလင်းချက် - ဥပဒေနှင့် လက်တွေ့ ပျက်စီးမှု",
       reasonMY: "ဆောက်လုပ်ရေးစံနှုန်းဥပဒေသည် 'အနိမ့်ဆုံးစံနှုန်း' သာဖြစ်သည်။ အလွန်ကြီးမားသော ငလျင်များတွင် ပျက်စီးမှု (Damage) ရှိနိုင်သည်။ 'ပျက်စီးမှု လုံးဝမရှိနိုင်ပါ' ဆိုခြင်းမှာ မှားယွင်းသည်။",
       memoryTipMY: "ဥပဒေ (基準法) သည် အနိမ့်ဆုံးလိုအပ်ချက် (最低限の基準) သာဖြစ်သည်။"
     }
@@ -69,7 +69,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 3,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 免震 vs 制振",
+      titleMY: "ရှင်းလင်းချက် - 免震構造 (Seismic Isolation) vs 制振構造 (Damping Structure)",
       reasonMY: "အလွှာတစ်ခုကို အလွန်ပျော့ပြောင်းစေခြင်း (Soft story layer) သည် Seismic Isolation (免震構造) ၏ ဝိသေသလက္ခဏာဖြစ်သည်။ Damping (制振) မဟုတ်ပါ။",
       memoryTipMY: "အလွှာတစ်ခုတည်းမှာ စုပ်ယူရင် (免震)၊ Damper တွေနဲ့ လျှော့ချရင် (制振)။"
     }
@@ -87,9 +87,9 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 閉断面の座屈",
-      reasonMY: "ပိတ်ထားသော ဖြတ်ပိုင်း (Closed section) ဖြစ်သော်လည်း ဖိအားအောက်တွင် Bending Buckling ဖြစ်ပေါ်နိုင်ဆဲဖြစ်သည်။ 'စဉ်းစားရန်မလို' ဆိုခြင်းမှာ မှားယွင်းသည်။",
-      memoryTipMY: "မည်သည့် ဖိသိပ်ခံ member (Compression member) မဆို Buckling ဖြစ်နိုင်သည်။"
+      titleMY: "ရှင်းလင်းချက် - ပိတ်ထားသော ဖြတ်ပိုင်းများ၏ Buckling",
+      reasonMY: "ပိတ်ထားသော ဖြတ်ပိုင်း (Closed section) ဖြစ်သော်လည်း ဖိအားအောက်တွင် Bending Buckling ဖြစ်ပေါ်နိုင်ဆဲဖြစ်သည်။ 'စဉ်းစားရန်မလို' ဆိုခြင်းမှာ မှားယွင်းသော ဖော်ပြချက်ဖြစ်သည်။",
+      memoryTipMY: "မည်သည့် ဖိသိပ်ခံ အစိတ်အပိုင်း (Compression member) မဆို Buckling ဖြစ်နိုင်သည်။"
     }
   },
   {
@@ -105,7 +105,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 肌すき (Gaps)",
+      titleMY: "ရှင်းလင်းချက် - ကွာဟချက် (Gaps)",
       reasonMY: "Friction joint တွင် ကွာဟချက်သည် 1mm ထက်ကျော်လွန်ပါက Filler plate ကို မဖြစ်မနေ ထည့်သွင်းရမည်။ ၁.၅ mm ဖြစ်နေသောကြောင့် လိုအပ်သည်။",
       memoryTipMY: "肌すき (Gap) > 1mm = Filler plate လိုအပ်သည်။"
     }
@@ -123,9 +123,9 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 溶接の利点",
+      titleMY: "ရှင်းလင်းချက် - ဂဟေဆက်ခြင်း၏ အားသာချက်",
       reasonMY: "ဂဟေဆက်ခြင်းသည် Splice plate များစွာ မလိုအပ်သောကြောင့် ပိုမိုပေါ့ပါးပြီး သံမဏိပမာဏကို လျှော့ချပေးနိုင်သည်။ 'တိုးလာသည်' ဆိုခြင်းမှာ မှားယွင်းသည်။",
-      memoryTipMY: "ဂဟေဆက်ခြင်းသည် (နတ်ဘို့ထက်) ပိုမိုပေါ့ပါးကျစ်လျစ်သည်။"
+      memoryTipMY: "ဂဟေဆက်ခြင်းသည် (ဘောလ်ထက်) ပိုမိုပေါ့ပါးကျစ်လျစ်သည်။"
     }
   },
   {
@@ -141,7 +141,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 2,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - SM材",
+      titleMY: "ရှင်းလင်းချက် - SM သံမဏိ (SM Material)",
       reasonMY: "SM Material တွင် Type B နှင့် Type C တို့အတွက် Charpy absorbed energy တန်ဖိုးကို သတ်မှတ်ထားသည်။ 'သတ်မှတ်မထားပါ' ဆိုခြင်းမှာ မှားယွင်းသည်။",
       memoryTipMY: "SM-B နှင့် SM-C တို့သည် Impact test သတ်မှတ်ချက် ရှိသည်။"
     }
@@ -159,7 +159,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 3,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - ひずみ硬化 (Strain Hardening)",
+      titleMY: "ရှင်းလင်းချက် - ひずみ硬化 (Strain Hardening / ပုံပျက်မာကျောခြင်း)",
       reasonMY: "Strain Hardening (ひずみ硬化) သည် ကြီးမားသော ပုံပျက်မှုကို ခံနိုင်ရည်ရှိစေရန် အထောက်အကူပြုသည်။ Strain Hardening ကြီးမားသော သံမဏိသည် ပိုမိုကောင်းမွန်သော Toughness နှင့် Energy Absorption စွမ်းရည် ရှိသည်။ ထို့ကြောင့် 'သေးငယ်သော သံမဏိက ပိုကောင်းသည်' ဟူသော ဖော်ပြချက်မှာ မှားယွင်းသည်။",
       memoryTipMY: "Strain Hardening ရှိလေ Toughness ပိုကောင်းလေ။"
     }
@@ -177,7 +177,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 3,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - ဥပဒေနှင့် စံနှုန်းများ ဦးစားပေးမှု",
+      titleMY: "ရှင်းလင်းချက် - ဥပဒေနှင့် စံနှုန်းများ၏ ဦးစားပေးမှု",
       reasonMY: "အမြဲတမ်း 'ဥပဒေ' (法令) သည် JASS 6 ကဲ့သို့သော စံနှုန်းများထက် ပိုမို အရေးကြီးပြီး ဦးစားပေးရမည် ဖြစ်သည်။ ဥပဒေကို ကျော်လွန်၍ စံနှုန်းကို ဦးစားပေး၍ မရပါ။",
       memoryTipMY: "ဥပဒေ (Law) က JASS ထက် ပိုကြီးသည်။"
     }
@@ -195,7 +195,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - ထုတ်လုပ်မှု လုပ်ထုံးလုပ်နည်းစာရွက် ပြင်ဆင်ခြင်း",
       reasonMY: "အခြေအနေအရ ကြီးကြပ်သူ၏ ခွင့်ပြုချက်ဖြင့် ပြင်ဆင်ခွင့် ရှိသည်။",
       memoryTipMY: "လိုအပ်ရင် ပြင်ဆင်လို့ ရပါတယ်။"
     }
@@ -213,9 +213,9 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 1,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
-      reasonMY: "Detail Drawing သည် အဆက်အစပ်များကို ပြသခြင်းဖြစ်ပြီး၊ တစ်ခုချင်းစီအတွက် ပုံမှာ Shop Drawing သို့မဟုတ် Single Part Drawing ဖြစ်သည်။",
-      memoryTipMY: "Piece တစ်ခုစီအတွက်ပုံက '一品図' ဖြစ်သည်။"
+      titleMY: "ရှင်းလင်းချက် - 工作図 (Shop Drawing) နှင့် 詳細図 (Detail Drawing)",
+      reasonMY: "詳細図 (Detail Drawing) သည် အဆက်အစပ်များ၏ အသေးစိတ်ကို ပြသခြင်းဖြစ်ပြီး၊ အစိတ်အပိုင်းတစ်ခုချင်းစီအတွက် ပုံ (Single Part Drawing) ကိုမူ 一品図 (Ichibunzu) ဟု ခေါ်သည်။ ထို့ကြောင့် (1) သည် မသင့်လျော်သော ဖော်ပြချက်ဖြစ်သည်။",
+      memoryTipMY: "Piece တစ်ခုစီအတွက်ပုံက '一品図' (Ichibunzu) ဖြစ်သည်။"
     }
   },
   {
@@ -231,7 +231,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 3,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - အပူပေးဖြောင့်ခြင်း အပူချိန်",
       reasonMY: "အဖြေလွှာအရ (3) ဖြစ်သည်။ ၆၅၀ ဒီဂရီအထက် ကျော်လွန်ပါက သံမဏိ၏ ဂုဏ်သတ္တိ ပြောင်းလဲနိုင်သည်။",
       memoryTipMY: "၆၀၀ မှ ၆၅၀ သည် ရေဖြင့် အအေးခံရန် အသင့်တော်ဆုံးဖြစ်သည်။"
     }
@@ -249,7 +249,7 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - Separator အပေါက်ဖောက်ခြင်း",
       reasonMY: "Separator အပေါက်များကို Gas ဖြင့် ဖောက်ခြင်းသည် တိကျမှုမရှိဘဲ သံမဏိကို ပျက်စီးစေနိုင်သည်။",
       memoryTipMY: "အပေါက်ဖောက်ရာတွင် Gas မသုံးရပါ။"
     }
@@ -261,21 +261,21 @@ export const chapter2023Data: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>自然発錆<rt>しぜんはっせい</rt></ruby>နှင့် <ruby>薬剤発錆<rt>やくざいはっせい</rt></ruby>がある。", textMY: "သဘာဝနှင့် ဓာတု သံချေးတက်နည်းများ ရှိသည်။" },
       { id: 2, textJP: "(2) <ruby>範囲<rt>はんい</rt></ruby>သည် <ruby>座金径<rt>ざがねけい</rt></ruby>၏ 2<ruby>倍<rt>ばい</rt></ruby>とする。", textMY: "ဧရိယာမှာ Washer အချင်း၏ ၂ ဆ ဖြစ်ရမည်။" },
-      { id: 3, textJP: "(3) <ruby>板厚<rt>いたあつ</rt></ruby>6mm<ruby>未満<rt>みまん</rt></ruby>သည် <ruby>黒皮<rt>くろかわ</rt></ruby>၏ မာမာအတိုင်းထားနိုင်သည်။", textMY: "6mm အောက်ဆိုပါက မူလမျက်နှာပြင်အတိုင်း ထားနိုင်သည်။" },
+      { id: 3, textJP: "(3) <ruby>板厚<rt>いたあつ</rt></ruby>6mm<ruby>未満<rt>みまん</rt></ruby>သည် <ruby>黒皮<rt>くろかわ</rt></ruby>၏ မာမာအတိုင်းထားနိုင်သည်။", textMY: "6mm အောက်ဆိုပါက 黒皮 (Mill Scale) အတိုင်းထားနိုင်သည်။" },
       { id: 4, textJP: "(4) <ruby>りん酸塩処理<rt>りんさんえんしょり</rt></ruby>ကို <ruby>確認<rt>かくにん</rt></ruby>する。", textMY: "Phosphate ပြုပြင်မှုကို စစ်ဆေးရမည်။" },
       { id: 5, textJP: "(5) <ruby>特別処理<rt>とくべつしょり</rt></ruby>သည် <ruby>試験<rt>しけん</rt></ruby>ကို <ruby>実施<rt>じっし</rt></ruby>する。", textMY: "အထူးပြုပြင်မှုများအတွက် စမ်းသပ်မှု လုပ်ရမည်။" }
     ],
     correctOptionId: 3,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - ပွတ်တိုက်မျက်နှာပြင် ပြင်ဆင်ခြင်း",
       reasonMY: "မည်သည့် အထူဖြစ်စေ Friction Joint ဖြစ်ပါက Mill Scale (黒皮) ကို ဖယ်ရှားရမည်။",
       memoryTipMY: "Friction Joint = Black scale ဖယ်ရှားရမည်။"
     }
   },
   {
     id: "2023-16",
-    questionJP: "<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ယာယီဂဟေဆက်ခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ယာယီဂဟေဆက်ခြင်း (Tack Welding) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>低水素系<rt>ていすいそけい</rt></ruby>ကို <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "Low-hydrogen rod ကို သုံးရမည်။" },
       { id: 2, textJP: "(2) <ruby>治具<rt>じぐ</rt></ruby>ကို <ruby>用いて拘束<rt>もちいてこうそく</rt></ruby>する。", textMY: "Fixture များဖြင့် ထိန်းချုပ်ရမည်။" },
@@ -285,8 +285,8 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
-      reasonMY: "အဖြေလွှာအရ (5) သည် မှားယွင်းသောဖော်ပြချက်ဖြစ်သည်။",
+      titleMY: "ရှင်းလင်းချက် - ယာယီဂဟေဆက်ခြင်း (Tack Welding)",
+      reasonMY: "ယာယီဂဟေ (Tack weld) ကို အဓိကဂဟေဆက်သောအခါ အရည်ပြန်မပျော်မည့်နေရာတွင် မလုပ်ဆောင်ရပါ။ ထိုသို့ပြုလုပ်ပါက ဂဟေချို့ယွင်းချက် (Defect) ဖြစ်ပေါ်စေနိုင်သောကြောင့် အဓိကဂဟေဆက်သောအခါ ယာယီဂဟေသည် အရည်ပြန်ပျော်သွားစေရန် သေချာစွာ စီမံရမည်။",
       memoryTipMY: "ယာယီဂဟေသည် အမြဲတမ်း အဓိကဂဟေအောက်တွင် ရှိရမည်။"
     }
   },
@@ -303,15 +303,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - SN နှင့် SM သံမဏိများ၏ ဂဟေဆက်နိုင်စွမ်း",
       reasonMY: "SN-A သည် ဂဟေဆက်ရန် မဟုတ်ပါ။ ထို့ကြောင့် အားလုံးကောင်းသည်ဆိုခြင်းမှာ မှားသည်။",
       memoryTipMY: "SN-A = No welding."
     }
   },
   {
     id: "2023-18",
-    questionJP: "「SA-3F」နှင့် 「SA-3H」၏ <ruby>範囲<rt>はんい</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "SA-3F နှင့် SA-3H အရည်အချင်း၏ ဘောင်တွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "JIS <ruby>溶接技術検定試験<rt>ようせつぎじゅつけんていしけん</rt></ruby>による<ruby>資格認証<rt>しかくにんしょう</rt></ruby>で「SA-3F」および「SA-3H」を<ruby>有<rt>ゆう</rt></ruby>する<ruby>溶接技能者<rt>ようせつぎのうしゃ</rt></ruby>の<ruby>施工可能範囲<rt>せこうかのうはんい</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "JIS ဂဟေဆက်ကျွမ်းကျင်မှု စာမေးပွဲအရ SA-3F နှင့် SA-3H အသိအမှတ်ပြုလက်မှတ်ရှိသူများ လုပ်ဆောင်နိုင်သော နယ်ပယ်အနက် မသင့်လျော်ဆုံးကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>被覆アーク溶接<rt>ひふくあーくようせつ</rt></ruby>", textMY: "Rod ဂဟေ" },
       { id: 2, textJP: "(2) <ruby>裏当て金有り<rt>うらあてがねあり</rt></ruby>", textMY: "Backing metal ပါခြင်း" },
@@ -321,15 +321,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 3,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
-      reasonMY: "အဆင့် ၃ သည် ၅၀ မီလီမီတာအထိ အကျုံးမဝင်ပါ။",
-      memoryTipMY: "အဆင့် ၃ ၏ အထူကန့်သတ်ချက်ကို သတိပြုပါ။"
+      titleMY: "ရှင်းလင်းချက် - 溶接資格 (Welding Qualification) ၏ အကျုံးဝင်မှု",
+      reasonMY: "SA-3F နှင့် SA-3H လက်မှတ်များသည် အထူ ၆ မီလီမီတာမှ ၅၀ မီလီမီတာအထိ အကျုံးဝင်သည်ဟု ဆိုခြင်းမှာ မှားယွင်းသည်။ SA-3F သည် အထူ ၆ မီလီမီတာမှ ၁၉ မီလီမီတာအထိသာ အကျုံးဝင်ပြီး၊ SA-3H သည် အထူ ၆ မီလီမီတာမှ ၃၈ မီလီမီတာအထိသာ အကျုံးဝင်သည်။ ထို့ကြောင့် ၅၀ မီလီမီတာအထိ အကျုံးဝင်သည်ဆိုခြင်းမှာ မသင့်လျော်ပါ။",
+      memoryTipMY: "SA-3F/3H ၏ အထူကန့်သတ်ချက်ကို သတိပြုပါ။"
     }
   },
   {
     id: "2023-19",
-    questionJP: "<ruby>溶接順序<rt>ようせつじゅんじょ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ဂဟေဆက်အစီအစဉ်တွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>溶接順序<rt>ようせつじゅんじょ</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်အစီအစဉ် (Welding Sequence) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>不可能箇所<rt>ふかのうかしょ</rt></ruby>ကို <ruby>避ける<rt>さける</rt></ruby>。", textMY: "မဖြစ်နိုင်သောနေရာများကို ရှောင်ရမည်။" },
       { id: 2, textJP: "(2) <ruby>熱影響<rt>ねつえいきょう</rt></ruby>ကို <ruby>最小限<rt>さいしょうげん</rt></ruby>にする。", textMY: "အပူသက်ရောက်မှုကို လျှော့ချရမည်။" },
@@ -339,15 +339,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - ဂဟေဆက်အစီအစဉ်",
       reasonMY: "ပုံပျက်မှုများသောဘက်ကို အရင်လုပ်မှ နောက်ပိုင်းတွင် ပြန်ထိန်းရလွယ်သည်။",
       memoryTipMY: "ပုံပျက်လွယ်တာကို အရင်လုပ်ပါ။"
     }
   },
   {
     id: "2023-20",
-    questionJP: "<ruby>溶接施工<rt>ようせつせこう</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ဂဟေဆက်လုပ်ငန်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>溶接施工<rt>ようせつせこう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်လုပ်ငန်း (Welding Procedure) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>သည် <ruby>厳重<rt>げんじゅう</rt></ruby>に<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ယာယီဂဟေကို တင်းကျပ်စွာ စစ်ရမည်။" },
       { id: 2, textJP: "(2) <ruby>内部欠陥<rt>ないぶけっかん</rt></ruby>သည် <ruby>取り除いた後<rt>とりのぞいたあと</rt></ruby> <ruby>再開<rt>さいかい</rt></ruby>する。", textMY: "ချို့ယွင်းချက်ကို ဖယ်ရှားပြီးမှ ပြန်စရမည်။" },
@@ -357,15 +357,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - ကြိုတင်အပူပေးခြင်း (Preheating)",
       reasonMY: "အထူကြီးသောဘက် (အပူချိန်ပိုလိုသောဘက်) ကို စံထားရမည်။",
       memoryTipMY: "အပူပေးရင် အမြင့်ဆုံးကို ကြည့်ရမည်။"
     }
   },
   {
     id: "2023-21",
-    questionJP: "<ruby>ガスシールド溶接<rt>がすしーるどようせつ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Gas Welding တွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>ガスシールドアーク溶接<rt>がすしーるどあーくようせつ</rt></ruby>の<ruby>施工条件<rt>せこうじょうけん</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "Gas Shielded Arc Welding ၏ လုပ်ငန်းအခြေအနေများနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>管理値<rt>かんりち</rt></ruby>က <ruby>定められている<rt>さだめられている</rt></ruby>。", textMY: "သတ်မှတ်တန်ဖိုးများ ရှိသည်။" },
       { id: 2, textJP: "(2) <ruby>高強度<rt>こうきょうど</rt></ruby>၏ <ruby>入熱<rt>にゅうねつ</rt></ruby>သည် <ruby>大きく<rt>おおきく</rt></ruby>できる。", textMY: "ခိုင်မာမှုမြင့်သော wire ဆိုလျှင် အပူပိုပေးနိုင်သည်။" },
@@ -375,15 +375,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 2,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - Heat input",
+      titleMY: "ရှင်းလင်းချက် - 溶接入熱 (Heat Input)",
       reasonMY: "ခိုင်မာမှုမြင့်သော သံမဏိများတွင် အပူ (Heat input) ကို ပိုမိုကန့်သတ်ရသည်။",
       memoryTipMY: "ခိုင်မာမှုမြင့်ရင် အပူလျှော့ရမည်။"
     }
   },
   {
     id: "2023-22",
-    questionJP: "<ruby>ロボット溶接<rt>ろぼっとようせつ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "စက်ရုပ်ဂဟေတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>ロボット溶接<rt>ろぼっとようせつ</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "စက်ရုပ်ဂဟေ (Robot Welding) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>種類<rt>しゅるい</rt></ruby>နှင့် <ruby>形状<rt>けいじょう</rt></ruby>တွင် <ruby>制限<rt>せいげん</rt></ruby>がある。", textMY: "အမျိုးအစားနှင့် ပုံစံ ကန့်သတ်ချက် ရှိသည်။" },
       { id: 2, textJP: "(2) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>သည် 1.4mm <ruby>以上<rt>いじょう</rt></ruby>ကို <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "ယာယီဂဟေကို ၁.၄ မီလီမီတာနှင့်အထက် wire သုံးရမည်။" },
@@ -393,15 +393,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 2,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - စက်ရုပ်ဂဟေ၏ ယာယီဂဟေ (Tack Welding)",
       reasonMY: "ယာယီဂဟေအတွက် wire သည် အလွန်မကြီးသင့်ပါ။",
       memoryTipMY: "၁.၄ ဆိုတာ ကြီးလွန်းသည်။"
     }
   },
   {
     id: "2023-23",
-    questionJP: "<ruby>溶接法<rt>ようせつほう</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ဂဟေနည်းလမ်းများတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>溶接法<rt>ようせつほう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေနည်းလမ်းများ (Welding Methods) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>熱・圧力<rt>ねつ・あつりょく</rt></ruby>ဖြင့် <ruby>一体化<rt>いったいか</rt></ruby>する。", textMY: "အပူ/ဖိအားဖြင့် တစ်သားတည်းလုပ်ခြင်းဖြစ်သည်။" },
       { id: 2, textJP: "(2) <ruby>融接<rt>ゆうせつ</rt></ruby>သည် <ruby>冷却・凝固<rt>れいきゃく・ぎょうこ</rt></ruby>ဖြင့် <ruby>接合<rt>せつごう</rt></ruby>する。", textMY: "အရည်ပျော်ပြီး အေးသွားရာမှ ဆက်ခြင်းဖြစ်သည်။" },
@@ -411,15 +411,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - သံမဏိတည်ဆောက်ပုံတွင် အသုံးပြုသော ဂဟေနည်းလမ်းများ",
       reasonMY: "သံမဏိဘောင်တွင် Brazing (ろう接) ကို မသုံးပါ။",
       memoryTipMY: "Brazing မပါဝင်ပါ။"
     }
   },
   {
     id: "2023-24",
-    questionJP: "<ruby>冷却速度<rt>れいきゃくそくど</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "အအေးခံနှုန်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>冷却速度<rt>れいきゃくそくど</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "အအေးခံနှုန်း (Cooling Rate) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) 800℃~500℃၏ <ruby>時間<rt>じかん</rt></ruby>で<ruby>表す<rt>あらわす</rt></ruby>。", textMY: "၈၀၀ မှ ၅၀၀ အထိ ကြာချိန်ဖြင့် ပြသည်။" },
       { id: 2, textJP: "(2) <ruby>長い<rt>ながい</rt></ruby>သည် <ruby>強度・靭性<rt>きょうど・じんせい</rt></ruby>က <ruby>低下<rt>ていか</rt></ruby>する。", textMY: "ကြာလွန်းပါက ခိုင်မာမှု ကျဆင်းသည်။" },
@@ -429,15 +429,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - အအေးခံနှုန်းနှင့် Heat Input",
       reasonMY: "အပူများများပေးလေ အေးရန် ပိုကြာလေ (အအေးနှေးလေ) ဖြစ်သည်။",
       memoryTipMY: "အပူများရင် အအေးနှေးသည်။"
     }
   },
   {
     id: "2023-25",
-    questionJP: "<ruby>溶接法<rt>ようせつほう</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ဂဟေဆက်နည်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>溶接法<rt>ようせつほう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်နည်း (Welding Method) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>被覆アーク<rt>ひふくあーく</rt></ruby>သည် <ruby>溶極式<rt>ようきょくしき</rt></ruby>である。", textMY: "SMAW သည် electrode အရည်ပျော်သောနည်းဖြစ်သည်။" },
       { id: 2, textJP: "(2) <ruby>ガスシールド<rt>がすしーるど</rt></ruby>သည် <ruby>溶着速度<rt>ようちゃくそくど</rt></ruby>က <ruby>大きい<rt>おおきい</rt></ruby>。", textMY: "Gas welding သည် ဂဟေသားတင်နှုန်း ပိုမြန်သည်။" },
@@ -447,15 +447,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - Slag",
+      titleMY: "ရှင်းလင်းချက် - サブマージアーク溶接 (Submerged Arc Welding)",
       reasonMY: "SAW သည် flux အမှုန့်များ (Slag) ဖြင့် ကာကွယ်ခြင်းဖြစ်သည်။ Gas ဖြင့် မဟုတ်ပါ။",
       memoryTipMY: "SAW = Slag shield."
     }
   },
   {
     id: "2023-26",
-    questionJP: "<ruby>溶接部<rt>ようせつぶ</rt></ruby>၏ <ruby>組織<rt>そしき</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ဂဟေဖွဲ့စည်းပုံတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>溶接部<rt>ようせつぶ</rt></ruby>の<ruby>組織<rt>そしき</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်နေရာ၏ ဖွဲ့စည်းပုံ (Microstructure) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>溶接金属<rt>ようせつきんぞく</rt></ruby>သည် <ruby>移行金属<rt>いこうきんぞく</rt></ruby>နှင့် <ruby>母材<rt>ぼざい</rt></ruby>၏ <ruby>凝固<rt>ぎょうこ</rt></ruby>ဖြစ်သည်。", textMY: "Weld metal သည် wire နှင့် base metal ရောပြီး မာလာသောအရာဖြစ်သည်။" },
       { id: 2, textJP: "(2) <ruby>機械的性質<rt>きかいてきせいしつ</rt></ruby>သည် <ruby>成分<rt>せいぶん</rt></ruby>နှင့် <ruby>速度<rt>そくど</rt></ruby>ဖြင့် <ruby>決まる<rt>きまる</rt></ruby>。", textMY: "ဂုဏ်သတ္တိများကို ဓာတုဖွဲ့စည်းမှုနှင့် အအေးနှုန်းဖြင့် ဆုံးဖြတ်သည်။" },
@@ -465,15 +465,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 1,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
-      reasonMY: "အဖြေလွှာအရ (1) ဖြစ်သည်။",
-      memoryTipMY: "Weld metal ၏ အဓိပ္ပါယ်ကို သတိပြုပါ။"
+      titleMY: "ရှင်းလင်းချက် - 溶接金属 (Weld Metal) ၏ ဖွဲ့စည်းပုံ",
+      reasonMY: "溶接金属 (Weld metal) သည် 移行金属 (filler metal) နှင့် 母材 (base metal) တို့ အရည်ပျော်ရောနှောပြီး 凝固 (solidification) ဖြစ်ပေါ်လာခြင်းဖြစ်သည်။ ဤဖော်ပြချက်သည် Weld metal ၏ ဖွဲ့စည်းပုံ (組織) ကို အပြည့်အစုံ ဖော်ပြခြင်းမဟုတ်ဘဲ ၎င်း၏ မူလရင်းမြစ်ကိုသာ ဖော်ပြနေသောကြောင့် မသင့်လျော်ဆုံးဖြစ်သည်။ Weld metal ၏ ဖွဲ့စည်းပုံသည် အအေးခံနှုန်းနှင့် အခြားအချက်များစွာပေါ် မူတည်သည်။",
+      memoryTipMY: "Weld metal ၏ ဖွဲ့စည်းပုံသည် ၎င်း၏ မူလရင်းမြစ်ထက် ပိုမိုရှုပ်ထွေးသည်။"
     }
   },
   {
     id: "2023-27",
-    questionJP: "<ruby>溶接変形<rt>ようせつへんけい</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ဂဟေပုံပျက်ခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>溶接変形<rt>ようせつへんけい</rt></ruby>への<ruby>対応<rt>たいおう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဂဟေဆက်ခြင်းကြောင့် ပုံပျက်ခြင်း (Welding Deformation) ကို ပြန်လည်ပြုပြင်ခြင်းနှင့်ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>角変形<rt>かくへんけい</rt></ruby>သည် <ruby>逆ひずみ法<rt>ぎゃくひずみほう</rt></ruby>がある。", textMY: "ထောင့်ပြောင်းခြင်းအတွက် presetting နည်းရှိသည်။" },
       { id: 2, textJP: "(2) <ruby>横収縮<rt>よこしゅうしゅく</rt></ruby>သည် <ruby>対応<rt>たいおう</rt></ruby>က <ruby>行われていない<rt>おこなわれていない</rt></ruby>。", textMY: "အနံလိုက်ကျုံ့ခြင်းကို ဖြေရှင်းလေ့မရှိပါ။" },
@@ -483,15 +483,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - ဂဟေဆက်ခြင်းကြောင့် လည်ပတ်ပုံပျက်ခြင်း (Rotational Distortion)",
       reasonMY: "မည်သည့် ပုံပျက်ခြင်းကိုမဆို fixture များဖြင့် ထိန်းချုပ်၍ ရနိုင်သည်။",
       memoryTipMY: "အားလုံး ထိန်းချုပ်၍ ရသည်။"
     }
   },
   {
     id: "2023-28",
-    questionJP: "<ruby>亜鉛めっき<rt>あえんめっき</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "Galvanizing တွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>溶融亜鉛めっき<rt>ようゆうあえんめっき</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ပူပြင်းသောသွပ်ရည်စိမ်ခြင်း (Hot-dip Galvanizing) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>合金層<rt>ごうきんそう</rt></ruby>ကို <ruby>形成<rt>けいせい</rt></ruby>する。", textMY: "Alloy layer ကို ဖြစ်ပေါ်စေသည်။" },
       { id: 2, textJP: "(2) <ruby>変形・割れ<rt>へんけい・われ</rt></ruby>に<ruby>注意<rt>ちゅうい</rt></ruby>する。", textMY: "ပုံပျက်ခြင်း/ကွဲခြင်းကို သတိပြုရမည်။" },
@@ -501,15 +501,15 @@ export const chapter2023Data: StudyCardData[] = [
     ],
     correctOptionId: 4,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - သတိပြုရန် (Key Point)",
+      titleMY: "ရှင်းလင်းချက် - 溶融亜鉛めっき (Hot-dip Galvanizing) ၏ သတ်မှတ်ချက်",
       reasonMY: "HDZT 77 ဆိုသော အခေါ်အဝေါ် မရှိပါ။ HDZ 55 (550g/m²) သာ ရှိသည်။",
       memoryTipMY: "HDZ 55 ကို မှတ်ထားပါ။"
     }
   },
   {
     id: "2023-29",
-    questionJP: "<ruby>塗装作業<rt>とそうさぎょう</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
-    questionMY: "ဆေးသုတ်ခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
+    questionJP: "<ruby>塗装作業<rt>とそうさぎょう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionMY: "ဆေးသုတ်ခြင်းလုပ်ငန်း (Painting Work) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>粘度が高い<rt>ねんどがたかい</rt></ruby>သည် <ruby>たれ<rt>たれ</rt></ruby>က <ruby>生じる<rt>しょうじる</rt></ruby>。", textMY: "ဆေးအရမ်းပျစ်လျှင် စီးကျတတ်သည်။" },
       { id: 2, textJP: "(2) <ruby>厚塗り<rt>あつぬり</rt></ruby>ကို <ruby>避ける<rt>さける</rt></ruby>。", textMY: "အထူကြီးသုတ်ခြင်းကို ရှောင်ရမည်။" },

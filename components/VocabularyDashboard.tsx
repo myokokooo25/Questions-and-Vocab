@@ -44,24 +44,34 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
   }, []);
 
   const chapterKeys = useMemo(() => {
-      const chapters = new Set<number>();
+      const numericChapters = new Set<number>();
+      const otherCategories = new Set<string>();
+      
       Object.keys(vocabularyData).forEach(key => {
           const chapterNum = parseInt(key.split('-')[0], 10);
           if (!isNaN(chapterNum)) {
-              chapters.add(chapterNum);
+              numericChapters.add(chapterNum);
+          } else {
+              otherCategories.add(key);
           }
       });
-      return Array.from(chapters).sort((a,b) => a - b);
+      
+      return {
+          numeric: Array.from(numericChapters).sort((a, b) => a - b),
+          other: Array.from(otherCategories).sort()
+      };
   }, []);
 
   const chapterOptions = useMemo(() => {
     return [
-        { value: 'all', label: 'All Chapters' },
-        ...chapterKeys.map(num => ({ value: num, label: `Chapter ${num}` }))
+        { value: 'all', label: 'All Chapters & Categories' },
+        ...chapterKeys.numeric.map(num => ({ value: num.toString(), label: `Chapter ${num}` })),
+        ...chapterKeys.other.map(cat => ({ value: cat, label: cat }))
     ];
   }, [chapterKeys]);
 
-  const [activeChapter, setActiveChapter] = useState<string | number>('all');
+  const [activeChapter, setActiveChapter] = useState<string>('all');
+
   
   const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => {
     const data = kanjiDictionary[kanji];
@@ -85,7 +95,8 @@ const VocabularyDashboard: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) =
     if (activeChapter !== 'all') {
         const vocabForChapter = new Set<string>();
         Object.entries(vocabularyData).forEach(([key, items]) => {
-            if (key.startsWith(`${activeChapter}-`)) {
+            // Match exactly if it's a non-numeric category, or startswith for chapters (e.g. "1-")
+            if (key === activeChapter || key.startsWith(`${activeChapter}-`)) {
                 items.forEach(item => vocabForChapter.add(item.jp));
             }
         });

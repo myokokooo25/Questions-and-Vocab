@@ -17,7 +17,7 @@ import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
 import KanjiTooltip from './KanjiTooltip';
 import { supabase } from '../lib/supabase';
-import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
+import { vocabularyData } from '../data/vocab';
 
 interface HistoryEntry {
   deviceId: string;
@@ -362,21 +362,34 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           let failCount = 0;
           let lastError = '';
 
+          // Flatten new vocabulary structure
+          const flatRecords: any[] = [];
+          
+          Object.keys(vocabularyData).sort().forEach((category) => {
+              vocabularyData[category].forEach((item) => {
+                  flatRecords.push({
+                      category: category,
+                      kanji: item.jp,
+                      reading: item.reading || '',
+                      english: item.english || '',
+                      burmese: item.my
+                  });
+              });
+          });
+
+          // Sort deterministically to generate stable sequential IDs based on kanji + category
+          flatRecords.sort((a,b) => (a.category + a.kanji).localeCompare(b.category + b.kanji));
+          
+          flatRecords.forEach((record, index) => {
+               record.id = index + 1; // 1-based sequential ID
+          });
+
           // Insert in batches of 100
           const batchSize = 100;
-          for (let i = 0; i < vocabularyData.length; i += batchSize) {
-              const batch = vocabularyData.slice(i, i + batchSize);
-              
-              const records = batch.map(word => ({
-                  id: word.id,
-                  category: word.category,
-                  kanji: word.kanji,
-                  reading: word.reading,
-                  english: word.english,
-                  burmese: word.burmese
-              }));
+          for (let i = 0; i < flatRecords.length; i += batchSize) {
+              const batch = flatRecords.slice(i, i + batchSize);
 
-              const { error } = await supabase.from('vocabulary_flashcards').upsert(records, { onConflict: 'id' });
+              const { error } = await supabase.from('vocabulary_flashcards').upsert(batch, { onConflict: 'id' });
               
               if (error) {
                   console.error(`Error inserting batch ${i / batchSize + 1}:`, error.message);
