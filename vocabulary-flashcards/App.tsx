@@ -206,6 +206,30 @@ const App: React.FC = () => {
                         <div className="bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl"><select value={currentCategory} onChange={e => setCurrentCategory(e.target.value)} className="bg-transparent font-bold border-none outline-none text-slate-600 p-3 appearance-none">{categories.map(c => <option key={c} value={c}>{c}</option>)}</select></div>
                         <div className="bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl flex-grow"><input type="search" placeholder="Search..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="bg-transparent border-none outline-none font-bold text-slate-600 p-3 w-full md:w-48"/></div>
                     </div>
+                    <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+                        {viewMode !== 'flashcard' && (
+                            <>
+                                <button
+                                    onClick={() => {
+                                        const exportData = filteredWords.map(word => {
+                                            const term = word.reading ? `${word.kanji} (${word.reading})` : word.kanji;
+                                            const definition = `${word.burmese} ${word.english ? `- ${word.english}` : ''}`;
+                                            return `${term}\t${definition}`;
+                                        }).join('\n');
+                                        navigator.clipboard.writeText(exportData);
+                                        alert('Copied to clipboard! You can now paste this into the Quizlet Import page.');
+                                    }}
+                                    className="px-6 py-3 shrink-0 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-2xl text-sm font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 transition-all"
+                                    title="Copy vocabulary to paste into Quizlet"
+                                >
+                                    Export for Quizlet
+                                </button>
+                                <div className="text-slate-500 shrink-0 font-bold px-2">
+                                    Total: {filteredWords.length}
+                                </div>
+                            </>
+                        )}
+                    </div>
                     {viewMode === 'flashcard' && (
                         <div className="flex items-center gap-6">
                             <button onClick={handlePrev} className="p-4 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-full disabled:opacity-30" disabled={filteredWords.length < 2}><ArrowLeftIcon /></button>

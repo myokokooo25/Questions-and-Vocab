@@ -17,7 +17,7 @@ import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
 import KanjiTooltip from './KanjiTooltip';
 import { supabase } from '../lib/supabase';
-import { vocabularyData } from '../data/vocab';
+import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
 
 interface HistoryEntry {
   deviceId: string;
@@ -354,42 +354,40 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   };
 
   const handleMigrateVocabToDB = async () => {
-      setMigrationStatus("Starting vocabulary migration...");
+      setMigrationStatus("Clearing old vocabulary data...");
       setIsSyncingVocab(true);
 
       try {
+          // Clear existing vocabulary table first
+          const { error: deleteError } = await supabase.from('vocabulary_flashcards').delete().gt('id', 0);
+          
+          if (deleteError) {
+              console.error("Error clearing old vocab:", deleteError.message);
+              setMigrationStatus(`Error clearing old database: ${deleteError.message}`);
+              setIsSyncingVocab(false);
+              return;
+          }
+
           let successCount = 0;
           let failCount = 0;
           let lastError = '';
 
-          // Flatten new vocabulary structure
-          const flatRecords: any[] = [];
-          
-          Object.keys(vocabularyData).sort().forEach((category) => {
-              vocabularyData[category].forEach((item) => {
-                  flatRecords.push({
-                      category: category,
-                      kanji: item.jp,
-                      reading: item.reading || '',
-                      english: item.english || '',
-                      burmese: item.my
-                  });
-              });
-          });
+          setMigrationStatus(`Uploading ${vocabularyData.length} new vocabulary words...`);
 
-          // Sort deterministically to generate stable sequential IDs based on kanji + category
-          flatRecords.sort((a,b) => (a.category + a.kanji).localeCompare(b.category + b.kanji));
-          
-          flatRecords.forEach((record, index) => {
-               record.id = index + 1; // 1-based sequential ID
-          });
-
-          // Insert in batches of 100
           const batchSize = 100;
-          for (let i = 0; i < flatRecords.length; i += batchSize) {
-              const batch = flatRecords.slice(i, i + batchSize);
+          for (let i = 0; i < vocabularyData.length; i += batchSize) {
+              const batch = vocabularyData.slice(i, i + batchSize);
+              
+              const records = batch.map(word => ({
+                  id: word.id,
+                  category: word.category,
+                  kanji: word.kanji,
+                  reading: word.reading,
+                  english: word.english,
+                  burmese: word.burmese
+              }));
 
-              const { error } = await supabase.from('vocabulary_flashcards').upsert(batch, { onConflict: 'id' });
+              const { error } = await supabase.from('vocabulary_flashcards').insert(records);
               
               if (error) {
                   console.error(`Error inserting batch ${i / batchSize + 1}:`, error.message);
@@ -635,8 +633,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <button onClick={handleMigrateDataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
                          {isSyncing ? 'Migrating Questions...' : 'Migrate Questions'}
                     </button>
-                    <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-teal-600 rounded-xl hover:bg-teal-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
-                         {isSyncingVocab ? 'Migrating Vocab...' : 'Migrate Vocab'}
+                    <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-emerald-600 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                         {isSyncingVocab ? 'Migrating 399 Flashcards...' : 'Migrate 399 Flashcards'}
                     </button>
                     <button onClick={loadHistoryData} className="p-3 bg-slate-700 rounded-xl hover:bg-slate-600 transition-colors shadow-lg" title="Refresh History">
                         <RefreshIcon className="w-5 h-5" />

@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { vocabularyData } from '../data/vocab';
+import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
@@ -15,41 +15,36 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 async function seedVocabulary() {
   console.log('Starting vocabulary seeding...');
   
-  // Flatten new vocabulary structure
-  const flatRecords: any[] = [];
-  
-  Object.keys(vocabularyData).sort().forEach((category) => {
-      vocabularyData[category].forEach((item) => {
-          flatRecords.push({
-              category: category,
-              kanji: item.jp,
-              reading: item.reading || '',
-              english: item.english || '',
-              burmese: item.my
-          });
-      });
-  });
+  console.log(`Clearing existing vocabulary data...`);
+  const { error: deleteError } = await supabase.from('vocabulary_flashcards').delete().gt('id', 0);
+  if (deleteError) {
+      console.error("Error clearing old vocab:", deleteError.message);
+      return;
+  }
 
-  // Sort deterministically to generate stable sequential IDs based on kanji + category
-  flatRecords.sort((a,b) => (a.category + a.kanji).localeCompare(b.category + b.kanji));
-  
-  flatRecords.forEach((record, index) => {
-       record.id = index + 1; // 1-based sequential ID
-  });
-
-  console.log(`Found ${flatRecords.length} vocabulary words to insert.`);
+  console.log(`Found ${vocabularyData.length} vocabulary words to insert.`);
   
   // Insert in batches of 100
   const batchSize = 100;
   let successCount = 0;
   let errorCount = 0;
   
-  for (let i = 0; i < flatRecords.length; i += batchSize) {
-    const batch = flatRecords.slice(i, i + batchSize);
+  for (let i = 0; i < vocabularyData.length; i += batchSize) {
+    const batch = vocabularyData.slice(i, i + batchSize);
+    
+    // Map to match database columns (lowercase)
+    const records = batch.map(word => ({
+      id: word.id,
+      category: word.category,
+      kanji: word.kanji,
+      reading: word.reading,
+      english: word.english,
+      burmese: word.burmese
+    }));
     
     const { data, error } = await supabase
       .from('vocabulary_flashcards')
-      .upsert(batch, { onConflict: 'id' });
+      .insert(records);
       
     if (error) {
       console.error(`Error inserting batch ${Math.floor(i / batchSize) + 1}:`, error.message);
