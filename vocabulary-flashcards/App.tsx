@@ -57,7 +57,7 @@ const App: React.FC = () => {
                 } else if (data && data.length > 0) {
                     // Merge DB data with local data so we don't lose words that aren't in DB yet
                     const mergedData = vocabularyData.map(localWord => {
-                        const dbWord = data.find((w: any) => w.id === localWord.id);
+                        const dbWord = data.find((w: any) => String(w.id) === String(localWord.id));
                         return dbWord ? { ...localWord, ...dbWord } : localWord;
                     });
                     setVocabulary(mergedData as VocabularyWord[]);
