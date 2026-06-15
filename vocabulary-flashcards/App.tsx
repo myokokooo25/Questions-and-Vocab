@@ -31,6 +31,18 @@ const App: React.FC = () => {
     const [viewMode, setViewMode] = useState<ViewMode>('dashboard');
     const [loadingAudioId, setLoadingAudioId] = useState<number | null>(null);
 
+    const [supabaseStatus, setSupabaseStatus] = useState<{
+        isConnected: boolean;
+        rowCount: number;
+        hasExplanationsCount: number;
+        error: string | null;
+    }>({
+        isConnected: false,
+        rowCount: 0,
+        hasExplanationsCount: 0,
+        error: null
+    });
+
     // Kanji Tooltip State
     const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
     const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
@@ -52,21 +64,54 @@ const App: React.FC = () => {
                 
                 if (error) {
                     console.error('Error fetching vocabulary from Supabase:', error);
+                    setSupabaseStatus({
+                        isConnected: false,
+                        rowCount: 0,
+                        hasExplanationsCount: 0,
+                        error: error.message
+                    });
                     // Fallback to local data
                     setVocabulary(vocabularyData);
                 } else if (data && data.length > 0) {
+                    console.log('[SUPABASE_DEBUG] Row data fetched length:', data.length);
+                    const withExplanationDb = data.filter((w: any) => w.ai_explanation);
+                    console.log('[SUPABASE_DEBUG] DB items containing ai_explanation in DB:', withExplanationDb.length);
+                    if (withExplanationDb.length > 0) {
+                        console.log('[SUPABASE_DEBUG] First DB item with explanation ID:', withExplanationDb[0].id, 'text:', withExplanationDb[0].ai_explanation.slice(0, 50));
+                    }
+                    
+                    setSupabaseStatus({
+                        isConnected: true,
+                        rowCount: data.length,
+                        hasExplanationsCount: withExplanationDb.length,
+                        error: null
+                    });
+
                     // Merge DB data with local data so we don't lose words that aren't in DB yet
                     const mergedData = vocabularyData.map(localWord => {
                         const dbWord = data.find((w: any) => String(w.id) === String(localWord.id));
                         return dbWord ? { ...localWord, ...dbWord } : localWord;
                     });
                     setVocabulary(mergedData as VocabularyWord[]);
+                    console.log('[SUPABASE_DEBUG] Final merged list items total:', mergedData.length, 'containing explanations:', mergedData.filter(w => w.ai_explanation).length);
                 } else {
+                    setSupabaseStatus({
+                        isConnected: true,
+                        rowCount: 0,
+                        hasExplanationsCount: 0,
+                        error: 'Table exists but has 0 rows'
+                    });
                     // Fallback if table is empty
                     setVocabulary(vocabularyData);
                 }
-            } catch (err) {
+            } catch (err: any) {
                 console.error('Failed to fetch vocabulary:', err);
+                setSupabaseStatus({
+                    isConnected: false,
+                    rowCount: 0,
+                    hasExplanationsCount: 0,
+                    error: err?.message || 'Unknown exception'
+                });
                 setVocabulary(vocabularyData);
             } finally {
                 setIsFetchingVocab(false);
@@ -74,6 +119,18 @@ const App: React.FC = () => {
         };
 
         fetchVocabulary();
+    }, []);
+
+    const handleUpdateWord = useCallback((updatedWord: VocabularyWord) => {
+        setVocabulary(prev => {
+            const nextList = prev.map(w => w.id === updatedWord.id ? updatedWord : w);
+            const explanationCount = nextList.filter(w => w.ai_explanation).length;
+            setSupabaseStatus(status => ({
+                ...status,
+                hasExplanationsCount: explanationCount
+            }));
+            return nextList;
+        });
     }, []);
 
     const [activeStudyDay, setActiveStudyDay] = useState<number | null>(null);
@@ -174,7 +231,7 @@ const App: React.FC = () => {
                     onClose={() => setSelectedKanji(null)}
                 />
             )}
-            <header className="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center mb-10 gap-6">
+            <header className="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center mb-6 gap-6">
                  <div className="text-center sm:text-left">
                     <h1 className="text-3xl font-black text-slate-700 tracking-tight">Technical Vocabulary</h1>
                     <p className="text-slate-500 font-bold italic">Interactive Flashcards</p>
@@ -183,6 +240,35 @@ const App: React.FC = () => {
                     <button onClick={toggleTheme} className="p-4 rounded-2xl shadow-neumorphic-outset text-slate-500 active:shadow-neumorphic-inset transition-all">{theme === 'light' ? <MoonIcon className="w-6 h-6" /> : <SunIcon className="w-6 h-6" />}</button>
                 </div>
             </header>
+
+            {/* Supabase Connection Status Banner */}
+            <div className="w-full max-w-5xl mb-10">
+                {!supabaseStatus.isConnected ? (
+                    <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 text-sm font-bold flex flex-col sm:flex-row justify-between items-center gap-3">
+                        <div className="flex items-center gap-2">
+                            <span className="w-2.5 h-2.5 rounded-full bg-red-600 inline-block animate-pulse"></span>
+                            <span>Supabase ချိတ်ဆက်မှုမရသေးပါ: {supabaseStatus.error || 'အကြောင်းပြချက်မသိရ'}</span>
+                        </div>
+                        <span className="text-xs bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono">Error</span>
+                    </div>
+                ) : supabaseStatus.rowCount === 0 ? (
+                    <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 text-amber-600 dark:text-amber-400 text-sm font-bold flex flex-col sm:flex-row justify-between items-center gap-3">
+                        <div className="flex items-center gap-2">
+                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block animate-pulse"></span>
+                            <span>Supabase တွင် စကားလုံးအချက်အလက်မရှိသေးပါ။ Dashboard တက်ဘ်ရှိ "Upload All Vocabulary to Database" ကိုအရင်နှိပ်ပါ။</span>
+                        </div>
+                        <span className="text-xs bg-amber-100 dark:bg-amber-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono">No Data</span>
+                    </div>
+                ) : (
+                    <div className="p-4 rounded-2xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/40 text-green-700 dark:text-green-400 text-sm font-bold flex flex-col sm:flex-row justify-between items-center gap-3">
+                        <div className="flex items-center gap-2">
+                            <span className="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
+                            <span>Supabase ချိတ်ဆက်မှု အဆင်ပြေပါသည် (စကားလုံး စုစုပေါင်း: {supabaseStatus.rowCount} လုံး၊ AI ရှင်းလင်းချက်ရှိပြီးသား: {supabaseStatus.hasExplanationsCount} လုံး)</span>
+                        </div>
+                        <span className="text-xs bg-green-100 dark:bg-green-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono">Connected</span>
+                    </div>
+                )}
+            </div>
             
             <nav className="w-full max-w-4xl mb-12">
                 <div className="bg-neumorphic-bg shadow-neumorphic-inset p-2 rounded-3xl flex flex-wrap justify-center gap-2">
@@ -196,7 +282,7 @@ const App: React.FC = () => {
                 {viewMode === 'dashboard' && <Dashboard totalWords={vocabulary.length} learnedWordsCount={allLearnedWords.length} studyProgress={flashcardData.progress} totalDays={TOTAL_STUDY_DAYS} onNavigate={setViewMode} />}
                 {viewMode === 'study' && <StudyPlan studyProgress={flashcardData.progress} onSelectDay={handleSelectDay} totalDays={TOTAL_STUDY_DAYS} wordsPerDay={WORDS_PER_DAY} />}
                 {viewMode === 'quiz' && <Quiz learnedWords={allLearnedWords} onQuizComplete={() => setViewMode('study')} vocabulary={vocabulary} />}
-                {viewMode === 'flashcard' && <Flashcard word={filteredWords[currentIndex]} isFlipped={isFlipped} onFlip={handleFlip} onPlayAudio={handlePlayPronunciation} isAudioLoading={loadingAudioId !== null} isMarkedAsLearned={markedAsLearnedSet.has(filteredWords[currentIndex]?.id)} onToggleMarkedAsLearned={() => filteredWords[currentIndex] && toggleFlashcardLearned(filteredWords[currentIndex].id)} onKanjiClick={handleKanjiClick} />}
+                {viewMode === 'flashcard' && <Flashcard word={filteredWords[currentIndex]} isFlipped={isFlipped} onFlip={handleFlip} onPlayAudio={handlePlayPronunciation} isAudioLoading={loadingAudioId !== null} isMarkedAsLearned={markedAsLearnedSet.has(filteredWords[currentIndex]?.id)} onToggleMarkedAsLearned={() => filteredWords[currentIndex] && toggleFlashcardLearned(filteredWords[currentIndex].id)} onKanjiClick={handleKanjiClick} onUpdateWord={handleUpdateWord} />}
                 {viewMode === 'list' && <ListView words={filteredWords} isEditMode={false} setWords={setVocabulary} categories={categories.slice(1)} markedAsLearned={markedAsLearnedSet} onToggleMarkedAsLearned={toggleFlashcardLearned} onPlayAudio={playWordAudio} loadingAudioId={loadingAudioId} onKanjiClick={handleKanjiClick} />}
             </main>
             

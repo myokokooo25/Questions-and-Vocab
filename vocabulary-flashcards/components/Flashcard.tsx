@@ -15,9 +15,10 @@ interface FlashcardProps {
   isMarkedAsLearned: boolean;
   onToggleMarkedAsLearned: () => void;
   onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void;
+  onUpdateWord?: (updatedWord: VocabularyWord) => void;
 }
 
-const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAudio, isAudioLoading, isMarkedAsLearned, onToggleMarkedAsLearned, onKanjiClick }) => {
+const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAudio, isAudioLoading, isMarkedAsLearned, onToggleMarkedAsLearned, onKanjiClick, onUpdateWord }) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
@@ -28,7 +29,7 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
     setAiExplanation(word?.ai_explanation || null);
     setIsAiLoading(false);
     setAiError(null);
-  }, [word]);
+  }, [word?.id, word?.ai_explanation, word]);
 
   const handleExplain = async (e: React.MouseEvent, forceNew: boolean = false) => {
     e.stopPropagation();
@@ -104,7 +105,12 @@ const Flashcard: React.FC<FlashcardProps> = ({ word, isFlipped, onFlip, onPlayAu
         console.error("Failed to save AI explanation to DB:", error);
         setAiError(`Database Error: ${error.message} (Please check Supabase RLS policies or column names)`);
       } else {
-        word.ai_explanation = formatted;
+        const updatedWord = { ...word, ai_explanation: formatted };
+        if (onUpdateWord) {
+          onUpdateWord(updatedWord);
+        } else {
+          word.ai_explanation = formatted;
+        }
       }
     } catch (err: any) {
       setAiError(`Error: ${err.message || 'Unknown Error'}`);

@@ -23,13 +23,34 @@ const Dashboard: React.FC<DashboardProps> = ({ totalWords, learnedWordsCount, st
 
   const handleMigrate = async () => {
     setIsMigrating(true);
-    setMigrationStatus("Uploading vocabulary to database...");
+    setMigrationStatus("Checking database for existing records...");
     let successCount = 0;
     let failCount = 0;
     let lastError = "";
 
     try {
+      // Fetch existing rows from Supabase to check what is already there and keep explanations
+      const { data: existingRows, error: fetchErr } = await supabase
+        .from('vocabulary_flashcards')
+        .select('id, ai_explanation');
+
+      if (fetchErr) {
+        console.error("Error fetching existing rows:", fetchErr);
+      }
+
+      const existingMap = new Map<string, string | null>(
+        existingRows?.map(row => [String(row.id), row.ai_explanation]) || []
+      );
+
+      setMigrationStatus("Synchronizing vocabulary (preserving existing explanations)...");
+
       for (const word of vocabularyData) {
+        const idStr = String(word.id);
+        const existingExplanation = existingMap.get(idStr);
+
+        // Keep the database's explanation if it already exists there!
+        const finalExplanation = existingExplanation || word.ai_explanation || null;
+
         const payload = {
           id: word.id,
           category: word.category || 'general',
@@ -37,7 +58,7 @@ const Dashboard: React.FC<DashboardProps> = ({ totalWords, learnedWordsCount, st
           reading: word.reading,
           english: word.english,
           burmese: word.burmese,
-          ai_explanation: word.ai_explanation || null
+          ai_explanation: finalExplanation
         };
 
         const { error } = await supabase.from('vocabulary_flashcards').upsert(payload);
@@ -51,9 +72,9 @@ const Dashboard: React.FC<DashboardProps> = ({ totalWords, learnedWordsCount, st
       }
 
       if (failCount > 0) {
-        setMigrationStatus(`Upload Finished. Success: ${successCount}, Failed: ${failCount}. Last Error: ${lastError}`);
+        setMigrationStatus(`Finished. Synchronized: ${successCount}, Failed: ${failCount}. Last Error: ${lastError}`);
       } else {
-        setMigrationStatus(`Upload Complete. Successfully added ${successCount} words.`);
+        setMigrationStatus(`Finished. Successfully synchronized ${successCount} words while preserving existing AI explanations!`);
       }
     } catch (err: any) {
       console.error("Fatal migration error:", err);

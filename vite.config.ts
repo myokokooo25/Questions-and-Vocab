@@ -15,6 +15,10 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': fileURLToPath(new URL('.', import.meta.url)),
         }
+      },
+      define: {
+        'process.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL || env.SUPABASE_URL || 'https://kdulrcovfiqbsenevowc.supabase.co'),
+        'process.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY || env.SUPABASE_ANON_KEY || ''),
       }
     };
 });
