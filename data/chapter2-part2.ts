@@ -13,11 +13,11 @@ export const chapter2Part2Data: StudyCardData[] = [
       { id: 4, textJP: "(4) <ruby>高力ボルト接合部<rt>こうりょくぼるとせつごうぶ</rt></ruby>をブラスト<ruby>処理<rt>しょり</rt></ruby>とする<ruby>場合<rt>ばあい</rt></ruby>、<ruby>ショットブラスト<rt>しょっとぶらすと</rt></ruby>および<ruby>グリットブラスト<rt>ぐりっとぶらすと</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>し、<ruby>表面粗さ<rt>ひょうめんあらさ</rt></ruby> 50μmRz <ruby>以上<rt>いじょう</rt></ruby>を<ruby>確保<rt>かくほ</rt></ruby>する。", textMY: "Blast ဖြင့်ပြင်ဆင်ပါက မျက်နှာပြင်ကြမ်းတမ်းမှု ၅၀ နှင့်အထက် ရှိရမည်။" },
       { id: 5, textJP: "(5) <ruby>溶融亜鉛めっき<rt>ようゆうあえんめっき</rt></ruby>つき<ruby>高力ボルト接合<rt>こうりょくぼるとせつごう</rt></ruby>の<ruby>摩擦面<rt>まさつめん</rt></ruby>に、<ruby>特記<rt>とっき</rt></ruby>によりブラスト<ruby>処理<rt>しょり</rt></ruby>あるいは<ruby>りん酸塩処理以外<rt>さんえんしょりいがい</rt></ruby>の<ruby>特別<rt>とくべつ</rt></ruby>な<ruby>処理<rt>しょり</rt></ruby>を<ruby>施<rt>ほどこ</rt></ruby>す<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>原則<rt>げんそく</rt></ruby>としてすべり<ruby>耐力試験<rt>たいりょくしけん</rt></ruby>を<ruby>実施<rt>じっし</rt></ruby>する。", textMY: "Galvanized bolt များအတွက် အထူးပြုပြင်မှုလုပ်ပါက ပွတ်တိုက်အားစမ်းသပ်မှု လုပ်ဆောင်ရမည်။" }
     ],
-    correctOptionId: 2,
+    correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 薬剤発錆の薬剤",
-      reasonMY: "Black scale (黒皮) ကိုပါ တစ်ပြိုင်နက် ဖယ်ရှားပေးနိုင်သော ဓာတုပစ္စည်းများကို အသုံးပြုနိုင်သည်။ ၎င်းတို့ကို တားမြစ်ထားခြင်း မရှိပါ။",
-      memoryTipMY: "Black scale ဖယ်ရှားတဲ့ဆေး သုံးလို့ရပါတယ်။"
+      titleMY: "ရှင်းလင်းချက် - 摩擦面処理 (Friction Surface Treatment)",
+      reasonMY: "Galvanized bolt (溶融亜鉛めっきつき高力ボルト) များအတွက် စံသတ်မှတ်ထားသော ပွတ်တိုက်မျက်နှာပြင် ပြုပြင်မှုမှာ Blast treatment (ブラスト処理) သာ ဖြစ်ပါသည်။ Phosphate treatment (りん酸塩処理) ကို အသုံးပြုမည်ဆိုပါကလည်း ပွတ်တိုက်အားစမ်းသပ်မှု (Slip resistance test) ကို မဖြစ်မနေ လုပ်ဆောင်ရမည် ဖြစ်သောကြောင့် ၎င်းကို ခြွင်းချက်အနေဖြင့် ဖော်ပြထားခြင်းမှာ မှားယွင်းပါသည်။",
+      memoryTipMY: "Galvanized bolt အတွက် Blast treatment မှလွဲ၍ ကျန်နည်းလမ်းအားလုံး Slip test လုပ်ရမည်။"
     }
   },
   {
