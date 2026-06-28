@@ -189,7 +189,7 @@ const Card: React.FC<CardProps> = ({
       // Save to Supabase
       const payload = {
         id: data.id,
-        category: data.category || `chapter${data.id.split('-')[0]}` || 'unknown',
+        category: data.category || data.id.toString().split('-')[0] || 'unknown',
         question_jp: data.questionJP,
         question_my: data.questionMY,
         options: data.options,

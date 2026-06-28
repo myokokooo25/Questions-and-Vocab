@@ -129,7 +129,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
            // Fetch all parts for 2021
            query = query.like('category', '2021-%');
         } else {
-           query = query.eq('category', category);
+           query = query.in('category', [category, `chapter${category}`]);
         }
 
         const { data, error } = await query;
@@ -318,8 +318,28 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           let failCount = 0;
           let lastError = '';
 
+          setMigrationStatus("Checking database for existing records...");
+          const { data: existingRows, error: fetchErr } = await supabase
+            .from('questions')
+            .select('id, ai_explanation');
+
+          if (fetchErr) {
+            console.error("Error fetching existing rows:", fetchErr);
+          }
+
+          const existingMap = new Map<string, string | null>(
+            existingRows?.map(row => [String(row.id), row.ai_explanation]) || []
+          );
+
+          setMigrationStatus("Synchronizing questions (preserving existing AI explanations)...");
+
           for (const group of allDataToUpload) {
               for (const q of group.data) {
+                  const idStr = String(q.id);
+                  const existingExplanation = existingMap.get(idStr);
+                  
+                  const finalExplanation = existingExplanation || q.ai_explanation || null;
+
                   const payload = {
                       id: q.id,
                       category: group.category,
@@ -328,7 +348,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                       options: q.options, // Supabase handles JSON automatically
                       correct_option_id: q.correctOptionId,
                       explanation: q.explanation,
-                      ai_explanation: q.ai_explanation
+                      ai_explanation: finalExplanation
                   };
 
                   const { error } = await supabase.from('questions').upsert(payload);
