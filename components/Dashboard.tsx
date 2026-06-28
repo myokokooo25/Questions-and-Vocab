@@ -18,6 +18,7 @@ import { kanjiDictionary } from '../data/kanji';
 import KanjiTooltip from './KanjiTooltip';
 import { supabase } from '../lib/supabase';
 import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
+import AnswerKeyView from './AnswerKeyView';
 
 interface HistoryEntry {
   deviceId: string;
@@ -39,6 +40,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const { bookmarkedIds, studyHistory, recordAnswer } = useProgress(); 
   
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
+  const [showAnswerKey, setShowAnswerKey] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [showInstallInfo, setShowInstallInfo] = useState(false);
@@ -821,6 +823,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         )
     }
 
+    if (showAnswerKey) {
+        return <AnswerKeyView onClose={() => setShowAnswerKey(false)} />;
+    }
+
     if (isLoadingQuestions) {
         return (
              <div className="flex flex-col items-center justify-center py-20">
@@ -1100,6 +1106,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     title="Bookmarks"
                 >
                     <BookmarkIcon className="w-5 h-5" />
+                </button>
+                <button
+                    onClick={() => setShowAnswerKey(true)}
+                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all"
+                    title="Answer Key"
+                >
+                    <ListBulletIcon className="w-5 h-5" />
                 </button>
                 {user?.isAdmin && (
                     <button
