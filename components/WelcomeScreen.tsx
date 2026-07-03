@@ -88,21 +88,6 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
         {/* Main Categories */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <button
-            onClick={() => onSelectApp('main')}
-            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
-          >
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform">
-                  <BookOpenIcon className="w-8 h-8" />
-              </div>
-              <div>
-                  <h2 className="text-xl font-black text-slate-700">2022-2025 Chapter Study</h2>
-                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Practice questions by chapter.</p>
-              </div>
-            </div>
-          </button>
-
-          <button
             onClick={() => onSelectApp('2026')}
             className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
           >
@@ -113,6 +98,21 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
               <div>
                   <h2 className="text-xl font-black text-slate-700">2026 Chapter Study</h2>
                   <p className="mt-1 text-sm text-slate-500 font-medium italic">New practice questions.</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => onSelectApp('main')}
+            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform">
+                  <BookOpenIcon className="w-8 h-8" />
+              </div>
+              <div>
+                  <h2 className="text-xl font-black text-slate-700">2022-2025 Chapter Study</h2>
+                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Practice questions by chapter.</p>
               </div>
             </div>
           </button>
