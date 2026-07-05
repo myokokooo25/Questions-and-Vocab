@@ -9,6 +9,10 @@ import { chapter1Data2026Part1 } from './chapter1-2026-part1';
 import { chapter1Data2026Part2 } from './chapter1-2026-part2';
 import { chapter1Data2026Part3 } from './chapter1-2026-part3';
 import { chapter1Data2026Part4 } from './chapter1-2026-part4';
+import { chapter2Data2026Part1 } from './chapter2-2026-part1';
+import { chapter2Data2026Part2 } from './chapter2-2026-part2';
+import { chapter2Data2026Part3 } from './chapter2-2026-part3';
+import { chapter2Data2026Part4 } from './chapter2-2026-part4';
 
 export const studyDataByChapter: { [key: number]: StudyCardData[] } = {
   1: chapter1Data,
@@ -26,7 +30,12 @@ export const studyDataByChapter2026: { [key: number]: StudyCardData[] } = {
     ...chapter1Data2026Part3,
     ...chapter1Data2026Part4,
   ],
-  2: [],
+  2: [
+    ...chapter2Data2026Part1,
+    ...chapter2Data2026Part2,
+    ...chapter2Data2026Part3,
+    ...chapter2Data2026Part4,
+  ],
   3: [],
   4: [],
   5: [],
