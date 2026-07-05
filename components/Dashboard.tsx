@@ -288,6 +288,83 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   };
 
   // --- MIGRATION LOGIC ---
+  // --- MIGRATION LOGIC FOR 2026 ---
+  const handleMigrate2026DataToDB = async () => {
+      setMigrationStatus("Starting migration for 2026 data...");
+      setIsSyncing(true);
+      try {
+          const allDataToUpload: {category: string, data: StudyCardData[]}[] = [];
+          
+          for (let i = 1; i <= 5; i++) {
+              if (studyDataByChapter2026[i]) {
+                  allDataToUpload.push({ category: `2026-${i}`, data: studyDataByChapter2026[i] });
+              }
+          }
+
+          let successCount = 0;
+          let failCount = 0;
+          let lastError = '';
+
+          setMigrationStatus("Checking database for existing records...");
+          const { data: existingRows, error: fetchErr } = await supabase
+            .from('questions')
+            .select('id, ai_explanation');
+
+          if (fetchErr) {
+            console.error("Error fetching existing rows:", fetchErr);
+          }
+
+          const existingMap = new Map<string, string | null>(
+            existingRows?.map(row => [String(row.id), row.ai_explanation]) || []
+          );
+
+          setMigrationStatus("Synchronizing 2026 questions (preserving existing AI explanations)...");
+
+          for (const group of allDataToUpload) {
+              for (const q of group.data) {
+                  const idStr = String(q.id);
+                  const existingExplanation = existingMap.get(idStr);
+                  
+                  const finalExplanation = existingExplanation || q.ai_explanation || null;
+
+                  const payload = {
+                      id: q.id,
+                      category: group.category,
+                      question_jp: q.questionJP,
+                      question_my: q.questionMY,
+                      options: q.options, // Supabase handles JSON automatically
+                      correct_option_id: q.correctOptionId,
+                      explanation: q.explanation,
+                      ai_explanation: finalExplanation
+                  };
+
+                  const { error } = await supabase.from('questions').upsert(payload);
+                  if (error) {
+                      console.error(`Error migrating question ${q.id}:`, error);
+                      failCount++;
+                      lastError = error.message;
+                  } else {
+                      successCount++;
+                  }
+                  
+                  setMigrationStatus(`Migrated ${successCount} 2026 questions... ${failCount > 0 ? `(${failCount} failed)` : ''}`);
+              }
+          }
+
+          if (failCount > 0) {
+              setMigrationStatus(`Completed with errors. Success: ${successCount}, Failed: ${failCount}. Last error: ${lastError}`);
+          } else {
+              setMigrationStatus(`Successfully migrated ${successCount} 2026 questions!`);
+          }
+      } catch (error: any) {
+          console.error("Migration failed:", error);
+          setMigrationStatus(`Migration failed: ${error.message}`);
+      } finally {
+          setIsSyncing(false);
+          setTimeout(() => setMigrationStatus(''), 5000);
+      }
+  };
+
   const handleMigrateDataToDB = async () => {
       setMigrationStatus("Starting migration...");
       setIsSyncing(true);
@@ -654,6 +731,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <div className='flex gap-3 flex-wrap'>
                     <button onClick={handleMigrateDataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
                          {isSyncing ? 'Migrating Questions...' : 'Migrate Questions'}
+                    </button>
+                    <button onClick={handleMigrate2026DataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                         {isSyncing ? 'Migrating 2026...' : 'Migrate 2026 Questions'}
                     </button>
                     <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-emerald-600 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
                          {isSyncingVocab ? 'Migrating 399 Flashcards...' : 'Migrate 399 Flashcards'}

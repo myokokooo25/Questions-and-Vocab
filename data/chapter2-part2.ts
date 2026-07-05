@@ -16,8 +16,8 @@ export const chapter2Part2Data: StudyCardData[] = [
     correctOptionId: 5,
     explanation: {
       titleMY: "ရှင်းလင်းချက် - 摩擦面処理 (Friction Surface Treatment)",
-      reasonMY: "Galvanized bolt (溶融亜鉛めっきつき高力ボルト) များအတွက် စံသတ်မှတ်ထားသော ပွတ်တိုက်မျက်နှာပြင် ပြုပြင်မှုမှာ Blast treatment (ブラスト処理) သာ ဖြစ်ပါသည်။ Phosphate treatment (りん酸塩処理) ကို အသုံးပြုမည်ဆိုပါကလည်း ပွတ်တိုက်အားစမ်းသပ်မှု (Slip resistance test) ကို မဖြစ်မနေ လုပ်ဆောင်ရမည် ဖြစ်သောကြောင့် ၎င်းကို ခြွင်းချက်အနေဖြင့် ဖော်ပြထားခြင်းမှာ မှားယွင်းပါသည်။",
-      memoryTipMY: "Galvanized bolt အတွက် Blast treatment မှလွဲ၍ ကျန်နည်းလမ်းအားလုံး Slip test လုပ်ရမည်။"
+      reasonMY: "Galvanized bolt (溶融亜鉛めっき) များအတွက် Blast treatment (ブラスト処理) သာလျှင် Slip test လုပ်ရန်မလိုသော တစ်ခုတည်းသောနည်းလမ်းဖြစ်သည်။ ၎င်းမှလွဲ၍ Phosphate treatment (りん酸塩処理) အပါအဝင် အခြားမည်သည့်နည်းလမ်းကိုသုံးသည်ဖြစ်စေ ပွတ်တိုက်အားစမ်းသပ်မှု (Slip resistance test) ကို မဖြစ်မနေ ပြုလုပ်ရမည်ဖြစ်သည်။ ထို့ကြောင့် 'りん酸塩処理以外の (Phosphate treatment မှလွဲ၍)' ဟု ဖော်ပြထားခြင်းမှာ မှားယွင်းပါသည်။",
+      memoryTipMY: "Galvanized bolt အတွက် Blast treatment (ブラスト処理) တစ်ခုတည်းသာ Slip test လုပ်စရာမလိုပါ။ ကျန်တာအကုန် လုပ်ရမည်။"
     }
   },
   {
