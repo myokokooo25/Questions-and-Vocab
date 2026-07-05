@@ -13,6 +13,8 @@ import { chapter2Data2026Part1 } from './chapter2-2026-part1';
 import { chapter2Data2026Part2 } from './chapter2-2026-part2';
 import { chapter2Data2026Part3 } from './chapter2-2026-part3';
 import { chapter2Data2026Part4 } from './chapter2-2026-part4';
+import { chapter3Data2026Part1 } from './chapter3-2026-part1';
+import { chapter3Data2026Part2 } from './chapter3-2026-part2';
 
 export const studyDataByChapter: { [key: number]: StudyCardData[] } = {
   1: chapter1Data,
@@ -36,7 +38,10 @@ export const studyDataByChapter2026: { [key: number]: StudyCardData[] } = {
     ...chapter2Data2026Part3,
     ...chapter2Data2026Part4,
   ],
-  3: [],
+  3: [
+    ...chapter3Data2026Part1,
+    ...chapter3Data2026Part2,
+  ],
   4: [],
   5: [],
 };
