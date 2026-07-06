@@ -15,6 +15,10 @@ import { chapter2Data2026Part3 } from './chapter2-2026-part3';
 import { chapter2Data2026Part4 } from './chapter2-2026-part4';
 import { chapter3Data2026Part1 } from './chapter3-2026-part1';
 import { chapter3Data2026Part2 } from './chapter3-2026-part2';
+import { chapter3Data2026Part3 } from './chapter3-2026-part3';
+import { chapter3Data2026Part4 } from './chapter3-2026-part4';
+import { chapter4Data2026Part1 } from './chapter4-2026-part1';
+import { chapter5Data2026Part1 } from './chapter5-2026-part1';
 
 export const studyDataByChapter: { [key: number]: StudyCardData[] } = {
   1: chapter1Data,
@@ -41,9 +45,15 @@ export const studyDataByChapter2026: { [key: number]: StudyCardData[] } = {
   3: [
     ...chapter3Data2026Part1,
     ...chapter3Data2026Part2,
+    ...chapter3Data2026Part3,
+    ...chapter3Data2026Part4,
   ],
-  4: [],
-  5: [],
+  4: [
+    ...chapter4Data2026Part1,
+  ],
+  5: [
+    ...chapter5Data2026Part1,
+  ],
 };
 
 export const chapterCount = Object.keys(studyDataByChapter).length;
