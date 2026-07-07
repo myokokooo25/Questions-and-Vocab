@@ -365,6 +365,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       }
   };
 
+  React.useEffect(() => {
+    if (localStorage.getItem('force_migrate_2026_v2') !== 'done') {
+      localStorage.setItem('force_migrate_2026_v2', 'done');
+      handleMigrate2026DataToDB();
+    }
+  }, []);
+
   const handleMigrateDataToDB = async () => {
       setMigrationStatus("Starting migration...");
       setIsSyncing(true);
