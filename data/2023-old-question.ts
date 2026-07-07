@@ -134,7 +134,7 @@ export const chapter2023Data: StudyCardData[] = [
     questionMY: "သံမဏိအမျိုးအစားများဆိုင်ရာ အောက်ပါဖော်ပြချက်များအနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) SS<ruby>材<rt>ざい</rt></ruby>သည် <ruby>溶接割れ<rt>ようせつわれ</rt></ruby>ကို <ruby>生じやすい<rt>しょうじやすい</rt></ruby>တတ်သည်။", textMY: "SS Material သည် ဂဟေဆက်ရာတွင် ကွဲအက်လွယ်သည်။" },
-      { id: 2, textJP: "(2) SM<ruby>材<rt>ざい</rt></ruby>သည် <ruby>シャルピー吸収エネルギー<rt>しゃるぴーきゅうしゅうエネルギー</rt></ruby>က <ruby>規定されていない<rt>きていされていない</rt></ruby>။", textMY: "SM Material တွင် Charpy impact test ကို သတ်မှတ်မထားပါ။" },
+      { id: 2, textJP: "(2) SM<ruby>材<rt>ざい</rt></ruby>は <ruby>シャルピー吸収エネルギー<rt>しゃるぴーきゅうしゅうエネルギー</rt></ruby>が <ruby>規定されていない<rt>きていされていない</rt></ruby>။", textMY: "SM Material တွင် Charpy impact test ကို သတ်မှတ်မထားပါ။" },
       { id: 3, textJP: "(3) SN<ruby>材<rt>ざい</rt></ruby> C<ruby>種<rt>しゅ</rt></ruby>သည် <ruby>板厚方向<rt>いたあつほうこう</rt></ruby>၏ <ruby>絞り値<rt>しぼりち</rt></ruby>ကို <ruby>規定<rt>きてい</rt></ruby>ထားသည်။", textMY: "SN Material Type C သည် အထူဘက်သို့ Reduction of area ကိုပါ သတ်မှတ်ထားသည်။" },
       { id: 4, textJP: "(4) BCR<ruby>材<rt>ざい</rt></ruby>သည် SN<ruby>材<rt>ざい</rt></ruby>ထက် <ruby>材質劣化<rt>ざいしつれっか</rt></ruby>ကို <ruby>注意<rt>ちゅうい</rt></ruby>ရမည်။", textMY: "BCR Material များသည် SN ထက် အရည်အသွေးကျဆင်းမှုကို သတိပြုရမည်။" },
       { id: 5, textJP: "(5) TMCP<ruby>鋼材<rt>こうざい</rt></ruby>သည် <ruby>厚さ<rt>あつさ</rt></ruby> 40mm <ruby>超<rt>ちょう</rt></ruby>လည်း <ruby>強度<rt>きょうど</rt></ruby>က <ruby>低下<rt>ていか</rt></ruby>မရှိပါ။", textMY: "TMCP Steel သည် အထူကြီးသော်လည်း ခိုင်မာမှုမကျဆင်းပါ။" }
@@ -205,9 +205,9 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>工作図<rt>こうさくず</rt></ruby>および<ruby>工作図作成<rt>こうさくずさくせい</rt></ruby>に<ruby>関する<rt>かんする</rt></ruby><ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "Shop Drawing နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>詳細図<rt>しょうさいず</rt></ruby>သည် <ruby>部材<rt>ぶざい</rt></ruby>1<ruby>台毎<rt>だいごと</rt></ruby>に<ruby>作成<rt>さくせい</rt></ruby>した<ruby>図面<rt>ずめん</rt></ruby>である。", textMY: "Detail Drawing သည် အစိတ်အပိုင်းတစ်ခုချင်းစီအတွက် ရေးဆွဲထားသော ပုံဖြစ်သည်။" },
+      { id: 1, textJP: "(1) <ruby>詳細図<rt>しょうさいず</rt></ruby>は <ruby>部材<rt>ぶざい</rt></ruby>1<ruby>台毎<rt>だいごと</rt></ruby>に<ruby>作成<rt>さくせい</rt></ruby>した<ruby>図面<rt>ずめん</rt></ruby>である。", textMY: "Detail Drawing သည် အစိတ်အပိုင်းတစ်ခုချင်းစီအတွက် ရေးဆွဲထားသော ပုံဖြစ်သည်။" },
       { id: 2, textJP: "(2) <ruby>設計図<rt>せっけいず</rt></ruby>や<ruby>仕様書<rt>しようしょ</rt></ruby>を<ruby>検討<rt>けんとう</rt></ruby>して<ruby>作成<rt>さくせい</rt></ruby>する。", textMY: "ဒီဇိုင်းပုံနှင့် သတ်မှတ်ချက်များကို စစ်ဆေးပြီးမှ ရေးဆွဲရမည်။" },
-      { id: 3, textJP: "(3) <ruby>工事監理者<rt>こうじかんりしゃ</rt></ruby>၏ <ruby>承認<rt>しょうにん</rt></ruby>ကို <ruby>得る<rt>える</rt></ruby>必要がある。", textMY: "ကြီးကြပ်သူ၏ အတည်ပြုချက် ရယူရန် လိုအပ်သည်။" },
+      { id: 3, textJP: "(3) <ruby>工事監理者<rt>こうじかんりしゃ</rt></ruby>の <ruby>承認<rt>しょうにん</rt></ruby>を <ruby>得る<rt>える</rt></ruby>必要がある。", textMY: "ကြီးကြပ်သူ၏ အတည်ပြုချက် ရယူရန် လိုအပ်သည်။" },
       { id: 4, textJP: "(4) <ruby>承認後<rt>しょうにんご</rt></ruby>၏ <ruby>変更<rt>へんこう</rt></ruby>သည် <ruby>指示者<rt>しじしゃ</rt></ruby>၏ <ruby>サイン<rt>さいん</rt></ruby>ကို <ruby>得る<rt>える</rt></ruby>။", textMY: "အတည်ပြုပြီးနောက် ပြောင်းလဲပါက ညွှန်ကြားသူ၏ လက်မှတ် ယူရမည်။" },
       { id: 5, textJP: "(5) <ruby>口頭指示<rt>こうとうしじ</rt></ruby>သည် <ruby>文書<rt>ぶんしょ</rt></ruby>として<ruby>残す<rt>のこす</rt></ruby>။", textMY: "နှုတ်ဖြင့် ညွှန်ကြားချက်များကို စာဖြင့် မှတ်တမ်းတင်ရမည်။" }
     ],
@@ -220,7 +220,7 @@ export const chapter2023Data: StudyCardData[] = [
   },
   {
     id: "2023-13",
-    questionJP: "<ruby>加熱矯正<rt>かねつきょうせい</rt></ruby>で<ruby>ただちに水冷<rt>すいれい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>၏ <ruby>温度<rt>おんど</rt></ruby>はどれか。",
+    questionJP: "<ruby>加熱矯正<rt>かねつきょうせい</rt></ruby>で<ruby>ただちに水冷<rt>すいれい</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>の <ruby>温度<rt>おんど</rt></ruby>はどれか。",
     questionMY: "အပူပေးဖြောင့်ပြီး ချက်ချင်းရေဖြင့် အအေးခံပါက အပူချိန်မှာ အဘယ်နည်း။",
     options: [
       { id: 1, textJP: "(1) 400℃~500℃", textMY: "၄၀၀ မှ ၅၀၀ ဒီဂရီ" },
@@ -243,9 +243,9 @@ export const chapter2023Data: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>ドリルあけ<rt>どりるあけ</rt></ruby>を<ruby>原則<rt>げんそく</rt></ruby>とする。", textMY: "Drilling ဖြင့် ဖောက်ခြင်းမှာ အခြေခံဖြစ်သည်။" },
       { id: 2, textJP: "(2) <ruby>板厚<rt>いたあつ</rt></ruby>13mm<ruby>以下<rt>いか</rt></ruby>は<ruby>せん断<rt>せんだん</rt></ruby>できる。", textMY: "၁၃ မီလီမီတာအောက်ကို Punching လုပ်နိုင်သည်။" },
-      { id: 3, textJP: "(3) <ruby>貫通孔<rt>かんつうこう</rt></ruby>သည် <ruby>径<rt>けい</rt></ruby>+10mmとする。", textMY: "ဖြတ်သန်းပေါက်ကို အချင်း + ၁၀ မီလီမီတာ ထားရမည်။" },
+      { id: 3, textJP: "(3) <ruby>貫通孔<rt>かんつうこう</rt></ruby>は <ruby>径<rt>けい</rt></ruby>+10mmとする。", textMY: "ဖြတ်သန်းပေါက်ကို အချင်း + ၁၀ မီလီမီတာ ထားရမည်။" },
       { id: 4, textJP: "(4) <ruby>セパレータ<rt>せぱれーた</rt></ruby><ruby>用孔<rt>ようあな</rt></ruby>は<ruby>ガスあけ<rt>がすあけ</rt></ruby>とする。", textMY: "Separator အပေါက်ကို Gas ဖြင့် ဖောက်နိုင်သည်။" },
-      { id: 5, textJP: "(5) M24<ruby>以下<rt>いか</rt></ruby>၏ <ruby>孔径<rt>こうけい</rt></ruby>သည် +2.0mmとする。", textMY: "M24 အောက် အပေါက်များကို +၂ မီလီမီတာ ထားရမည်။" }
+      { id: 5, textJP: "(5) M24<ruby>以下<rt>いか</rt></ruby>の <ruby>孔径<rt>こうけい</rt></ruby>は +2.0mmとする。", textMY: "M24 အောက် အပေါက်များကို +၂ မီလီမီတာ ထားရမည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -260,10 +260,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionMY: "HS Bolt ၏ ပွတ်တိုက်မျက်နှာပြင် ပြုပြင်ခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
       { id: 1, textJP: "(1) <ruby>自然発錆<rt>しぜんはっせい</rt></ruby>နှင့် <ruby>薬剤発錆<rt>やくざいはっせい</rt></ruby>がある。", textMY: "သဘာဝနှင့် ဓာတု သံချေးတက်နည်းများ ရှိသည်။" },
-      { id: 2, textJP: "(2) <ruby>範囲<rt>はんい</rt></ruby>သည် <ruby>座金径<rt>ざがねけい</rt></ruby>၏ 2<ruby>倍<rt>ばい</rt></ruby>とする。", textMY: "ဧရိယာမှာ Washer အချင်း၏ ၂ ဆ ဖြစ်ရမည်။" },
+      { id: 2, textJP: "(2) <ruby>範囲<rt>はんい</rt></ruby>は <ruby>座金径<rt>ざがねけい</rt></ruby>の 2<ruby>倍<rt>ばい</rt></ruby>とする。", textMY: "ဧရိယာမှာ Washer အချင်း၏ ၂ ဆ ဖြစ်ရမည်။" },
       { id: 3, textJP: "(3) <ruby>板厚<rt>いたあつ</rt></ruby>6mm<ruby>未満<rt>みまん</rt></ruby>သည် <ruby>黒皮<rt>くろかわ</rt></ruby>၏ မာမာအတိုင်းထားနိုင်သည်။", textMY: "6mm အောက်ဆိုပါက 黒皮 (Mill Scale) အတိုင်းထားနိုင်သည်။" },
       { id: 4, textJP: "(4) <ruby>りん酸塩処理<rt>りんさんえんしょり</rt></ruby>ကို <ruby>確認<rt>かくにん</rt></ruby>する。", textMY: "Phosphate ပြုပြင်မှုကို စစ်ဆေးရမည်။" },
-      { id: 5, textJP: "(5) <ruby>特別処理<rt>とくべつしょり</rt></ruby>သည် <ruby>試験<rt>しけん</rt></ruby>ကို <ruby>実施<rt>じっし</rt></ruby>する。", textMY: "အထူးပြုပြင်မှုများအတွက် စမ်းသပ်မှု လုပ်ရမည်။" }
+      { id: 5, textJP: "(5) <ruby>特別処理<rt>とくべつしょり</rt></ruby>は <ruby>試験<rt>しけん</rt></ruby>を <ruby>実施<rt>じっし</rt></ruby>する。", textMY: "အထူးပြုပြင်မှုများအတွက် စမ်းသပ်မှု လုပ်ရမည်။" }
     ],
     correctOptionId: 3,
     explanation: {
@@ -277,10 +277,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ယာယီဂဟေဆက်ခြင်း (Tack Welding) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>低水素系<rt>ていすいそけい</rt></ruby>ကို <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "Low-hydrogen rod ကို သုံးရမည်။" },
-      { id: 2, textJP: "(2) <ruby>治具<rt>じぐ</rt></ruby>ကို <ruby>用いて拘束<rt>もちいてこうそく</rt></ruby>する。", textMY: "Fixture များဖြင့် ထိန်းချုပ်ရမည်။" },
+      { id: 1, textJP: "(1) <ruby>低水素系<rt>ていすいそけい</rt></ruby>を <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "Low-hydrogen rod ကို သုံးရမည်။" },
+      { id: 2, textJP: "(2) <ruby>治具<rt>じぐ</rt></ruby>を <ruby>用いて拘束<rt>もちいてこうそく</rt></ruby>する。", textMY: "Fixture များဖြင့် ထိန်းချုပ်ရမည်။" },
       { id: 3, textJP: "(3) <ruby>最小長さ<rt>さいしょうながさ</rt></ruby>30mmとする。", textMY: "အနည်းဆုံးအရှည် ၃၀ မီလီမီတာ ဖြစ်ရမည်။" },
-      { id: 4, textJP: "(4) <ruby>組立て前<rt>くみたてまえ</rt></ruby>に<ruby>矯正<rt>きょうせい</rt></ruby>ကို <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "မတပ်ဆင်မီ အဖြောင့်ပြင်ရမည်။" },
+      { id: 4, textJP: "(4) <ruby>組立て前<rt>くみたてまえ</rt></ruby>に<ruby>矯正<rt>きょうせい</rt></ruby>を <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "မတပ်ဆင်မီ အဖြောင့်ပြင်ရမည်။" },
       { id: 5, textJP: "(5) <ruby>再溶融<rt>さいようゆう</rt></ruby>されない<ruby>箇所<rt>かしょ</rt></ruby>တွင် <ruby>行ってはならない<rt>おこなってはならない</rt></ruby>。", textMY: "အရည်ပြန်မပျော်မည့်နေရာတွင် မလုပ်ရပါ။" }
     ],
     correctOptionId: 5,
@@ -295,11 +295,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>建築鉄骨<rt>けんちくてっこつ</rt></ruby>၏ <ruby>溶接<rt>ようせつ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိဂဟေဆက်ခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>裏当て金<rt>うらあてがね</rt></ruby>၏ <ruby>片面溶接<rt>かためんようせつ</rt></ruby>သည် <ruby>一般的<rt>いっぱんてき</rt></ruby>である。", textMY: "Backing metal သုံး၍ တစ်ဖက်တည်းဆက်ခြင်းမှာ ယေဘုယျဖြစ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>板厚方向<rt>いたあつほうこう</rt></ruby>သည် SN<ruby>材<rt>ざい</rt></ruby> C<ruby>種<rt>しゅ</rt></ruby>ကို <ruby>選定<rt>せんてい</rt></ruby>する。", textMY: "အထူဘက်သို့အားခံရပါက SN-C ကို သုံးရမည်။" },
-      { id: 3, textJP: "(3) <ruby>仕口部<rt>しぐちぶ</rt></ruby>သည် <ruby>計画<rt>けいかく</rt></ruby>ကို <ruby>立てる<rt>たてる</rt></ruby>必要がある。", textMY: "Joint နေရာများအတွက် စီမံချက် ဆွဲရမည်။" },
+      { id: 1, textJP: "(1) <ruby>裏当て金<rt>うらあてがね</rt></ruby>の <ruby>片面溶接<rt>かためんようせつ</rt></ruby>は <ruby>一般的<rt>いっぱんてき</rt></ruby>である。", textMY: "Backing metal သုံး၍ တစ်ဖက်တည်းဆက်ခြင်းမှာ ယေဘုယျဖြစ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>板厚方向<rt>いたあつほうこう</rt></ruby>は SN<ruby>材<rt>ざい</rt></ruby> C<ruby>種<rt>しゅ</rt></ruby>を <ruby>選定<rt>せんてい</rt></ruby>する。", textMY: "အထူဘက်သို့အားခံရပါက SN-C ကို သုံးရမည်။" },
+      { id: 3, textJP: "(3) <ruby>仕口部<rt>しぐちぶ</rt></ruby>は <ruby>計画<rt>けいかく</rt></ruby>を <ruby>立てる<rt>たてる</rt></ruby>必要がある。", textMY: "Joint နေရာများအတွက် စီမံချက် ဆွဲရမည်။" },
       { id: 4, textJP: "(4) JASS 6တွင် <ruby>各種溶接<rt>かくしゅようせつ</rt></ruby>ကို <ruby>定めている<rt>さだめている</rt></ruby>。", textMY: "JASS 6 တွင် ဂဟေအမျိုးမျိုးကို သတ်မှတ်ထားသည်။" },
-      { id: 5, textJP: "(5) <ruby>全ての<rt>すべての</rt></ruby>SN, SM<ruby>材<rt>ざい</rt></ruby>၏ <ruby>溶接性<rt>ようせつせい</rt></ruby>သည် <ruby>良好<rt>りょうこう</rt></ruby>である。", textMY: "SN, SM အားလုံး ဂဟေဆက်နိုင်စွမ်း ကောင်းသည်။" }
+      { id: 5, textJP: "(5) <ruby>全ての<rt>すべての</rt></ruby>SN, SM<ruby>材<rt>ざい</rt></ruby>の <ruby>溶接性<rt>ようせつせい</rt></ruby>は <ruby>良好<rt>りょうこう</rt></ruby>である。", textMY: "SN, SM အားလုံး ဂဟေဆက်နိုင်စွမ်း ကောင်းသည်။" }
     ],
     correctOptionId: 5,
     explanation: {
@@ -331,11 +331,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>溶接順序<rt>ようせつじゅんじょ</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဂဟေဆက်အစီအစဉ် (Welding Sequence) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>不可能箇所<rt>ふかのうかしょ</rt></ruby>ကို <ruby>避ける<rt>さける</rt></ruby>。", textMY: "မဖြစ်နိုင်သောနေရာများကို ရှောင်ရမည်။" },
-      { id: 2, textJP: "(2) <ruby>熱影響<rt>ねつえいきょう</rt></ruby>ကို <ruby>最小限<rt>さいしょうげん</rt></ruby>にする。", textMY: "အပူသက်ရောက်မှုကို လျှော့ချရမည်။" },
+      { id: 1, textJP: "(1) <ruby>不可能箇所<rt>ふかのうかしょ</rt></ruby>を <ruby>避ける<rt>さける</rt></ruby>。", textMY: "မဖြစ်နိုင်သောနေရာများကို ရှောင်ရမည်။" },
+      { id: 2, textJP: "(2) <ruby>熱影響<rt>ねつえいきょう</rt></ruby>を <ruby>最小限<rt>さいしょうげん</rt></ruby>にする。", textMY: "အပူသက်ရောက်မှုကို လျှော့ချရမည်။" },
       { id: 3, textJP: "(3) <ruby>全体に分散<rt>ぜんたいにぶんさん</rt></ruby>させる。", textMY: "တစ်ပြင်လုံးသို့ ဖြန့်ရမည်။" },
-      { id: 4, textJP: "(4) <ruby>変形が小さい方<rt>へんけいちいさいほう</rt></ruby>ကို <ruby>先行<rt>せんこう</rt></ruby>する。", textMY: "ပုံပျက်မှုနည်းသောဘက်ကို အရင်လုပ်ရမည်။" },
-      { id: 5, textJP: "(5) <ruby>変形<rt>へんけい</rt></ruby>ကို <ruby>打ち消す順序<rt>うちけすじゅんじょ</rt></ruby>とする。", textMY: "ပုံပျက်မှုကို ပြန်ထိန်းမည့် အစီအစဉ်ဖြစ်ရမည်။" }
+      { id: 4, textJP: "(4) <ruby>変形が小さい方<rt>へんけいちいさいほう</rt></ruby>を <ruby>先行<rt>せんこう</rt></ruby>する。", textMY: "ပုံပျက်မှုနည်းသောဘက်ကို အရင်လုပ်ရမည်။" },
+      { id: 5, textJP: "(5) <ruby>変形<rt>へんけい</rt></ruby>を <ruby>打ち消す順序<rt>うちけすじゅんじょ</rt></ruby>とする。", textMY: "ပုံပျက်မှုကို ပြန်ထိန်းမည့် အစီအစဉ်ဖြစ်ရမည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -349,11 +349,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>溶接施工<rt>ようせつせこう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဂဟေဆက်လုပ်ငန်း (Welding Procedure) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>သည် <ruby>厳重<rt>げんじゅう</rt></ruby>に<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ယာယီဂဟေကို တင်းကျပ်စွာ စစ်ရမည်။" },
-      { id: 2, textJP: "(2) <ruby>内部欠陥<rt>ないぶけっかん</rt></ruby>သည် <ruby>取り除いた後<rt>とりのぞいたあと</rt></ruby> <ruby>再開<rt>さいかい</rt></ruby>する。", textMY: "ချို့ယွင်းချက်ကို ဖယ်ရှားပြီးမှ ပြန်စရမည်။" },
-      { id: 3, textJP: "(3) -5℃~5℃သည် 100mmကို <ruby>加熱<rt>かねつ</rt></ruby>する。", textMY: "အပူချိန်နည်းပါက ၁၀၀ မီလီမီတာ ပတ်လည်ကို အပူပေးရမည်။" },
-      { id: 4, textJP: "(4) <ruby>結露<rt>けつろ</rt></ruby>သည် <ruby>乾燥<rt>かんそう</rt></ruby>させてから<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ရေငွေ့ရှိပါက အခြောက်ခံပြီးမှ လုပ်ရမည်။" },
-      { id: 5, textJP: "(5) <ruby>予熱温度<rt>よねつおんど</rt></ruby>သည် <ruby>低い方<rt>ひくいほう</rt></ruby>ကို <ruby>採用<rt>さいよう</rt></ruby>する。", textMY: "Preheat အပူချိန်ကို အနိမ့်ဆုံးဘက်က ယူရမည်။" }
+      { id: 1, textJP: "(1) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>は <ruby>厳重<rt>げんじゅう</rt></ruby>に<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ယာယီဂဟေကို တင်းကျပ်စွာ စစ်ရမည်။" },
+      { id: 2, textJP: "(2) <ruby>内部欠陥<rt>ないぶけっかん</rt></ruby>は <ruby>取り除いた後<rt>とりのぞいたあと</rt></ruby> <ruby>再開<rt>さいかい</rt></ruby>する。", textMY: "ချို့ယွင်းချက်ကို ဖယ်ရှားပြီးမှ ပြန်စရမည်။" },
+      { id: 3, textJP: "(3) -5℃~5℃は 100mmを <ruby>加熱<rt>かねつ</rt></ruby>する。", textMY: "အပူချိန်နည်းပါက ၁၀၀ မီလီမီတာ ပတ်လည်ကို အပူပေးရမည်။" },
+      { id: 4, textJP: "(4) <ruby>結露<rt>けつろ</rt></ruby>は <ruby>乾燥<rt>かんそう</rt></ruby>させてから<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ရေငွေ့ရှိပါက အခြောက်ခံပြီးမှ လုပ်ရမည်။" },
+      { id: 5, textJP: "(5) <ruby>予熱温度<rt>よねつおんど</rt></ruby>は <ruby>低い方<rt>ひくいほう</rt></ruby>を <ruby>採用<rt>さいよう</rt></ruby>する。", textMY: "Preheat အပူချိန်ကို အနိမ့်ဆုံးဘက်က ယူရမည်။" }
     ],
     correctOptionId: 5,
     explanation: {
@@ -367,11 +367,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>ガスシールドアーク溶接<rt>がすしーるどあーくようせつ</rt></ruby>の<ruby>施工条件<rt>せこうじょうけん</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "Gas Shielded Arc Welding ၏ လုပ်ငန်းအခြေအနေများနှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>管理値<rt>かんりち</rt></ruby>က <ruby>定められている<rt>さだめられている</rt></ruby>。", textMY: "သတ်မှတ်တန်ဖိုးများ ရှိသည်။" },
-      { id: 2, textJP: "(2) <ruby>高強度<rt>こうきょうど</rt></ruby>၏ <ruby>入熱<rt>にゅうねつ</rt></ruby>သည် <ruby>大きく<rt>おおきく</rt></ruby>できる。", textMY: "ခိုင်မာမှုမြင့်သော wire ဆိုလျှင် အပူပိုပေးနိုင်သည်။" },
-      { id: 3, textJP: "(3) <ruby>鋼板・形鋼<rt>こうはん・かたこう</rt></ruby>သည် <ruby>管理<rt>かんり</rt></ruby>က <ruby>厳しい<rt>きびしい</rt></ruby>。", textMY: "သံပြားနှင့် shape steel များတွင် စီမံမှု ပိုတင်းကျပ်သည်။" },
-      { id: 4, textJP: "(4) <ruby>ワイヤ突き出し長さ<rt>わいやつきだしながさ</rt></ruby>ကို <ruby>管理<rt>かんり</rt></ruby>する。", textMY: "Wire အရှည်ကို စီမံရမည်။" },
-      { id: 5, textJP: "(5) <ruby>位置<rt>いち</rt></ruby>သည် 10mmで<ruby>計測<rt>けいそく</rt></ruby>する。", textMY: "၁၀ မီလီမီတာအကွာတွင် တိုင်းတာရမည်။" }
+      { id: 1, textJP: "(1) <ruby>管理値<rt>かんりち</rt></ruby>が <ruby>定められている<rt>さだめられている</rt></ruby>。", textMY: "သတ်မှတ်တန်ဖိုးများ ရှိသည်။" },
+      { id: 2, textJP: "(2) <ruby>高強度<rt>こうきょうど</rt></ruby>の <ruby>入熱<rt>にゅうねつ</rt></ruby>は <ruby>大きく<rt>おおきく</rt></ruby>できる。", textMY: "ခိုင်မာမှုမြင့်သော wire ဆိုလျှင် အပူပိုပေးနိုင်သည်။" },
+      { id: 3, textJP: "(3) <ruby>鋼板・形鋼<rt>こうはん・かたこう</rt></ruby>は <ruby>管理<rt>かんり</rt></ruby>が <ruby>厳しい<rt>きびしい</rt></ruby>。", textMY: "သံပြားနှင့် shape steel များတွင် စီမံမှု ပိုတင်းကျပ်သည်။" },
+      { id: 4, textJP: "(4) <ruby>ワイヤ突き出し長さ<rt>わいやつきだしながさ</rt></ruby>を <ruby>管理<rt>かんり</rt></ruby>する。", textMY: "Wire အရှည်ကို စီမံရမည်။" },
+      { id: 5, textJP: "(5) <ruby>位置<rt>いち</rt></ruby>は 10mmで<ruby>計測<rt>けいそく</rt></ruby>する。", textMY: "၁၀ မီလီမီတာအကွာတွင် တိုင်းတာရမည်။" }
     ],
     correctOptionId: 2,
     explanation: {
@@ -386,9 +386,9 @@ export const chapter2023Data: StudyCardData[] = [
     questionMY: "စက်ရုပ်ဂဟေ (Robot Welding) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>種類<rt>しゅるい</rt></ruby>နှင့် <ruby>形状<rt>けいじょう</rt></ruby>တွင် <ruby>制限<rt>せいげん</rt></ruby>がある。", textMY: "အမျိုးအစားနှင့် ပုံစံ ကန့်သတ်ချက် ရှိသည်။" },
-      { id: 2, textJP: "(2) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>သည် 1.4mm <ruby>以上<rt>いじょう</rt></ruby>ကို <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "ယာယီဂဟေကို ၁.၄ မီလီမီတာနှင့်အထက် wire သုံးရမည်။" },
-      { id: 3, textJP: "(3) <ruby>固形タブ<rt>こけいたぶ</rt></ruby>ကို <ruby>管理<rt>かんり</rt></ruby>する。", textMY: "End tab ကို စီမံရမည်။" },
-      { id: 4, textJP: "(4) <ruby>水・油<rt>みず・あぶら</rt></ruby>ကို <ruby>除去<rt>じょきょ</rt></ruby>する。", textMY: "ရေနှင့် ဆီကို ဖယ်ရှားရမည်။" },
+      { id: 2, textJP: "(2) <ruby>組立て溶接<rt>くみたてようせつ</rt></ruby>は 1.4mm <ruby>以上<rt>いじょう</rt></ruby>を <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "ယာယီဂဟေကို ၁.၄ မီလီမီတာနှင့်အထက် wire သုံးရမည်။" },
+      { id: 3, textJP: "(3) <ruby>固形タブ<rt>こけいたぶ</rt></ruby>を <ruby>管理<rt>かんり</rt></ruby>する。", textMY: "End tab ကို စီမံရမည်။" },
+      { id: 4, textJP: "(4) <ruby>水・油<rt>みず・あぶら</rt></ruby>を <ruby>除去<rt>じょきょ</rt></ruby>する。", textMY: "ရေနှင့် ဆီကို ဖယ်ရှားရမည်။" },
       { id: 5, textJP: "(5) <ruby>振動<rt>しんどう</rt></ruby>က <ruby>少ない箇所<rt>すくないかしょ</rt></ruby>တွင် <ruby>設置<rt>せっち</rt></ruby>する。", textMY: "တုန်ခါမှုနည်းသောနေရာတွင် ထားရမည်။" }
     ],
     correctOptionId: 2,
@@ -406,7 +406,7 @@ export const chapter2023Data: StudyCardData[] = [
       { id: 1, textJP: "(1) <ruby>熱・圧力<rt>ねつ・あつりょく</rt></ruby>ဖြင့် <ruby>一体化<rt>いったいか</rt></ruby>する。", textMY: "အပူ/ဖိအားဖြင့် တစ်သားတည်းလုပ်ခြင်းဖြစ်သည်။" },
       { id: 2, textJP: "(2) <ruby>融接<rt>ゆうせつ</rt></ruby>သည် <ruby>冷却・凝固<rt>れいきゃく・ぎょうこ</rt></ruby>ဖြင့် <ruby>接合<rt>せつごう</rt></ruby>する。", textMY: "အရည်ပျော်ပြီး အေးသွားရာမှ ဆက်ခြင်းဖြစ်သည်။" },
       { id: 3, textJP: "(3) <ruby>ろう接<rt>ろうせつ</rt></ruby>သည် <ruby>低い金属<rt>ひくいきんぞく</rt></ruby>ကို <ruby>充填<rt>じゅうてん</rt></ruby>する。", textMY: "Brazing သည် အရည်ပျော်မှတ်နိမ့်သော သတ္တုဖြည့်ခြင်းဖြစ်သည်။" },
-      { id: 4, textJP: "(4) <ruby>圧接<rt>あっせつ</rt></ruby>သည် <ruby>機械的圧力<rt>きかいてきあつりょく</rt></ruby>ကို <ruby>負荷<rt>ふか</rt></ruby>する。", textMY: "Pressure welding သည် ဖိအားပေးခြင်းဖြစ်သည်။" },
+      { id: 4, textJP: "(4) <ruby>圧接<rt>あっせつ</rt></ruby>は <ruby>機械的圧力<rt>きかいてきあつりょく</rt></ruby>を <ruby>負荷<rt>ふか</rt></ruby>する。", textMY: "Pressure welding သည် ဖိအားပေးခြင်းဖြစ်သည်။" },
       { id: 5, textJP: "(5) <ruby>建築鉄骨<rt>けんちくてっこつ</rt></ruby>တွင် 3<ruby>種類全て<rt>しゅるいすべて</rt></ruby> <ruby>利用<rt>りよう</rt></ruby>する。", textMY: "သံမဏိဘောင်တွင် ၃ မျိုးစလုံး သုံးသည်။" }
     ],
     correctOptionId: 5,
@@ -421,11 +421,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>冷却速度<rt>れいきゃくそくど</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "အအေးခံနှုန်း (Cooling Rate) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) 800℃~500℃၏ <ruby>時間<rt>じかん</rt></ruby>で<ruby>表す<rt>あらわす</rt></ruby>。", textMY: "၈၀၀ မှ ၅၀၀ အထိ ကြာချိန်ဖြင့် ပြသည်။" },
-      { id: 2, textJP: "(2) <ruby>長い<rt>ながい</rt></ruby>သည် <ruby>強度・靭性<rt>きょうど・じんせい</rt></ruby>က <ruby>低下<rt>ていか</rt></ruby>する。", textMY: "ကြာလွန်းပါက ခိုင်မာမှု ကျဆင်းသည်။" },
-      { id: 3, textJP: "(3) <ruby>短い<rt>みじかい</rt></ruby>သည် <ruby>硬化<rt>こうか</rt></ruby>し<ruby>割れ<rt>われ</rt></ruby>が<ruby>発生<rt>はっせい</rt></ruby>する。", textMY: "တိုလွန်းပါက မာပြီး ကွဲအက်တတ်သည်။" },
-      { id: 4, textJP: "(4) <ruby>入熱<rt>にゅうねつ</rt></ruby>က <ruby>大きい<rt>おおきい</rt></ruby>သည် <ruby>速く<rt>はやく</rt></ruby>なる。", textMY: "အပူများလျှင် ပိုမြန်သည်။" },
-      { id: 5, textJP: "(5) <ruby>入熱<rt>にゅうねつ</rt></ruby>သည် <ruby>速度<rt>そくど</rt></ruby>に<ruby>反比例<rt>はんぴれい</rt></ruby>する。", textMY: "အပူသည် အရှိန်နှင့် ပြောင်းပြန်အချိုးကျသည်။" }
+      { id: 1, textJP: "(1) 800℃~500℃の <ruby>時間<rt>じかん</rt></ruby>で<ruby>表す<rt>あらわす</rt></ruby>。", textMY: "၈၀၀ မှ ၅၀၀ အထိ ကြာချိန်ဖြင့် ပြသည်။" },
+      { id: 2, textJP: "(2) <ruby>長い<rt>ながい</rt></ruby>は <ruby>強度・靭性<rt>きょうど・じんせい</rt></ruby>が <ruby>低下<rt>ていか</rt></ruby>する。", textMY: "ကြာလွန်းပါက ခိုင်မာမှု ကျဆင်းသည်။" },
+      { id: 3, textJP: "(3) <ruby>短い<rt>みじかい</rt></ruby>は <ruby>硬化<rt>こうか</rt></ruby>し<ruby>割れ<rt>われ</rt></ruby>が<ruby>発生<rt>はっせい</rt></ruby>する。", textMY: "တိုလွန်းပါက မာပြီး ကွဲအက်တတ်သည်။" },
+      { id: 4, textJP: "(4) <ruby>入熱<rt>にゅうねつ</rt></ruby>が <ruby>大きい<rt>おおきい</rt></ruby>は <ruby>速く<rt>はやく</rt></ruby>なる。", textMY: "အပူများလျှင် ပိုမြန်သည်။" },
+      { id: 5, textJP: "(5) <ruby>入熱<rt>にゅうねつ</rt></ruby>は <ruby>速度<rt>そくど</rt></ruby>に<ruby>反比例<rt>はんぴれい</rt></ruby>する。", textMY: "အပူသည် အရှိန်နှင့် ပြောင်းပြန်အချိုးကျသည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -439,11 +439,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>溶接法<rt>ようせつほう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဂဟေဆက်နည်း (Welding Method) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>被覆アーク<rt>ひふくあーく</rt></ruby>သည် <ruby>溶極式<rt>ようきょくしき</rt></ruby>である。", textMY: "SMAW သည် electrode အရည်ပျော်သောနည်းဖြစ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>ガスシールド<rt>がすしーるど</rt></ruby>သည် <ruby>溶着速度<rt>ようちゃくそくど</rt></ruby>က <ruby>大きい<rt>おおきい</rt></ruby>。", textMY: "Gas welding သည် ဂဟေသားတင်နှုန်း ပိုမြန်သည်။" },
-      { id: 3, textJP: "(3) <ruby>フラックスワイヤ<rt>ふらっくすわいや</rt></ruby>သည် <ruby>速度<rt>そくど</rt></ruby>က <ruby>大きい<rt>おおきい</rt></ruby>。", textMY: "Flux wire က ပိုမြန်သည်။" },
-      { id: 4, textJP: "(4) <ruby>サブマージ<rt>さぶまーじ</rt></ruby>သည် <ruby>発生ガス<rt>はっせいがす</rt></ruby>でシールドする。", textMY: "SAW သည် gas ဖြင့် ကာကွယ်ခြင်းဖြစ်သည်။" },
-      { id: 5, textJP: "(5) <ruby>エレクトロスラグ<rt>えれくとろすらぐ</rt></ruby>သည် <ruby>角溶接<rt>すみようせつ</rt></ruby>に<ruby>適用<rt>てきよう</rt></ruby>する。", textMY: "ESW ကို ထောင့်ဂဟေအတွက် သုံးသည်။" }
+      { id: 1, textJP: "(1) <ruby>被覆アーク<rt>ひふくあーく</rt></ruby>は <ruby>溶極式<rt>ようきょくしき</rt></ruby>である。", textMY: "SMAW သည် electrode အရည်ပျော်သောနည်းဖြစ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>ガスシールド<rt>がすしーるど</rt></ruby>は <ruby>溶着速度<rt>ようちゃくそくど</rt></ruby>が <ruby>大きい<rt>おおきい</rt></ruby>。", textMY: "Gas welding သည် ဂဟေသားတင်နှုန်း ပိုမြန်သည်။" },
+      { id: 3, textJP: "(3) <ruby>フラックスワイヤ<rt>ふらっくすわいや</rt></ruby>は <ruby>速度<rt>そくど</rt></ruby>が <ruby>大きい<rt>おおきい</rt></ruby>。", textMY: "Flux wire က ပိုမြန်သည်။" },
+      { id: 4, textJP: "(4) <ruby>サブマージ<rt>さぶまーじ</rt></ruby>は <ruby>発生ガス<rt>はっせいがす</rt></ruby>でシールドする。", textMY: "SAW သည် gas ဖြင့် ကာကွယ်ခြင်းဖြစ်သည်။" },
+      { id: 5, textJP: "(5) <ruby>エレクトロスラグ<rt>えれくとろすらぐ</rt></ruby>は <ruby>角溶接<rt>すみようせつ</rt></ruby>に<ruby>適用<rt>てきよう</rt></ruby>する。", textMY: "ESW ကို ထောင့်ဂဟေအတွက် သုံးသည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -461,7 +461,7 @@ export const chapter2023Data: StudyCardData[] = [
       { id: 2, textJP: "(2) <ruby>機械的性質<rt>きかいてきせいしつ</rt></ruby>သည် <ruby>成分<rt>せいぶん</rt></ruby>နှင့် <ruby>速度<rt>そくど</rt></ruby>ဖြင့် <ruby>決まる<rt>きまる</rt></ruby>。", textMY: "ဂုဏ်သတ္တိများကို ဓာတုဖွဲ့စည်းမှုနှင့် အအေးနှုန်းဖြင့် ဆုံးဖြတ်သည်။" },
       { id: 3, textJP: "(3) HAZသည် <ruby>部位<rt>ぶい</rt></ruby>によって<ruby>組織<rt>そしき</rt></ruby>က <ruby>異なる<rt>ことなる</rt></ruby>。", textMY: "HAZ ၏ ဖွဲ့စည်းပုံသည် နေရာအလိုက် ကွဲပြားသည်။" },
       { id: 4, textJP: "(4) <ruby>硬さ<rt>かたさ</rt></ruby>လည်း <ruby>変化<rt>へんか</rt></ruby>する。", textMY: "မာကျောမှုလည်း ပြောင်းလဲသည်။" },
-      { id: 5, textJP: "(5) PCMသည် <ruby>炭素含有量<rt>たんそがんゆうりょう</rt></ruby>၏ <ruby>指標<rt>しひょう</rt></ruby>である。", textMY: "PCM သည် ကာဗွန်အညွှန်းကိန်းဖြစ်သည်။" }
+      { id: 5, textJP: "(5) PCMは <ruby>炭素含有量<rt>たんそがんゆうりょう</rt></ruby>の <ruby>指標<rt>しひょう</rt></ruby>である。", textMY: "PCM သည် ကာဗွန်အညွှန်းကိန်းဖြစ်သည်။" }
     ],
     correctOptionId: 1,
     explanation: {
@@ -475,11 +475,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>溶接変形<rt>ようせつへんけい</rt></ruby>への<ruby>対応<rt>たいおう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဂဟေဆက်ခြင်းကြောင့် ပုံပျက်ခြင်း (Welding Deformation) ကို ပြန်လည်ပြုပြင်ခြင်းနှင့်ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>角変形<rt>かくへんけい</rt></ruby>သည် <ruby>逆ひずみ法<rt>ぎゃくひずみほう</rt></ruby>がある。", textMY: "ထောင့်ပြောင်းခြင်းအတွက် presetting နည်းရှိသည်။" },
-      { id: 2, textJP: "(2) <ruby>横収縮<rt>よこしゅうしゅく</rt></ruby>သည် <ruby>対応<rt>たいおう</rt></ruby>က <ruby>行われていない<rt>おこなわれていない</rt></ruby>。", textMY: "အနံလိုက်ကျုံ့ခြင်းကို ဖြေရှင်းလေ့မရှိပါ။" },
-      { id: 3, textJP: "(3) <ruby>座屈変形<rt>ざくつへんけい</rt></ruby>သည် <ruby>順序<rt>じゅんじょ</rt></ruby>က <ruby>重要<rt>じゅうよう</rt></ruby>である。", textMY: "Buckling အတွက် အစီအစဉ်မှာ အရေးကြီးသည်။" },
-      { id: 4, textJP: "(4) <ruby>縦曲り<rt>たてまがり</rt></ruby>သည် <ruby>対称配置<rt>たいしょうはいち</rt></ruby>とする。", textMY: "အလျားလိုက်ကွေးခြင်းကို ဘယ်ညာညီအောင် ထားရမည်။" },
-      { id: 5, textJP: "(5) <ruby>回転変形<rt>かいてんへんけい</rt></ruby>သည် <ruby>拘束<rt>こうそく</rt></ruby>က <ruby>利用<rt>りよう</rt></ruby>できない。", textMY: "လည်ထွက်ခြင်းကို ထိန်းချုပ်၍ မရပါ။" }
+      { id: 1, textJP: "(1) <ruby>角変形<rt>かくへんけい</rt></ruby>は <ruby>逆ひずみ法<rt>ぎゃくひずみほう</rt></ruby>がある。", textMY: "ထောင့်ပြောင်းခြင်းအတွက် presetting နည်းရှိသည်။" },
+      { id: 2, textJP: "(2) <ruby>横収縮<rt>よこしゅうしゅく</rt></ruby>は <ruby>対応<rt>たいおう</rt></ruby>が <ruby>行われていない<rt>おこなわれていない</rt></ruby>。", textMY: "အနံလိုက်ကျုံ့ခြင်းကို ဖြေရှင်းလေ့မရှိပါ။" },
+      { id: 3, textJP: "(3) <ruby>座屈変形<rt>ざくつへんけい</rt></ruby>は <ruby>順序<rt>じゅんじょ</rt></ruby>が <ruby>重要<rt>じゅうよう</rt></ruby>である。", textMY: "Buckling အတွက် အစီအစဉ်မှာ အရေးကြီးသည်။" },
+      { id: 4, textJP: "(4) <ruby>縦曲り<rt>たてまがり</rt></ruby>は <ruby>対称配置<rt>たいしょうはいち</rt></ruby>とする。", textMY: "အလျားလိုက်ကွေးခြင်းကို ဘယ်ညာညီအောင် ထားရမည်။" },
+      { id: 5, textJP: "(5) <ruby>回転変形<rt>かいてんへんけい</rt></ruby>は <ruby>拘束<rt>こうそく</rt></ruby>が <ruby>利用<rt>りよう</rt></ruby>できない。", textMY: "လည်ထွက်ခြင်းကို ထိန်းချုပ်၍ မရပါ။" }
     ],
     correctOptionId: 5,
     explanation: {
@@ -493,11 +493,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>溶融亜鉛めっき<rt>ようゆうあえんめっき</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ပူပြင်းသောသွပ်ရည်စိမ်ခြင်း (Hot-dip Galvanizing) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>合金層<rt>ごうきんそう</rt></ruby>ကို <ruby>形成<rt>けいせい</rt></ruby>する。", textMY: "Alloy layer ကို ဖြစ်ပေါ်စေသည်။" },
+      { id: 1, textJP: "(1) <ruby>合金層<rt>ごうきんそう</rt></ruby>を <ruby>形成<rt>けいせい</rt></ruby>する。", textMY: "Alloy layer ကို ဖြစ်ပေါ်စေသည်။" },
       { id: 2, textJP: "(2) <ruby>変形・割れ<rt>へんけい・われ</rt></ruby>に<ruby>注意<rt>ちゅうい</rt></ruby>する。", textMY: "ပုံပျက်ခြင်း/ကွဲခြင်းကို သတိပြုရမည်။" },
       { id: 3, textJP: "(3) <ruby>設計段階<rt>せっけいだんかい</rt></ruby>တွင် <ruby>防止<rt>ぼうし</rt></ruby>できる。", textMY: "ဒီဇိုင်းအဆင့်ကတည်းက ကာကွယ်နိုင်သည်။" },
       { id: 4, textJP: "(4) HDZT 77သည် <ruby>付着量<rt>ふちゃくりょう</rt></ruby>である。", textMY: "HDZT 77 ဆိုသည်မှာ coating ပမာဏဖြစ်သည်။" },
-      { id: 5, textJP: "(5) <ruby>温度<rt>おんど</rt></ruby>သည် 450℃<ruby>前後<rt>ぜんご</rt></ruby>である。", textMY: "အပူချိန်မှာ ၄၅၀ ဒီဂရီဝန်းကျင်ဖြစ်သည်။" }
+      { id: 5, textJP: "(5) <ruby>温度<rt>おんど</rt></ruby>は 450℃<ruby>前後<rt>ぜんご</rt></ruby>である。", textMY: "အပူချိန်မှာ ၄၅၀ ဒီဂရီဝန်းကျင်ဖြစ်သည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -511,11 +511,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>塗装作業<rt>とそうさぎょう</rt></ruby>に関する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最も<rt>もっと</rt></ruby><ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဆေးသုတ်ခြင်းလုပ်ငန်း (Painting Work) နှင့် ပတ်သက်၍ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>粘度が高い<rt>ねんどがたかい</rt></ruby>သည် <ruby>たれ<rt>たれ</rt></ruby>က <ruby>生じる<rt>しょうじる</rt></ruby>。", textMY: "ဆေးအရမ်းပျစ်လျှင် စီးကျတတ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>厚塗り<rt>あつぬり</rt></ruby>ကို <ruby>避ける<rt>さける</rt></ruby>。", textMY: "အထူကြီးသုတ်ခြင်းကို ရှောင်ရမည်။" },
+      { id: 1, textJP: "(1) <ruby>粘度が高い<rt>ねんどがたかい</rt></ruby>は <ruby>たれ<rt>たれ</rt></ruby>が <ruby>生じる<rt>しょうじる</rt></ruby>。", textMY: "ဆေးအရမ်းပျစ်လျှင် စီးကျတတ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>厚塗り<rt>あつぬり</rt></ruby>を <ruby>避ける<rt>さける</rt></ruby>。", textMY: "အထူကြီးသုတ်ခြင်းကို ရှောင်ရမည်။" },
       { id: 3, textJP: "(3) <ruby>はけ・吹付け<rt>はけ・ふきつけ</rt></ruby>がある。", textMY: "Brush နှင့် Spray နည်းများ ရှိသည်။" },
-      { id: 4, textJP: "(4) 5℃<ruby>以下<rt>いか</rt></ruby>သည် <ruby>避ける<rt>さける</rt></ruby>。", textMY: "၅ ဒီဂရီအောက်ဆိုလျှင် ရှောင်ရမည်။" },
-      { id: 5, textJP: "(5) <ruby>溶接部<rt>ようせつぶ</rt></ruby>100mmသည် <ruby>塗装しない<rt>とそうしない</rt></ruby>。", textMY: "ဂဟေဆက်မည့်နေရာ ၁၀၀ မီလီမီတာအတွင်း ဆေးမသုတ်ရ။" }
+      { id: 4, textJP: "(4) 5℃<ruby>以下<rt>いか</rt></ruby>は <ruby>避ける<rt>さける</rt></ruby>。", textMY: "၅ ဒီဂရီအောက်ဆိုလျှင် ရှောင်ရမည်။" },
+      { id: 5, textJP: "(5) <ruby>溶接部<rt>ようせつぶ</rt></ruby>100mmは <ruby>塗装しない<rt>とそうしない</rt></ruby>。", textMY: "ဂဟေဆက်မည့်နေရာ ၁၀၀ မီလီမီတာအတွင်း ဆေးမသုတ်ရ။" }
     ],
     correctOptionId: 1,
     explanation: {
@@ -530,7 +530,7 @@ export const chapter2023Data: StudyCardData[] = [
     questionMY: "QA တွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
       { id: 1, textJP: "(1) <ruby>施工者<rt>せこうしゃ</rt></ruby>က <ruby>保証<rt>ほしょう</rt></ruby>する。", textMY: "တည်ဆောက်သူက အာမခံရမည်။" },
-      { id: 2, textJP: "(2) <ruby>法律<rt>ほうりつ</rt></ruby>သည် <ruby>最低要求<rt>さいていようきゅう</rt></ruby>である。", textMY: "ဥပဒေသည် အနိမ့်ဆုံးလိုအပ်ချက်ဖြစ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>法律<rt>ほうりつ</rt></ruby>は <ruby>最低要求<rt>さいていようきゅう</rt></ruby>である。", textMY: "ဥပဒေသည် အနိမ့်ဆုံးလိုအပ်ချက်ဖြစ်သည်။" },
       { id: 3, textJP: "(3) <ruby>マネジメントの成果物<rt>まねじめんとのせいかぶつ</rt></ruby>である。", textMY: "စီမံခန့်ခွဲမှု၏ ရလဒ်ဖြစ်သည်။" },
       { id: 4, textJP: "(4) <ruby>生産者都合<rt>せいさんしゃつごう</rt></ruby>တွင် <ruby>設定しない<rt>せっていしない</rt></ruby>。", textMY: "ထုတ်လုပ်သူအကြိုက် မသတ်မှတ်ရ။" },
       { id: 5, textJP: "(5) <ruby>設計者<rt>せっけいしゃ</rt></ruby>က <ruby>保証<rt>ほしょう</rt></ruby>する。", textMY: "ဒီဇိုင်နာက အာမခံရမည်။" }
@@ -547,8 +547,8 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>抜取検査<rt>ぬきとりけんさ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "နမူနာစစ်ဆေးခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>規準型<rt>きじゅんがた</rt></ruby>သည် <ruby>危険を一定<rt>きけんをいってい</rt></ruby>にする。", textMY: "Standard type သည် အန္တရာယ်ကို ကန့်သတ်ပေးသည်။" },
-      { id: 2, textJP: "(2) <ruby>調整型<rt>ちょうせいがた</rt></ruby>သည် <ruby>選択<rt>せんたく</rt></ruby>できる。", textMY: "Adjusted type ကို ရွေးချယ်နိုင်သည်။" },
+      { id: 1, textJP: "(1) <ruby>規準型<rt>きじゅんがた</rt></ruby>は <ruby>危険を一定<rt>きけんをいってい</rt></ruby>にする。", textMY: "Standard type သည် အန္တရာယ်ကို ကန့်သတ်ပေးသည်။" },
+      { id: 2, textJP: "(2) <ruby>調整型<rt>ちょうせいがた</rt></ruby>は <ruby>選択<rt>せんたく</rt></ruby>できる。", textMY: "Adjusted type ကို ရွေးချယ်နိုင်သည်။" },
       { id: 3, textJP: "(3) <ruby>選別型<rt>せんべつがた</rt></ruby>သည် <ruby>不良率<rt>ふりょうりつ</rt></ruby>ကို AOQLဟု <ruby>呼ぶ<rt>よぶ</rt></ruby>。", textMY: "Screening type ၏ အမှားနှုန်းကို AOQL ဟု ခေါ်သည်။" },
       { id: 4, textJP: "(4) 4<ruby>種類<rt>しゅるい</rt></ruby>ရှိသည်။", textMY: "၄ မျိုး ရှိသည်။" },
       { id: 5, textJP: "(5) <ruby>計数値と計量値<rt>けいすうちとけいりょうち</rt></ruby>がある。", textMY: "အရေအတွက်နှင့် တိုင်းတာမှုတန်ဖိုးများ ရှိသည်။" }
@@ -601,11 +601,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>受入検査<rt>うけいれけんさ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "လက်ခံစစ်ဆေးခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>対物検査<rt>たいぶつけんさ</rt></ruby>သည် <ruby>特記<rt>とっき</rt></ruby>による。", textMY: "ပစ္စည်းစစ်ဆေးမှုမှာ Spec ပေါ် မူတည်သည်။" },
-      { id: 2, textJP: "(2) <ruby>書類検査<rt>しょるいけんさ</rt></ruby>သည် <ruby>成績表<rt>せいせきひょう</rt></ruby>である。", textMY: "စာရွက်စစ်ဆေးမှုမှာ မှတ်တမ်းဇယားဖြစ်သည်။" },
-      { id: 3, textJP: "(3) <ruby>種類<rt>しゅるい</rt></ruby>သည် <ruby>特記<rt>とっき</rt></ruby>による。", textMY: "အမျိုးအစားမှာ Spec ပေါ် မူတည်သည်။" },
-      { id: 4, textJP: "(4) <ruby>不合格<rt>ふごうかく</rt></ruby>သည် <ruby>直ちに不合格<rt>ただちにふごうかく</rt></ruby>とする。", textMY: "မအောင်မြင်ပါက ချက်ချင်း ရှုံးသည်ဟု သတ်မှတ်ရမည်။" },
-      { id: 5, textJP: "(5) <ruby>不適合<rt>ふてきごう</rt></ruby>သည် <ruby>再検査<rt>さいけんさ</rt></ruby>する。", textMY: "မကိုက်ညီပါက ပြန်စစ်ရမည်။" }
+      { id: 1, textJP: "(1) <ruby>対物検査<rt>たいぶつけんさ</rt></ruby>は <ruby>特記<rt>とっき</rt></ruby>による。", textMY: "ပစ္စည်းစစ်ဆေးမှုမှာ Spec ပေါ် မူတည်သည်။" },
+      { id: 2, textJP: "(2) <ruby>書類検査<rt>しょるいけんさ</rt></ruby>は <ruby>成績表<rt>せいせきひょう</rt></ruby>である。", textMY: "စာရွက်စစ်ဆေးမှုမှာ မှတ်တမ်းဇယားဖြစ်သည်။" },
+      { id: 3, textJP: "(3) <ruby>種類<rt>しゅるい</rt></ruby>は <ruby>特記<rt>とっき</rt></ruby>による。", textMY: "အမျိုးအစားမှာ Spec ပေါ် မူတည်သည်။" },
+      { id: 4, textJP: "(4) <ruby>不合格<rt>ふごうかく</rt></ruby>は <ruby>直ちに不合格<rt>ただちにふごうかく</rt></ruby>とする。", textMY: "မအောင်မြင်ပါက ချက်ချင်း ရှုံးသည်ဟု သတ်မှတ်ရမည်။" },
+      { id: 5, textJP: "(5) <ruby>不適合<rt>ふてきごう</rt></ruby>は <ruby>再検査<rt>さいけんさ</rt></ruby>する。", textMY: "မကိုက်ညီပါက ပြန်စစ်ရမည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -621,8 +621,8 @@ export const chapter2023Data: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>取合部<rt>とりあいぶ</rt></ruby>သည် <ruby>全箇所<rt>ぜんかしょ</rt></ruby>စစ်ရမည်။", textMY: "အဆက်နေရာအားလုံး စစ်ရမည်။" },
       { id: 2, textJP: "(2) <ruby>摩擦面<rt>まさつめん</rt></ruby>ကို <ruby>検査<rt>けんさ</rt></ruby>する。", textMY: "ပွတ်တိုက်မျက်နှာပြင်ကို စစ်ရမည်။" },
-      { id: 3, textJP: "(3) <ruby>開先形状<rt>かいさきけいじょう</rt></ruby>ကို <ruby>検査<rt>けんさ</rt></ruby>する。", textMY: "Bevel ပုံစံကို စစ်ရမည်။" },
-      { id: 4, textJP: "(4) <ruby>外観<rt>がいかん</rt></ruby>သည် <ruby>目視のみ<rt>もくしのみ</rt></ruby>である。", textMY: "အပြင်ပန်းကို မျက်စိဖြင့်သာ ကြည့်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>開先形状<rt>かいさきけいじょう</rt></ruby>を <ruby>検査<rt>けんさ</rt></ruby>する。", textMY: "Bevel ပုံစံကို စစ်ရမည်။" },
+      { id: 4, textJP: "(4) <ruby>外観<rt>がいかん</rt></ruby>は <ruby>目視のみ<rt>もくしのみ</rt></ruby>である。", textMY: "အပြင်ပန်းကို မျက်စိဖြင့်သာ ကြည့်ရမည်။" },
       { id: 5, textJP: "(5) <ruby>きず<rt>きず</rt></ruby>သည် 3<ruby>種類<rt>しゅるい</rt></ruby>ရှိသည်။", textMY: "ချို့ယွင်းချက် ၃ မျိုး ရှိသည်။" }
     ],
     correctOptionId: 4,
@@ -637,10 +637,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>許容差<rt>きょようさ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ခွင့်ပြုလွဲချော်မှုတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>限界許容差<rt>げんかいきょようさ</rt></ruby>သည် <ruby>合否判定<rt>ごうひはんてい</rt></ruby>である。", textMY: "Limit tolerance သည် အောင်/ရှုံး ဆုံးဖြတ်ချက်ဖြစ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>管理許容差<rt>かんりきょようさ</rt></ruby>သည် <ruby>目標値<rt>もくひょうち</rt></ruby>である。", textMY: "Management tolerance သည် ပန်းတိုင်တန်ဖိုးဖြစ်သည်။" },
-      { id: 3, textJP: "(3) <ruby>超えた<rt>こえた</rt></ruby>သည် <ruby>再製作<rt>さいせいさく</rt></ruby>とする。", textMY: "ကျော်လွန်ပါက ပြန်လုပ်ရမည်။" },
-      { id: 4, textJP: "(4) <ruby>マイナス誤差<rt>まいなすごさ</rt></ruby>သည် <ruby>修正不要<rt>しゅうせいふよう</rt></ruby>である。", textMY: "အနှုတ်ဘက်လွဲလျှင် ပြင်ရန်မလိုပါ။" },
+      { id: 1, textJP: "(1) <ruby>限界許容差<rt>げんかいきょようさ</rt></ruby>は <ruby>合否判定<rt>ごうひはんてい</rt></ruby>である。", textMY: "Limit tolerance သည် အောင်/ရှုံး ဆုံးဖြတ်ချက်ဖြစ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>管理許容差<rt>かんりきょようさ</rt></ruby>は <ruby>目標値<rt>もくひょうち</rt></ruby>である。", textMY: "Management tolerance သည် ပန်းတိုင်တန်ဖိုးဖြစ်သည်။" },
+      { id: 3, textJP: "(3) <ruby>超えた<rt>こえた</rt></ruby>は <ruby>再製作<rt>さいせいさく</rt></ruby>とする。", textMY: "ကျော်လွန်ပါက ပြန်လုပ်ရမည်။" },
+      { id: 4, textJP: "(4) <ruby>マイナス誤差<rt>まいなすごさ</rt></ruby>は <ruby>修正不要<rt>しゅうせいふよう</rt></ruby>である。", textMY: "အနှုတ်ဘက်လွဲလျှင် ပြင်ရန်မလိုပါ။" },
       { id: 5, textJP: "(5) <ruby>補修<rt>ほしゅう</rt></ruby>ဖြင့် <ruby>対処<rt>たいしょ</rt></ruby>できる。", textMY: "ပြုပြင်ခြင်းဖြင့် ဖြေရှင်းနိုင်သည်။" }
     ],
     correctOptionId: 4,
@@ -655,11 +655,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>受入検査<rt>うけいれけんさ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "လက်ခံစစ်ဆေးခြင်းတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>書類検査<rt>しょるいけんさ</rt></ruby>သည် <ruby>両方<rt>りょうほう</rt></ruby>ကို <ruby>基準<rt>きじゅん</rt></ruby>とする。", textMY: "စာရွက်စစ်ဆေးမှုမှာ စံနှုန်းနှစ်ခုလုံး သုံးသည်။" },
-      { id: 2, textJP: "(2) 7<ruby>項目<rt>こうもく</rt></ruby>သည် <ruby>適用<rt>てきよう</rt></ruby>できる。", textMY: "အချက် ၇ ချက် အသုံးပြုနိုင်သည်။" },
-      { id: 3, textJP: "(3) <ruby>対物検査<rt>たいぶつけんさ</rt></ruby>သည် <ruby>確認<rt>かくにん</rt></ruby>である。", textMY: "ပစ္စည်းစစ်ဆေးမှုမှာ အတည်ပြုခြင်းဖြစ်သည်။" },
-      { id: 4, textJP: "(4) <ruby>対物1<rt>たいぶついち</rt></ruby>သည် <ruby>管理許容差<rt>かんりきょようさ</rt></ruby>である。", textMY: "Object 1 သည် management tolerance ဖြစ်သည်။" },
-      { id: 5, textJP: "(5) <ruby>対物2<rt>たいぶつに</rt></ruby>သည် <ruby>統計的手法<rt>とうけいてきしゅほう</rt></ruby>である。", textMY: "Object 2 သည် စာရင်းအင်းနည်းဖြစ်သည်။" }
+      { id: 1, textJP: "(1) <ruby>書類検査<rt>しょるいけんさ</rt></ruby>は <ruby>両方<rt>りょうほう</rt></ruby>を <ruby>基準<rt>きじゅん</rt></ruby>とする。", textMY: "စာရွက်စစ်ဆေးမှုမှာ စံနှုန်းနှစ်ခုလုံး သုံးသည်။" },
+      { id: 2, textJP: "(2) 7<ruby>項目<rt>こうもく</rt></ruby>は <ruby>適用<rt>てきよう</rt></ruby>できる。", textMY: "အချက် ၇ ချက် အသုံးပြုနိုင်သည်။" },
+      { id: 3, textJP: "(3) <ruby>対物検査<rt>たいぶつけんさ</rt></ruby>は <ruby>確認<rt>かくにん</rt></ruby>である。", textMY: "ပစ္စည်းစစ်ဆေးမှုမှာ အတည်ပြုခြင်းဖြစ်သည်။" },
+      { id: 4, textJP: "(4) <ruby>対物1<rt>たいぶついち</rt></ruby>は <ruby>管理許容差<rt>かんりきょようさ</rt></ruby>である。", textMY: "Object 1 သည် management tolerance ဖြစ်သည်။" },
+      { id: 5, textJP: "(5) <ruby>対物2<rt>たいぶつに</rt></ruby>は <ruby>統計的手法<rt>とうけいてきしゅほう</rt></ruby>である。", textMY: "Object 2 သည် စာရင်းအင်းနည်းဖြစ်သည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -673,10 +673,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>管理技術者<rt>かんりぎじゅつしゃ</rt></ruby>၏ <ruby>役割<rt>やくわり</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "စီမံခန့်ခွဲသူ၏ တာဝန်တွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>原因追求<rt>げんいんついきゅう</rt></ruby>နှင့် <ruby>処置<rt>しょち</rt></ruby>ကို <ruby>検討<rt>けんとう</rt></ruby>する。", textMY: "အကြောင်းရင်းရှာဖွေပြီး ဖြေရှင်းနည်းစဉ်းစားရမည်။" },
+      { id: 1, textJP: "(1) <ruby>原因追求<rt>げんいんついきゅう</rt></ruby>နှင့် <ruby>処置<rt>しょち</rt></ruby>を <ruby>検討<rt>けんとう</rt></ruby>する。", textMY: "အကြောင်းရင်းရှာဖွေပြီး ဖြေရှင်းနည်းစဉ်းစားရမည်။" },
       { id: 2, textJP: "(2) <ruby>マニュアル反映<rt>まにゅあるはんえい</rt></ruby>နှင့် <ruby>防止<rt>ぼうし</rt></ruby>ကို <ruby>行なう<rt>おこなう</rt></ruby>。", textMY: "လက်စွဲတွင်ထည့်ပြီး ကာကွယ်ရမည်။" },
       { id: 3, textJP: "(3) <ruby>迅速報告<rt>じんそくほうこく</rt></ruby>ရမည်။", textMY: "အမြန် အစီရင်ခံရမည်။" },
-      { id: 4, textJP: "(4) 4Mသည် <ruby>情報管理より重要<rt>じょうほうかんりよりじゅうよう</rt></ruby>である。", textMY: "4M က သတင်းအချက်အလက်ထက် ပိုအရေးကြီးသည်။" },
+      { id: 4, textJP: "(4) 4Mは <ruby>情報管理より重要<rt>じょうほうかんりよりじゅうよう</rt></ruby>である。", textMY: "4M က သတင်းအချက်အလက်ထက် ပိုအရေးကြီးသည်။" },
       { id: 5, textJP: "(5) <ruby>手戻り防止<rt>てもどりぼうし</rt></ruby>に<ruby>重要<rt>じゅうよう</rt></ruby>である。", textMY: "အလုပ်နှစ်ခါမလုပ်ရအောင် အရေးကြီးသည်။" }
     ],
     correctOptionId: 4,
@@ -693,9 +693,9 @@ export const chapter2023Data: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>適切組合せ<rt>てきせつくみあわせ</rt></ruby>ဖြင့် <ruby>確保<rt>かくほ</rt></ruby>する。", textMY: "မှန်ကန်စွာ ပေါင်းစပ်ပြီး အာမခံရမည်။" },
       { id: 2, textJP: "(2) <ruby>破断しないこと<rt>はだんしないこと</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>である。", textMY: "မကျိုးပဲ့ရန် လိုအပ်သည်။" },
-      { id: 3, textJP: "(3) <ruby>社内全数検査<rt>しゃないぜんすうけんさ</rt></ruby>ကို <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "စက်ရုံတွင်း အားလုံးစစ်ရမည်။" },
-      { id: 4, textJP: "(4) <ruby>隅肉<rt>すみにく</rt></ruby>သည် UTကို <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "Fillet weld ကို UT စစ်ရမည်။" },
-      { id: 5, textJP: "(5) <ruby>改善記録<rt>かいぜんきろく</rt></ruby>ကို <ruby>とる<rt>とる</rt></ruby>。", textMY: "တိုးတက်မှုမှတ်တမ်း ယူရမည်။" }
+      { id: 3, textJP: "(3) <ruby>社内全数検査<rt>しゃないぜんすうけんさ</rt></ruby>を <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "စက်ရုံတွင်း အားလုံးစစ်ရမည်။" },
+      { id: 4, textJP: "(4) <ruby>隅肉<rt>すみにく</rt></ruby>は UTを <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "Fillet weld ကို UT စစ်ရမည်။" },
+      { id: 5, textJP: "(5) <ruby>改善記録<rt>かいぜんきろく</rt></ruby>を <ruby>とる<rt>とる</rt></ruby>。", textMY: "တိုးတက်မှုမှတ်တမ်း ယူရမည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -711,9 +711,9 @@ export const chapter2023Data: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>知識・経験<rt>ちしき・けいけん</rt></ruby>က <ruby>望ましい<rt>のぞましい</rt></ruby>。", textMY: "ဗဟုသုတနှင့် အတွေ့အကြုံ လိုအပ်သည်။" },
       { id: 2, textJP: "(2) 1~3<ruby>レベル<rt>れべる</rt></ruby>がある。", textMY: "အဆင့် ၁ မှ ၃ ထိ ရှိသည်။" },
-      { id: 3, textJP: "(3) <ruby>受入<rt>うけいれ</rt></ruby>သည် <ruby>レベル1<rt>れべるわん</rt></ruby>က <ruby>望ましい<rt>のぞましい</rt></ruby>。", textMY: "လက်ခံစစ်ဆေးမှုမှာ အဆင့် ၁ လိုအပ်သည်။" },
+      { id: 3, textJP: "(3) <ruby>受入<rt>うけいれ</rt></ruby>は <ruby>レベル1<rt>れべるわん</rt></ruby>が <ruby>望ましい<rt>のぞましい</rt></ruby>。", textMY: "လက်ခံစစ်ဆေးမှုမှာ အဆင့် ၁ လိုအပ်သည်။" },
       { id: 4, textJP: "(4) <ruby>認定資格<rt>にんていしかく</rt></ruby>がある。", textMY: "အသိအမှတ်ပြုလက်မှတ် ရှိသည်။" },
-      { id: 5, textJP: "(5) <ruby>製品検査技術者<rt>せいひんけんさぎじゅつしゃ</rt></ruby>က <ruby>従事<rt>じゅうじ</rt></ruby>する。", textMY: "ထုတ်ကုန်စစ်ဆေးသူက လုပ်ဆောင်သည်။" }
+      { id: 5, textJP: "(5) <ruby>製品検査技術者<rt>せいひんけんさぎじゅつしゃ</rt></ruby>が <ruby>従事<rt>じゅうじ</rt></ruby>する。", textMY: "ထုတ်ကုန်စစ်ဆေးသူက လုပ်ဆောင်သည်။" }
     ],
     correctOptionId: 3,
     explanation: {
@@ -727,10 +727,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>スタッド検査<rt>すたっどけんさ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "Stud (စတပ်) ဂဟေဆက်ခြင်းအား စစ်ဆေးရာတွင် မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>全周形成<rt>ぜんしゅうけいせい</rt></ruby>ကို <ruby>目視<rt>もくし</rt></ruby>する。", textMY: "ဂဟေသားအရင်းတစ်ပတ်လည်လုံးတွင် သေချာစွာ ဖွဲ့စည်းမှုရှိမရှိကို မျက်စိဖြင့် ကြည့်ရှုစစ်ဆေးရမည်။" },
-      { id: 2, textJP: "(2) <ruby>高さ<rt>たかさ</rt></ruby>သည် 1<ruby>ロット<rt>ろっと</rt></ruby> 3<ruby>本<rt>ほん</rt></ruby>とする。", textMY: "အမြင့်နှင့် ခွာစောင်းမှု (Inclination) စစ်ဆေးခြင်းကို Lot တစ်ခုလျှင် ၃ ချောင်းနှုန်းဖြင့် စစ်ဆေးသည်။" },
+      { id: 1, textJP: "(1) <ruby>全周形成<rt>ぜんしゅうけいせい</rt></ruby>を <ruby>目視<rt>もくし</rt></ruby>する。", textMY: "ဂဟေသားအရင်းတစ်ပတ်လည်လုံးတွင် သေချာစွာ ဖွဲ့စည်းမှုရှိမရှိကို မျက်စိဖြင့် ကြည့်ရှုစစ်ဆေးရမည်။" },
+      { id: 2, textJP: "(2) <ruby>高さ<rt>たかさ</rt></ruby>は 1<ruby>ロット<rt>ろっと</rt></ruby> 3<ruby>本<rt>ほん</rt></ruby>とする。", textMY: "အမြင့်နှင့် ခွာစောင်းမှု (Inclination) စစ်ဆေးခြင်းကို Lot တစ်ခုလျှင် ၃ ချောင်းနှုန်းဖြင့် စစ်ဆေးသည်။" },
       { id: 3, textJP: "(3) <ruby>限界許容差<rt>げんかいきょようさ</rt></ruby>による。", textMY: "အတိုင်းအတာများကို Limit tolerance (限界許容差) ထား၍ စစ်ဆေးအတည်ပြုသည်။" },
-      { id: 4, textJP: "(4) <ruby>打撃曲げ<rt>だげきまげ</rt></ruby>သည် 1<ruby>ロット<rt>ろっと</rt></ruby> 1<ruby>本<rt>ほん</rt></ruby>とする。", textMY: "ရိုက်ကွေးစစ်ဆေးမှု (打撃曲げ検査) ကို Lot တစ်ခုလျှင် ၁ ချောင်းနှုန်းဖြင့်သာ လုပ်ဆောင်သည်။" },
+      { id: 4, textJP: "(4) <ruby>打撃曲げ<rt>だげきまげ</rt></ruby>は 1<ruby>ロット<rt>ろっと</rt></ruby> 1<ruby>本<rt>ほん</rt></ruby>とする。", textMY: "ရိုက်ကွေးစစ်ဆေးမှု (打撃曲げ検査) ကို Lot တစ်ခုလျှင် ၁ ချောင်းနှုန်းဖြင့်သာ လုပ်ဆောင်သည်။" },
       { id: 5, textJP: "(5) 30°で<ruby>合格<rt>ごうかく</rt></ruby>とする。", textMY: "Stud ကို ၃၀ ဒီဂရီအထိ ကွေးညွှတ်၍ စစ်ဆေးပြီးနောက် မကျိုးပဲ့ပါက အောင်မြင်သည်ဟု သတ်မှတ်သည်။" }
     ],
     correctOptionId: 5,
@@ -746,10 +746,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionMY: "JASS 6 အရ ထုတ်ကုန်အရည်အသွေး စစ်ဆေးခြင်း (製品検査) နှင့်ပတ်သက်၍ မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>鉄骨製作者<rt>てっこつせいさくしゃ</rt></ruby>က <ruby>実施<rt>じっし</rt></ruby>する。", textMY: "သံမဏိဘောင်ထုတ်လုပ်သူ (Fabricator / 製作者) က တာဝန်ယူ၍ လုပ်ဆောင်ရမည်။" },
-      { id: 2, textJP: "(2) <ruby>施工者<rt>せこうしゃ</rt></ruby>က <ruby>実施<rt>じっし</rt></ruby>する。", textMY: "တည်ဆောက်သူ / အင်ဂျင်နီယာချုပ် (施工者) က တာဝန်ယူ၍ စစ်ဆေးရမည်။" },
+      { id: 2, textJP: "(2) <ruby>施工者<rt>せこうしゃ</rt></ruby>が <ruby>実施<rt>じっし</rt></ruby>する。", textMY: "တည်ဆောက်သူ / အင်ဂျင်နီယာချုပ် (施工者) က တာဝန်ယူ၍ စစ်ဆေးရမည်။" },
       { id: 3, textJP: "(3) <ruby>出荷前最終検査<rt>しゅっかまえさいしゅうけんさ</rt></ruby>である。", textMY: "စက်ရုံမှ အလုပ်ခွင်သို့ မတင်ပို့မီ ပြုလုပ်သော နောက်ဆုံးစစ်ဆေးမှု (Final Inspection) ဖြစ်သည်။" },
       { id: 4, textJP: "(4) <ruby>合格後<rt>ごうかくご</rt></ruby>に<ruby>出荷<rt>しゅっか</rt></ruby>する。", textMY: "စစ်ဆေးမှုအောင်မြင်ပြီးမှသာ စက်ရုံမှ တင်ပို့ခြင်း (出荷) ကို ခွင့်ပြုသည်။" },
-      { id: 5, textJP: "(5) <ruby>不適合<rt>ふてきごう</rt></ruby>သည် <ruby>手直し<rt>てなおし</rt></ruby>する。", textMY: "စစ်ဆေးမှုတွင် မကိုက်ညီပါက လိုအပ်သလို အသေးစိတ်ပြန်လည်ပြုပြင်ခြင်း (手直し) လုပ်ဆောင်ရမည်။" }
+      { id: 5, textJP: "(5) <ruby>不適合<rt>ふてきごう</rt></ruby>は <ruby>手直し<rt>てなおし</rt></ruby>する。", textMY: "စစ်ဆေးမှုတွင် မကိုက်ညီပါက လိုအပ်သလို အသေးစိတ်ပြန်လည်ပြုပြင်ခြင်း (手直し) လုပ်ဆောင်ရမည်။" }
     ],
     correctOptionId: 2,
     explanation: {
@@ -763,10 +763,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>非破壊試験<rt>ひはかいしけん</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "အဖျက်အဆီးကင်း စစ်ဆေးမှု (NDT) များနှင့်ပတ်သက်၍ မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>放射線<rt>ほうしゃせん</rt></ruby>သည် <ruby>内部欠陥<rt>ないぶけっかん</rt></ruby>である。", textMY: "Radiographic Testing (RT) သည် အတွင်းပိုင်းချို့ယွင်းချက်ကို ဖလင်ဖြင့် စစ်ဆေးရာတွင် အသုံးပြုသည်။" },
-      { id: 2, textJP: "(2) <ruby>超音波<rt>ちょうおんぱ</rt></ruby>သည် <ruby>反射波<rt>はんしゃは</rt></ruby>である。", textMY: "Ultrasonic Testing (UT) သည် အသံလှိုင်း၏ ပဲ့တင်ပြန်ကန်မှု (Reflection/Echo) ကို အသုံးပြု၍ စစ်ဆေးသည်။" },
-      { id: 3, textJP: "(3) <ruby>垂直探傷<rt>すいちょくたんしょう</rt></ruby>သည် <ruby>ラミネーション<rt>らみねーしょん</rt></ruby>である。", textMY: "Straight beam UT (垂直探傷) သည် သံပြားလွှာများထပ်နေသည့် Lamination ချို့ယွင်းချက်များရှာဖွေရာတွင် အသုံးပြုသည်။" },
-      { id: 4, textJP: "(4) <ruby>浸透<rt>しんとう</rt></ruby>သည် <ruby>高電圧<rt>こうでんあつ</rt></ruby>である。", textMY: "Penetrant Testing (PT/浸透探傷) သည် အလွန်မြင့်မားသော ဗို့အား (High voltage) ကို အသုံးပြု၍ စစ်ဆေးသည်။" },
+      { id: 1, textJP: "(1) <ruby>放射線<rt>ほうしゃせん</rt></ruby>は <ruby>内部欠陥<rt>ないぶけっかん</rt></ruby>である。", textMY: "Radiographic Testing (RT) သည် အတွင်းပိုင်းချို့ယွင်းချက်ကို ဖလင်ဖြင့် စစ်ဆေးရာတွင် အသုံးပြုသည်။" },
+      { id: 2, textJP: "(2) <ruby>超音波<rt>ちょうおんぱ</rt></ruby>は <ruby>反射波<rt>はんしゃは</rt></ruby>である。", textMY: "Ultrasonic Testing (UT) သည် အသံလှိုင်း၏ ပဲ့တင်ပြန်ကန်မှု (Reflection/Echo) ကို အသုံးပြု၍ စစ်ဆေးသည်။" },
+      { id: 3, textJP: "(3) <ruby>垂直探傷<rt>すいちょくたんしょう</rt></ruby>は <ruby>ラミネーション<rt>らみねーしょん</rt></ruby>である。", textMY: "Straight beam UT (垂直探傷) သည် သံပြားလွှာများထပ်နေသည့် Lamination ချို့ယွင်းချက်များရှာဖွေရာတွင် အသုံးပြုသည်။" },
+      { id: 4, textJP: "(4) <ruby>浸透<rt>しんとう</rt></ruby>は <ruby>高電圧<rt>こうでんあつ</rt></ruby>である。", textMY: "Penetrant Testing (PT/浸透探傷) သည် အလွန်မြင့်မားသော ဗို့အား (High voltage) ကို အသုံးပြု၍ စစ်ဆေးသည်။" },
       { id: 5, textJP: "(5) <ruby>磁粉<rt>じふん</rt></ruby>သည် <ruby>磁束平行<rt>じそくへいこう</rt></ruby>တွင် <ruby>困難<rt>こんなん</rt></ruby>である。", textMY: "Magnetic Particle Testing (MT) သည် သံလိုက်စက်ကွင်းနှင့် ချို့ယွင်းချက် မျဉ်းပြိုင်ဖြစ်နေပါက ချို့ယွင်းချက်ကို ရှာဖွေတွေ့ရှိရန် ခက်ခဲသည်။" }
     ],
     correctOptionId: 4,
@@ -781,11 +781,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "UT<ruby>検査<rt>けんさ</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "Ultrasonic Testing (UT) ဖြင့် စစ်ဆေးခြင်းနှင့် ပတ်သက်၍ မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>すべて<rt>すべて</rt></ruby>ကို <ruby>検査対象<rt>けんさたいしょう</rt></ruby>とする。", textMY: "ဂဟေဆက်သည့် နေရာအားလုံး (すべて) ကို စစ်ဆေးရမည့် ပစ်မှတ်အဖြစ် ထားရှိရမည်။" },
-      { id: 2, textJP: "(2) 6mm<ruby>未満<rt>みまん</rt></ruby>သည် <ruby>適用しない<rt>てきようしない</rt></ruby>。", textMY: "သံမဏိအထူ 6mm အောက်ပါးလွှာပါက UT နည်းကို အသုံးမပြုပါ။" },
-      { id: 3, textJP: "(3) <ruby>屈折角<rt>くっせつかく</rt></ruby>သည် 70°<ruby>のみ<rt>のみ</rt></ruby>とする。", textMY: "Angle beam UT တွင် ဝင်ရောက်စစ်ဆေးသည့် အသံလှိုင်းထောင့် (屈折角) ကို ၇၀ ဒီဂရီ (70°) ဖြင့်သာ စစ်ဆေးရမည်။" },
-      { id: 4, textJP: "(4) <ruby>グリセリン<rt>ぐりせりん</rt></ruby>ကို <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "UT တွင် အသံလှိုင်းဖြတ်သန်းမှုကောင်းစေရန် ဂလစ်စရင်း (Glycerin) သို့မဟုတ် ကပ်ခွာရည် များကို အသုံးပြုသည်။" },
-      { id: 5, textJP: "(5) <ruby>一探触子法<rt>いったんしょくしほう</rt></ruby>သည် <ruby>平板<rt>へいばん</rt></ruby>に<ruby>適用<rt>てきよう</rt></ruby>する。", textMY: "Probe တစ်ခုတည်းသုံးသောနည်း (One-probe method / 一探触子法) သည် အပြား (Flat Plate) များကို စစ်ဆေးရာတွင် အသုံးဝင်သည်။" }
+      { id: 1, textJP: "(1) <ruby>すべて<rt>すべて</rt></ruby>を <ruby>検査対象<rt>けんさたいしょう</rt></ruby>とする。", textMY: "ဂဟေဆက်သည့် နေရာအားလုံး (すべて) ကို စစ်ဆေးရမည့် ပစ်မှတ်အဖြစ် ထားရှိရမည်။" },
+      { id: 2, textJP: "(2) 6mm<ruby>未満<rt>みまん</rt></ruby>は <ruby>適用しない<rt>てきようしない</rt></ruby>。", textMY: "သံမဏိအထူ 6mm အောက်ပါးလွှာပါက UT နည်းကို အသုံးမပြုပါ။" },
+      { id: 3, textJP: "(3) <ruby>屈折角<rt>くっせつかく</rt></ruby>は 70°<ruby>のみ<rt>のみ</rt></ruby>とする。", textMY: "Angle beam UT တွင် ဝင်ရောက်စစ်ဆေးသည့် အသံလှိုင်းထောင့် (屈折角) ကို ၇၀ ဒီဂရီ (70°) ဖြင့်သာ စစ်ဆေးရမည်။" },
+      { id: 4, textJP: "(4) <ruby>グリセリン<rt>ぐりせりん</rt></ruby>を <ruby>使用<rt>しよう</rt></ruby>する。", textMY: "UT တွင် အသံလှိုင်းဖြတ်သန်းမှုကောင်းစေရန် ဂလစ်စရင်း (Glycerin) သို့မဟုတ် ကပ်ခွာရည် များကို အသုံးပြုသည်။" },
+      { id: 5, textJP: "(5) <ruby>一探触子法<rt>いったんしょくしほう</rt></ruby>は <ruby>平板<rt>へいばん</rt></ruby>に<ruby>適用<rt>てきよう</rt></ruby>する。", textMY: "Probe တစ်ခုတည်းသုံးသောနည်း (One-probe method / 一探触子法) သည် အပြား (Flat Plate) များကို စစ်ဆေးရာတွင် အသုံးဝင်သည်။" }
     ],
     correctOptionId: 3,
     explanation: {
@@ -799,11 +799,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>安全衛生<rt>あんぜんえいせい</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဘေးအန္တရာယ်ကင်းရှင်းရေးနှင့် ကျန်းမာရေး (Safety and Health) ကိစ္စရပ်များတွင် မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>快適環境形成<rt>かいてきかんきょうけいせい</rt></ruby>ကို <ruby>目的<rt>もくてき</rt></ruby>とする。", textMY: "လုပ်ငန်းခွင်တွင် သက်တောင့်သက်သာနှင့် ကျန်းမာရေးနှင့်ညီညွတ်သော ပတ်ဝန်းကျင်ဖန်တီးရေးကို ရည်ရွယ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>監督官<rt>かんとくかん</rt></ruby>သည် <ruby>是正勧告<rt>ぜせいかんこく</rt></ruby>ကို <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "စစ်ဆေးရေးအရာရှိ (監督官) သည် ပြုပြင်စီမံရန် လိုအပ်သည့်ကိစ္စများကို အကြံပြုညွှန်ကြားခွင့် (是正勧告) ရှိသည်။" },
-      { id: 3, textJP: "(3) <ruby>ロボット教示<rt>ろぼっときょうじ</rt></ruby>သည် <ruby>作業主任者<rt>しゅにんしゃ</rt></ruby>က <ruby>必要<rt>ひつよう</rt></ruby>である。", textMY: "စက်ရုပ်လည်ပတ်ညွှန်ကြားသည့်အလုပ် (ロボット教示) လုပ်ဆောင်ရန်အတွက် သီးသန့်တာဝန်ခံကြီးကြပ်သူ (作業主任者) ခန့်အပ်ထားရန် လိုအပ်သည်။" },
-      { id: 4, textJP: "(4) <ruby>重大災害<rt>じゅうだいさいがい</rt></ruby>သည် 3<ruby>人以上<rt>にんいじょう</rt></ruby>である。", textMY: "တစ်ကြိမ်တည်းတွင် အလုပ်သမား ၃ ဦးနှင့်အထက် သေဆုံး၊ဒဏ်ရာရပါက ကြီးမားသောမတော်တဆမှု (重大災害) ဟု သတ်မှတ်သည်။" },
-      { id: 5, textJP: "(5) <ruby>度数率<rt>どすうりつ</rt></ruby>သည် 100<ruby>万時間<rt>まんじかん</rt></ruby>である。", textMY: "မတော်တဆမှုဖြစ်ပွားနှုန်း (Frequency Rate) ကို တွက်ချက်ရာတွင် အလုပ်ချိန် နာရီ ၁ သန်းလျှင် ဖြစ်ပွားမှုမည်မျှရှိသည်ကို အခြေခံသည်။" }
+      { id: 1, textJP: "(1) <ruby>快適環境形成<rt>かいてきかんきょうけいせい</rt></ruby>を <ruby>目的<rt>もくてき</rt></ruby>とする。", textMY: "လုပ်ငန်းခွင်တွင် သက်တောင့်သက်သာနှင့် ကျန်းမာရေးနှင့်ညီညွတ်သော ပတ်ဝန်းကျင်ဖန်တီးရေးကို ရည်ရွယ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>監督官<rt>かんとくかん</rt></ruby>は <ruby>是正勧告<rt>ぜせいかんこく</rt></ruby>を <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "စစ်ဆေးရေးအရာရှိ (監督官) သည် ပြုပြင်စီမံရန် လိုအပ်သည့်ကိစ္စများကို အကြံပြုညွှန်ကြားခွင့် (是正勧告) ရှိသည်။" },
+      { id: 3, textJP: "(3) <ruby>ロボット教示<rt>ろぼっときょうじ</rt></ruby>は <ruby>作業主任者<rt>しゅにんしゃ</rt></ruby>が <ruby>必要<rt>ひつよう</rt></ruby>である。", textMY: "စက်ရုပ်လည်ပတ်ညွှန်ကြားသည့်အလုပ် (ロボット教示) လုပ်ဆောင်ရန်အတွက် သီးသန့်တာဝန်ခံကြီးကြပ်သူ (作業主任者) ခန့်အပ်ထားရန် လိုအပ်သည်။" },
+      { id: 4, textJP: "(4) <ruby>重大災害<rt>じゅうだいさいがい</rt></ruby>は 3<ruby>人以上<rt>にんいじょう</rt></ruby>である。", textMY: "တစ်ကြိမ်တည်းတွင် အလုပ်သမား ၃ ဦးနှင့်အထက် သေဆုံး၊ဒဏ်ရာရပါက ကြီးမားသောမတော်တဆမှု (重大災害) ဟု သတ်မှတ်သည်။" },
+      { id: 5, textJP: "(5) <ruby>度数率<rt>どすうりつ</rt></ruby>は 100<ruby>万時間<rt>まんじかん</rt></ruby>である。", textMY: "မတော်တဆမှုဖြစ်ပွားနှုန်း (Frequency Rate) ကို တွက်ချက်ရာတွင် အလုပ်ချိန် နာရီ ၁ သန်းလျှင် ဖြစ်ပွားမှုမည်မျှရှိသည်ကို အခြေခံသည်။" }
     ],
     correctOptionId: 3,
     explanation: {
@@ -817,11 +817,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>機械安全<rt>きかいあんぜん</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "စက်ပစ္စည်းဆိုင်ရာ ဘေးကင်းရေး (Machine Safety) နှင့်ပတ်သက်၍ မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>砥石角度<rt>といしかくど</rt></ruby>သည် 45°~60°とする。", textMY: "Bench grinder ၏ ကျောက်ပြားကာဗာထောင့် (砥石角度) သည် အကြမ်းအားဖြင့် ၄၅ မှ ၆၀ ဒီဂရီ အတွင်းရှိရမည်။" },
-      { id: 2, textJP: "(2) <ruby>取替え<rt>とりかえ</rt></ruby>သည် <ruby>特別教育修了者<rt>とくべつきょういくしゅうりょうしゃ</rt></ruby>က <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ဂရင်းဒါးကျောက်ပြား (砥石) ဖြုတ်/တပ် လဲလှယ်ခြင်းကို အထူးပညာပေး (特別教育) ပြီးမြောက်သူကသာ လုပ်ဆောင်ရမည်။" },
-      { id: 3, textJP: "(3) <ruby>加工機<rt>かこうき</rt></ruby>သည် <ruby>進行ゆっくり<rt>しんこうゆっくり</rt></ruby>とする。", textMY: "သတ္တုဖြတ်တောက်ပုံဖော်စက် (加工機) များတွင် လုပ်ငန်းစဉ်ကို ဘေးကင်းစေရန် ဖြည်းညှင်းစွာ လုပ်ဆောင်သင့်သည်။" },
-      { id: 4, textJP: "(4) <ruby>ボール盤<rt>ぼーるばん</rt></ruby>သည် <ruby>手袋使用<rt>てぶくろしよう</rt></ruby>できる。", textMY: "လွန်ပြီးစက် / ဖောက်စက် (ボール盤 / Drilling machine) ကို အသုံးပြုရာတွင် လက်အိတ် (Gloves) ဝတ်ဆင်ခွင့်ပြုသည်။" },
-      { id: 5, textJP: "(5) <ruby>不安全行動<rt>ふあんぜんこうどう</rt></ruby>သည် <ruby>起因<rt>きいん</rt></ruby>である。", textMY: "အလုပ်သမားများ၏ မလုံခြုံသောကိုယ်အမူအကျင့် (Unsafe acts) သည် မတော်တဆမှုများ၏ အဓိကအကြောင်းရင်း ဖြစ်သည်။" }
+      { id: 1, textJP: "(1) <ruby>砥石角度<rt>といしかくど</rt></ruby>は 45°~60°とする。", textMY: "Bench grinder ၏ ကျောက်ပြားကာဗာထောင့် (砥石角度) သည် အကြမ်းအားဖြင့် ၄၅ မှ ၆၀ ဒီဂရီ အတွင်းရှိရမည်။" },
+      { id: 2, textJP: "(2) <ruby>取替え<rt>とりかえ</rt></ruby>は <ruby>特別教育修了者<rt>とくべつきょういくしゅうりょうしゃ</rt></ruby>が <ruby>行う<rt>おこなう</rt></ruby>。", textMY: "ဂရင်းဒါးကျောက်ပြား (砥石) ဖြုတ်/တပ် လဲလှယ်ခြင်းကို အထူးပညာပေး (特別教育) ပြီးမြောက်သူကသာ လုပ်ဆောင်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>加工機<rt>かこうき</rt></ruby>は <ruby>進行ゆっくり<rt>しんこうゆっくり</rt></ruby>とする。", textMY: "သတ္တုဖြတ်တောက်ပုံဖော်စက် (加工機) များတွင် လုပ်ငန်းစဉ်ကို ဘေးကင်းစေရန် ဖြည်းညှင်းစွာ လုပ်ဆောင်သင့်သည်။" },
+      { id: 4, textJP: "(4) <ruby>ボール盤<rt>ぼーるばん</rt></ruby>は <ruby>手袋使用<rt>てぶくろしよう</rt></ruby>できる。", textMY: "လွန်ပြီးစက် / ဖောက်စက် (ボール盤 / Drilling machine) ကို အသုံးပြုရာတွင် လက်အိတ် (Gloves) ဝတ်ဆင်ခွင့်ပြုသည်။" },
+      { id: 5, textJP: "(5) <ruby>不安全行動<rt>ふあんぜんこうどう</rt></ruby>は <ruby>起因<rt>きいん</rt></ruby>である。", textMY: "အလုပ်သမားများ၏ မလုံခြုံသောကိုယ်အမူအကျင့် (Unsafe acts) သည် မတော်တဆမှုများ၏ အဓိကအကြောင်းရင်း ဖြစ်သည်။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -836,10 +836,10 @@ export const chapter2023Data: StudyCardData[] = [
     questionMY: "ဝန်ချည်နှောင်ခြင်းနှင့် ကရိန်းကြိုးများ (Slinging gears / 玉掛用具) နှင့် ပတ်သက်၍ မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>き裂<rt>きれつ</rt></ruby>သည် <ruby>使用不可<rt>しようふか</rt></ruby>である。", textMY: "ကြိုးချိတ်၊ ကွင်းများတွင် အက်ကွဲကြောင်း (Crack) တွေ့ရှိပါက လုံးဝ အသုံးမပြုရပါ။" },
-      { id: 2, textJP: "(2) <ruby>安全係数<rt>あんぜんけいすう</rt></ruby>သည် 6<ruby>以上<rt>いじょう</rt></ruby>である。", textMY: "Cable ကြိုးများ၏ Safety factor (ဘေးကင်းရေးအချိုး) သည် ၆ ဆ နှင့်အထက် ရှိရမည်။" },
-      { id: 3, textJP: "(3) <ruby>減少<rt>げんしょう</rt></ruby>10%သည် <ruby>使用不可<rt>しようふか</rt></ruby>である。", textMY: "ဝါယာကြိုး၏ အချင်း (Diameter) ပုံမှန်ထက် ၁၀% လျော့ကျသွားပါက အသုံးမပြုရ။" },
-      { id: 4, textJP: "(4) 1<ruby>トン以上<rt>いじょう</rt></ruby>သည် <ruby>特別教育<rt>とくべつきょういく</rt></ruby>である。", textMY: "အလေးချိန် ၁ တန်နှင့်အထက် ရှိသော ပစ္စည်းများကို ချည်နှောင်ရာတွင် အထူးပညာပေး (特別教育) သင်တန်းအောင်မြင်ရုံဖြင့် လုံလောက်သည်။" },
-      { id: 5, textJP: "(5) 7%<ruby>切断<rt>せつだん</rt></ruby>သည် <ruby>使用不可<rt>しようふか</rt></ruby>である。", textMY: "ဝါယာကြိုးမျှင် ၇% ပြတ်တောက်သွားပါက အသုံးမပြုရပါ။" }
+      { id: 2, textJP: "(2) <ruby>安全係数<rt>あんぜんけいすう</rt></ruby>は 6<ruby>以上<rt>いじょう</rt></ruby>である。", textMY: "Cable ကြိုးများ၏ Safety factor (ဘေးကင်းရေးအချိုး) သည် ၆ ဆ နှင့်အထက် ရှိရမည်။" },
+      { id: 3, textJP: "(3) <ruby>減少<rt>げんしょう</rt></ruby>10%は <ruby>使用不可<rt>しようふか</rt></ruby>である。", textMY: "ဝါယာကြိုး၏ အချင်း (Diameter) ပုံမှန်ထက် ၁၀% လျော့ကျသွားပါက အသုံးမပြုရ။" },
+      { id: 4, textJP: "(4) 1<ruby>トン以上<rt>いじょう</rt></ruby>は <ruby>特別教育<rt>とくべつきょういく</rt></ruby>である。", textMY: "အလေးချိန် ၁ တန်နှင့်အထက် ရှိသော ပစ္စည်းများကို ချည်နှောင်ရာတွင် အထူးပညာပေး (特別教育) သင်တန်းအောင်မြင်ရုံဖြင့် လုံလောက်သည်။" },
+      { id: 5, textJP: "(5) 7%<ruby>切断<rt>せつだん</rt></ruby>は <ruby>使用不可<rt>しようふか</rt></ruby>である。", textMY: "ဝါယာကြိုးမျှင် ၇% ပြတ်တောက်သွားပါက အသုံးမပြုရပါ။" }
     ],
     correctOptionId: 4,
     explanation: {
@@ -853,11 +853,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>建築基準法<rt>けんちくきじゅんほう</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဆောက်လုပ်ရေးစံနှုန်းဥပဒေ (建築基準法) နှင့်ပတ်သက်၍ မှားယွင်းသောအချက်ကို ရွေးချယ်ပါ။",
     options: [
-      { id: 1, textJP: "(1) <ruby>指定機関確認<rt>していきかんかくにん</rt></ruby>သည် <ruby>建築主事<rt>しゅじ</rt></ruby>とみなす。", textMY: "ပုဂ္ဂလိက စစ်ဆေးရေးအဖွဲ့အစည်း (指定機関) ၏ အတည်ပြုမှုကို အစိုးရကြီးကြပ်သူ (建築主事) ၏ အတည်ပြုချက်အဖြစ် သတ်မှတ်နိုင်သည်။" },
-      { id: 2, textJP: "(2) <ruby>申請書<rt>しんせいしょ</rt></ruby>သည် 4<ruby>日以内<rt>にちいない</rt></ruby>とする。", textMY: "ဆောက်လုပ်ခွင့်အတည်ပြု လျှောက်လွှာနှင့်ပတ်သက်၍ ၄ ရက်အတွင်း အကြောင်းပြန်ရမည်စသဖြင့် သတ်မှတ်ချက်ရှိသည်။" },
-      { id: 3, textJP: "(3) RC<ruby>造<rt>ぞう</rt></ruby>သည် <ruby>中間検査対象外<rt>ちゅうかんけんさたいしょうがい</rt></ruby>である。", textMY: "သံကူကွန်ကရစ် (RC) အဆောက်အဦများသည် ကြားဖြတ်စစ်ဆေးမှု (中間検査) ခံယူရန် မလိုအပ်သော ကင်းလွတ်ခွင့်ရှိသည်။" },
+      { id: 1, textJP: "(1) <ruby>指定機関確認<rt>していきかんかくにん</rt></ruby>は <ruby>建築主事<rt>しゅじ</rt></ruby>とみなす。", textMY: "ပုဂ္ဂလိက စစ်ဆေးရေးအဖွဲ့အစည်း (指定機関) ၏ အတည်ပြုမှုကို အစိုးရကြီးကြပ်သူ (建築主事) ၏ အတည်ပြုချက်အဖြစ် သတ်မှတ်နိုင်သည်။" },
+      { id: 2, textJP: "(2) <ruby>申請書<rt>しんせいしょ</rt></ruby>は 4<ruby>日以内<rt>にちいない</rt></ruby>とする。", textMY: "ဆောက်လုပ်ခွင့်အတည်ပြု လျှောက်လွှာနှင့်ပတ်သက်၍ ၄ ရက်အတွင်း အကြောင်းပြန်ရမည်စသဖြင့် သတ်မှတ်ချက်ရှိသည်။" },
+      { id: 3, textJP: "(3) RC<ruby>造<rt>ぞう</rt></ruby>は <ruby>中間検査対象外<rt>ちゅうかんけんさたいしょうがい</rt></ruby>である。", textMY: "သံကူကွန်ကရစ် (RC) အဆောက်အဦများသည် ကြားဖြတ်စစ်ဆေးမှု (中間検査) ခံယူရန် မလိုအပ်သော ကင်းလွတ်ခွင့်ရှိသည်။" },
       { id: 4, textJP: "(4) <ruby>最低基準<rt>さいていきじゅん</rt></ruby>である。", textMY: "ဤဥပဒေပြဋ္ဌာန်းချက်များသည် အဆောက်အဦများအတွက် 'အနိမ့်ဆုံး စံနှုန်း (Minimum standard)' ကို သတ်မှတ်ထားခြင်းဖြစ်သည်။" },
-      { id: 5, textJP: "(5) <ruby>安全性<rt>あんぜんせい</rt></ruby>သည် <ruby>防火<rt>ぼうか</rt></ruby>ကို <ruby>含む<rt>ふくむ</rt></ruby>。", textMY: "အဆောက်အဦတစ်ခု၏ 'ဘေးကင်းလုံခြုံမှု' တွင် မီးဘေးကာကွယ်ရေး (Fire prevention) စံနှုန်းများလည်း ပါဝင်သည်။" }
+      { id: 5, textJP: "(5) <ruby>安全性<rt>あんぜんせい</rt></ruby>は <ruby>防火<rt>ぼうか</rt></ruby>を <ruby>含む<rt>ふくむ</rt></ruby>。", textMY: "အဆောက်အဦတစ်ခု၏ 'ဘေးကင်းလုံခြုံမှု' တွင် မီးဘေးကာကွယ်ရေး (Fire prevention) စံနှုန်းများလည်း ပါဝင်သည်။" }
     ],
     correctOptionId: 3,
     explanation: {
@@ -873,8 +873,8 @@ export const chapter2023Data: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>緊結<rt>きんけつ</rt></ruby>ကို <ruby>行わなかった<rt>おこなわなかった</rt></ruby>。", textMY: "လိုအပ်သော နေရာများတွင် သံချည်သံနှောင် (緊結) ထပ်မံမပြုလုပ်ဘဲ နေခဲ့သည်။" },
       { id: 2, textJP: "(2) <ruby>ナット2重<rt>なっとにじゅう</rt></ruby>とした。", textMY: "Bolt များ မပြုတ်ထွက်စေရန် Nut ကို ၂ ထပ် (Double nuts) အသုံးပြုခဲ့သည်။" },
-      { id: 3, textJP: "(3) <ruby>細長比<rt>ほそながひ</rt></ruby>သည် 300とした。", textMY: "တိုင်များ၏ သွယ်လျမှုအချိုး (Slenderness ratio) ကို ၃၀၀ အဖြစ် ထားရှိခဲ့သည်။" },
-      { id: 4, textJP: "(4) <ruby>圧縮柱<rt>あっしゅくちゅう</rt></ruby>သည် <ruby>鋳鉄<rt>ちゅうてつ</rt></ruby>ကို <ruby>使用<rt>しよう</rt></ruby>した。", textMY: "ဖိအားခံရသောတိုင် (Compression Column) များအတွက် သွန်းသံ (Cast iron/鋳鉄) ကို အသုံးပြုခဲ့သည်။" },
+      { id: 3, textJP: "(3) <ruby>細長比<rt>ほそながひ</rt></ruby>は 300とした。", textMY: "တိုင်များ၏ သွယ်လျမှုအချိုး (Slenderness ratio) ကို ၃၀၀ အဖြစ် ထားရှိခဲ့သည်။" },
+      { id: 4, textJP: "(4) <ruby>圧縮柱<rt>あっしゅくちゅう</rt></ruby>は <ruby>鋳鉄<rt>ちゅうてつ</rt></ruby>を <ruby>使用<rt>しよう</rt></ruby>した。", textMY: "ဖိအားခံရသောတိုင် (Compression Column) များအတွက် သွန်းသံ (Cast iron/鋳鉄) ကို အသုံးပြုခဲ့သည်။" },
       { id: 5, textJP: "(5) <ruby>利便性優先<rt>りべんせいゆうせん</rt></ruby>とした。", textMY: "ဖွဲ့စည်းပုံကြံ့ခိုင်မှုထက် အသုံးပြုရအဆင်ပြေချောမွေ့မှု (利便性) ကိုသာ ပိုမိုဦးစားပေး၍ ဒီဇိုင်းဆွဲခဲ့သည်။" }
     ],
     correctOptionId: 4,
@@ -889,11 +889,11 @@ export const chapter2023Data: StudyCardData[] = [
     questionJP: "<ruby>用語<rt>ようご</rt></ruby>တွင် <ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "ဝေါဟာရများတွင် မသင့်လျော်သည့်အချက်မှာ အဘယ်နည်း။",
     options: [
-      { id: 1, textJP: "(1) <ruby>敷地<rt>しきち</rt></ruby>သည် <ruby>一団の土地<rt>いちだんのとち</rt></ruby>である。", textMY: "မြေကွက်ဆိုသည်မှာ မြေတစ်ကွက်လုံးဖြစ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>地階<rt>ちかい</rt></ruby>သည် <ruby>天井すべて<rt>てんじょうすべて</rt></ruby>က <ruby>下<rt>した</rt></ruby>である。", textMY: "မြေအောက်ထပ်မှာ မျက်နှာကျက်အားလုံး အောက်ရောက်ရမည်။" },
-      { id: 3, textJP: "(3) <ruby>基礎<rt>きそ</rt></ruby>သည် <ruby>主要部分<rt>しゅようぶぶん</rt></ruby>である。", textMY: "အခြေခံသည် အဓိကအပိုင်းဖြစ်သည်။" },
-      { id: 4, textJP: "(4) <ruby>柱<rt>はしら</rt></ruby>သည် <ruby>主要部分<rt>しゅようぶぶん</rt></ruby>である。", textMY: "တိုင်သည် အဓိကအပိုင်းဖြစ်သည်။" },
-      { id: 5, textJP: "(5) <ruby>荷重<rt>かじゅう</rt></ruby>သည် <ruby>震動・衝撃<rt>しんどう・しょうげき</rt></ruby>ကို <ruby>含む<rt>ふくむ</rt></ruby>。", textMY: "ဝန်တွင် တုန်ခါမှု ပါဝင်သည်။" }
+      { id: 1, textJP: "(1) <ruby>敷地<rt>しきち</rt></ruby>は <ruby>一団の土地<rt>いちだんのとち</rt></ruby>である。", textMY: "မြေကွက်ဆိုသည်မှာ မြေတစ်ကွက်လုံးဖြစ်သည်။" },
+      { id: 2, textJP: "(2) <ruby>地階<rt>ちかい</rt></ruby>は <ruby>天井すべて<rt>てんじょうすべて</rt></ruby>が <ruby>下<rt>した</rt></ruby>である。", textMY: "မြေအောက်ထပ်မှာ မျက်နှာကျက်အားလုံး အောက်ရောက်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>基礎<rt>きそ</rt></ruby>は <ruby>主要部分<rt>しゅようぶぶん</rt></ruby>である。", textMY: "အခြေခံသည် အဓိကအပိုင်းဖြစ်သည်။" },
+      { id: 4, textJP: "(4) <ruby>柱<rt>はしら</rt></ruby>は <ruby>主要部分<rt>しゅようぶぶん</rt></ruby>である。", textMY: "တိုင်သည် အဓိကအပိုင်းဖြစ်သည်။" },
+      { id: 5, textJP: "(5) <ruby>荷重<rt>かじゅう</rt></ruby>は <ruby>震動・衝撃<rt>しんどう・しょうげき</rt></ruby>を <ruby>含む<rt>ふくむ</rt></ruby>。", textMY: "ဝန်တွင် တုန်ခါမှု ပါဝင်သည်။" }
     ],
     correctOptionId: 2,
     explanation: {

@@ -119,7 +119,7 @@ export const chapter2024Data: StudyCardData[] = [
       { id: 2, textJP: "(2) <ruby>完全溶込<rt>かんぜんようこみ</rt></ruby>み<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>有効長さ<rt>ゆうこうながさ</rt></ruby>は、<ruby>実際<rt>じっさい</rt></ruby>の<ruby>溶接長さ<rt>ようせつながさ</rt></ruby>をそのまま取ることができる。", textMY: "Full Penetration Weld ၏ ထိရောက်သောအရှည်မှာ လက်တွေ့ ဂဟေအရှည်အတိုင်းဖြစ်သည်။" },
       { id: 3, textJP: "(3) <ruby>隅肉溶接<rt>すみにくようせつ</rt></ruby>の<ruby>有効長さ<rt>ゆうこうながさ</rt></ruby>は、<ruby>始終端部<rt>しじゅうたんぶ</rt></ruby>の<ruby>不完全<rt>ふかんぜん</rt></ruby>な<ruby>部分<rt>ぶぶん</rt></ruby>を<ruby>含<rt>ふく</rt></ruby>めてはならない。", textMY: "Fillet Weld ၏ ထိရောက်သောအရှည်တွင် အစနှင့်အဆုံးရှိ မပြည့်စုံသော အပိုင်းကို ထည့်မတွက်ရပါ။" },
       { id: 4, textJP: "(4) <ruby>溶接部<rt>ようせつぶ</rt></ruby>の<ruby>基準強度<rt>きじゅんきょうど</rt></ruby>は、<ruby>低<rt>ひく</rt></ruby>い<ruby>方<rt>ほう</rt></ruby>の<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>基準強度<rt>きじゅんきょうど</rt></ruby>とする。", textMY: "ဂဟေဆက်နေရာ၏ စံနှုန်းခိုင်မာမှုသည် အားအနည်းဆုံးသံမဏိ၏ စံနှုန်းအတိုင်းဖြစ်သည်။" },
-      { id: 5, textJP: "(5) <ruby>残留応力<rt>ざんりゅうおうりょく</rt></ruby>သည် <ruby>構造性能<rt>こうぞうせいのう</rt></ruby><ruby>低下<rt>ていか</rt></ruby>の<ruby>要因<rt>よういん</rt></ruby>につながる。", textMY: "Residual Stress သည် ဖွဲ့စည်းပုံ စွမ်းဆောင်ရည် ကျဆင်းစေသည့် အကြောင်းရင်း ဖြစ်သည်။" }
+      { id: 5, textJP: "(5) <ruby>残留応力<rt>ざんりゅうおうりょく</rt></ruby>は <ruby>構造性能<rt>こうぞうせいのう</rt></ruby><ruby>低下<rt>ていか</rt></ruby>の<ruby>要因<rt>よういん</rt></ruby>につながる。", textMY: "Residual Stress သည် ဖွဲ့စည်းပုံ စွမ်းဆောင်ရည် ကျဆင်းစေသည့် အကြောင်းရင်း ဖြစ်သည်။" }
     ],
     correctOptionId: 1,
     explanation: {
@@ -515,7 +515,7 @@ export const chapter2024Data: StudyCardData[] = [
       { id: 2, textJP: "(2) <ruby>曲げ試験<rt>まげしけん</rt></ruby>は<ruby>材料<rt>ざいりょう</rt></ruby>の<ruby>変形能力<rt>へんけいのうりょく</rt></ruby>を<ruby>調べる<rt>しらべる</rt></ruby>。", textMY: "Bending Test သည် ပစ္စည်း၏ ပုံပျက်ခံနိုင်စွမ်းကို စစ်ဆေးသည်။" },
       { id: 3, textJP: "(3) SN<ruby>材<rt>ざい</rt></ruby>ではJISにおいて<ruby>曲げ試験<rt>まげしけん</rt></ruby>は<ruby>要求<rt>ようきゅう</rt></ruby>されていない。", textMY: "SN Material အတွက် JIS တွင် Bending Test ကို တောင်းဆိုထားခြင်း မရှိပါ။" },
       { id: 4, textJP: "(4) <ruby>引張試験<rt>ひっぱりしけん</rt></ruby>は<ruby>降伏点<rt>こうふくてん</rt></ruby>や<ruby>引張強さ<rt>ひっぱりつよさ</rt></ruby>を<ruby>測定<rt>そくてい</rt></ruby>する。", textMY: "Tensile Test သည် Yield Point နှင့် Tensile Strength တို့ကို တိုင်းတာသည်။" },
-      { id: 5, textJP: "(5) <ruby>硬さ試験<rt>かたさしけん</rt></ruby>は<ruby>表面<rt>ひょうめん</rt></ruby>の<ruby>硬度<rt>こうど</rt></ruby>ကို <ruby>測定<rt>そくてい</rt></ruby>する。", textMY: "Hardness Test သည် မျက်နှာပြင်၏ မာကျောမှုကို တိုင်းတာသည်။" }
+      { id: 5, textJP: "(5) <ruby>硬さ試験<rt>かたさしけん</rt></ruby>は<ruby>表面<rt>ひょうめん</rt></ruby>の<ruby>硬度<rt>こうど</rt></ruby>を <ruby>測定<rt>そくてい</rt></ruby>する。", textMY: "Hardness Test သည် မျက်နှာပြင်၏ မာကျောမှုကို တိုင်းတာသည်။" }
     ],
     correctOptionId: 3,
     explanation: {
@@ -533,7 +533,7 @@ export const chapter2024Data: StudyCardData[] = [
       { id: 2, textJP: "(2) <ruby>鋼材管理責任者<rt>こうざいかんりせきにんしゃ</rt></ruby>が<ruby>照合<rt>しょうごう</rt></ruby>や<ruby>外観検査<rt>がいかんけんさ</rt></ruby>を<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "သံမဏိစီမံခန့်ခွဲမှု တာဝန်ခံက တိုက်ဆိုင်စစ်ဆေးခြင်းနှင့် အပြင်ပန်းစစ်ဆေးခြင်းကို လုပ်ဆောင်သည်။" },
       { id: 3, textJP: "(3) <ruby>不合格品<rt>ふごうかくひん</rt></ruby>は<ruby>誤って使用<rt>あやまってしよう</rt></ruby>されないように<ruby>管理<rt>かんり</rt></ruby>する。", textMY: "မအောင်မြင်သောပစ္စည်းများကို မှားယွင်းအသုံးမပြုမိစေရန် စီမံခန့်ခွဲရမည်။" },
       { id: 4, textJP: "(4) <ruby>証明書<rt>しょうめいしょ</rt></ruby>との<ruby>照合<rt>しょうごう</rt></ruby>が<ruby>不可能<rt>ふかのう</rt></ruby>な<ruby>場合<rt>ばあい</rt></ruby>は<ruby>材料試験<rt>ざいりょうしけん</rt></ruby>を<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "လက်မှတ်နှင့် တိုက်ဆိုင်ရန် မဖြစ်နိုင်ပါက ပစ္စည်းစမ်းသပ်မှုကို လုပ်ဆောင်ရမည်။" },
-      { id: 5, textJP: "(5) <ruby>現品<rt>げんぴん</rt></ruby>の<ruby>識別表示<rt>しきべつひょうじ</rt></ruby>だけで<ruby>品質<rt>ひんしつ</rt></ruby>ကို <ruby>保証<rt>ほしょう</rt></ruby>できる。", textMY: "ပစ္စည်းပေါ်ရှိ အမှတ်အသားတစ်ခုတည်းဖြင့် အရည်အသွေးကို အာမခံနိုင်သည်။" }
+      { id: 5, textJP: "(5) <ruby>現品<rt>げんぴん</rt></ruby>の<ruby>識別表示<rt>しきべつひょうじ</rt></ruby>だけで<ruby>品質<rt>ひんしつ</rt></ruby>を <ruby>保証<rt>ほしょう</rt></ruby>できる。", textMY: "ပစ္စည်းပေါ်ရှိ အမှတ်အသားတစ်ခုတည်းဖြင့် အရည်အသွေးကို အာမခံနိုင်သည်။" }
     ],
     correctOptionId: 5,
     explanation: {
@@ -585,7 +585,7 @@ export const chapter2024Data: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>不良品<rt>ふりょうひん</rt></ruby>の<ruby>処置方法<rt>しょちほうほう</rt></ruby>は<ruby>重要度<rt>じゅうようど</rt></ruby>を<ruby>考慮<rt>こうりょ</rt></ruby>して<ruby>決定<rt>けってい</rt></ruby>する。", textMY: "ချို့ယွင်းချက်ရှိသောပစ္စည်းကို ဖြေရှင်းမည့်နည်းလမ်းကို အရေးကြီးမှုအပေါ် မူတည်၍ ဆုံးဖြတ်ရမည်။" },
       { id: 2, textJP: "(2) <ruby>マイナス<rt>まいなす</rt></ruby>の<ruby>限界許容差<rt>げんかいきょようさ</rt></ruby>を<ruby>超えた<rt>こえた</rt></ruby><ruby>場合<rt>ばあい</rt></ruby>、そのまま<ruby>使用<rt>しよう</rt></ruby>できる。", textMY: "အနှုတ်ဘက်သို့ ခွင့်ပြုလွဲချော်မှု ကျော်လွန်သွားပါက ဒီအတိုင်း သုံးနိုင်သည်။" },
-      { id: 3, textJP: "(3) <ruby>長さ<rt>ながさ</rt></ruby><rt>等<rt>とう</rt></ruby>の<ruby>不良品<rt>ふりょうひん</rt></ruby>は<ruby>補修<rt>ほしゅう</rt></ruby>により<ruby>対処<rt>たいしょ</rt></ruby>することもできる。", textMY: "အလျားမမှန်သောပစ္စည်းများကို ပြန်လည်ပြုပြင်ခြင်းဖြင့် ဖြေရှင်းနိုင်သည်။" },
+      { id: 3, textJP: "(3) <ruby>長さ<rt>ながさ</rt></ruby><ruby>等<rt>とう</rt></ruby>の<ruby>不良品<rt>ふりょうひん</rt></ruby>は<ruby>補修<rt>ほしゅう</rt></ruby>により<ruby>対処<rt>たいしょ</rt></ruby>することもできる。", textMY: "အလျားမမှန်သောပစ္စည်းများကို ပြန်လည်ပြုပြင်ခြင်းဖြင့် ဖြေရှင်းနိုင်သည်။" },
       { id: 4, textJP: "(4) <ruby>隅肉溶接サイズ<rt>すみにくようせつさいず</rt></ruby>のように<ruby>管理上<rt>かんりじょう</rt></ruby>の<ruby>規定<rt>きてい</rt></ruby>もある。", textMY: "Fillet weld size ကဲ့သို့သော စီမံခန့်ခွဲမှုဆိုင်ရာ စည်းမျဉ်းများလည်း ရှိသည်။" },
       { id: 5, textJP: "(5) <ruby>管理許容差<rt>かんりきょようさ</rt></ruby>を<ruby>超える<rt>こえる</rt></ruby><ruby>製品<rt>せいひん</rt></ruby>の<ruby>割合<rt>わりあい</rt></ruby>を<ruby>把握<rt>はあく</rt></ruby>する<ruby>必要<rt>ひつよう</rt></ruby>がある。", textMY: "စံနှုန်းကျော်လွန်နေသော ထုတ်ကုန်ပမာဏကို သိရှိရန် လိုအပ်သည်။" }
     ],
@@ -602,7 +602,7 @@ export const chapter2024Data: StudyCardData[] = [
     questionMY: "JASS 6 အရ ပစ္စည်းစစ်ဆေးမှု (Object Inspection) ဆိုင်ရာ အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>対物検査1<rt>たいぶつけんさいち</rt></ruby>は<ruby>抜き取った結果<rt>ぬきとったけっか</rt></ruby>から<ruby>直接合否<rt>ちょくせつごうひ</rt></ruby>を<ruby>判定<rt>はんてい</rt></ruby>する。", textMY: "Inspection 1 သည် နမူနာကောက်ယူမှုမှ တိုက်ရိုက် အောင်/ရှုံး ဆုံးဖြတ်သည်။" },
-      { id: 2, textJP: "(2) <ruby>対物検査2<rt>たいぶつけんさに</rt></ruby>は<ruby>社内検査記録<rt>しゃないけんさきろく</rt></ruby>との<ruby>整合性<rt>せいごうせい</rt></ruby>ကို <ruby>検定<rt>けんてい</rt></ruby>する。", textMY: "Inspection 2 သည် စက်ရုံတွင်းမှတ်တမ်းနှင့် ကိုက်ညီမှုကို စစ်ဆေးသည်။" },
+      { id: 2, textJP: "(2) <ruby>対物検査2<rt>たいぶつけんさに</rt></ruby>は<ruby>社内検査記録<rt>しゃないけんさきろく</rt></ruby>との<ruby>整合性<rt>せいごうせい</rt></ruby>を <ruby>検定<rt>けんてい</rt></ruby>する。", textMY: "Inspection 2 သည် စက်ရုံတွင်းမှတ်တမ်းနှင့် ကိုက်ညီမှုကို စစ်ဆေးသည်။" },
       { id: 3, textJP: "(3) <ruby>対物検査1<rt>たいぶつけんさいち</rt></ruby>の方法は最も<ruby>単純<rt>たんじゅん</rt></ruby>である。", textMY: "Inspection 1 ၏ နည်းလမ်းသည် အခြေခံအကျဆုံး ဖြစ်သည်။" },
       { id: 4, textJP: "(4) <ruby>対物検査2<rt>たいぶつけんさに</rt></ruby>での<ruby>不合格<rt>ふごうかく</rt></ruby>は、<ruby>精度そのもの<rt>せいどそのもの</rt></ruby>の<ruby>不合格<rt>ふごうかく</rt></ruby>を<ruby>意味<rt>いみ</rt></ruby>する。", textMY: "Inspection 2 တွင် မအောင်မြင်ခြင်းသည် တိကျမှု ကိုယ်တိုင် မအောင်မြင်ခြင်းကို ဆိုလိုသည်။" },
       { id: 5, textJP: "(5) <ruby>不合格ロット<rt>ふごうかくろっと</rt></ruby>は<ruby>残り全数<rt>のこりぜんすう</rt></ruby>の<ruby>寸法測定<rt>すんぽうそくてい</rt></ruby>を<ruby>行う<rt>おこなう</rt></ruby>。", textMY: "မအောင်မြင်သော အုပ်စု (Lot) ကို ကျန်ရှိသော အားလုံးကို အတိုင်းအတာ စစ်ဆေးရမည်။" }

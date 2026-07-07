@@ -105,13 +105,7 @@ export const chapter2Data2026Part1: StudyCardData[] = [
     correctOptionId: 5,
     explanation: {
       titleMY: "ရှင်းလင်းချက် - 設計図書の優先順位",
-      reasonMY: `စာရွက်စာတမ်းများ ကွဲလွဲနေပါက ဦးစားပေးရမည့် အစီအစဉ်မှာ အောက်ပါအတိုင်းဖြစ်သည်။
-① 質問回答書 (Q&A)
-② 現場説明書 (Site Instruction)
-③ 特記仕様書 (Special Spec)
-④ 設計図 (Drawing)
-⑤ 標準仕様書 (Standard Spec)
-ထို့ကြောင့် Q&A နှင့် Site Instruction ကွဲလွဲပါက 'Q&A (質問回答書)' ကိုသာ ဦးစားပေးရမည်ဖြစ်၍ (5) မှာ မှားယွင်းပါသည်။`,
+      reasonMY: "စာရွက်စာတမ်းများ ကွဲလွဲနေပါက ဦးစားပေးရမည့် အစီအစဉ်မှာ အောက်ပါအတိုင်းဖြစ်သည်။\n① 質問回答書 (Q&A)\n② 現場説明書 (Site Instruction)\n③ 特記仕様書 (Special Spec)\n④ 設計図 (Drawing)\n⑤ 標準仕様書 (Standard Spec)\nထို့ကြောင့် Q&A နှင့် Site Instruction ကွဲလွဲပါက 'Q&A (質問回答書)' ကိုသာ ဦးစားပေးရမည်ဖြစ်၍ (5) မှာ မှားယွင်းပါသည်။",
       memoryTipMY: "Q&A > Site Instruction > Special Spec > Drawing > Standard Spec"
     }
   },
