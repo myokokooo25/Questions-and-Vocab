@@ -161,7 +161,123 @@ const processVocab = (items: any[]): VocabItem[] => {
     }));
 };
 
+import vocab2026_2_1 from './questions/2026-2-1.js';
+import vocab2026_2_2 from './questions/2026-2-2.js';
+import vocab2026_2_3 from './questions/2026-2-3.js';
+import vocab2026_2_4 from './questions/2026-2-4.js';
+import vocab2026_2_5 from './questions/2026-2-5.js';
+import vocab2026_2_6 from './questions/2026-2-6.js';
+import vocab2026_2_7 from './questions/2026-2-7.js';
+import vocab2026_2_8 from './questions/2026-2-8.js';
+import vocab2026_2_9 from './questions/2026-2-9.js';
+import vocab2026_2_10 from './questions/2026-2-10.js';
+import vocab2026_2_11 from './questions/2026-2-11.js';
+import vocab2026_2_12 from './questions/2026-2-12.js';
+import vocab2026_2_13 from './questions/2026-2-13.js';
+import vocab2026_2_14 from './questions/2026-2-14.js';
+import vocab2026_2_15 from './questions/2026-2-15.js';
+import vocab2026_2_16 from './questions/2026-2-16.js';
+import vocab2026_2_17 from './questions/2026-2-17.js';
+import vocab2026_2_18 from './questions/2026-2-18.js';
+import vocab2026_2_19 from './questions/2026-2-19.js';
+import vocab2026_2_20 from './questions/2026-2-20.js';
+import vocab2026_2_21 from './questions/2026-2-21.js';
+import vocab2026_2_22 from './questions/2026-2-22.js';
+import vocab2026_2_23 from './questions/2026-2-23.js';
+import vocab2026_2_24 from './questions/2026-2-24.js';
+import vocab2026_2_25 from './questions/2026-2-25.js';
+import vocab2026_2_26 from './questions/2026-2-26.js';
+import vocab2026_2_27 from './questions/2026-2-27.js';
+import vocab2026_2_28 from './questions/2026-2-28.js';
+import vocab2026_2_29 from './questions/2026-2-29.js';
+import vocab2026_2_30 from './questions/2026-2-30.js';
+import vocab2026_2_31 from './questions/2026-2-31.js';
+import vocab2026_2_32 from './questions/2026-2-32.js';
+import vocab2026_2_33 from './questions/2026-2-33.js';
+import vocab2026_2_34 from './questions/2026-2-34.js';
+import vocab2026_2_35 from './questions/2026-2-35.js';
+import vocab2026_2_36 from './questions/2026-2-36.js';
+import vocab2026_2_37 from './questions/2026-2-37.js';
+import vocab2026_2_38 from './questions/2026-2-38.js';
+import vocab2026_2_39 from './questions/2026-2-39.js';
+import vocab2026_2_40 from './questions/2026-2-40.js';
+import vocab2026_2_41 from './questions/2026-2-41.js';
+import vocab2026_2_42 from './questions/2026-2-42.js';
+import vocab2026_2_43 from './questions/2026-2-43.js';
+import vocab2026_2_44 from './questions/2026-2-44.js';
+import vocab2026_2_45 from './questions/2026-2-45.js';
+import vocab2026_2_46 from './questions/2026-2-46.js';
+import vocab2026_2_47 from './questions/2026-2-47.js';
+import vocab2026_2_48 from './questions/2026-2-48.js';
+import vocab2026_2_49 from './questions/2026-2-49.js';
+import vocab2026_2_50 from './questions/2026-2-50.js';
+import vocab2026_2_51 from './questions/2026-2-51.js';
+import vocab2026_2_52 from './questions/2026-2-52.js';
+import vocab2026_2_53 from './questions/2026-2-53.js';
+import vocab2026_2_54 from './questions/2026-2-54.js';
+import vocab2026_2_55 from './questions/2026-2-55.js';
+import vocab2026_2_56 from './questions/2026-2-56.js';
+import vocab2026_2_57 from './questions/2026-2-57.js';
+
 export const vocabularyData: { [key: string]: VocabItem[] } = {
+  '2026-2-1': processVocab(vocab2026_2_1),
+  '2026-2-2': processVocab(vocab2026_2_2),
+  '2026-2-3': processVocab(vocab2026_2_3),
+  '2026-2-4': processVocab(vocab2026_2_4),
+  '2026-2-5': processVocab(vocab2026_2_5),
+  '2026-2-6': processVocab(vocab2026_2_6),
+  '2026-2-7': processVocab(vocab2026_2_7),
+  '2026-2-8': processVocab(vocab2026_2_8),
+  '2026-2-9': processVocab(vocab2026_2_9),
+  '2026-2-10': processVocab(vocab2026_2_10),
+  '2026-2-11': processVocab(vocab2026_2_11),
+  '2026-2-12': processVocab(vocab2026_2_12),
+  '2026-2-13': processVocab(vocab2026_2_13),
+  '2026-2-14': processVocab(vocab2026_2_14),
+  '2026-2-15': processVocab(vocab2026_2_15),
+  '2026-2-16': processVocab(vocab2026_2_16),
+  '2026-2-17': processVocab(vocab2026_2_17),
+  '2026-2-18': processVocab(vocab2026_2_18),
+  '2026-2-19': processVocab(vocab2026_2_19),
+  '2026-2-20': processVocab(vocab2026_2_20),
+  '2026-2-21': processVocab(vocab2026_2_21),
+  '2026-2-22': processVocab(vocab2026_2_22),
+  '2026-2-23': processVocab(vocab2026_2_23),
+  '2026-2-24': processVocab(vocab2026_2_24),
+  '2026-2-25': processVocab(vocab2026_2_25),
+  '2026-2-26': processVocab(vocab2026_2_26),
+  '2026-2-27': processVocab(vocab2026_2_27),
+  '2026-2-28': processVocab(vocab2026_2_28),
+  '2026-2-29': processVocab(vocab2026_2_29),
+  '2026-2-30': processVocab(vocab2026_2_30),
+  '2026-2-31': processVocab(vocab2026_2_31),
+  '2026-2-32': processVocab(vocab2026_2_32),
+  '2026-2-33': processVocab(vocab2026_2_33),
+  '2026-2-34': processVocab(vocab2026_2_34),
+  '2026-2-35': processVocab(vocab2026_2_35),
+  '2026-2-36': processVocab(vocab2026_2_36),
+  '2026-2-37': processVocab(vocab2026_2_37),
+  '2026-2-38': processVocab(vocab2026_2_38),
+  '2026-2-39': processVocab(vocab2026_2_39),
+  '2026-2-40': processVocab(vocab2026_2_40),
+  '2026-2-41': processVocab(vocab2026_2_41),
+  '2026-2-42': processVocab(vocab2026_2_42),
+  '2026-2-43': processVocab(vocab2026_2_43),
+  '2026-2-44': processVocab(vocab2026_2_44),
+  '2026-2-45': processVocab(vocab2026_2_45),
+  '2026-2-46': processVocab(vocab2026_2_46),
+  '2026-2-47': processVocab(vocab2026_2_47),
+  '2026-2-48': processVocab(vocab2026_2_48),
+  '2026-2-49': processVocab(vocab2026_2_49),
+  '2026-2-50': processVocab(vocab2026_2_50),
+  '2026-2-51': processVocab(vocab2026_2_51),
+  '2026-2-52': processVocab(vocab2026_2_52),
+  '2026-2-53': processVocab(vocab2026_2_53),
+  '2026-2-54': processVocab(vocab2026_2_54),
+  '2026-2-55': processVocab(vocab2026_2_55),
+  '2026-2-56': processVocab(vocab2026_2_56),
+  '2026-2-57': processVocab(vocab2026_2_57),
+
   '1-1': processVocab(vocab1_1),
   '1-2': processVocab(vocab1_2),
   '1-3': processVocab(vocab1_3),

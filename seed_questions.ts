@@ -1,5 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import * as dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+
 dotenv.config();
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://kdulrcovfiqbsenevowc.supabase.co';
@@ -12,23 +15,28 @@ if (!supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-import { studyDataByChapter, studyDataByChapter2026, chapter2021Data, chapter2022Data, chapter2023Data, chapter2024Data, chapter2025Data } from './data/content';
-
 async function seed() {
-  const allData = [
-     ...Object.values(studyDataByChapter).flat(),
-     ...Object.values(studyDataByChapter2026).flat(),
-     ...chapter2021Data,
-     ...chapter2022Data,
-     ...chapter2023Data,
-     ...chapter2024Data,
-     ...chapter2025Data
-  ];
+  const allData = [];
+  const files = fs.readdirSync('./data').filter(f => f.endsWith('.ts') && f !== 'content.ts' && f !== 'index.ts' && f !== 'kanji.ts');
+  
+  for (const file of files) {
+      try {
+          const mod = await import(`./data/${file}`);
+          for (const key of Object.keys(mod)) {
+             if (Array.isArray(mod[key])) {
+                allData.push(...mod[key]);
+             }
+          }
+      } catch (e) {
+          console.error("Error importing", file, e);
+      }
+  }
 
   console.log(`Total questions: ${allData.length}`);
   
   let successCount = 0;
   for (const q of allData) {
+      if (!q.id || !q.questionJP) continue;
       const payload = {
             id: q.id,
             category: q.category || 'unknown',
