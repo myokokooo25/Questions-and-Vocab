@@ -1,42 +1,23 @@
 export default [
-  {
-    "jp": "用語 (ようご)",
-    "my": "ဝေါဟာရ",
-    "type": "Noun"
-  },
-  {
-    "jp": "定義 (ていぎ)",
-    "my": "အဓိပ္ပါယ်ဖွင့်ဆိုချက်",
-    "type": "Noun"
-  },
-  {
-    "jp": "次 (つぎ)",
-    "my": "နောက်",
-    "type": "Noun"
-  },
-  {
-    "jp": "記述 (きじゅつ)",
-    "my": "ဖော်ပြချက်",
-    "type": "Noun"
-  },
-  {
-    "jp": "不適当 (ふてきとう)",
-    "my": "မသင့်လျော်သော",
-    "type": "Adjective"
-  },
-  {
-    "jp": "溶接 (ようせつ)",
-    "my": "ဂဟေဆော်ခြင်း",
-    "type": "Noun"
-  },
-  {
-    "jp": "範囲 (はんい)",
-    "my": "နယ်ပယ်",
-    "type": "Noun"
-  },
-  {
-    "jp": "構造 (こうぞう)",
-    "my": "တည်ဆောက်ပုံ",
-    "type": "Noun"
-  }
+  { jp: '溶接技術 (ようせつぎじゅつ)', my: 'ဂဟေဆော်နည်းပညာ (Welding technology / technique)' },
+  { jp: '検定試験 (けんていしけん)', my: 'အရည်အချင်းစစ်ဆေးခြင်း / စာမေးပွဲ (Qualification test / Certification exam)' },
+  { jp: '資格認証 (しかくにんしょう)', my: 'အရည်အချင်းအသိအမှတ်ပြုခြင်း / လက်မှတ် (Qualification certification)' },
+  { jp: '有する (ゆうする)', my: 'ပိုင်ဆိုင်သော / ရရှိထားသော (To have / possess)' },
+  { jp: '溶接技能者 (ようせつぎのうしゃ)', my: 'ဂဟေဆော်ကျွမ်းကျင်သူ (Skilled welder)' },
+  { jp: '施工可能範囲 (しこうかのうはんい)', my: 'လုပ်ဆောင်နိုင်သောနယ်ပယ် (Possible execution range)' },
+  { jp: '溶接法 (ようせつほう)', my: 'ဂဟေဆော်နည်း (Welding method)' },
+  { jp: '板厚 (いたあつ)', my: 'ပြားအထူ (Plate thickness)' },
+  { jp: '溶接姿勢 (ようせつしせい)', my: 'ဂဟေဆော်သည့်အနေအထား (Welding position)' },
+  { jp: '等 (など)', my: 'စသည်တို့ (Etc.)' },
+  { jp: '関する (かんする)', my: '...နှင့် ပတ်သက်သော (Related to)' },
+  { jp: '記述 (きじゅつ)', my: 'ဖော်ပြချက် (Description)' },
+  { jp: '最も不適当な (もっともふてきとうな)', my: 'အမှားယွင်းဆုံး / အမသင့်လျော်ဆုံး (Most inappropriate)' },
+  { jp: '被覆アーク溶接 (ひふくあーくようせつ)', my: 'အတ်ခ်ဂဟေဆော်ခြင်း / ဂဟေတံသုံး၍ဆော်ခြင်း (Shielded metal arc welding - SMAW)' },
+  { jp: '裏当て金付き (うらあてがねつき)', my: 'အောက်ခံသံပြားပါရှိသော (With backing metal)' },
+  { jp: '開先 (かいさき)', my: 'ဂဟေဆော်ရန်အစွန်းပုံဖော်ထားသောနေရာ / Groove (Groove / Bevel)' },
+  { jp: '中厚板構造 (ちゅうあついたこうぞう)', my: 'အလယ်အလတ်အထူရှိသောပြားတည်ဆောက်ပုံ (Medium-thick plate structure)' },
+  { jp: '以上 (いじょう)', my: 'အထက် / ထိုအထက် (Or more / above)' },
+  { jp: '以下 (いか)', my: 'အောက် / ထိုအောက် (Less than or equal to)' },
+  { jp: '下向姿勢 (したむきしせい)', my: 'အောက်ဘက်သို့ဂဟေဆော်သည့်အနေအထား / Flat position (Flat position)' },
+  { jp: '横向姿勢 (よこむきしせい)', my: 'အလျားလိုက်ဂဟေဆော်သည့်အနေအထား / Horizontal position (Horizontal position)' }
 ];
