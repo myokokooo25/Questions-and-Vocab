@@ -366,8 +366,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   };
 
   React.useEffect(() => {
-    if (localStorage.getItem('force_migrate_2026_v2') !== 'done') {
-      localStorage.setItem('force_migrate_2026_v2', 'done');
+    if (localStorage.getItem('force_migrate_2026_v12') !== 'done') {
+      localStorage.setItem('force_migrate_2026_v12', 'done');
       handleMigrate2026DataToDB();
     }
   }, []);
@@ -1159,15 +1159,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       
       <header className="sticky top-0 z-50 w-full bg-neumorphic-bg/80 backdrop-blur-md">
         <div className="flex items-center justify-between h-20 max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
               <button
                 onClick={onGoBack}
-                className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all shrink-0"
                 title="Go Back"
               >
                 <ChevronLeftIcon className="w-6 h-6" />
               </button>
-              <h1 className="text-xl font-black text-slate-700 hidden sm:block ml-2">
+              <h1 className="text-xl font-black text-slate-700 hidden sm:block ml-2 whitespace-nowrap truncate">
                 {isOldQuestionMode ? `${selectedApp}年 過去問題` : '鉄骨技術者 試験対策'}
               </h1>
             </div>
