@@ -45,6 +45,7 @@ const App: React.FC = () => {
 
     // Kanji Tooltip State
     const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
+    const [selectedKanjiChar, setSelectedKanjiChar] = useState<string | null>(null);
     const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
     
     const auth = useMemo(() => {
@@ -198,18 +199,17 @@ const App: React.FC = () => {
 
     const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => {
         const data = kanjiDictionary[kanji];
-        if (data) {
-          // Calculate position
-          const rect = event.currentTarget.getBoundingClientRect();
-          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-          
-          setTooltipPos({
-            top: rect.bottom + scrollTop,
-            left: rect.left + scrollLeft
-          });
-          setSelectedKanji(data);
-        }
+        // Calculate position
+        const rect = event.currentTarget.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        setTooltipPos({
+          top: rect.bottom + scrollTop,
+          left: rect.left + scrollLeft
+        });
+        setSelectedKanji(data || null);
+        setSelectedKanjiChar(kanji);
     };
 
     if (!auth) return <div className="p-20 text-center font-bold text-slate-500">Access Denied. Please Login from main screen.</div>;
@@ -224,11 +224,12 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col items-center p-4 sm:p-8 bg-neumorphic-bg text-neumorphic-text">
-            {selectedKanji && (
+            {(selectedKanji || selectedKanjiChar) && (
                 <KanjiTooltip
                     kanjiData={selectedKanji}
+                    kanjiChar={selectedKanjiChar || undefined}
                     position={tooltipPos}
-                    onClose={() => setSelectedKanji(null)}
+                    onClose={() => { setSelectedKanji(null); setSelectedKanjiChar(null); }}
                 />
             )}
             <header className="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center mb-6 gap-6">

@@ -56,6 +56,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   // Kanji Tooltip State
   const [selectedKanji, setSelectedKanji] = useState<Kanji | null>(null);
+  const [selectedKanjiChar, setSelectedKanjiChar] = useState<string | null>(null);
+  const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
 
   const [showFontSizeMenu, setShowFontSizeMenu] = useState(false);
@@ -578,20 +580,20 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }
   };
 
-  const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => {
+  const handleKanjiClick = (kanji: string, event: React.MouseEvent<HTMLSpanElement>, questionId?: string) => {
+    setSelectedQuestionId(questionId || null);
     const data = kanjiDictionary[kanji];
-    if (data) {
-      // Calculate position
-      const rect = event.currentTarget.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-      
-      setTooltipPos({
-        top: rect.bottom + scrollTop,
-        left: rect.left + scrollLeft
-      });
-      setSelectedKanji(data);
-    }
+    // Calculate position
+    const rect = event.currentTarget.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    
+    setTooltipPos({
+      top: rect.bottom + scrollTop,
+      left: rect.left + scrollLeft
+    });
+    setSelectedKanji(data || null);
+    setSelectedKanjiChar(kanji);
   };
 
   // Filter Logic
@@ -1036,11 +1038,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   return (
     <div className="min-h-screen bg-neumorphic-bg">
        {/* Tooltip */}
-       {selectedKanji && (
+       {(selectedKanji || selectedKanjiChar) && (
           <KanjiTooltip
             kanjiData={selectedKanji}
+            kanjiChar={selectedKanjiChar || undefined}
+            questionId={selectedQuestionId || undefined}
             position={tooltipPos}
-            onClose={() => setSelectedKanji(null)}
+            onClose={() => { setSelectedKanji(null); setSelectedKanjiChar(null); }}
           />
         )}
 

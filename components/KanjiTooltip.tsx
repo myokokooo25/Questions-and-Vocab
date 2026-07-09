@@ -1,14 +1,51 @@
 import React from 'react';
 import { Kanji } from '../types';
+import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
+import { vocabularyData as questionVocabData } from '../data/vocab';
 
 interface KanjiTooltipProps {
   kanjiData: Kanji | null;
+  kanjiChar?: string;
+  questionId?: string;
   position: { top: number; left: number };
   onClose: () => void;
 }
 
-const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, position, onClose }) => {
-  if (!kanjiData) return null;
+const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, questionId, position, onClose }) => {
+  const character = kanjiData?.character || kanjiChar;
+  if (!character) return null;
+
+  // Search for vocabulary words containing this Kanji
+  let relatedWords = vocabularyData.filter(v => v.kanji.includes(character));
+  let specificWords: any[] = [];
+  if (questionId && questionVocabData[questionId]) {
+    specificWords = questionVocabData[questionId].filter(v => v.jp.includes(character));
+  }
+  
+  // Format specific words to match the vocabularyData structure
+  const formattedSpecificWords = specificWords.map(word => ({
+    id: `specific-${word.jp}`,
+    kanji: word.jp,
+    reading: word.reading || '',
+    burmese: word.my,
+    english: word.english || ''
+  }));
+
+  // Combine and deduplicate
+  const seenKanji = new Set<string>();
+  const combinedWords = [];
+  
+  for (const word of [...formattedSpecificWords, ...relatedWords]) {
+    if (!seenKanji.has(word.kanji)) {
+      seenKanji.add(word.kanji);
+      combinedWords.push(word);
+    }
+  }
+  
+  relatedWords = combinedWords.slice(0, 5); // Limit to 5
+
+
+  if (!kanjiData && relatedWords.length === 0) return null; // Nothing to show
 
   return (
     <>
@@ -16,7 +53,7 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, position, onClos
       <div className="fixed inset-0 z-40" onClick={onClose} />
       
       <div
-        className="absolute z-50 w-64 p-4 bg-white rounded-lg shadow-2xl ring-1 ring-slate-900/10 transition-opacity duration-200 dark:bg-slate-800 dark:ring-white/20"
+        className="absolute z-50 w-72 p-4 bg-white rounded-lg shadow-2xl ring-1 ring-slate-900/10 transition-opacity duration-200 dark:bg-slate-800 dark:ring-white/20 overflow-y-auto max-h-[80vh]"
         style={{ 
           top: position.top, 
           left: position.left, 
@@ -26,24 +63,54 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, position, onClos
         }}
         onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing it
       >
-        <div className="flex items-start justify-between pb-3 border-b border-gray-200 dark:border-slate-700">
-          <p className="text-5xl font-semibold leading-none text-indigo-600 dark:text-indigo-400">{kanjiData.character}</p>
-          <div className='text-right'>
-             <p className="text-lg font-semibold text-gray-800 dark:text-slate-100">{kanjiData.meaning}</p>
-             <p className="mt-1 text-lg font-semibold text-indigo-700 dark:text-indigo-300">{kanjiData.meaningMY}</p>
+        {kanjiData && (
+          <>
+            <div className="flex items-start justify-between pb-3 border-b border-gray-200 dark:border-slate-700">
+              <p className="text-5xl font-semibold leading-none text-indigo-600 dark:text-indigo-400">{kanjiData.character}</p>
+              <div className='text-right'>
+                <p className="text-lg font-semibold text-gray-800 dark:text-slate-100">{kanjiData.meaning}</p>
+                <p className="mt-1 text-lg font-semibold text-indigo-700 dark:text-indigo-300">{kanjiData.meaningMY}</p>
+              </div>
+            </div>
+            
+            <div className="mt-3 text-sm text-gray-600 dark:text-slate-300">
+              <p><strong className="font-semibold text-gray-900 w-20 inline-block dark:text-slate-100">On'yomi:</strong> {kanjiData.onyomi}</p>
+              <p className="mt-1"><strong className="font-semibold text-gray-900 w-20 inline-block dark:text-slate-100">Kun'yomi:</strong> {kanjiData.kunyomi}</p>
+            </div>
+          </>
+        )}
+
+        {!kanjiData && (
+            <div className="pb-3 border-b border-gray-200 dark:border-slate-700">
+              <p className="text-4xl font-semibold leading-none text-indigo-600 dark:text-indigo-400">{character}</p>
+            </div>
+        )}
+
+        {relatedWords.length > 0 && (
+          <div className={`mt-3 ${kanjiData ? 'pt-3 border-t border-gray-100 dark:border-slate-700' : ''}`}>
+             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Related Vocabulary</h4>
+             <ul className="space-y-2">
+                {relatedWords.map(word => (
+                   <li key={word.id} className="text-sm">
+                      <div className="flex items-baseline gap-2">
+                         <span className="font-bold text-slate-700 dark:text-slate-200">{word.kanji}</span>
+                         <span className="text-xs text-slate-500">({word.reading})</span>
+                      </div>
+                      <div className="text-slate-600 dark:text-slate-400">
+                         {word.burmese} {word.english ? ` - ${word.english}` : ''}
+                      </div>
+                   </li>
+                ))}
+             </ul>
           </div>
-        </div>
-        
-        <div className="mt-3 text-sm text-gray-600 dark:text-slate-300">
-          <p><strong className="font-semibold text-gray-900 w-20 inline-block dark:text-slate-100">On'yomi:</strong> {kanjiData.onyomi}</p>
-          <p className="mt-1"><strong className="font-semibold text-gray-900 w-20 inline-block dark:text-slate-100">Kun'yomi:</strong> {kanjiData.kunyomi}</p>
-        </div>
+        )}
+
         <button 
             onClick={onClose} 
             className="absolute top-2 right-2 p-1 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-slate-700 dark:hover:text-slate-300"
             aria-label="Close"
         >
-             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
         </button>

@@ -19,7 +19,7 @@ const stripHtml = (html: string): string => {
 
 interface CardProps {
   data: StudyCardData;
-  onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void;
+  onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>, questionId?: string) => void;
   mode: 'study';
   onOptionSelect?: (optionId: number) => void;
   selectedOptionId?: number;
@@ -270,7 +270,7 @@ const Card: React.FC<CardProps> = ({
                     <p className={`${getFontSizeClass('lg')} font-bold leading-relaxed text-slate-700`}>{data.questionMY}</p>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 w-full">
                       <div className={`flex-1 w-full font-mono ${getFontSizeClass('sm')} text-slate-500 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-4 rounded-2xl leading-relaxed`}>
-                        <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
+                        <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                       </div>
                       <div className="self-end sm:self-auto">
                         <AudioButton text={data.questionJP} id={`q-${data.id}`} />
@@ -281,7 +281,7 @@ const Card: React.FC<CardProps> = ({
                   <>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 w-full">
                       <div className={`flex-1 w-full font-mono ${getFontSizeClass('lg')} font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-6 sm:px-8 py-4 sm:py-6 rounded-[2rem] leading-loose`}>
-                        <JapaneseText text={data.questionJP} onKanjiClick={onKanjiClick} />
+                        <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                       </div>
                       <div className="self-end sm:self-auto">
                         <AudioButton text={data.questionJP} id={`q-${data.id}`} />
@@ -351,7 +351,7 @@ const Card: React.FC<CardProps> = ({
                             <p className={`font-black ${getFontSizeClass('lg')} mb-1`}>{option.textMY}</p>
                             <div className="flex items-center gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity">
                                 <div className={`font-mono ${getFontSizeClass('sm')} font-bold`}>
-                                    <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
+                                    <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                                 </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
@@ -360,7 +360,7 @@ const Card: React.FC<CardProps> = ({
                         <>
                             <div className="flex items-center gap-3">
                                 <div className={`font-mono font-black ${getFontSizeClass('lg')}`}>
-                                    <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
+                                    <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                                 </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
@@ -404,17 +404,17 @@ const Card: React.FC<CardProps> = ({
                   {isSubmitted ? (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
                       <h3 className="text-xl font-black text-slate-700 mb-6 border-b border-slate-300/30 pb-4">
-                        <JapaneseText text={typeof data.explanation === 'string' ? 'ရှင်းလင်းချက်' : data.explanation?.titleMY || 'Explanation'} onKanjiClick={onKanjiClick} />
+                        <JapaneseText text={typeof data.explanation === 'string' ? 'ရှင်းလင်းချက်' : data.explanation?.titleMY || 'Explanation'} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                       </h3>
                       <div className="space-y-6 text-base font-bold text-slate-600">
                         <div className="flex gap-4">
                             <span className="shrink-0 w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-xs font-black">!</span>
-                            <p className="pt-1"><JapaneseText text={typeof data.explanation === 'string' ? data.explanation : data.explanation?.reasonMY || ''} onKanjiClick={onKanjiClick} /></p>
+                            <p className="pt-1"><JapaneseText text={typeof data.explanation === 'string' ? data.explanation : data.explanation?.reasonMY || ''} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} /></p>
                         </div>
                         {typeof data.explanation !== 'string' && data.explanation?.memoryTipMY && (
                           <div className="flex gap-4">
                               <span className="shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-black">★</span>
-                              <p className="pt-1 italic"><JapaneseText text={data.explanation.memoryTipMY} onKanjiClick={onKanjiClick} /></p>
+                              <p className="pt-1 italic"><JapaneseText text={data.explanation.memoryTipMY} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} /></p>
                           </div>
                         )}
                       </div>
@@ -471,7 +471,7 @@ const Card: React.FC<CardProps> = ({
                           {vocabData.map((item, index) => (
                               <tr key={index} className="border-t border-slate-300/20 group">
                               <td className="px-4 py-4 font-mono text-slate-700 group-hover:text-blue-600 transition-colors">
-                                <JapaneseText text={item.jp} onKanjiClick={onKanjiClick} />
+                                <JapaneseText text={item.jp} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                               </td>
                               <td className="px-4 py-4">{item.my}</td>
                               </tr>

@@ -10,7 +10,7 @@ interface ChapterQuizProps {
   questions: StudyCardData[];
   chapterTitle: string;
   onExit: () => void;
-  onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>) => void;
+  onKanjiClick: (kanji: string, event: React.MouseEvent<HTMLSpanElement>, questionId?: string) => void;
   isMockExam?: boolean;
   timeLimit?: number; // in seconds
 }
@@ -215,7 +215,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
            <div className={`font-bold text-slate-700 leading-relaxed ${getFontSizeClass('xl')}`}>
               {language === 'my' ? currentQuestion.questionMY : (
                 <div className="font-mono">
-                  <JapaneseText text={currentQuestion.questionJP} onKanjiClick={onKanjiClick} />
+                  <JapaneseText text={currentQuestion.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                 </div>
               )}
            </div>
@@ -252,7 +252,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
                 <span className={`font-bold ${getFontSizeClass('lg')}`}>
                    {language === 'my' ? option.textMY : (
                      <div className="font-mono">
-                        <JapaneseText text={option.textJP} onKanjiClick={onKanjiClick} />
+                        <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                      </div>
                    )}
                 </span>
