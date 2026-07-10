@@ -66,10 +66,7 @@ const Card: React.FC<CardProps> = ({
   const [activeTab, setActiveTab] = useState<'explanation' | 'vocab'>('explanation');
   const vocabData = vocabularyData[data.id] || [];
 
-  const [hint, setHint] = useState<string | null>(null);
-  const [isHintLoading, setIsHintLoading] = useState(false);
-  const [hintError, setHintError] = useState<string | null>(null);
-  
+        
   const [audioPlayingId, setAudioPlayingId] = useState<string | null>(null);
   const [isReportOpen, setIsReportOpen] = useState(false);
 
@@ -88,51 +85,7 @@ const Card: React.FC<CardProps> = ({
     }
   }, [data.id, data.ai_explanation]);
 
-  const handleGetHint = async () => {
-    if (isHintLoading || hint) return;
-    setIsHintLoading(true);
-    setHintError(null);
-
-    try {
-      const prompt = `You are an expert structural engineering teacher. Give a very short hint in Burmese for this question (max 1 sentence). Do not reveal the answer directly. Question: ${data.questionMY}`;
-
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
-      });
-
-      if (!response.ok) {
-        let errorMessage = "Failed to generate hint";
-        const errorText = await response.text();
-        try {
-          const errorData = JSON.parse(errorText);
-          errorMessage = errorData.error || errorMessage;
-        } catch (e) {
-          errorMessage = `Server Error (${response.status}): ${errorText.slice(0, 50)}... Make sure Vercel Serverless Functions are deployed.`;
-        }
-        throw new Error(errorMessage);
-      }
-
-      const responseTextRaw = await response.text();
-      let responseData;
-      try {
-        responseData = JSON.parse(responseTextRaw);
-      } catch (e) {
-        throw new Error(`Invalid JSON response: ${responseTextRaw.slice(0, 50)}...`);
-      }
-      const responseTextValue = responseData.text;
-
-      if (!responseTextValue) throw new Error("No response from AI");
-      setHint(responseTextValue);
-    } catch (err: any) {
-      setHintError("Hint ရယူ၍မရပါ။ " + (err.message || ''));
-      console.error("AI Error:", err);
-    } finally {
-      setIsHintLoading(false);
-    }
-  };
-
+  
   const handleExplainAgain = async (forceNew: boolean = false) => {
     if (!forceNew && data.ai_explanation) {
       setAiExplanation(data.ai_explanation);
@@ -301,13 +254,6 @@ const Card: React.FC<CardProps> = ({
                   <BookmarkIcon className="w-6 h-6" />
                 </button>
                 <button
-                    onClick={handleGetHint}
-                    disabled={isHintLoading || !!hint || isSubmitted}
-                    className={`p-3.5 rounded-full transition-all duration-300 disabled:opacity-30 ${hint ? 'shadow-neumorphic-inset text-amber-600 bg-amber-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-amber-500'}`}
-                >
-                    {isHintLoading ? <LoadingSpinnerIcon className="w-6 h-6" /> : <LightBulbIcon className="w-6 h-6" />}
-                </button>
-                <button
                     onClick={() => setIsReportOpen(true)}
                     className="p-3.5 rounded-full shadow-neumorphic-outset text-slate-400 hover:text-red-500 transition-all duration-300 active:shadow-neumorphic-inset"
                 >
@@ -315,69 +261,74 @@ const Card: React.FC<CardProps> = ({
                 </button>
             </div>
         </div>
-        
-        { (hint || hintError) && (
-          <div className="mb-8 p-6 rounded-[2rem] bg-neumorphic-bg shadow-neumorphic-inset border border-amber-400/20">
-            <h4 className="font-black text-amber-600 flex items-center uppercase text-xs tracking-widest mb-2">
-              <LightBulbIcon className="w-4 h-4 mr-2" /> အကူအညီ (Hint)
-            </h4>
-            {hint && <div className="text-sm font-bold text-slate-600 italic leading-relaxed">{hint}</div>}
-            {hintError && <div className="text-sm font-bold text-red-500">{hintError}</div>}
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 gap-6">
-          {(data.options || []).map((option) => {
-            const isSelected = selectedOptionId === option.id;
-            const isCorrect = isSubmitted && option.id === data.correctOptionId;
-            const isIncorrect = isSelected && isSubmitted && !isCorrect;
-
-            let cardStyle = 'shadow-neumorphic-outset';
-            if (isSelected) cardStyle = 'shadow-neumorphic-inset bg-slate-50/5';
+        <div className="space-y-4">
+          {data.options?.map((option, index) => {
+            const isSelected = selectedOption === index;
+            const isCorrect = option.isCorrect;
             
-            const textStyle = isCorrect ? 'text-green-600' : isIncorrect ? 'text-red-600' : 'text-slate-600';
+            let buttonClass = 'shadow-neumorphic-outset hover:shadow-neumorphic-outset text-slate-600 bg-neumorphic-bg';
+            
+            if (isSubmitted) {
+              if (isCorrect) {
+                buttonClass = 'shadow-neumorphic-inset border-2 border-green-400 bg-green-50/10 text-green-700';
+              } else if (isSelected) {
+                buttonClass = 'shadow-neumorphic-inset border-2 border-red-400 bg-red-50/10 text-red-700';
+              } else {
+                buttonClass = 'shadow-neumorphic-outset opacity-50 bg-neumorphic-bg text-slate-500';
+              }
+            } else if (isSelected) {
+              buttonClass = 'shadow-neumorphic-inset bg-blue-50/10 text-blue-700 border border-blue-400/30';
+            }
 
             return (
-              <div
-                key={option.id}
-                onClick={!isSubmitted ? () => onOptionSelect && onOptionSelect(option.id) : undefined}
-                className={`w-full p-6 rounded-[2rem] transition-all duration-300 flex items-start justify-between text-left ${cardStyle} ${textStyle} group ${!isSubmitted ? 'cursor-pointer' : ''}`}
-                role="button"
-                aria-disabled={isSubmitted}
-              >
-                  <div className="flex-1 pr-6">
-                     {language === 'my' ? (
-                        <>
-                            <p className={`font-black ${getFontSizeClass('lg')} mb-1`}>{option.textMY}</p>
-                            <div className="flex items-center gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                <div className={`font-mono ${getFontSizeClass('sm')} font-bold`}>
+              <div key={index} className="flex items-center gap-4">
+                  <button
+                    onClick={() => {
+                      if (!isSubmitted) {
+                        setSelectedOption(index);
+                        if (onOptionSelect) onOptionSelect(index);
+                      }
+                    }}
+                    disabled={isSubmitted}
+                    className={`flex-1 text-left p-5 sm:p-6 rounded-[2rem] transition-all duration-300 ${buttonClass}`}
+                  >
+                    <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                        <div className="flex items-center gap-4 flex-1">
+                            <span className="shrink-0 w-10 h-10 rounded-full bg-neumorphic-bg shadow-neumorphic-outset flex items-center justify-center font-black text-slate-400 text-sm">{index + 1}</span>
+                            <div className="flex flex-col gap-1">
+                              {language === 'my' ? (
+                                <>
+                                  <p className={`font-bold ${getFontSizeClass('base')}`}>{option.textMY}</p>
+                                  <p className={`font-mono ${getFontSizeClass('sm')} font-bold opacity-60`}>
                                     <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
-                                </div>
-                                <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <div className="flex items-center gap-3">
-                                <div className={`font-mono font-black ${getFontSizeClass('lg')}`}>
+                                  </p>
+                                </>
+                              ) : (
+                                <>
+                                  <p className={`font-mono ${getFontSizeClass('base')} font-bold`}>
                                     <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
-                                </div>
-                                <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
+                                  </p>
+                                  {(language === 'jp' || language === 'both') && (
+                                      <p className={`${getFontSizeClass('sm')} font-bold opacity-60 italic`}>{option.textMY}</p>
+                                  )}
+                                </>
+                              )}
                             </div>
-                             {language === 'jp' && (
-                                <p className={`mt-2 ${getFontSizeClass('sm')} font-bold opacity-60 italic`}>{option.textMY}</p>
-                            )}
-                        </>
-                    )}
-                  </div>
+                        </div>
+                        <div className="self-end sm:self-auto ml-14 sm:ml-0">
+                          <AudioButton text={option.textJP} id={`opt-${data.id}-${index}`} />
+                        </div>
+                    </div>
+                  </button>
+                  
                   {isSubmitted && (
-                    <div className="pt-1">
+                    <div className="pt-1 w-8 flex justify-center shrink-0">
                         {isCorrect && <CheckCircleSolidIcon className="w-8 h-8 text-green-500 drop-shadow-sm"/>}
-                        {isIncorrect && <XCircleSolidIcon className="w-8 h-8 text-red-500 drop-shadow-sm"/>}
+                        {isSelected && !isCorrect && <XCircleSolidIcon className="w-8 h-8 text-red-500 drop-shadow-sm"/>}
                     </div>
                   )}
               </div>
-            )
+            );
           })}
         </div>
         
