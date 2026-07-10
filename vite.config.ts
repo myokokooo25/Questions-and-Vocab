@@ -2,6 +2,7 @@
 import { fileURLToPath, URL } from 'url';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
@@ -10,7 +11,25 @@ export default defineConfig(({ mode }) => {
         port: 3000,
         host: '0.0.0.0',
       },
-      plugins: [react()],
+      plugins: [
+        react(),
+        VitePWA({
+          registerType: 'autoUpdate',
+          workbox: {
+            maximumFileSizeToCacheInBytes: 5000000
+          },
+          includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+          manifest: {
+            name: 'Japanese Tech Flashcards',
+            short_name: 'Tech Vocab',
+            description: 'Japanese Technical Vocabulary Flashcards',
+            theme_color: '#ffffff',
+            background_color: '#f8fafc',
+            display: 'standalone',
+            icons: [{ src: '/icon.svg', sizes: 'any', type: 'image/svg+xml' }]
+          }
+        })
+      ],
       resolve: {
         alias: {
           '@': fileURLToPath(new URL('.', import.meta.url)),
