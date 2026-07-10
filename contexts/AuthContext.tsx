@@ -8,7 +8,7 @@ interface AuthContextType {
   loading: boolean;
   error: string | null;
   login: (accessKey: string, userName?: string) => Promise<boolean>;
-  logout: () => void | Promise<void>;
+  logout: () => void;
   syncLocalKeys: () => Promise<string>;
 }
 
@@ -161,26 +161,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     initializeAuth();
-
-    // Listen for Supabase OAuth login
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session?.user) {
-        // Map Supabase user to our User type
-        const userData = {
-          accessKey: 'GOOGLE_AUTH',
-          userName: session.user.user_metadata?.full_name || session.user.email || 'Google User',
-          type: 'permanent',
-          isAdmin: false,
-          loggedInAt: new Date().toISOString()
-        };
-        localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(userData));
-        setUser(userData as any);
-      }
-    });
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
   }, []);
 
   const login = async (accessKey: string, userName: string = ''): Promise<boolean> => {
@@ -384,8 +364,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const logout = async () => {
-    await supabase.auth.signOut();
+  const logout = () => {
     localStorage.removeItem(LOGGED_IN_USER_KEY);
     setUser(null);
   };
