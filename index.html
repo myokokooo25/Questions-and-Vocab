@@ -33,9 +33,9 @@
               },
             },
             boxShadow: {
-              'neumorphic-outset': '8px 8px 16px rgb(var(--color-neumorphic-shadow-dark)), -8px -8px 16px rgb(var(--color-neumorphic-shadow-light))',
-              'neumorphic-inset': 'inset 6px 6px 12px rgb(var(--color-neumorphic-shadow-dark)), inset -6px -6px 12px rgb(var(--color-neumorphic-shadow-light))',
-              'neumorphic-sm': '4px 4px 8px rgb(var(--color-neumorphic-shadow-dark)), -4px -4px 8px rgb(var(--color-neumorphic-shadow-light))',
+              'neumorphic-outset': 'var(--shadow-outset)',
+              'neumorphic-inset': 'var(--shadow-inset)',
+              'neumorphic-sm': 'var(--shadow-sm)',
             }
           },
         },
@@ -51,19 +51,28 @@
         --color-slate-500: 100 116 139;
         --color-slate-600: 71 85 105;
         --color-slate-700: 51 65 85;
+        --shadow-outset: 8px 8px 16px rgb(var(--color-neumorphic-shadow-dark)), -8px -8px 16px rgb(var(--color-neumorphic-shadow-light));
+        --shadow-inset: inset 6px 6px 12px rgb(var(--color-neumorphic-shadow-dark)), inset -6px -6px 12px rgb(var(--color-neumorphic-shadow-light));
+        --shadow-sm: 4px 4px 8px rgb(var(--color-neumorphic-shadow-dark)), -4px -4px 8px rgb(var(--color-neumorphic-shadow-light));
       }
 
 
       html.khachannel {
-        --color-neumorphic-bg: 15 15 15;
+        --color-neumorphic-bg: 10 10 10;
         --color-neumorphic-text: 240 236 227;
-        --color-neumorphic-shadow-dark: 5 5 5;
-        --color-neumorphic-shadow-light: 30 30 30;
+        --color-neumorphic-shadow-dark: 10 10 10;
+        --color-neumorphic-shadow-light: 10 10 10;
         --color-slate-400: 154 154 154;
-        --color-slate-500: 201 162 48;
+        --color-slate-500: 217 179 64;
         --color-slate-600: 240 236 227;
         --color-slate-700: 217 179 64;
+        
+        --shadow-outset: 0 0 0 1px #2a2a2a;
+        --shadow-inset: inset 0 0 0 1px #d9b340;
+        --shadow-sm: 0 0 0 1px #2a2a2a;
       }
+      html.khachannel .bg-neumorphic-bg { background-color: #121212; }
+      html.khachannel body { background-color: #0a0a0a; }
       html.dark {
         --color-neumorphic-bg: 30 35 45;
         --color-neumorphic-text: 203 213 225;
