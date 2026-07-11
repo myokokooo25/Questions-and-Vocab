@@ -43,4 +43,6 @@ export default [
   { jp: 'ブラケット (ぶらけっと)', my: 'ဘရက်ကက် / ထောက်တိုင် (Bracket)' },
   { jp: '柱材 (ちゅうざい)', my: 'တိုင်အစိတ်အပိုင်း (Column material / member)' },
   { jp: '隅角部 (ぐうかくぶ)', my: 'ထောင့်နေရာ (Corner part)' },
-  { jp: '円形孔 (
+  { jp: '円形孔 (えんけいこう)', my: 'စက်ဝိုင်းပုံအပေါက် (Circular hole)' },
+  { jp: '設ける (もうける)', my: 'ဖန်တီးသည် / ပြုလုပ်ထားရှိသည် (To provide / establish)' }
+];

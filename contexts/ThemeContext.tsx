@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark' | 'khachannel';
 type FontSize = 'small' | 'medium' | 'large';
 
 interface ThemeContextType {
@@ -17,7 +17,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [theme, setTheme] = useState<Theme>(() => {
     try {
       const storedTheme = localStorage.getItem('app_theme');
-      if (storedTheme === 'dark' || storedTheme === 'light') {
+      if (storedTheme === 'dark' || storedTheme === 'light' || storedTheme === 'khachannel') {
         return storedTheme;
       }
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -43,7 +43,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
+    root.classList.remove('light', 'dark', 'khachannel');
     root.classList.add(theme);
     try {
       localStorage.setItem('app_theme', theme);
@@ -62,7 +62,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   };
 
   const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : prevTheme === 'dark' ? 'khachannel' : 'light'));
   };
 
   const value = { theme, toggleTheme, fontSize, setFontSize };

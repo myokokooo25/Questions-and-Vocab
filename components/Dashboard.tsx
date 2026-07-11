@@ -1296,7 +1296,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
                     title="Theme"
                 >
-                    {theme === 'light' ? <MoonIcon className="w-5 h-5" /> : <SunIcon className="w-5 h-5" />}
+                    {theme === 'light' ? <MoonIcon className="w-5 h-5" /> : theme === 'dark' ? <SparkleIcon className="w-5 h-5 text-amber-500" /> : <SunIcon className="w-5 h-5" />}
                 </button>
                 <button
                     onClick={() => setShowInstallInfo(true)}

@@ -8,7 +8,7 @@ import StudyPlan from './components/StudyPlan';
 import Quiz from './components/Quiz';
 import Dashboard from './components/Dashboard';
 import type { VocabularyWord, Kanji } from './types';
-import { ArrowLeftIcon, ArrowRightIcon, HomeIcon, SunIcon, MoonIcon } from './components/Icons';
+import { ArrowLeftIcon, ArrowRightIcon, HomeIcon, SunIcon, MoonIcon, SparkleIcon } from './components/Icons';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useProgress } from '../contexts/ProgressContext';
@@ -238,7 +238,7 @@ const App: React.FC = () => {
                     <p className="text-slate-500 font-bold italic">Interactive Flashcards</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <button onClick={toggleTheme} className="p-4 rounded-2xl shadow-neumorphic-outset text-slate-500 active:shadow-neumorphic-inset transition-all">{theme === 'light' ? <MoonIcon className="w-6 h-6" /> : <SunIcon className="w-6 h-6" />}</button>
+                    <button onClick={toggleTheme} className="p-4 rounded-2xl shadow-neumorphic-outset text-slate-500 active:shadow-neumorphic-inset transition-all">{theme === 'light' ? <MoonIcon className="w-6 h-6" /> : theme === 'dark' ? <SparkleIcon className="w-6 h-6 text-amber-500" /> : <SunIcon className="w-6 h-6" />}</button>
                 </div>
             </header>
 
