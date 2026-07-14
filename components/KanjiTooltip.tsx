@@ -24,11 +24,11 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
   
   // Format specific words to match the vocabularyData structure
   const formattedSpecificWords = specificWords.map(word => ({
-    id: `specific-${word.jp}`,
+    id: Math.floor(Math.random() * 1000000),
     kanji: word.jp,
     reading: word.reading || '',
     burmese: word.my,
-    english: word.english || ''
+    english: word.english || '', category: 'specific'
   }));
 
   // Combine and deduplicate

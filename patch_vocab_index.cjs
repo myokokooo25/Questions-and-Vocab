@@ -1,33 +1,29 @@
 const fs = require('fs');
+const path = require('path');
 
-let indexCode = fs.readFileSync('data/vocab/index.ts', 'utf8');
+const questionsDir = path.join(__dirname, 'data', 'vocab', 'questions');
+const files = fs.readdirSync(questionsDir).filter(f => f.endsWith('.js'));
 
-// Generate imports
-let importsToAdd = [];
-let mappingsToAdd = [];
+let imports = `import { VocabItem } from '../../types';\n\n`;
+imports += `const processVocab = (vocab: any[], categoryId: string): VocabItem[] => {
+    return vocab.map((item, index) => ({
+        id: parseInt(categoryId.replace(/-/g, '')) * 1000 + index,
+        jp: item.jp,
+        my: item.my,
+        reading: item.reading || '',
+        english: item.english || ''
+    }));
+};\n\n`;
 
-const chapters = [
-  { chapter: 1, max: 26 },
-  { chapter: 3, max: 46 },
-  { chapter: 4, max: 8 },
-  { chapter: 5, max: 9 }
-];
+let mappings = `export const vocabularyData: { [key: string]: VocabItem[] } = {\n`;
 
-for (const c of chapters) {
-  for (let i = 1; i <= c.max; i++) {
-    const id = `2026-${c.chapter}-${i}`;
-    const varName = `vocab2026_${c.chapter}_${i}`;
-    importsToAdd.push(`import ${varName} from './questions/${id}.js';`);
-    mappingsToAdd.push(`  '${id}': processVocab(${varName}),`);
-  }
-}
+files.forEach(file => {
+    const id = file.replace('.js', '');
+    const varName = 'vocab' + id.replace(/-/g, '_');
+    imports += `import ${varName} from './questions/${file}';\n`;
+    mappings += `  '${id}': processVocab(${varName}, '${id}'),\n`;
+});
 
-// Insert imports before export const vocabularyData
-const exportIndex = indexCode.indexOf('export const vocabularyData');
-indexCode = indexCode.slice(0, exportIndex) + importsToAdd.join('\n') + '\n\n' + indexCode.slice(exportIndex);
+mappings += `};\n`;
 
-// Insert mappings right after export const vocabularyData: { ... } = {
-const mapIndex = indexCode.indexOf('{', exportIndex) + 1;
-indexCode = indexCode.slice(0, mapIndex) + '\n' + mappingsToAdd.join('\n') + indexCode.slice(mapIndex);
-
-fs.writeFileSync('data/vocab/index.ts', indexCode);
+fs.writeFileSync(path.join(__dirname, 'data', 'vocab', 'index.ts'), imports + '\n' + mappings);

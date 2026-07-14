@@ -78,4 +78,3 @@ export default [
   { jp: '注意 (ちゅうい)', my: 'သတိပြုခြင်း (Attention / Caution)' },
   { jp: '必要 (ひつよう)', my: 'လိုအပ်ချက် (Necessary)' }
 ];
-```[cite: 1]
