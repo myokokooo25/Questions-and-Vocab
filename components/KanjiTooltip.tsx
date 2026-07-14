@@ -53,7 +53,7 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
       <div className="fixed inset-0 z-40" onClick={onClose} />
       
       <div
-        className="absolute z-50 w-72 p-4 bg-white rounded-lg shadow-2xl ring-1 ring-slate-900/10 transition-opacity duration-200 dark:bg-slate-800 dark:ring-white/20 overflow-y-auto max-h-[80vh]"
+        className="absolute z-50 w-72 p-4 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset ring-1 ring-slate-400/20 transition-opacity duration-200 text-neumorphic-text overflow-y-auto max-h-[80vh]"
         style={{ 
           top: position.top, 
           left: position.left, 
@@ -65,38 +65,38 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
       >
         {kanjiData && (
           <>
-            <div className="flex items-start justify-between pb-3 border-b border-gray-200 dark:border-slate-700">
-              <p className="text-5xl font-semibold leading-none text-indigo-600 dark:text-indigo-400">{kanjiData.character}</p>
+            <div className="flex items-start justify-between pb-3 border-b border-slate-400/20">
+              <p className="text-5xl font-semibold leading-none text-slate-700">{kanjiData.character}</p>
               <div className='text-right'>
-                <p className="text-lg font-semibold text-gray-800 dark:text-slate-100">{kanjiData.meaning}</p>
-                <p className="mt-1 text-lg font-semibold text-indigo-700 dark:text-indigo-300">{kanjiData.meaningMY}</p>
+                <p className="text-lg font-semibold text-slate-700">{kanjiData.meaning}</p>
+                <p className="mt-1 text-lg font-semibold text-slate-600">{kanjiData.meaningMY}</p>
               </div>
             </div>
             
-            <div className="mt-3 text-sm text-gray-600 dark:text-slate-300">
-              <p><strong className="font-semibold text-gray-900 w-20 inline-block dark:text-slate-100">On'yomi:</strong> {kanjiData.onyomi}</p>
-              <p className="mt-1"><strong className="font-semibold text-gray-900 w-20 inline-block dark:text-slate-100">Kun'yomi:</strong> {kanjiData.kunyomi}</p>
+            <div className="mt-3 text-sm text-slate-600">
+              <p><strong className="font-semibold text-slate-700 w-20 inline-block">On'yomi:</strong> {kanjiData.onyomi}</p>
+              <p className="mt-1"><strong className="font-semibold text-slate-700 w-20 inline-block">Kun'yomi:</strong> {kanjiData.kunyomi}</p>
             </div>
           </>
         )}
 
         {!kanjiData && (
-            <div className="pb-3 border-b border-gray-200 dark:border-slate-700">
-              <p className="text-4xl font-semibold leading-none text-indigo-600 dark:text-indigo-400">{character}</p>
+            <div className="pb-3 border-b border-slate-400/20">
+              <p className="text-4xl font-semibold leading-none text-slate-700">{character}</p>
             </div>
         )}
 
         {relatedWords.length > 0 && (
-          <div className={`mt-3 ${kanjiData ? 'pt-3 border-t border-gray-100 dark:border-slate-700' : ''}`}>
+          <div className={`mt-3 ${kanjiData ? 'pt-3 border-t border-slate-400/20' : ''}`}>
              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Related Vocabulary</h4>
              <ul className="space-y-2">
                 {relatedWords.map(word => (
                    <li key={word.id} className="text-sm">
                       <div className="flex items-baseline gap-2">
-                         <span className="font-bold text-slate-700 dark:text-slate-200">{word.kanji}</span>
+                         <span className="font-bold text-slate-700">{word.kanji}</span>
                          <span className="text-xs text-slate-500">({word.reading})</span>
                       </div>
-                      <div className="text-slate-600 dark:text-slate-400">
+                      <div className="text-slate-600">
                          {word.burmese} {word.english ? ` - ${word.english}` : ''}
                       </div>
                    </li>
@@ -107,7 +107,7 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
 
         <button 
             onClick={onClose} 
-            className="absolute top-2 right-2 p-1 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-slate-700 dark:hover:text-slate-300"
+            className="absolute top-2 right-2 p-1 text-slate-400 rounded-xl hover:shadow-neumorphic-inset hover:text-slate-600 active:shadow-neumorphic-inset transition-all"
             aria-label="Close"
         >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">

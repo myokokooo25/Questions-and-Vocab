@@ -61,7 +61,7 @@ export const InstallPrompt: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] animate-in slide-in-from-bottom-full duration-300">
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-4 border border-slate-200 dark:border-slate-700 max-w-md mx-auto flex items-center justify-between gap-4">
+      <div className="bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset p-4 ring-1 ring-slate-400/20 max-w-md mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <img src="/icon.svg" alt="App Icon" className="w-12 h-12 rounded-xl object-cover bg-slate-100" />
           <div>

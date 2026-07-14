@@ -49,7 +49,7 @@ const ReportModal: React.FC<ReportModalProps> = ({ isOpen, onClose, contextInfo 
           <>
             <div className="space-y-1">
                 <h2 className="text-2xl font-black text-slate-700 tracking-tight">Report Content Issue</h2>
-                <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 w-fit px-2 py-0.5 rounded">
+                <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-widest border border-slate-400/20 shadow-neumorphic-inset w-fit px-2 py-0.5 rounded">
                     <span>Context:</span>
                     <span className="text-slate-600 truncate max-w-[200px]">{contextInfo}</span>
                 </div>
@@ -85,7 +85,7 @@ const ReportModal: React.FC<ReportModalProps> = ({ isOpen, onClose, contextInfo 
                                 onClick={() => setSeverity(opt)}
                                 className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
                                     severity === opt 
-                                    ? 'bg-white shadow-sm text-blue-600' 
+                                    ? 'bg-blue-600 shadow-neumorphic-sm text-white' 
                                     : 'text-slate-400 hover:text-slate-600'
                                 }`}
                             >
@@ -129,7 +129,7 @@ const ReportModal: React.FC<ReportModalProps> = ({ isOpen, onClose, contextInfo 
           </>
         ) : (
           <div className="text-center py-10 space-y-6 animate-in zoom-in duration-300">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto shadow-inner">
+            <div className="w-20 h-20 bg-neumorphic-bg shadow-neumorphic-inset border-2 border-green-500 rounded-full flex items-center justify-center mx-auto shadow-inner">
                 <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
             </div>
             <div className="space-y-2">

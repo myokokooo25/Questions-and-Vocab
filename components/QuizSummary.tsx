@@ -12,16 +12,16 @@ const QuizSummary: React.FC<QuizSummaryProps> = ({ score, totalQuestions, onRetr
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
   return (
-    <div className="text-center py-16 px-6 bg-white rounded-xl shadow-lg ring-1 ring-slate-900/5 dark:bg-slate-800 dark:ring-white/10">
-        <PencilIcon className="w-12 h-12 mx-auto text-indigo-500 dark:text-indigo-400" />
-        <h3 className="mt-4 text-2xl font-bold text-gray-900 dark:text-slate-100">Quiz Complete!</h3>
-        <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">You've finished the quiz.</p>
+    <div className="text-center py-16 px-6 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset">
+        <PencilIcon className="w-12 h-12 mx-auto text-slate-500" />
+        <h3 className="mt-4 text-2xl font-bold text-slate-700">Quiz Complete!</h3>
+        <p className="mt-2 text-lg text-slate-600">You've finished the quiz.</p>
         
         <div className="my-8">
-            <p className="text-5xl font-bold text-indigo-600 dark:text-indigo-400">
+            <p className="text-5xl font-bold text-slate-700">
                 {score} / {totalQuestions}
             </p>
-            <p className="mt-2 text-xl font-semibold text-gray-800 dark:text-slate-200">
+            <p className="mt-2 text-xl font-semibold text-slate-600">
                 {percentage}%
             </p>
         </div>
@@ -29,13 +29,13 @@ const QuizSummary: React.FC<QuizSummaryProps> = ({ score, totalQuestions, onRetr
         <div className="flex justify-center gap-4 mt-8">
             <button 
                 onClick={onRetry}
-                className="px-6 py-2 text-sm font-semibold text-indigo-700 bg-indigo-100 border border-transparent rounded-lg shadow-sm hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-slate-700 dark:text-indigo-300 dark:hover:bg-slate-600 dark:focus:ring-offset-slate-800"
+                className="px-6 py-2 text-sm font-semibold text-slate-700 bg-neumorphic-bg rounded-xl shadow-neumorphic-sm hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all"
             >
                 Retry Quiz
             </button>
             <button 
                 onClick={onExit}
-                className="px-6 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-slate-600 dark:text-slate-200 dark:border-slate-500 dark:hover:bg-slate-500 dark:focus:ring-offset-slate-800"
+                className="px-6 py-2 text-sm font-semibold text-slate-500 bg-neumorphic-bg rounded-xl shadow-neumorphic-sm hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all"
             >
                 Exit to Dashboard
             </button>
