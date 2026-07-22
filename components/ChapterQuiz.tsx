@@ -266,7 +266,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
         <div className={`mt-10 transition-all duration-500 ${isMockExam || isAnswered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
           <button 
             onClick={handleNext}
-            className="w-full py-4 bg-blue-600 text-white rounded-2xl font-black text-lg shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2"
+            className="w-full py-4 bg-blue-600 text-white rounded-2xl font-black text-lg border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all hover:bg-blue-500 flex items-center justify-center gap-2"
           >
             {currentIndex < shuffledQuestions.length - 1 ? 'Next Question' : 'Finish Exam'}
           </button>
