@@ -3,32 +3,32 @@ import { StudyCardData } from '../types';
 export const chapter1Data2026Level2Part1: StudyCardData[] = [
   {
     "id": "2026-l2-1-1",
-    "questionJP": "<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
+    "questionJP": "<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     "questionMY": "High-strength bolt joint နှင့်ပတ်သက်၍ အောက်ပါဖော်ပြချက်များအနက် အသင့်လျော်ဆုံးမဟုတ်သောအချက်ကို ရွေးချယ်ပါ။",
     "options": [
       {
         "id": 1,
-        "textJP": "(1) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>とは、<ruby>孔<rt>あな</rt></ruby>をあけた<ruby>接合<rt>せつごう</rt></ruby><ruby>部<rt>ぶ</rt></ruby>に<ruby>高力<rt>こうりき</rt></ruby>ボルトを<ruby>差<rt>さ</rt></ruby>し<ruby>込<rt>こ</rt></ruby>み、<ruby>強<rt>つよ</rt></ruby>く<ruby>締<rt>し</rt></ruby>め<ruby>付<rt>つ</rt></ruby>けることによって<ruby>板<rt>いた</rt></ruby>の<ruby>接合<rt>せつごう</rt></ruby><ruby>面<rt>めん</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じる<ruby>摩擦<rt>まさつ</rt></ruby><ruby>抵抗<rt>ていこう</rt></ruby><ruby>力<rt>りょく</rt></ruby>で<ruby>力<rt>ちから</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>接合<rt>せつごう</rt></ruby>の<ruby>方法<rt>ほうほう</rt></ruby>である。",
+        "textJP": "(1) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>とは、<ruby>孔<rt>あな</rt></ruby>をあけた<ruby>接合<rt>せつごう</rt></ruby><ruby>部<rt>ぶ</rt></ruby>に<ruby>高力<rt>こうりょく</rt></ruby>ボルトを<ruby>差<rt>さ</rt></ruby>し<ruby>込<rt>こ</rt></ruby>み、<ruby>強<rt>つよ</rt></ruby>く<ruby>締<rt>し</rt></ruby>め<ruby>付<rt>つ</rt></ruby>けることによって<ruby>板<rt>いた</rt></ruby>の<ruby>接合<rt>せつごう</rt></ruby><ruby>面<rt>めん</rt></ruby>に<ruby>生<rt>しょう</rt></ruby>じる<ruby>摩擦<rt>まさつ</rt></ruby><ruby>抵抗<rt>ていこう</rt></ruby><ruby>力<rt>りょく</rt></ruby>で<ruby>力<rt>ちから</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>接合<rt>せつごう</rt></ruby>の<ruby>方法<rt>ほうほう</rt></ruby>である。",
         "textMY": "High-strength bolt friction joint ဆိုသည်မှာ အပေါက်ဖောက်ထားသော အဆက်နေရာတွင် high-strength bolt ကိုထည့်၍ တင်းကျပ်စွာဆွဲထားခြင်းဖြင့် ပြားနှစ်ခုကြားရှိ friction (ပွတ်တိုက်အား) ဖြင့် အားကို လွှဲပြောင်းပေးသော နည်းလမ်းဖြစ်သည်။"
       },
       {
         "id": 2,
-        "textJP": "(2) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>にはスプリットティー<ruby>形式<rt>けいしき</rt></ruby>やエンドプレート<ruby>形式<rt>けいしき</rt></ruby>などがあり、<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いずに<ruby>柱<rt>はしら</rt></ruby><ruby>梁<rt>やな</rt></ruby><ruby>仕<rt>つかまつ</rt></ruby><ruby>口<rt>くち</rt></ruby>を<ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てることができる。",
+        "textJP": "(2) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>にはスプリットティー<ruby>形式<rt>けいしき</rt></ruby>やエンドプレート<ruby>形式<rt>けいしき</rt></ruby>などがあり、<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いずに<ruby>柱<rt>はしら</rt></ruby><ruby>梁<rt>やな</rt></ruby><ruby>仕<rt>つかまつ</rt></ruby><ruby>口<rt>くち</rt></ruby>を<ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てることができる。",
         "textMY": "High-strength bolt tension joint တွင် Split-tee ပုံစံနှင့် End-plate ပုံစံများရှိပြီး welding မသုံးဘဲ တိုင်နှင့်ယက်မ အဆက် (Beam-to-column connection) ကို တပ်ဆင်နိုင်သည်။"
       },
       {
         "id": 3,
-        "textJP": "(3) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>面<rt>めん</rt></ruby>は、<ruby>黒<rt>くろ</rt></ruby><ruby>皮<rt>がわ</rt></ruby>を<ruby>除去<rt>じょきょ</rt></ruby>してから<ruby>自然<rt>しぜん</rt></ruby>または<ruby>薬剤<rt>やくざい</rt></ruby>により<ruby>発<rt>はつ</rt></ruby><ruby>錆<rt>さび</rt></ruby>（さび）させるか、もしくはブラスト<ruby>処理<rt>しょり</rt></ruby>をしなければならない。",
+        "textJP": "(3) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>面<rt>めん</rt></ruby>は、<ruby>黒<rt>くろ</rt></ruby><ruby>皮<rt>がわ</rt></ruby>を<ruby>除去<rt>じょきょ</rt></ruby>してから<ruby>自然<rt>しぜん</rt></ruby>または<ruby>薬剤<rt>やくざい</rt></ruby>により<ruby>発<rt>はつ</rt></ruby><ruby>錆<rt>さび</rt></ruby>（さび）させるか、もしくはブラスト<ruby>処理<rt>しょり</rt></ruby>をしなければならない。",
         "textMY": "High-strength bolt friction joint ၏ ပွတ်တိုက်မျက်နှာပြင် (Friction surface) ကို Mill scale ဖယ်ရှားပြီး သဘာဝအတိုင်းဖြစ်စေ၊ ဆေးရည်ဖြင့်ဖြစ်စေ သံချေးတက်စေရမည် သို့မဟုတ် Blast processing (သဲမှုတ်ခြင်း) လုပ်ပေးရမည်။"
       },
       {
         "id": 4,
-        "textJP": "(4) トルシア<ruby>形<rt>がた</rt></ruby><ruby>高力<rt>こうりき</rt></ruby>ボルトは、ピンテールの<ruby>破断<rt>はだん</rt></ruby>によって<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>締<rt>しめ</rt></ruby><ruby>付<rt>づ</rt></ruby>けトルクの<ruby>管理<rt>かんり</rt></ruby>を<ruby>可能<rt>かのう</rt></ruby>にしたものであり、<ruby>目視<rt>もくし</rt></ruby>のみによる<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>が<ruby>可能<rt>かのう</rt></ruby>なことから<ruby>広<rt>ひろ</rt></ruby>く<ruby>用<rt>もち</rt></ruby>いられている。",
+        "textJP": "(4) トルシア<ruby>形<rt>がた</rt></ruby><ruby>高力<rt>こうりょく</rt></ruby>ボルトは、ピンテールの<ruby>破断<rt>はだん</rt></ruby>によって<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>締<rt>しめ</rt></ruby><ruby>付<rt>づ</rt></ruby>けトルクの<ruby>管理<rt>かんり</rt></ruby>を<ruby>可能<rt>かのう</rt></ruby>にしたものであり、<ruby>目視<rt>もくし</rt></ruby>のみによる<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>が<ruby>可能<rt>かのう</rt></ruby>なことから<ruby>広<rt>ひろ</rt></ruby>く<ruby>用<rt>もち</rt></ruby>いられている。",
         "textMY": "Torque-shear (TC) type high-strength bolt သည် Pintail ပြတ်ထွက်သွားခြင်းဖြင့် လိုအပ်သော tightening torque ကို ထိန်းချုပ်နိုင်ပြီး မျက်စိဖြင့်ကြည့်ရုံဖြင့် အရည်အသွေးစစ်ဆေးနိုင်သောကြောင့် ကျယ်ပြန့်စွာ အသုံးပြုကြသည်။"
       },
       {
         "id": 5,
-        "textJP": "(5) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>面<rt>めん</rt></ruby>に1.5mmの<ruby>肌<rt>はだ</rt></ruby>すきがある<ruby>場合<rt>ばあい</rt></ruby>、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>の1/10<ruby>以下<rt>いか</rt></ruby>であればフィラープレートは<ruby>入<rt>い</rt></ruby>れなくてもよい。",
+        "textJP": "(5) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>面<rt>めん</rt></ruby>に1.5mmの<ruby>肌<rt>はだ</rt></ruby>すきがある<ruby>場合<rt>ばあい</rt></ruby>、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>の1/10<ruby>以下<rt>いか</rt></ruby>であればフィラープレートは<ruby>入<rt>い</rt></ruby>れなくてもよい。",
         "textMY": "High-strength bolt friction joint ၏ မျက်နှာပြင်တွင် 1.5mm ကွာဟချက် (clearance) ရှိနေပါက ပြားအထူ၏ 1/10 အောက်ဖြစ်လျှင် Filler plate ထည့်စရာမလိုပါ။"
       }
     ],
@@ -41,17 +41,17 @@ export const chapter1Data2026Level2Part1: StudyCardData[] = [
   },
   {
     "id": "2026-l2-1-2",
-    "questionJP": "<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
+    "questionJP": "<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     "questionMY": "High-strength bolt joint နှင့်ပတ်သက်၍ အောက်ပါဖော်ပြချက်များအနက် အသင့်လျော်ဆုံးမဟုတ်သောအချက်ကို ရွေးချယ်ပါ။",
     "options": [
       {
         "id": 1,
-        "textJP": "(1) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>は、<ruby>高力<rt>こうりき</rt></ruby>ボルトと<ruby>呼<rt>よ</rt></ruby>ばれる<ruby>高<rt>こう</rt></ruby><ruby>強度<rt>きょうど</rt></ruby>のボルトを<ruby>強<rt>つよ</rt></ruby>く<ruby>締<rt>し</rt></ruby>め<ruby>付<rt>つ</rt></ruby>けることで<ruby>力<rt>ちから</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>接合<rt>せつごう</rt></ruby><ruby>方法<rt>ほうほう</rt></ruby>であり、<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>と<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の2<ruby>種類<rt>しゅるい</rt></ruby>がある。",
+        "textJP": "(1) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>は、<ruby>高力<rt>こうりょく</rt></ruby>ボルトと<ruby>呼<rt>よ</rt></ruby>ばれる<ruby>高<rt>こう</rt></ruby><ruby>強度<rt>きょうど</rt></ruby>のボルトを<ruby>強<rt>つよ</rt></ruby>く<ruby>締<rt>し</rt></ruby>め<ruby>付<rt>つ</rt></ruby>けることで<ruby>力<rt>ちから</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>接合<rt>せつごう</rt></ruby><ruby>方法<rt>ほうほう</rt></ruby>であり、<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>と<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の2<ruby>種類<rt>しゅるい</rt></ruby>がある。",
         "textMY": "High-strength bolt joint သည် High-strength bolt ဟုခေါ်သော ခံနိုင်ရည်အားမြင့် bolt များကို တင်းကျပ်စွာဆွဲ၍ အားကိုလွှဲပြောင်းပေးသောနည်းလမ်းဖြစ်ပြီး Friction joint နှင့် Tension joint ဟူ၍ ၂ မျိုးရှိသည်။"
       },
       {
         "id": 2,
-        "textJP": "(2) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>と<ruby>溶接<rt>ようせつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>を<ruby>併用<rt>へいよう</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>後<rt>ご</rt></ruby>に<ruby>施工<rt>しこう</rt></ruby>された<ruby>高力<rt>こうりき</rt></ruby>ボルトの<ruby>耐<rt>耐</rt></ruby><ruby>力<rt>りょく</rt></ruby>は<ruby>設計<rt>せっけい</rt></ruby><ruby>上<rt>じょう</rt></ruby><ruby>考慮<rt>こうりょ</rt></ruby>することができない。",
+        "textJP": "(2) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>と<ruby>溶接<rt>ようせつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>を<ruby>併用<rt>へいよう</rt></ruby>する<ruby>場合<rt>ばあい</rt></ruby>、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>後<rt>ご</rt></ruby>に<ruby>施工<rt>しこう</rt></ruby>された<ruby>高力<rt>こうりょく</rt></ruby>ボルトの<ruby>耐<rt>耐</rt></ruby><ruby>力<rt>りょく</rt></ruby>は<ruby>設計<rt>せっけい</rt></ruby><ruby>上<rt>じょう</rt></ruby><ruby>考慮<rt>こうりょ</rt></ruby>することができない。",
         "textMY": "High-strength bolt နှင့် welding ကို တွဲဖက်အသုံးပြုရာတွင် Welding လုပ်ပြီးမှ တပ်ဆင်သော High-strength bolt ၏ ခံနိုင်ရည်အားကို ဒီဇိုင်းတွင် ထည့်သွင်းစဉ်းစား၍ မရပါ။"
       },
       {
@@ -61,12 +61,12 @@ export const chapter1Data2026Level2Part1: StudyCardData[] = [
       },
       {
         "id": 4,
-        "textJP": "(4) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>面<rt>めん</rt></ruby>は、<ruby>黒<rt>くろ</rt></ruby><ruby>皮<rt>がわ</rt></ruby>を<ruby>除去<rt>じょきょ</rt></ruby>してから<ruby>自然<rt>しぜん</rt></ruby>または<ruby>薬剤<rt>やくざい</rt></ruby>により<ruby>発<rt>はつ</rt></ruby><ruby>錆<rt>さび</rt></ruby>（さび）させるか、もしくはブラスト<ruby>処理<rt>しょり</rt></ruby>をして<ruby>必要<rt>ひつよう</rt></ruby>なすべり<ruby>係数<rt>けいすう</rt></ruby>を<ruby>確保<rt>かくほ</rt></ruby>しなければならない。",
+        "textJP": "(4) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>面<rt>めん</rt></ruby>は、<ruby>黒<rt>くろ</rt></ruby><ruby>皮<rt>がわ</rt></ruby>を<ruby>除去<rt>じょきょ</rt></ruby>してから<ruby>自然<rt>しぜん</rt></ruby>または<ruby>薬剤<rt>やくざい</rt></ruby>により<ruby>発<rt>はつ</rt></ruby><ruby>錆<rt>さび</rt></ruby>（さび）させるか、もしくはブラスト<ruby>処理<rt>しょり</rt></ruby>をして<ruby>必要<rt>ひつよう</rt></ruby>なすべり<ruby>係数<rt>けいすう</rt></ruby>を<ruby>確保<rt>かくほ</rt></ruby>しなければならない。",
         "textMY": "Friction joint ၏ ပွတ်တိုက်မျက်နှာပြင်ကို Mill scale ဖယ်ရှားပြီး သဘာဝအတိုင်း သို့မဟုတ် ဆေးရည်ဖြင့် သံချေးတက်စေခြင်း (သို့) Blast processing ပြုလုပ်ခြင်းဖြင့် လိုအပ်သော Slip coefficient ကို ရယူရမည်။"
       },
       {
         "id": 5,
-        "textJP": "(5) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>用<rt>よう</rt></ruby>の<ruby>孔<rt>あな</rt></ruby>あけは、<ruby>原則<rt>げんそく</rt></ruby>として<ruby>直<rt>ちょく</rt></ruby><ruby>角度<rt>かくど</rt></ruby>などの<ruby>品質<rt>ひんしつ</rt></ruby>が<ruby>確保<rt>かくほ</rt></ruby>できるドリル<ruby>孔<rt>あな</rt></ruby>あけとするが、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>が12mm<ruby>以下<rt>いか</rt></ruby>の<ruby>場合<rt>ばあい</rt></ruby>、パンチングによる<ruby>孔<rt>あな</rt></ruby>あけとすることができる。",
+        "textJP": "(5) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>用<rt>よう</rt></ruby>の<ruby>孔<rt>あな</rt></ruby>あけは、<ruby>原則<rt>げんそく</rt></ruby>として<ruby>直<rt>ちょく</rt></ruby><ruby>角度<rt>かくど</rt></ruby>などの<ruby>品質<rt>ひんしつ</rt></ruby>が<ruby>確保<rt>かくほ</rt></ruby>できるドリル<ruby>孔<rt>あな</rt></ruby>あけとするが、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>が12mm<ruby>以下<rt>いか</rt></ruby>の<ruby>場合<rt>ばあい</rt></ruby>、パンチングによる<ruby>孔<rt>あな</rt></ruby>あけとすることができる。",
         "textMY": "High-strength bolt အတွက် အပေါက်ဖောက်ရာတွင် ထောင့်မှန်ကျမှုသေချာစေရန် Drill ဖြင့်ဖောက်ရမည်ဖြစ်သော်လည်း ပြားအထူ 12mm အောက်ဖြစ်ပါက Punching ဖြင့်ဖောက်နိုင်သည်။"
       }
     ],
@@ -79,27 +79,27 @@ export const chapter1Data2026Level2Part1: StudyCardData[] = [
   },
   {
     "id": "2026-l2-1-3",
-    "questionJP": "<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
+    "questionJP": "<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     "questionMY": "High-strength bolt joint နှင့်ပတ်သက်၍ အောက်ပါဖော်ပြချက်များအနက် အသင့်လျော်ဆုံးမဟုတ်သောအချက်ကို ရွေးချယ်ပါ။",
     "options": [
       {
         "id": 1,
-        "textJP": "(1) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>には、<ruby>接合<rt>せつごう</rt></ruby><ruby>面<rt>めん</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>力<rt>りょく</rt></ruby>で<ruby>応力<rt>おうりょく</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>と、ボルトの<ruby>導入<rt>どうにゅう</rt></ruby><ruby>軸<rt>じく</rt></ruby><ruby>力<rt>りょく</rt></ruby>を<ruby>介<rt>かい</rt></ruby>して<ruby>応力<rt>おうりょく</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>がある。<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>と<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>は<ruby>併用<rt>へいよう</rt></ruby>することはできない。",
+        "textJP": "(1) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>には、<ruby>接合<rt>せつごう</rt></ruby><ruby>面<rt>めん</rt></ruby>の<ruby>摩擦<rt>まさつ</rt></ruby><ruby>力<rt>りょく</rt></ruby>で<ruby>応力<rt>おうりょく</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>と、ボルトの<ruby>導入<rt>どうにゅう</rt></ruby><ruby>軸<rt>じく</rt></ruby><ruby>力<rt>りょく</rt></ruby>を<ruby>介<rt>かい</rt></ruby>して<ruby>応力<rt>おうりょく</rt></ruby>を<ruby>伝達<rt>でんたつ</rt></ruby>する<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>がある。<ruby>摩擦<rt>まさつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>と<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>は<ruby>併用<rt>へいよう</rt></ruby>することはできない。",
         "textMY": "High-strength bolt joint တွင် မျက်နှာပြင်ပွတ်တိုက်အားဖြင့် အားလွှဲပြောင်းသော Friction joint နှင့် Bolt ၏ ဝင်ရိုးတလျှောက်ဆွဲအားဖြင့် အားလွှဲပြောင်းသော Tension joint တို့ရှိသည်။ Friction နှင့် Tension joint များကို တွဲဖက်အသုံးပြု၍မရပါ။"
       },
       {
         "id": 2,
-        "textJP": "(2) <ruby>高力<rt>こうりき</rt></ruby>ボルトやナットのねじ<ruby>部<rt>ぶ</rt></ruby>にごみが<ruby>付着<rt>ふちゃく</rt></ruby>するとトルク<ruby>係<rt>がかり</rt></ruby><ruby>数値<rt>すうち</rt></ruby>が<ruby>増大<rt>ぞうだい</rt></ruby>し、トルク<ruby>係<rt>がかり</rt></ruby><ruby>数値<rt>すうち</rt></ruby>が<ruby>変<rt>か</rt></ruby>わらないとみなして<ruby>決<rt>き</rt></ruby>めた<ruby>締付<rt>しめつ</rt></ruby>けトルクで<ruby>締<rt>し</rt></ruby>め<ruby>付<rt>つ</rt></ruby>けるとボルト<ruby>張力<rt>ちょうりょく</rt></ruby>が<ruby>低下<rt>ていか</rt></ruby>する。",
+        "textJP": "(2) <ruby>高力<rt>こうりょく</rt></ruby>ボルトやナットのねじ<ruby>部<rt>ぶ</rt></ruby>にごみが<ruby>付着<rt>ふちゃく</rt></ruby>するとトルク<ruby>係<rt>がかり</rt></ruby><ruby>数値<rt>すうち</rt></ruby>が<ruby>増大<rt>ぞうだい</rt></ruby>し、トルク<ruby>係<rt>がかり</rt></ruby><ruby>数値<rt>すうち</rt></ruby>が<ruby>変<rt>か</rt></ruby>わらないとみなして<ruby>決<rt>き</rt></ruby>めた<ruby>締付<rt>しめつ</rt></ruby>けトルクで<ruby>締<rt>し</rt></ruby>め<ruby>付<rt>つ</rt></ruby>けるとボルト<ruby>張力<rt>ちょうりょく</rt></ruby>が<ruby>低下<rt>ていか</rt></ruby>する。",
         "textMY": "Bolt သို့မဟုတ် Nut ၏ အသွားတွင် အမှိုက်များကပ်နေပါက Torque coefficient တန်ဖိုးတက်လာပြီး Torque coefficient မပြောင်းလဲဟုယူဆ၍ သတ်မှတ်ထားသော Torque ဖြင့် ကျပ်ပါက Bolt ၏ ဆွဲအား (Tension) လျော့ကျသွားမည်။"
       },
       {
         "id": 3,
-        "textJP": "(3) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>にはスプリットティー<ruby>形式<rt>けいしき</rt></ruby>やエンドプレート<ruby>形式<rt>けいしき</rt></ruby>などがあり、<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いずに<ruby>柱<rt>はしら</rt></ruby><ruby>梁<rt>やな</rt></ruby><ruby>仕<rt>つかまつ</rt></ruby><ruby>口<rt>くち</rt></ruby>を<ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てることができる。",
+        "textJP": "(3) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>引張<rt>ひっぱ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>にはスプリットティー<ruby>形式<rt>けいしき</rt></ruby>やエンドプレート<ruby>形式<rt>けいしき</rt></ruby>などがあり、<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いずに<ruby>柱<rt>はしら</rt></ruby><ruby>梁<rt>やな</rt></ruby><ruby>仕<rt>つかまつ</rt></ruby><ruby>口<rt>くち</rt></ruby>を<ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てることができる。",
         "textMY": "High-strength bolt tension joint တွင် Split-tee နှင့် End-plate ပုံစံများရှိပြီး Welding မသုံးဘဲ တိုင်နှင့်ယက်မကို တပ်ဆင်နိုင်သည်။"
       },
       {
         "id": 4,
-        "textJP": "(4) トルシア<ruby>形<rt>がた</rt></ruby><ruby>高力<rt>こうりき</rt></ruby>ボルトは、ピンテールの<ruby>破断<rt>はだん</rt></ruby>によって<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>締<rt>しめ</rt></ruby><ruby>付<rt>づ</rt></ruby>けトルクの<ruby>管理<rt>かんり</rt></ruby>を<ruby>可能<rt>かのう</rt></ruby>にしたものであり、<ruby>専用<rt>せんよう</rt></ruby>の<ruby>締付<rt>しめつ</rt></ruby>け<ruby>具<rt>ぐ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>容易<rt>ようい</rt></ruby>に<ruby>施工<rt>しこう</rt></ruby><ruby>可能<rt>かのう</rt></ruby>である。",
+        "textJP": "(4) トルシア<ruby>形<rt>がた</rt></ruby><ruby>高力<rt>こうりょく</rt></ruby>ボルトは、ピンテールの<ruby>破断<rt>はだん</rt></ruby>によって<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>締<rt>しめ</rt></ruby><ruby>付<rt>づ</rt></ruby>けトルクの<ruby>管理<rt>かんり</rt></ruby>を<ruby>可能<rt>かのう</rt></ruby>にしたものであり、<ruby>専用<rt>せんよう</rt></ruby>の<ruby>締付<rt>しめつ</rt></ruby>け<ruby>具<rt>ぐ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>容易<rt>ようい</rt></ruby>に<ruby>施工<rt>しこう</rt></ruby><ruby>可能<rt>かのう</rt></ruby>である。",
         "textMY": "TC bolt သည် Pintail ပြတ်ထွက်မှုဖြင့် လိုအပ်သော Torque ကို ထိန်းချုပ်နိုင်ပြီး သီးသန့်စက်ဖြင့် လွယ်ကူစွာ တပ်ဆင်နိုင်သည်။"
       },
       {
@@ -142,7 +142,7 @@ export const chapter1Data2026Level2Part1: StudyCardData[] = [
       },
       {
         "id": 5,
-        "textJP": "(5) <ruby>溶接<rt>ようせつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby><ruby>部<rt>ぶ</rt></ruby>は<ruby>接合<rt>せつごう</rt></ruby><ruby>部分<rt>ぶぶん</rt></ruby>に<ruby>溶接<rt>ようせつ</rt></ruby><ruby>金属<rt>きんぞく</rt></ruby>を<ruby>付加<rt>ふか</rt></ruby>するため<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>よりも<ruby>鋼材<rt>こうざい</rt></ruby><ruby>量<rt>りょう</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>え、<ruby>建物<rt>たてもの</rt></ruby><ruby>全体<rt>ぜんたい</rt></ruby>の<ruby>重量<rt>じゅうりょう</rt></ruby>が<ruby>増加<rt>ぞうか</rt></ruby>するという<ruby>短所<rt>たんしょ</rt></ruby>がある。",
+        "textJP": "(5) <ruby>溶接<rt>ようせつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby><ruby>部<rt>ぶ</rt></ruby>は<ruby>接合<rt>せつごう</rt></ruby><ruby>部分<rt>ぶぶん</rt></ruby>に<ruby>溶接<rt>ようせつ</rt></ruby><ruby>金属<rt>きんぞく</rt></ruby>を<ruby>付加<rt>ふか</rt></ruby>するため<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>よりも<ruby>鋼材<rt>こうざい</rt></ruby><ruby>量<rt>りょう</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>え、<ruby>建物<rt>たてもの</rt></ruby><ruby>全体<rt>ぜんたい</rt></ruby>の<ruby>重量<rt>じゅうりょう</rt></ruby>が<ruby>増加<rt>ぞうか</rt></ruby>するという<ruby>短所<rt>たんしょ</rt></ruby>がある。",
         "textMY": "Welding joint သည် အဆက်နေရာတွင် Welding metal ထည့်ရသောကြောင့် High-strength bolt joint ထက် သံမဏိပမာဏ ပိုများလာပြီး အဆောက်အအုံတစ်ခုလုံး၏ အလေးချိန်ကို တိုးလာစေသည်ဟူသော အားနည်းချက်ရှိသည်။"
       }
     ],

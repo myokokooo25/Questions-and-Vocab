@@ -18,7 +18,7 @@ export const chapter1Data2026Level2Part2: StudyCardData[] = [
       },
       {
         "id": 3,
-        "textJP": "(3) <ruby>梁<rt>りょう</rt></ruby><ruby>継手<rt>つぎて</rt></ruby>に<ruby>作用<rt>さよう</rt></ruby>する<ruby>主要<rt>しゅよう</rt></ruby>な<ruby>力<rt>ちから</rt></ruby>は<ruby>曲<rt>ま</rt></ruby>げモーメントと<ruby>軸<rt>じく</rt></ruby><ruby>力<rt>りょく</rt></ruby>であり、<ruby>梁<rt>りょう</rt></ruby><ruby>継手<rt>つぎて</rt></ruby>はできるだけ<ruby>梁<rt>やな</rt></ruby>の<ruby>応力<rt>おうりょく</rt></ruby>の<ruby>小<rt>ちい</rt></ruby>さいところに<ruby>設<rt>もう</rt></ruby>けるのが<ruby>基本<rt>きほん</rt></ruby>である。",
+        "textJP": "(3) <ruby>梁<rt>はり</rt></ruby><ruby>継手<rt>つぎて</rt></ruby>に<ruby>作用<rt>さよう</rt></ruby>する<ruby>主要<rt>しゅよう</rt></ruby>な<ruby>力<rt>ちから</rt></ruby>は<ruby>曲<rt>ま</rt></ruby>げモーメントと<ruby>軸<rt>じく</rt></ruby><ruby>力<rt>りょく</rt></ruby>であり、<ruby>梁<rt>はり</rt></ruby><ruby>継手<rt>つぎて</rt></ruby>はできるだけ<ruby>梁<rt>やな</rt></ruby>の<ruby>応力<rt>おうりょく</rt></ruby>の<ruby>小<rt>ちい</rt></ruby>さいところに<ruby>設<rt>もう</rt></ruby>けるのが<ruby>基本<rt>きほん</rt></ruby>である。",
         "textMY": "Beam splice တွင် သက်ရောက်သော အဓိကအားများမှာ Bending moment နှင့် Axial force ဖြစ်ပြီး ၎င်းတို့ကို ယက်မ၏ Stress အနည်းဆုံးနေရာများတွင် ထားရှိရန် အခြေခံဖြစ်သည်။"
       },
       {
@@ -46,12 +46,12 @@ export const chapter1Data2026Level2Part2: StudyCardData[] = [
     "options": [
       {
         "id": 1,
-        "textJP": "(1) <ruby>一般<rt>いっぱん</rt></ruby><ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>圧延<rt>あつえん</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>（SS<ruby>材<rt>ざい</rt></ruby>）は、<ruby>化学<rt>かがく</rt></ruby><ruby>成分<rt>せいぶん</rt></ruby>について、りん（P）と<ruby>硫黄<rt>いおう</rt></ruby>（S）の<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>りょう</rt></ruby>しか<ruby>制限<rt>せいげん</rt></ruby>されていないため、SN<ruby>材<rt>ざい</rt></ruby>と<ruby>比<rt>くら</rt></ruby>べると<ruby>溶接<rt>ようせつ</rt></ruby><ruby>割<rt>わ</rt></ruby>れを<ruby>生<rt>しょう</rt></ruby>じ<ruby>易<rt>やす</rt></ruby>く、<ruby>靭<rt>うつぼ</rt></ruby><ruby>性<rt>せい</rt></ruby>も<ruby>一般<rt>いっぱん</rt></ruby><ruby>的<rt>てき</rt></ruby>には<ruby>劣<rt>おと</rt></ruby>る。",
+        "textJP": "(1) <ruby>一般<rt>いっぱん</rt></ruby><ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>圧延<rt>あつえん</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>（SS<ruby>材<rt>ざい</rt></ruby>）は、<ruby>化学<rt>かがく</rt></ruby><ruby>成分<rt>せいぶん</rt></ruby>について、りん（P）と<ruby>硫黄<rt>いおう</rt></ruby>（S）の<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>はり</rt></ruby>しか<ruby>制限<rt>せいげん</rt></ruby>されていないため、SN<ruby>材<rt>ざい</rt></ruby>と<ruby>比<rt>くら</rt></ruby>べると<ruby>溶接<rt>ようせつ</rt></ruby><ruby>割<rt>わ</rt></ruby>れを<ruby>生<rt>しょう</rt></ruby>じ<ruby>易<rt>やす</rt></ruby>く、<ruby>靭<rt>うつぼ</rt></ruby><ruby>性<rt>せい</rt></ruby>も<ruby>一般<rt>いっぱん</rt></ruby><ruby>的<rt>てき</rt></ruby>には<ruby>劣<rt>おと</rt></ruby>る。",
         "textMY": "General structure steel (SS) သည် ဓာတုပါဝင်မှု၌ Phosphorus (P) နှင့် Sulfur (S) ကိုသာ ကန့်သတ်ထားသောကြောင့် SN steel နှင့်ယှဉ်လျှင် Welding crack (ဂဟေအက်ကွဲခြင်း) ဖြစ်လွယ်ပြီး Toughness (ကြံ့ခိုင်မှု) လည်း ယေဘုယျအားဖြင့် ညံ့သည်။"
       },
       {
         "id": 2,
-        "textJP": "(2) <ruby>溶接<rt>ようせつ</rt></ruby><ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>圧延<rt>あつえん</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>（SM<ruby>材<rt>ざい</rt></ruby>）は、SS<ruby>材<rt>ざい</rt></ruby>よりも<ruby>多<rt>おお</rt></ruby>くの<ruby>化学<rt>かがく</rt></ruby><ruby>成分<rt>せいぶん</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>りょう</rt></ruby>を<ruby>制限<rt>せいげん</rt></ruby>し、<ruby>強度<rt>きょうど</rt></ruby>と<ruby>同時<rt>どうじ</rt></ruby>に<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>も<ruby>考慮<rt>こうりょ</rt></ruby>した<ruby>鋼材<rt>こうざい</rt></ruby>である。",
+        "textJP": "(2) <ruby>溶接<rt>ようせつ</rt></ruby><ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>圧延<rt>あつえん</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>（SM<ruby>材<rt>ざい</rt></ruby>）は、SS<ruby>材<rt>ざい</rt></ruby>よりも<ruby>多<rt>おお</rt></ruby>くの<ruby>化学<rt>かがく</rt></ruby><ruby>成分<rt>せいぶん</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>はり</rt></ruby>を<ruby>制限<rt>せいげん</rt></ruby>し、<ruby>強度<rt>きょうど</rt></ruby>と<ruby>同時<rt>どうじ</rt></ruby>に<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>も<ruby>考慮<rt>こうりょ</rt></ruby>した<ruby>鋼材<rt>こうざい</rt></ruby>である。",
         "textMY": "Welded structure steel (SM) သည် SS ထက် ဓာတုပါဝင်မှုများကို ပိုမိုကန့်သတ်ထားပြီး ခိုင်ခံ့မှုသာမက Welding လုပ်နိုင်စွမ်းကိုပါ ထည့်သွင်းစဉ်းစားထားသော သံမဏိဖြစ်သည်။"
       },
       {
@@ -89,7 +89,7 @@ export const chapter1Data2026Level2Part2: StudyCardData[] = [
       },
       {
         "id": 2,
-        "textJP": "(2) <ruby>溶接<rt>ようせつ</rt></ruby><ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>圧延<rt>あつえん</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>（SM<ruby>材<rt>ざい</rt></ruby>）は、SS<ruby>材<rt>ざい</rt></ruby>に<ruby>比<rt>くら</rt></ruby>べて<ruby>規定<rt>きてい</rt></ruby><ruby>項目<rt>こうもく</rt></ruby>が<ruby>多<rt>おお</rt></ruby>く、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>に<ruby>優<rt>すぐ</rt></ruby>れているが、400N/mm²<ruby>級<rt>きゅう</rt></ruby>、490N/mm²<ruby>級<rt>きゅう</rt></ruby>では、SN<ruby>材<rt>ざい</rt></ruby>と<ruby>異<rt>こと</rt></ruby>なり<ruby>受<rt>受</rt></ruby><ruby>渡<rt>わたし</rt></ruby><ruby>当事者<rt>とうじしゃ</rt></ruby><ruby>間<rt>かん</rt></ruby>の<ruby>協定<rt>きょうてい</rt></ruby>によって<ruby>熱<rt>ねつ</rt></ruby><ruby>加工<rt>かこう</rt></ruby><ruby>制御<rt>せいぎょ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>った<ruby>場合<rt>ばあい</rt></ruby>を<ruby>除<rt>のぞ</rt></ruby>いて<ruby>炭素<rt>たんそ</rt></ruby><ruby>当<rt>とう</rt></ruby><ruby>量<rt>りょう</rt></ruby>は<ruby>規定<rt>きてい</rt></ruby>されていない。",
+        "textJP": "(2) <ruby>溶接<rt>ようせつ</rt></ruby><ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>圧延<rt>あつえん</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>（SM<ruby>材<rt>ざい</rt></ruby>）は、SS<ruby>材<rt>ざい</rt></ruby>に<ruby>比<rt>くら</rt></ruby>べて<ruby>規定<rt>きてい</rt></ruby><ruby>項目<rt>こうもく</rt></ruby>が<ruby>多<rt>おお</rt></ruby>く、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>に<ruby>優<rt>すぐ</rt></ruby>れているが、400N/mm²<ruby>級<rt>きゅう</rt></ruby>、490N/mm²<ruby>級<rt>きゅう</rt></ruby>では、SN<ruby>材<rt>ざい</rt></ruby>と<ruby>異<rt>こと</rt></ruby>なり<ruby>受<rt>受</rt></ruby><ruby>渡<rt>わたし</rt></ruby><ruby>当事者<rt>とうじしゃ</rt></ruby><ruby>間<rt>かん</rt></ruby>の<ruby>協定<rt>きょうてい</rt></ruby>によって<ruby>熱<rt>ねつ</rt></ruby><ruby>加工<rt>かこう</rt></ruby><ruby>制御<rt>せいぎょ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>った<ruby>場合<rt>ばあい</rt></ruby>を<ruby>除<rt>のぞ</rt></ruby>いて<ruby>炭素<rt>たんそ</rt></ruby><ruby>当<rt>とう</rt></ruby><ruby>量<rt>はり</rt></ruby>は<ruby>規定<rt>きてい</rt></ruby>されていない。",
         "textMY": "SM steel သည် SS ထက် သတ်မှတ်ချက်ပိုများပြီး Welding လုပ်နိုင်စွမ်းကောင်းသော်လည်း၊ 400 နှင့် 490 Class များတွင် SN နှင့်မတူဘဲ နှစ်ဦးသဘောတူ TMCP ဖြင့်ပြုလုပ်ထားခြင်းမှလွဲ၍ Carbon equivalent ကို သတ်မှတ်ထားခြင်းမရှိပါ။"
       },
       {
@@ -122,7 +122,7 @@ export const chapter1Data2026Level2Part2: StudyCardData[] = [
     "options": [
       {
         "id": 1,
-        "textJP": "(1) SN<ruby>材<rt>ざい</rt></ruby>は<ruby>建築<rt>けんちく</rt></ruby><ruby>鉄骨<rt>てっこつ</rt></ruby>に<ruby>要求<rt>ようきゅう</rt></ruby>される<ruby>性能<rt>せいのう</rt></ruby>と<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>兼<rt>か</rt></ruby>ね<ruby>備<rt>そな</rt></ruby>えた<ruby>建築<rt>けんちく</rt></ruby><ruby>専用<rt>せんよう</rt></ruby>の<ruby>鋼材<rt>こうざい</rt></ruby><ruby>規格<rt>きかく</rt></ruby>としてJISに<ruby>規定<rt>きてい</rt></ruby>された<ruby>材料<rt>ざいりょう</rt></ruby>であり、<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>性能<rt>せいのう</rt></ruby>に<ruby>応<rt>おう</rt></ruby>じてA<ruby>種<rt>しゅ</rt></ruby>、B<ruby>種<rt>しゅ</rt></ruby>、C<ruby>種<rt>しゅ</rt></ruby>の3<ruby>種類<rt>しゅるい</rt></ruby>がある。",
+        "textJP": "(1) SN<ruby>材<rt>ざい</rt></ruby>は<ruby>建築<rt>けんちく</rt></ruby><ruby>鉄骨<rt>てっこつ</rt></ruby>に<ruby>要求<rt>ようきゅう</rt></ruby>される<ruby>性能<rt>せいのう</rt></ruby>と<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>兼<rt>か</rt></ruby>ね<ruby>備<rt>そな</rt></ruby>えた<ruby>建築<rt>けんちく</rt></ruby><ruby>専用<rt>せんよう</rt></ruby>の<ruby>鋼材<rt>こうざい</rt></ruby><ruby>規格<rt>きかく</rt></ruby>としてJISに<ruby>規定<rt>きてい</rt></ruby>された<ruby>材料<rt>ざいはり</rt></ruby>であり、<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>性能<rt>せいのう</rt></ruby>に<ruby>応<rt>おう</rt></ruby>じてA<ruby>種<rt>しゅ</rt></ruby>、B<ruby>種<rt>しゅ</rt></ruby>、C<ruby>種<rt>しゅ</rt></ruby>の3<ruby>種類<rt>しゅるい</rt></ruby>がある。",
         "textMY": "SN steel သည် ဆောက်လုပ်ရေးသံမဏိအတွက် လိုအပ်သောစွမ်းဆောင်ရည်နှင့် Welding လုပ်နိုင်စွမ်းကို ပေါင်းစပ်ထားသော ဆောက်လုပ်ရေးသီးသန့် JIS စံနှုန်းဖြစ်ပြီး လိုအပ်ချက်အရ Class A, B, C ဟူ၍ ၃ မျိုးရှိသည်။"
       },
       {
@@ -246,17 +246,17 @@ export const chapter1Data2026Level2Part2: StudyCardData[] = [
       },
       {
         "id": 3,
-        "textJP": "(3) <ruby>一般<rt>いっぱん</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>炭素<rt>たんそ</rt></ruby>（C）の<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>りょう</rt></ruby>は、およそ0.06～0.23％である。",
+        "textJP": "(3) <ruby>一般<rt>いっぱん</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>構造<rt>こうぞう</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>炭素<rt>たんそ</rt></ruby>（C）の<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>はり</rt></ruby>は、およそ0.06～0.23％である。",
         "textMY": "ယေဘုယျဆောက်လုပ်ရေးသုံး သံမဏိများတွင် Carbon ပါဝင်မှုသည် ၀.၀၆% မှ ၀.၂၃% ခန့်ဖြစ်သည်။"
       },
       {
         "id": 4,
-        "textJP": "(4) りん（P）は、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>、<ruby>冷<rt>ひや</rt></ruby><ruby>間<rt>かん</rt></ruby><ruby>加工<rt>かこう</rt></ruby><ruby>性<rt>せい</rt></ruby>および<ruby>衝撃<rt>しょうげき</rt></ruby><ruby>特性<rt>とくせい</rt></ruby>を<ruby>著<rt>いちじる</rt></ruby>しく<ruby>阻害<rt>そがい</rt></ruby>するため、<ruby>有害<rt>ゆうがい</rt></ruby>な<ruby>不純物<rt>ふじゅんぶつ</rt></ruby>とされ、<ruby>靭<rt>うつぼ</rt></ruby><ruby>性<rt>せい</rt></ruby>が<ruby>要求<rt>ようきゅう</rt></ruby>される<ruby>鋼材<rt>こうざい</rt></ruby>では<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>りょう</rt></ruby>の<ruby>上限<rt>じょうげん</rt></ruby>が<ruby>規定<rt>きてい</rt></ruby>されている。",
+        "textJP": "(4) りん（P）は、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>性<rt>せい</rt></ruby>、<ruby>冷<rt>ひや</rt></ruby><ruby>間<rt>かん</rt></ruby><ruby>加工<rt>かこう</rt></ruby><ruby>性<rt>せい</rt></ruby>および<ruby>衝撃<rt>しょうげき</rt></ruby><ruby>特性<rt>とくせい</rt></ruby>を<ruby>著<rt>いちじる</rt></ruby>しく<ruby>阻害<rt>そがい</rt></ruby>するため、<ruby>有害<rt>ゆうがい</rt></ruby>な<ruby>不純物<rt>ふじゅんぶつ</rt></ruby>とされ、<ruby>靭<rt>うつぼ</rt></ruby><ruby>性<rt>せい</rt></ruby>が<ruby>要求<rt>ようきゅう</rt></ruby>される<ruby>鋼材<rt>こうざい</rt></ruby>では<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>はり</rt></ruby>の<ruby>上限<rt>じょうげん</rt></ruby>が<ruby>規定<rt>きてい</rt></ruby>されている。",
         "textMY": "Phosphorus (P) သည် Welding, Cold-forming နှင့် Impact properties ကို သိသာစွာ ကျဆင်းစေသောကြောင့် အန္တရာယ်ရှိသော အညစ်အကြေးအဖြစ် သတ်မှတ်ကာ Toughness လိုအပ်သော သံမဏိများတွင် အများဆုံးပါဝင်ခွင့်ကို ကန့်သတ်ထားသည်။"
       },
       {
         "id": 5,
-        "textJP": "(5) <ruby>硫黄<rt>いおう</rt></ruby>（S）は、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby><ruby>方向<rt>ほうこう</rt></ruby>の<ruby>絞<rt>しぼ</rt></ruby>りを<ruby>減少<rt>げんしょう</rt></ruby>させ、<ruby>耐<rt>耐</rt></ruby>ラメラテア<ruby>特性<rt>とくせい</rt></ruby>を<ruby>劣化<rt>れっか</rt></ruby>させるため、<ruby>靭<rt>うつぼ</rt></ruby><ruby>性<rt>せい</rt></ruby>が<ruby>要求<rt>ようきゅう</rt></ruby>される<ruby>鋼材<rt>こうざい</rt></ruby>では<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>りょう</rt></ruby>の<ruby>上限<rt>じょうげん</rt></ruby>が<ruby>規定<rt>きてい</rt></ruby>されている。",
+        "textJP": "(5) <ruby>硫黄<rt>いおう</rt></ruby>（S）は、<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby><ruby>方向<rt>ほうこう</rt></ruby>の<ruby>絞<rt>しぼ</rt></ruby>りを<ruby>減少<rt>げんしょう</rt></ruby>させ、<ruby>耐<rt>耐</rt></ruby>ラメラテア<ruby>特性<rt>とくせい</rt></ruby>を<ruby>劣化<rt>れっか</rt></ruby>させるため、<ruby>靭<rt>うつぼ</rt></ruby><ruby>性<rt>せい</rt></ruby>が<ruby>要求<rt>ようきゅう</rt></ruby>される<ruby>鋼材<rt>こうざい</rt></ruby>では<ruby>含有<rt>がんゆう</rt></ruby><ruby>量<rt>はり</rt></ruby>の<ruby>上限<rt>じょうげん</rt></ruby>が<ruby>規定<rt>きてい</rt></ruby>されている。",
         "textMY": "Sulfur (S) သည် ပြားအထူ (Thickness) လားရာအတိုင်း 絞り (Reduction of area) ကို ကျဆင်းစေပြီး Lamellar tearing (အလွှာလိုက်ကွာကျခြင်း) ကို ဖြစ်စေသောကြောင့် Toughness လိုအပ်သော သံမဏိများတွင် အများဆုံးပါဝင်ခွင့်ကို ကန့်သတ်ထားသည်။"
       }
     ],
