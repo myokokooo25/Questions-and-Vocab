@@ -237,7 +237,7 @@ export const chapter2021Part1Data: StudyCardData[] = [
   },
   {
     id: "2021-14",
-    questionJP: "「JASS 6」における<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合面<rt>せつごうめん</rt></ruby>の<ruby>摩擦面処理<rt>まさつめんしょり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
+    questionJP: "「JASS 6」における<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合面<rt>せつごうめん</rt></ruby>の<ruby>摩擦面処理<rt>まさつめんしょり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "「JASS 6」ပါ အားမြင့်ဘိုလ်တိုင် (High Strength Bolt) များのပွတ်တိုက်မျက်နှာပြင် ပြုပြင်ခြင်းとပတ်သက်၍ အောက်ပါဖော်ပြချက်များအနက် မသင့်လျော်ဆုံးမှာ အဘယ်နည်း。",
     options: [
       { id: 1, textJP: "(1) <ruby>摩擦面<rt>まさつめん</rt></ruby>の<ruby>黒皮<rt>くろかわ</rt></ruby>は、ブラスト<ruby>処理<rt>しょり</rt></ruby>またはディスクグラインダー<ruby>掛け<rt>がけ</rt></ruby>などにより、<ruby>完全<rt>かんぜん</rt></ruby>に<ruby>除去<rt>じょきょ</rt></ruby>しなければならない。", textMY: "  (Mill Scale) をBlast Cleaning  Grinder でしなければならない。" },
@@ -258,9 +258,9 @@ export const chapter2021Part1Data: StudyCardData[] = [
     questionJP: "「JASS 6」に<ruby>基づき<rt>もとづき</rt></ruby><ruby>鋼材<rt>こうざい</rt></ruby>に<ruby>孔あけ加工<rt>あなあけかこう</rt></ruby>を<ruby>行う<rt>おこなう</rt></ruby><ruby>場合<rt>ばあい</rt></ruby>の<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不適当<rt>ふてきとう</rt></ruby>なものはどれか。",
     questionMY: "「JASS 6」အရ သံမဏိについてအပေါက်ဖောက်ခြင်း (Hole Drilling) とပတ်သက်၍ အောက်ပါဖော်ပြချက်များအနက် မသင့်လျော်ဆုံးမှာ အဘယ်နည်း。",
     options: [
-      { id: 1, textJP: "(1) <ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>用<rt>よう</rt></ruby>の<ruby>孔あけ加工<rt>あなあけかこう</rt></ruby>は、<ruby>原則<rt>げんそく</rt></ruby>としてドリルあけとする。", textMY: " についてで (Drill) をしなければならない。" },
+      { id: 1, textJP: "(1) <ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>用<rt>よう</rt></ruby>の<ruby>孔あけ加工<rt>あなあけかこう</rt></ruby>は、<ruby>原則<rt>げんそく</rt></ruby>としてドリルあけとする。", textMY: " についてで (Drill) をしなければならない。" },
       { id: 2, textJP: "(2) <ruby>板厚<rt>いたあつ</rt></ruby>13mm<ruby>以下<rt>いか</rt></ruby>の<ruby>部材<rt>ぶざい</rt></ruby>であれば、<ruby>孔<rt>あな</rt></ruby>の<ruby>周辺<rt>しゅうへん</rt></ruby>に<ruby>有害な<rt>ゆうがいな</rt></ruby>ひび<ruby>割れ<rt>われ</rt></ruby>などが<ruby>生じない<rt>しょうじない</rt></ruby><ruby>範囲<rt>はんい</rt></ruby>で、<ruby>せん孔<rt>せんこう</rt></ruby> (パンチ) による<ruby>孔あけ<rt>あなあけ</rt></ruby>を<ruby>行う<rt>おこなう</rt></ruby>ことができる。", textMY: "   について場合はPunching では" },
-      { id: 3, textJP: "(3) <ruby>高力<rt>こうりき</rt></ruby>ボルトの<ruby>孔径<rt>あなけい</rt></ruby>は、ボルトの<ruby>呼び径<rt>よびけい</rt></ruby>に2.0mmを<ruby>加えた<rt>くわえた</rt></ruby>ものとする。", textMY: " は .  しなければならない。" },
+      { id: 3, textJP: "(3) <ruby>高力<rt>こうりょく</rt></ruby>ボルトの<ruby>孔径<rt>あなけい</rt></ruby>は、ボルトの<ruby>呼び径<rt>よびけい</rt></ruby>に2.0mmを<ruby>加えた<rt>くわえた</rt></ruby>ものとする。", textMY: " は .  しなければならない。" },
       { id: 4, textJP: "(4) <ruby>孔<rt>あな</rt></ruby>の<ruby>周辺<rt>しゅうへん</rt></ruby>に<ruby>生じた<rt>しょうじた</rt></ruby>バリは、<ruby>完全<rt>かんぜん</rt></ruby>に<ruby>除去<rt>じょきょ</rt></ruby>しなければならない。", textMY: "   (Burr) をしなければならない。" },
       { id: 5, textJP: "(5) <ruby>孔あけ位置<rt>あなあけいち</rt></ruby>を<ruby>誤った<rt>あやまった</rt></ruby><ruby>場合<rt>ばあい</rt></ruby>、<ruby>溶接<rt>ようせつ</rt></ruby>で<ruby>埋め戻した<rt>うめもどした</rt></ruby><ruby>後に<rt>あとに</rt></ruby><ruby>再度<rt>さいど</rt></ruby><ruby>孔あけ<rt>あなあけ</rt></ruby>を<ruby>行ってもよい<rt>おこなってもよい</rt></ruby>。", textMY: " 場合はで  は" }
     ],

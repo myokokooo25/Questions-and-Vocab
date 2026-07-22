@@ -111,7 +111,7 @@ export const chapter2Data2026Part3: StudyCardData[] = [
   },
   {
     id: "2026-2-37",
-    questionJP: "<ruby>高力<rt>こうりき</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>と<ruby>比較<rt>ひかく</rt></ruby>した<ruby>溶接<rt>ようせつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>（<ruby>継手<rt>つぎて</rt></ruby>）の<ruby>特徴<rt>とくちょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
+    questionJP: "<ruby>高力<rt>こうりょく</rt></ruby>ボルト<ruby>接合<rt>せつごう</rt></ruby>と<ruby>比較<rt>ひかく</rt></ruby>した<ruby>溶接<rt>ようせつ</rt></ruby><ruby>接合<rt>せつごう</rt></ruby>（<ruby>継手<rt>つぎて</rt></ruby>）の<ruby>特徴<rt>とくちょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "High-strength bolt ဖြင့် ဆက်သွယ်ခြင်းနှင့် နှိုင်းယှဉ်ပါက ဂဟေဆက်ခြင်း (Welding joint) ၏ လက္ခဏာများနှင့်ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>継手<rt>つぎて</rt></ruby><ruby>効率<rt>こうりつ</rt></ruby>が<ruby>高<rt>たか</rt></ruby>い。", textMY: "Joint efficiency (ဆက်သွယ်မှုစွမ်းဆောင်ရည်) ပိုမြင့်မားသည်။" },
