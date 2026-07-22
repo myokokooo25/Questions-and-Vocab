@@ -744,7 +744,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <button onClick={handleMigrateDataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
                          {isSyncing ? 'Migrating Questions...' : 'Migrate Questions'}
                     </button>
-                    <button onClick={handleMigrate2026DataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-blue-600 rounded-xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all hover:bg-blue-500 text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                    <button onClick={handleMigrate2026DataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
                          {isSyncing ? 'Migrating 2026...' : 'Migrate 2026 Questions'}
                     </button>
                     <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-emerald-600 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
@@ -792,7 +792,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <button 
                         onClick={handleBulkUpload} 
                         disabled={isBulkUploading || !bulkJson.trim()} 
-                        className="px-6 py-3 bg-blue-600 rounded-xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all hover:bg-blue-500 text-sm font-bold uppercase tracking-wider disabled:opacity-50"
+                        className="px-6 py-3 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-sm font-bold uppercase tracking-wider disabled:opacity-50"
                     >
                         {isBulkUploading ? 'Uploading...' : 'Upload JSON'}
                     </button>
@@ -875,7 +875,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             </p>
             <button
               onClick={() => setView('study')}
-              className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all hover:bg-blue-500 text-sm font-bold uppercase tracking-wider"
+              className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-sm font-bold uppercase tracking-wider"
             >
               Go to Study
             </button>
@@ -1176,7 +1176,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
               <button
                 onClick={() => setShowAppGuide(false)}
-                className="w-full py-4 mt-8 text-sm font-black uppercase tracking-widest text-white bg-blue-600 rounded-2xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all hover:bg-blue-500"
+                className="w-full py-4 mt-8 text-sm font-black uppercase tracking-widest text-white bg-blue-600 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all hover:bg-blue-700"
               >
                 နားလည်ပါပြီ
               </button>

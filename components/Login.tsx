@@ -116,7 +116,7 @@ const AuthScreen: React.FC = () => {
 
               <button
                 onClick={() => setShowAppGuide(false)}
-                className="w-full py-4 mt-8 text-sm font-black uppercase tracking-widest text-white bg-blue-600 rounded-2xl border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition-all hover:bg-blue-500"
+                className="w-full py-4 mt-8 text-sm font-black uppercase tracking-widest text-white bg-blue-600 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all hover:bg-blue-700"
               >
                 နားလည်ပါပြီ
               </button>
