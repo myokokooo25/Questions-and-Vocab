@@ -11,7 +11,7 @@ import FlashcardApp from './vocabulary-flashcards/App';
 import InstallPrompt from './components/InstallPrompt';
 import { ChevronLeftIcon } from './components/Icons';
 
-type AppMode = 'main' | '2026' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards';
+type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards';
 
 const FlashcardAppWrapper: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   return (
@@ -68,7 +68,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen">
       <InstallPrompt />
-      { (selectedApp === 'main' || selectedApp === '2026' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as 'main' | '2026' | '2021' | '2022' | '2023' | '2024' | '2025'} onGoBack={handleGoBack} /> }
+      { (selectedApp === 'main' || selectedApp === '2026' || selectedApp === '2026-level2' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025'} onGoBack={handleGoBack} /> }
       { selectedApp === 'flashcards' && <FlashcardAppWrapper onGoBack={handleGoBack} /> }
     </div>
   );

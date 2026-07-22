@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Card from './Card';
 import Dropdown from './Dropdown';
-import { studyDataByChapter, studyDataByChapter2026, chapterCount } from '../data/content';
+import { studyDataByChapter, studyDataByChapter2026, studyDataByChapter2026Level2, chapterCount } from '../data/content';
 import { chapter2021Data, chapter2021Parts } from '../data/2021-old-question';
 import { chapter2022Data } from '../data/2022-old-question';
 import { chapter2023Data } from '../data/2023-old-question';
@@ -29,7 +29,7 @@ interface HistoryEntry {
 }
 
 interface DashboardProps {
-  selectedApp: 'main' | '2026' | '2021' | '2022' | '2023' | '2024' | '2025';
+  selectedApp: 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025';
   onGoBack: () => void;
 }
 
@@ -125,7 +125,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         ? (selectedApp === '2021' ? '2021' : selectedApp)
         : selectedApp === '2026' 
             ? `2026-${activeChapter}` 
-            : activeChapter.toString();
+            : selectedApp === '2026-level2'
+              ? `2026-level2-${activeChapter}`
+              : activeChapter.toString();
 
       try {
         let query = supabase.from('questions').select('*');
@@ -175,6 +177,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
              }
           } else if (selectedApp === '2026') {
               localData = studyDataByChapter2026[activeChapter] || [];
+          } else if (selectedApp === '2026-level2') {
+              localData = studyDataByChapter2026Level2[activeChapter] || [];
           } else {
               localData = studyDataByChapter[activeChapter] || [];
           }
@@ -202,6 +206,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
            }
         } else if (selectedApp === '2026') {
             localData = studyDataByChapter2026[activeChapter] || [];
+        } else if (selectedApp === '2026-level2') {
+            localData = studyDataByChapter2026Level2[activeChapter] || [];
         } else {
             localData = studyDataByChapter[activeChapter] || [];
         }
@@ -304,6 +310,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               if (studyDataByChapter2026[i]) {
                   allDataToUpload.push({ category: `2026-${i}`, data: studyDataByChapter2026[i] });
               }
+              if (studyDataByChapter2026Level2[i]) {
+                  allDataToUpload.push({ category: `2026-level2-${i}`, data: studyDataByChapter2026Level2[i] });
+              }
           }
 
           let successCount = 0;
@@ -392,6 +401,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               }
               if (studyDataByChapter2026[i]) {
                   allDataToUpload.push({ category: `2026-${i}`, data: studyDataByChapter2026[i] });
+              }
+              if (studyDataByChapter2026Level2[i]) {
+                  allDataToUpload.push({ category: `2026-level2-${i}`, data: studyDataByChapter2026Level2[i] });
               }
           }
           // Years
@@ -666,6 +678,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         if (studyDataByChapter2026[i]) {
             allQuestions = [...allQuestions, ...studyDataByChapter2026[i]];
         }
+        if (studyDataByChapter2026Level2[i]) {
+            allQuestions = [...allQuestions, ...studyDataByChapter2026Level2[i]];
+        }
     }
     // Add old questions
     allQuestions = [
@@ -695,7 +710,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       }
       return [{ value: Number(selectedApp), label: `${selectedApp}年 過去問題` }];
     }
-    const prefix = selectedApp === '2026' ? '2026 ' : '2022-2025 ';
+    const prefix = selectedApp === '2026' ? '2026 ' : selectedApp === '2026-level2' ? '2026 Level 2 ' : '2022-2025 ';
     const options = Array.from({ length: localTotalChapters }, (_, i) => ({
       value: i + 1,
       label: `${prefix}Chapter ${i + 1}`,

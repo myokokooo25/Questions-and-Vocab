@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon } from './Icons';
 
 interface WelcomeScreenProps {
-  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | 'flashcards') => void;
+  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards') => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
@@ -85,8 +85,35 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
       </div>
 
       <div className="w-full max-w-5xl space-y-10">
+        {/* Study Guide Section */}
+        <div className="bg-neumorphic-bg rounded-[3rem] shadow-neumorphic-inset p-8 sm:p-10 mb-10">
+            <div className="flex items-center gap-4 mb-6 ml-2">
+                <InfoIcon className="w-7 h-7 text-blue-600" />
+                <h2 className="text-xl font-black text-slate-600 uppercase tracking-[0.1em]">Study Guide (လေ့လာရန်အကြံပြုချက်)</h2>
+            </div>
+            <div className="space-y-4 text-slate-600 font-medium leading-relaxed">
+              <p>
+                <span className="font-bold text-slate-700">၁၀ လပိုင်း ၁၇ ရက်နေ့ (October 17)</span> စာမေးပွဲအတွက် အချိန် (၃) လခန့် (၈၅ ရက်ခန့်) ကျန်သေးသဖြင့် အောက်ပါအတိုင်း လေ့လာရန် အကြံပြုအပ်ပါသည်။
+              </p>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li>
+                  <span className="font-bold text-slate-700">ဘယ်အခန်းက စလုပ်ရမလဲ?</span> <br/>
+                  - <span className="text-blue-600 font-bold">Chapter 1 မှ စတင်ပါ</span>။ အခြေခံသဘောတရားများဖြစ်သဖြင့် Chapter 1 ကို သေချာနားလည်မှ ကျန်အခန်းများကို ဆက်သွားရန် ပိုလွယ်ကူပါမည်။
+                </li>
+                <li>
+                  <span className="font-bold text-slate-700">တစ်ရက်ကို ဘယ်နှပုဒ် လုပ်သင့်လဲ?</span> <br/>
+                  - ဂျပန်စာ ခက်ခဲသောကြောင့် <span className="text-emerald-600 font-bold">တစ်ရက်ကို အနည်းဆုံး ၅ ပုဒ် မှ ၁၀ ပုဒ်ခန့်</span> သေချာနားလည်အောင် ကျက်မှတ်/လေ့ကျင့်ပါ။ (၅ ပုဒ် × ၈၀ ရက် = ပုဒ်ရေ ၄၀၀ ရရှိပါမည်)
+                </li>
+                <li>
+                  <span className="font-bold text-slate-700">Vocabulary Cards များကို အသုံးပြုပါ</span> <br/>
+                  - စာမေးပွဲ မေးခွန်းများကို နားလည်ရန် ဝေါဟာရ (Vocab) က အရေးကြီးဆုံးဖြစ်၍ မအားသည့်အချိန်များတွင် Vocabulary Cards များကို ဖွင့်ကြည့်ပါ။
+                </li>
+              </ul>
+            </div>
+        </div>
+
         {/* Main Categories */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <button
             onClick={() => onSelectApp('2026')}
             className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
@@ -98,6 +125,21 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
               <div>
                   <h2 className="text-xl font-black text-slate-700">2026 Chapter Study</h2>
                   <p className="mt-1 text-sm text-slate-500 font-medium italic">New practice questions.</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => onSelectApp('2026-level2')}
+            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-emerald-600 group-hover:scale-110 transition-transform">
+                  <BookOpenIcon className="w-8 h-8" />
+              </div>
+              <div>
+                  <h2 className="text-xl font-black text-slate-700">2026 Chapter Study 2級</h2>
+                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Level 2 practice questions.</p>
               </div>
             </div>
           </button>
