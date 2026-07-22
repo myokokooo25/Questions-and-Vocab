@@ -369,8 +369,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   };
 
   React.useEffect(() => {
-    if (localStorage.getItem('force_migrate_2026_v12') !== 'done') {
-      localStorage.setItem('force_migrate_2026_v12', 'done');
+    if (localStorage.getItem('force_migrate_2026_v14') !== 'done') {
+      localStorage.setItem('force_migrate_2026_v14', 'done');
       handleMigrate2026DataToDB();
     }
   }, []);
