@@ -1,5 +1,5 @@
 import fs from 'fs';
-let content = fs.readFileSync('components/Login.tsx', 'utf-8');
+let content = fs.readFileSync('components/Dashboard.tsx', 'utf-8');
 
 const appGuideCode = `
       {showAppGuide && (
@@ -7,7 +7,7 @@ const appGuideCode = `
            <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset p-6 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
               <div className="flex items-center gap-3 mb-6">
                  <div className="p-3 bg-blue-100 rounded-2xl shadow-neumorphic-inset text-blue-600">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <InfoIcon className="w-6 h-6" />
                  </div>
                  <h2 className="text-xl sm:text-2xl font-black text-slate-700">အသုံးပြုနည်းနှင့် လေ့လာရန် အကြံပြုချက်များ</h2>
               </div>
@@ -74,16 +74,13 @@ const appGuideCode = `
       )}
 `;
 
-// Extract existing app guide block and replace it
 const startIndex = content.indexOf('{showAppGuide && (');
 if (startIndex !== -1) {
     let endIndex = content.indexOf(')}', startIndex) + 2;
-    // ensure we capture the whole block
     const afterBlock = content.substring(endIndex);
     if (afterBlock.startsWith('\n      {showInstallInfo')) {
-       // do nothing
+       // ok
     } else {
-        // find next {showInstallInfo
         endIndex = content.indexOf('{showInstallInfo', startIndex) - 6;
     }
     const beforeBlock = content.substring(0, startIndex);
@@ -91,4 +88,5 @@ if (startIndex !== -1) {
     
     content = beforeBlock + appGuideCode.trim() + '\n      ' + afterEnd;
 }
-fs.writeFileSync('components/Login.tsx', content);
+
+fs.writeFileSync('components/Dashboard.tsx', content);
