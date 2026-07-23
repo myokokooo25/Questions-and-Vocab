@@ -951,7 +951,14 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }
 
     if (showAnswerKey) {
-        return <AnswerKeyView onClose={() => setShowAnswerKey(false)} />;
+        return (
+            <AnswerKeyView
+                onClose={() => setShowAnswerKey(false)}
+                selectedApp={selectedApp}
+                initialChapter={activeChapter}
+                currentQuestions={onlineQuestions}
+            />
+        );
     }
 
     if (isLoadingQuestions) {

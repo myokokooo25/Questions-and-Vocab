@@ -30,6 +30,13 @@ import { chapter2Data2026Level2Part1 } from './chapter2-2026-level2-part1';
 import { chapter2Data2026Level2Part2 } from './chapter2-2026-level2-part2';
 import { chapter2Data2026Level2Part3 } from './chapter2-2026-level2-part3';
 import { chapter2Data2026Level2Part4 } from './chapter2-2026-level2-part4';
+import { chapter3Data2026Level2Part1 } from './chapter3-2026-level2-part1';
+import { chapter3Data2026Level2Part2 } from './chapter3-2026-level2-part2';
+import { chapter3Data2026Level2Part3 } from './chapter3-2026-level2-part3';
+import { chapter3Data2026Level2Part4 } from './chapter3-2026-level2-part4';
+import { chapter4Data2026Level2Part1 } from './chapter4-2026-level2-part1';
+import { chapter5Data2026Level2Part1 } from './chapter5-2026-level2-part1';
+
 
 export const studyDataByChapter: { [key: number]: StudyCardData[] } = {
   1: chapter1Data,
@@ -76,6 +83,18 @@ export const studyDataByChapter2026Level2: { [key: number]: StudyCardData[] } = 
     ...chapter2Data2026Level2Part2,
     ...chapter2Data2026Level2Part3,
     ...chapter2Data2026Level2Part4,
+  ],
+  3: [
+    ...chapter3Data2026Level2Part1,
+    ...chapter3Data2026Level2Part2,
+    ...chapter3Data2026Level2Part3,
+    ...chapter3Data2026Level2Part4,
+  ],
+  4: [
+    ...chapter4Data2026Level2Part1,
+  ],
+  5: [
+    ...chapter5Data2026Level2Part1,
   ]
 };
 
