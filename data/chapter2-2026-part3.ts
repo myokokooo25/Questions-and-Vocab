@@ -138,11 +138,11 @@ export const chapter2Data2026Part3: StudyCardData[] = [
       { id: 4, textJP: "(4) <ruby>溶接<rt>ようせつ</rt></ruby>に<ruby>利用<rt>りよう</rt></ruby>されるエネルギーには、<ruby>電気<rt>でんき</rt></ruby><ruby>的<rt>てき</rt></ruby>エネルギー、<ruby>化学<rt>かがく</rt></ruby><ruby>的<rt>てき</rt></ruby>エネルギー、<ruby>力学<rt>りきがく</rt></ruby><ruby>的<rt>てき</rt></ruby>エネルギー、<ruby>光<rt>ひかり</rt></ruby>エネルギーがある。", textMY: "ဂဟေဆော်ရာတွင် အသုံးပြုသော စွမ်းအင်များတွင် လျှပ်စစ်စွမ်းအင်၊ ဓာတုစွမ်းအင် (ဂက်စ်မီး)၊ စက်မှု/ဖိအားစွမ်းအင် နှင့် အလင်းစွမ်းအင် (လေဆာ) တို့ ပါဝင်သည်။" },
       { id: 5, textJP: "(5) <ruby>建築<rt>けんちく</rt></ruby><ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>溶接<rt>ようせつ</rt></ruby>に<ruby>利用<rt>りよう</rt></ruby>されるエネルギーは、<ruby>電気<rt>でんき</rt></ruby><ruby>的<rt>てき</rt></ruby>エネルギーと<ruby>力学<rt>りきがく</rt></ruby><ruby>的<rt>てき</rt></ruby>エネルギーのみである。", textMY: "ဆောက်လုပ်ရေး သံမဏိဂဟေဆော်ရာတွင် အသုံးပြုသောစွမ်းအင်မှာ လျှပ်စစ်စွမ်းအင်နှင့် စက်မှု/ဖိအားစွမ်းအင် နှစ်မျိုးသာဖြစ်သည်။" }
     ],
-    correctOptionId: 2,
+    correctOptionId: 5,
     explanation: {
       titleMY: "ရှင်းလင်းချက် - 建築鉄骨の溶接法",
-      reasonMY: "ဆောက်လုပ်ရေး သံမဏိလုပ်ငန်းတွင် Arc welding ကဲ့သို့ 'Fusion welding (融接)' သာမက၊ Stud welding သို့မဟုတ် Gas pressure welding ကဲ့သို့ 'Pressure welding (圧接)' များကိုလည်း အသုံးပြုပါသည်။ 'Fusion welding (融接) သာဖြစ်သည်' ဆိုခြင်းမှာ မှားယွင်းပါသည်။ (မှတ်ချက် - Brazing (ろう接) ကိုတော့ အသုံးမပြုပါ)",
-      memoryTipMY: "သံမဏိလုပ်ငန်းမှာ Arc (融接) အပြင် Stud welding လို (圧接) လည်း သုံးပါတယ်။"
+      reasonMY: "ဆောက်လုပ်ရေး သံမဏိဂဟေဆော်ရာတွင် Arc welding နှင့် Electroslag welding ကဲ့သို့သော လျှပ်စစ်စွမ်းအင် (電気的エネルギー) ကိုသာ အသုံးပြုပါသည်။ စက်မှု/ဖိအားစွမ်းအင် (力学的エネルギー) ကို အသုံးပြုသော ဖိအားသုံးဂဟေ (圧接) ကို သံချောင်း (Rebar) ဆက်ရာတွင် သုံးသော်လည်း၊ ဆောက်လုပ်ရေး သံမဏိများတွင် အသုံးမပြုပါ။ ထို့ကြောင့် 'လျှပ်စစ်စွမ်းအင်နှင့် စက်မှု/ဖိအားစွမ်းအင် နှစ်မျိုးသာဖြစ်သည်' ဆိုခြင်းမှာ မှားယွင်းပါသည်။",
+      memoryTipMY: "ဆောက်လုပ်ရေး သံမဏိ (Building steel) မှာ လျှပ်စစ်စွမ်းအင် (Electric energy) ကိုပဲ သုံးပါတယ်။"
     }
   },
   {
@@ -210,11 +210,11 @@ export const chapter2Data2026Part3: StudyCardData[] = [
       { id: 4, textJP: "(4) サブマージアーク<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>溶融<rt>ようゆう</rt></ruby><ruby>金属<rt>きんぞく</rt></ruby>の<ruby>大気<rt>たいき</rt></ruby>からの<ruby>遮<rt>しゃ</rt></ruby>へいは、<ruby>粒状<rt>りゅうじょう</rt></ruby>フラックスから<ruby>発生<rt>はっせい</rt></ruby>するガス<ruby>成分<rt>せいぶん</rt></ruby>でアーク<ruby>柱<rt>ちゅう</rt></ruby><ruby>周囲<rt>しゅうい</rt></ruby>を<ruby>覆<rt>おお</rt></ruby>って<ruby>行<rt>おこな</rt></ruby>われる。", textMY: "Submerged arc welding တွင် အရည်ပျော်သတ္တုကို လေထုမှကာကွယ်ခြင်းသည် အမှုန့်ပုံစံ Flux မှ ထွက်ပေါ်လာသော 'ဓာတ်ငွေ့ (Gas)' များဖြင့် Arc ပတ်လည်ကို ဖုံးအုပ်၍ ပြုလုပ်ခြင်းဖြစ်သည်။" },
       { id: 5, textJP: "(5) エレクトロスラグ<ruby>溶接<rt>ようせつ</rt></ruby>は、<ruby>溶接<rt>ようせつ</rt></ruby><ruby>組立<rt>くみたて</rt></ruby><ruby>箱形<rt>はこがた</rt></ruby><ruby>断面<rt>だんめん</rt></ruby><ruby>柱<rt>はしら</rt></ruby>のスキンプレートの<ruby>角<rt>かど</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby>に<ruby>適用<rt>てきよう</rt></ruby>されている。", textMY: "Electroslag welding (ESW) ကို Box column တိုင်များ၏ Skin plate ထောင့်ဂဟေဆက် (Corner joint) တွင် အသုံးပြုကြသည်။" }
     ],
-    correctOptionId: 4,
+    correctOptionId: 5,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - サブマージアーク溶接のシールド",
-      reasonMY: "Submerged arc welding (SAW) တွင် လေထုမှကာကွယ်ခြင်းကို 'ဓာတ်ငွေ့ (Gas)' ဖြင့် ပြုလုပ်ခြင်းမဟုတ်ဘဲ၊ အရည်ပျော်နေသော Slag များ (溶融スラグ) နှင့် ၎င်းအပေါ်ရှိ အရည်မပျော်သေးသော အမှုန့် (Flux) များဖြင့် တိုက်ရိုက်ဖုံးအုပ်၍ (Slag shielding) ကာကွယ်ခြင်းဖြစ်သည်။ ထို့ကြောင့် 'ဓာတ်ငွေ့ဖြင့် (ガス成分で)' ဆိုခြင်းမှာ မှားယွင်းပါသည်။",
-      memoryTipMY: "SAW က ဂက်စ်မလိုပါဘူး။ အမှုန့်နဲ့ Slag တွေကပဲ လေမဝင်အောင် ဖုံးပေးထားတာပါ။"
+      titleMY: "ရှင်းလင်းချက် - エレクトロスラグ溶接と角溶接",
+      reasonMY: "Electroslag welding (ESW) ကို Box column ၏ အတွင်းဘက် Diaphragm (内ダイアフラム) ကို ဂဟေဆော်ရာတွင် အဓိကအသုံးပြုသည်။ Box column ၏ ထောင့်ဂဟေဆက် (Skin plate corner weld) များကိုမူ Submerged arc welding (SAW) ဖြင့် အများဆုံးဂဟေဆော်လေ့ရှိသည်။",
+      memoryTipMY: "Electroslag (ESW) = အတွင်း Diaphragm။ Submerged Arc (SAW) = Box column ထောင့်ဂဟေဆက်။"
     }
   },
   {

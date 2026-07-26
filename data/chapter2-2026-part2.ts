@@ -84,11 +84,11 @@ export const chapter2Data2026Part2: StudyCardData[] = [
       { id: 4, textJP: "(4) <ruby>切削<rt>せっさく</rt></ruby><ruby>油<rt>あぶら</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>機械<rt>きかい</rt></ruby><ruby>加工<rt>かこう</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>う<ruby>場合<rt>ばあい</rt></ruby>、<ruby>開先<rt>かいさき</rt></ruby><ruby>面<rt>めん</rt></ruby>に<ruby>付着<rt>ふちゃく</rt></ruby>した<ruby>切削<rt>せっさく</rt></ruby><ruby>油<rt>あぶら</rt></ruby>は、ブローホールや<ruby>割<rt>わ</rt></ruby>れなど<ruby>溶接<rt>ようせつ</rt></ruby><ruby>欠陥<rt>けっかん</rt></ruby>の<ruby>原因<rt>げんいん</rt></ruby>となるため、<ruby>十分<rt>じゅうぶん</rt></ruby>に<ruby>除去<rt>じょきょ</rt></ruby>する。", textMY: "Cutting oil ကိုသုံး၍ စက်ဖြင့်ပြုပြင်ရာတွင်၊ Bevel မျက်နှာပြင်တွင် ကပ်ငြိနေသော Cutting oil သည် Blowhole သို့မဟုတ် အက်ကွဲခြင်းကဲ့သို့သော ဂဟေချို့ယွင်းချက်များကို ဖြစ်စေနိုင်သဖြင့် လုံလောက်စွာ ဖယ်ရှားရမည်။" },
       { id: 5, textJP: "(5) <ruby>開先<rt>かいさき</rt></ruby><ruby>加工<rt>かこう</rt></ruby><ruby>面<rt>めん</rt></ruby>に<ruby>発生<rt>はっせい</rt></ruby>したノッチのうち、<ruby>深<rt>ふか</rt></ruby>さが1mm<ruby>以下<rt>いか</rt></ruby>で<ruby>形状<rt>けいじょう</rt></ruby>が<ruby>滑<rt>なめ</rt></ruby>らかなものはグラインダで<ruby>平滑<rt>へいかつ</rt></ruby>に<ruby>仕上<rt>しあ</rt></ruby>げる。", textMY: "Bevel ပြုပြင်ထားသော မျက်နှာပြင်တွင် ဖြစ်ပေါ်နေသော Notch များအနက်၊ အနက် 1mm အောက်ဖြစ်ပြီး ပုံစံချောမွေ့ပါက Grinder ဖြင့် ညီညာအောင် ချောမွတ်အောင်လုပ်ရမည်။" }
     ],
-    correctOptionId: 5,
+    correctOptionId: 3,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 開先加工面のノッチ (Notch on Bevel face)",
-      reasonMY: "Bevel ပြုပြင်ထားသောမျက်နှာပြင်တွင် အနက် 1mm အောက်ဖြစ်ပြီး ပုံစံချောမွေ့သော Notch များရှိပါက၊ အထူးတလည်ပြုပြင်စရာမလိုဘဲ 'そのまま (ထိုအတိုင်း)' ထားနိုင်သည်။ Grinder ဖြင့် ညီညာအောင် လုပ်ရန်မလိုအပ်ပါ။ အကယ်၍ 1mm ထက်ကျော်လွန်ပါက သို့မဟုတ် ပုံစံမချောမွေ့ပါကမှ Grinder သို့မဟုတ် ဂဟေဖြင့် ပြုပြင်ရပါမည်။",
-      memoryTipMY: "1mm အောက် ချောမွေ့တဲ့ Notch ဆိုရင် 'そのまま' (ဒီအတိုင်းထား)။"
+      titleMY: "ရှင်းလင်းချက် - 加熱矯正の温度",
+      reasonMY: "အပူပေး၍ ဖြောင့်မတ်ခြင်း (加熱矯正) ပြုလုပ်ရာတွင်၊ နေရာကွက်၍ အပူပေးခြင်းမှလွဲ၍ '500℃ ထက်ကျော်လွန်သောအပူပေးမှု' ကိုပြုလုပ်ပါကသာ ဂုဏ်သတ္တိများကို ပြန်လည်စစ်ဆေးရန် သတ်မှတ်ထားပါသည်။ မေးခွန်းတွင် '400℃' ဟု ဖော်ပြထားသဖြင့် မှားယွင်းပါသည်။",
+      memoryTipMY: "အပူပေးဖြောင့်မတ်တဲ့အခါ 500℃ ထက်ကျော်ရင် ဂုဏ်သတ္တိပြန်စစ်ရမယ်။ 400℃ မဟုတ်ပါ။"
     }
   },
   {
@@ -98,7 +98,7 @@ export const chapter2Data2026Part2: StudyCardData[] = [
     options: [
       { id: 1, textJP: "(1) <ruby>組立<rt>くみた</rt></ruby>て<ruby>溶接<rt>ようせつ</rt></ruby>は、4mm<ruby>以上<rt>いじょう</rt></ruby>の<ruby>脚長<rt>きゃくちょう</rt></ruby>をもつビードを<ruby>適切<rt>てきせつ</rt></ruby>な<ruby>間隔<rt>かんかく</rt></ruby>で<ruby>配置<rt>はいち</rt></ruby>する。", textMY: "Tack welding သည် 4mm နှင့်အထက် Leg length ရှိသော Bead ကို သင့်လျော်သော အကွာအဝေးများဖြင့် ချထားရမည်။" },
       { id: 2, textJP: "(2) <ruby>冷間<rt>れいかん</rt></ruby><ruby>成形<rt>せいけい</rt></ruby><ruby>角形<rt>かくがた</rt></ruby><ruby>鋼管<rt>こうかん</rt></ruby>の<ruby>角<rt>かど</rt></ruby><ruby>部<rt>ぶ</rt></ruby>など、<ruby>大<rt>おお</rt></ruby>きな<ruby>冷間<rt>れいかん</rt></ruby><ruby>塑性<rt>そせい</rt></ruby><ruby>加工<rt>かこう</rt></ruby>を<ruby>受<rt>う</rt></ruby>けた<ruby>箇所<rt>かしょ</rt></ruby>への<ruby>組立<rt>くみた</rt></ruby>て<ruby>溶接<rt>ようせつ</rt></ruby>は<ruby>避<rt>さ</rt></ruby>ける。", textMY: "Cold-formed square steel tube ၏ ထောင့်ချိုးများကဲ့သို့ ကြီးမားသော Cold plastic working ခံထားရသည့် နေရာများတွင် Tack welding လုပ်ခြင်းကို ရှောင်ကြဉ်ရမည်။" },
-      { id: 3, textJP: "(3) <ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てる<ruby>材<rt>ざい</rt></ruby>の<ruby>厚<rt>あつ</rt></ruby>いほうの<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>が6mm<ruby>以下<rt>いか</rt></ruby>の<ruby>部材<rt>ぶざい</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う<ruby>組立<rt>くみた</rt></ruby>て<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>最小<rt>さいしょう</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby><ruby>長<rt>なが</rt></ruby>さは30mmとする。", textMY: "တပ်ဆင်မည့်ပစ္စည်းများအနက် အထူပိုများသောဘက်၏ အထူသည် 6mm နှင့်အောက် ဖြစ်ပါက၊ Tack weld ၏ အနည်းဆုံးဂဟေအလျားသည် 30mm ဖြစ်ရမည်။" },
+      { id: 3, textJP: "(3) <ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てる<ruby>材<rt>ざい</rt></ruby>の<ruby>厚<rt>あつ</rt></ruby>いほうの<ruby>板<rt>いた</rt></ruby><ruby>厚<rt>あつ</rt></ruby>が6mm<ruby>以下<rt>いか</rt></ruby>の<ruby>部材<rt>ぶざい</rt></ruby>に<ruby>行<rt>おこな</rt></ruby>う<ruby>組立<rt>くみた</rt></ruby>て<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>最小<rt>さいしょう</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby><ruby>長<rt>なが</rt></ruby>さは30mmとする。", textMY: "Tack weld ပြုလုပ်မည့် ပစ္စည်းများတွင် အထူပိုသောဘက်၏ အထူသည် 6mm နှင့်အောက် ဖြစ်ပါက၊ Tack weld ၏ အနည်းဆုံးဂဟေအလျားသည် 30mm ဖြစ်ရမည်။" },
       { id: 4, textJP: "(4) <ruby>高張力<rt>こうちょうりょく</rt></ruby><ruby>鋼<rt>こう</rt></ruby>の<ruby>組立<rt>くみた</rt></ruby>て<ruby>溶接<rt>ようせつ</rt></ruby>を<ruby>被覆<rt>ひふく</rt></ruby>アーク<ruby>溶接<rt>ようせつ</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>う<ruby>場合<rt>ばあい</rt></ruby>には、<ruby>低水素<rt>ていすいそ</rt></ruby><ruby>系<rt>けい</rt></ruby>またはイルミナイト<ruby>系<rt>けい</rt></ruby><ruby>溶接<rt>ようせつ</rt></ruby><ruby>棒<rt>ぼう</rt></ruby>を<ruby>使用<rt>しよう</rt></ruby>する。", textMY: "High tensile steel ကို Shielded metal arc welding ဖြင့် Tack weld လုပ်ပါက Low hydrogen type သို့မဟုတ် Ilmenite type ဂဟေချောင်းကို အသုံးပြုရမည်。" },
       { id: 5, textJP: "(5) <ruby>組立<rt>くみた</rt></ruby>て<ruby>溶接<rt>ようせつ</rt></ruby>の<ruby>位置<rt>いち</rt></ruby>は、<ruby>部材<rt>ぶざい</rt></ruby>の<ruby>角<rt>かど</rt></ruby>、<ruby>端部<rt>たんぶ</rt></ruby>など<ruby>強度<rt>きょうど</rt></ruby><ruby>上<rt>じょう</rt></ruby>および<ruby>工作<rt>こうさく</rt></ruby><ruby>上<rt>じょう</rt></ruby><ruby>問題<rt>もんだい</rt></ruby>となりやすい<ruby>箇所<rt>かしょ</rt></ruby>は<ruby>避<rt>さ</rt></ruby>ける。", textMY: "Tack weld ပြုလုပ်မည့်နေရာသည် ပစ္စည်း၏ ထောင့်၊ အစွန်းပိုင်း စသည့် ခိုင်ခံ့မှုနှင့် လုပ်ငန်းပိုင်းဆိုင်ရာ ပြဿနာဖြစ်လွယ်သော နေရာများကို ရှောင်ကြဉ်ရမည်။" }
     ],
@@ -156,7 +156,7 @@ export const chapter2Data2026Part2: StudyCardData[] = [
       { id: 4, textJP: "(4) 490N/mm²級 (鋼板) | YGW11 (溶接材料) | 330 (溶接電流A) | 40 (アーク電圧V) | 30 (溶接速度cm/分) | 235 (パス間温度℃)", textMY: "490N/mm² အဆင့် သံမဏိ | YGW11 | လျှပ်စီး 330A | ဗို့အား 40V | အမြန်နှုန်း 30 cm/min | Interpass အပူချိန် 235°C" },
       { id: 5, textJP: "(5) 490N/mm²級 (鋼板) | YGW18 (溶接材料) | 330 (溶接電流A) | 40 (アーク電圧V) | 20 (溶接速度cm/分) | 325 (パス間温度℃)", textMY: "490N/mm² အဆင့် သံမဏိ | YGW18 | လျှပ်စီး 330A | ဗို့အား 40V | အမြန်နှုန်း 20 cm/min | Interpass အပူချိန် 325°C" }
     ],
-    correctOptionId: 1,
+    correctOptionId: 3,
     explanation: {
       titleMY: "ရှင်းလင်းချက် - パス間温度の管理 (Interpass Temperature Control)",
       reasonMY: "Gas shielded arc welding တွင် YGW11 (490N/mm² အဆင့် သံမဏိများအတွက် အဓိကသုံးသော Solid wire) ကို အသုံးပြုသောအခါ၊ Interpass temperature ကို အများဆုံး 350°C အောက် (≤ 350°C) ထိန်းသိမ်းရန် သတ်မှတ်ထားသည်။ (1) တွင် YGW11 ကိုသုံးပြီး Interpass အပူချိန် 435°C ဟုပြထားသဖြင့် 350°C ထက်ကျော်လွန်နေကာ မှားယွင်းပါသည်။ မှတ်ချက်အနေဖြင့် YGW18 ကို 400N/mm² အဆင့်တွင် သုံးပါက 450°C အထိ ခွင့်ပြုထားပါသည်။",
