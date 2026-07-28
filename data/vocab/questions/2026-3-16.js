@@ -1,1 +1,22 @@
-export default [];
+export default [
+  { jp: '受入検査 (うけいれけんさ)', my: 'လက်ခံစစ်ဆေးခြင်း (Acceptance inspection)' },
+  { jp: '寸法精度 (すんぽうせいど)', my: 'အရွယ်အစားတိကျမှု (Dimensional accuracy)' },
+  { jp: '書類検査 (しょるいけんさ)', my: 'စာရွက်စာတမ်းစစ်ဆေးခြင်း (Document inspection)' },
+  { jp: '対物検査 (たいぶつけんさ)', my: 'ပစ္စည်းကိုယ်တိုင်ကိုစစ်ဆေးခြင်း / လက်တွေ့စစ်ဆေးခြင်း (Physical inspection / Objective inspection)' },
+  { jp: '特記 (とっき)', my: 'အထူးသတ်မှတ်ချက် (Special specification)' },
+  { jp: '特記のない場合 (とっきのないばあい)', my: 'အထူးသတ်မှတ်ချက်မရှိပါက (If there are no special specifications)' },
+  { jp: '社内検査成績表 (しゃないけんさせいせきひょう)', my: 'ကုမ္ပဏီတွင်းစစ်ဆေးမှုရလဒ်စာရင်း (In-house inspection record / report)' },
+  { jp: '付則 (ふそく)', my: 'နောက်ဆက်တွဲစည်းမျဉ်း (Supplementary provisions / Appendix)' },
+  { jp: '基準 (きじゅん)', my: 'စံနှုန်း (Standard / Criteria)' },
+  { jp: '示す (しめす)', my: 'ပြသသော / ဖော်ပြထားသော (To show / indicate)' },
+  { jp: 'その他の方法 (そのほかのほうほう)', my: 'အခြားသောနည်းလမ်းများ (Other methods)' },
+  { jp: '種類 (しゅるい)', my: 'အမျိုးအစား (Type / Kind)' },
+  { jp: '検査項目 (けんさこうもく)', my: 'စစ်ဆေးရမည့်အချက်များ (Inspection item)' },
+  { jp: '受け入れる (うけいれる)', my: 'လက်ခံသည် (To accept)' },
+  { jp: '限界許容差 (げんかいきょようさ)', my: 'အကန့်အသတ်ခွင့်ပြုကွာဟချက် / အများဆုံးခွင့်ပြုကွာဟချက် (Limit tolerance)' },
+  { jp: '不適合となった (ふてきごうとなった)', my: 'မကိုက်ညီသော / ကိုက်ညီမှုမရှိဖြစ်သွားသော (Became non-conforming)' },
+  { jp: '修正 (しゅうせい)', my: 'ပြုပြင်ခြင်း (Correction / Modification)' },
+  { jp: '再製作 (さいせいさく)', my: 'ပြန်လည်ထုတ်လုပ်ခြင်း (Remanufacturing / Remaking)' },
+  { jp: '処置 (しょち)', my: 'ကိုင်တွယ်ဖြေရှင်းခြင်း / စီမံဆောင်ရွက်ခြင်း (Treatment / Measure)' },
+  { jp: '再検査 (さいけんさ)', my: 'ပြန်လည်စစ်ဆေးခြင်း (Re-inspection)' }
+];

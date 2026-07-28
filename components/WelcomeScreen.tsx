@@ -7,6 +7,30 @@ interface WelcomeScreenProps {
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
+
+  const calculateDaysLeft = () => {
+    const today = new Date();
+    let targetYear = today.getFullYear();
+    let targetDate = new Date(targetYear, 9, 17); // Month is 0-indexed (9 = October)
+    
+    if (today > targetDate) {
+        targetDate = new Date(targetYear + 1, 9, 17);
+    }
+    
+    const diffTime = targetDate.getTime() - today.getTime();
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+  const toMyanmarNumerals = (num: number) => {
+    const myanmarNumbers = ['၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'];
+    return num.toString().split('').map(digit => myanmarNumbers[parseInt(digit)]).join('');
+  };
+
+  const daysLeft = calculateDaysLeft();
+  const monthsLeft = Math.floor(daysLeft / 30);
+  const remainingDays = daysLeft % 30;
+  const monthsText = monthsLeft > 0 ? toMyanmarNumerals(monthsLeft) + ' လ ' : '';
+  const daysText = remainingDays > 0 ? toMyanmarNumerals(remainingDays) + ' ရက်' : '';
+
   const oldYears = ['2021', '2022', '2023', '2024', '2025'] as const;
   const [showInstallInfo, setShowInstallInfo] = useState(false);
 
@@ -93,7 +117,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
             </div>
             <div className="space-y-4 text-slate-600 font-medium leading-relaxed">
               <p>
-                <span className="font-bold text-slate-700">၁၀ လပိုင်း ၁၇ ရက်နေ့ (October 17)</span> စာမေးပွဲအတွက် အချိန် (၃) လခန့် (၈၅ ရက်ခန့်) ကျန်သေးသဖြင့် အောက်ပါအတိုင်း လေ့လာရန် အကြံပြုအပ်ပါသည်။
+                <span className="font-bold text-slate-700">၁၀ လပိုင်း ၁၇ ရက်နေ့ (October 17)</span> စာမေးပွဲအတွက် အချိန် {monthsLeft > 0 ? `(${toMyanmarNumerals(monthsLeft)}) လခန့် ` : ''}({toMyanmarNumerals(daysLeft)} ရက်ခန့်) ကျန်သေးသဖြင့် အောက်ပါအတိုင်း လေ့လာရန် အကြံပြုအပ်ပါသည်။
               </p>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li>
@@ -102,7 +126,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                 </li>
                 <li>
                   <span className="font-bold text-slate-700">တစ်ရက်ကို ဘယ်နှပုဒ် လုပ်သင့်လဲ?</span> <br/>
-                  - ဂျပန်စာ ခက်ခဲသောကြောင့် <span className="text-emerald-600 font-bold">တစ်ရက်ကို အနည်းဆုံး ၅ ပုဒ် မှ ၁၀ ပုဒ်ခန့်</span> သေချာနားလည်အောင် ကျက်မှတ်/လေ့ကျင့်ပါ။ (၅ ပုဒ် × ၈၀ ရက် = ပုဒ်ရေ ၄၀၀ ရရှိပါမည်)
+                  - ဂျပန်စာ ခက်ခဲသောကြောင့် <span className="text-emerald-600 font-bold">တစ်ရက်ကို အနည်းဆုံး ၅ ပုဒ် မှ ၁၀ ပုဒ်ခန့်</span> သေချာနားလည်အောင် ကျက်မှတ်/လေ့ကျင့်ပါ။ (၅ ပုဒ် × {toMyanmarNumerals(daysLeft)} ရက် = ပုဒ်ရေ {toMyanmarNumerals(5 * daysLeft)} ရရှိပါမည်)
                 </li>
                 <li>
                   <span className="font-bold text-slate-700">Vocabulary Cards များကို အသုံးပြုပါ</span> <br/>

@@ -18,17 +18,33 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
   // Search for vocabulary words containing this Kanji
   let relatedWords = vocabularyData.filter(v => v.kanji.includes(character));
   let specificWords: any[] = [];
+
+  // Search specific question first if provided
   if (questionId && questionVocabData[questionId]) {
-    specificWords = questionVocabData[questionId].filter(v => v.jp.includes(character));
+    specificWords = questionVocabData[questionId].filter(v => v.jp && v.jp.includes(character));
   }
-  
-  // Format specific words to match the vocabularyData structure
-  const formattedSpecificWords = specificWords.map(word => ({
-    id: Math.floor(Math.random() * 1000000),
+
+  // Also search across all question vocabularies (e.g. 2026 data/vocab/questions)
+  const additionalVocab: any[] = [];
+  Object.keys(questionVocabData).forEach(qKey => {
+    const list = questionVocabData[qKey];
+    if (Array.isArray(list)) {
+      list.forEach(v => {
+        if (v.jp && v.jp.includes(character)) {
+          additionalVocab.push(v);
+        }
+      });
+    }
+  });
+
+  // Format question vocab words to match vocabularyData structure
+  const formattedSpecificWords = [...specificWords, ...additionalVocab].map(word => ({
+    id: word.id || Math.floor(Math.random() * 1000000),
     kanji: word.jp,
     reading: word.reading || '',
     burmese: word.my,
-    english: word.english || '', category: 'specific'
+    english: word.english || '',
+    category: 'specific'
   }));
 
   // Combine and deduplicate
@@ -36,16 +52,18 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
   const combinedWords = [];
   
   for (const word of [...formattedSpecificWords, ...relatedWords]) {
-    if (!seenKanji.has(word.kanji)) {
+    if (word.kanji && !seenKanji.has(word.kanji)) {
       seenKanji.add(word.kanji);
       combinedWords.push(word);
     }
   }
   
-  relatedWords = combinedWords.slice(0, 5); // Limit to 5
+  relatedWords = combinedWords.slice(0, 6); // Limit to 6
 
-
-  if (!kanjiData && relatedWords.length === 0) return null; // Nothing to show
+  // Calculate smart horizontal position so it stays inside screen bounds
+  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 360;
+  const tooltipWidth = 288; // 18rem = 288px
+  const adjustedLeft = Math.max(12, Math.min(position.left, viewportWidth - tooltipWidth - 16));
 
   return (
     <>
@@ -56,10 +74,9 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
         className="absolute z-50 w-72 p-4 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset ring-1 ring-slate-400/20 transition-opacity duration-200 text-neumorphic-text overflow-y-auto max-h-[80vh]"
         style={{ 
           top: position.top, 
-          left: position.left, 
+          left: adjustedLeft, 
           transform: 'translateY(10px)',
-          // Prevent it from going off-screen horizontally
-          maxWidth: 'calc(100vw - 32px)',
+          maxWidth: 'calc(100vw - 24px)',
         }}
         onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing it
       >
@@ -81,8 +98,9 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
         )}
 
         {!kanjiData && (
-            <div className="pb-3 border-b border-slate-400/20">
+            <div className="pb-3 border-b border-slate-400/20 flex items-center justify-between">
               <p className="text-4xl font-semibold leading-none text-slate-700">{character}</p>
+              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Kanji Info</p>
             </div>
         )}
 
@@ -90,13 +108,13 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
           <div className={`mt-3 ${kanjiData ? 'pt-3 border-t border-slate-400/20' : ''}`}>
              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Related Vocabulary</h4>
              <ul className="space-y-2">
-                {relatedWords.map(word => (
-                   <li key={word.id} className="text-sm">
+                {relatedWords.map((word, idx) => (
+                   <li key={`${word.id}-${idx}`} className="text-sm">
                       <div className="flex items-baseline gap-2">
                          <span className="font-bold text-slate-700">{word.kanji}</span>
-                         <span className="text-xs text-slate-500">({word.reading})</span>
+                         {word.reading && <span className="text-xs text-slate-500">({word.reading})</span>}
                       </div>
-                      <div className="text-slate-600">
+                      <div className="text-slate-600 text-xs">
                          {word.burmese} {word.english ? ` - ${word.english}` : ''}
                       </div>
                    </li>

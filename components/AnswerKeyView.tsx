@@ -7,12 +7,14 @@ import { chapter2024Data } from '../data/2024-old-question';
 import { chapter2025Data } from '../data/2025-old-question';
 import { StudyCardData } from '../types';
 import { ChevronLeftIcon, CheckCircleSolidIcon, SearchIcon, ChevronDownIcon } from './Icons';
+import JapaneseText from './JapaneseText';
 
 interface AnswerKeyViewProps {
   onClose: () => void;
   selectedApp?: string;
   initialChapter?: number;
   currentQuestions?: StudyCardData[];
+  onKanjiClick?: (kanji: string, event: React.MouseEvent<HTMLSpanElement>, questionId?: string) => void;
 }
 
 const CATEGORIES = [
@@ -31,6 +33,7 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
   selectedApp = '2026',
   initialChapter = 1,
   currentQuestions = [],
+  onKanjiClick,
 }) => {
   // Determine starting category based on selectedApp
   const defaultCategory = CATEGORIES.some(c => c.id === selectedApp) ? selectedApp : '2026';
@@ -204,13 +207,16 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
                   </div>
 
                   {/* Japanese Question */}
-                  <h3
-                    className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: q.questionJP }}
-                  />
+                  <div className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 leading-relaxed font-mono bg-slate-50 dark:bg-slate-800/80 p-3 sm:p-4 rounded-2xl">
+                    {onKanjiClick ? (
+                      <JapaneseText text={q.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, q.id)} />
+                    ) : (
+                      <span dangerouslySetInnerHTML={{ __html: q.questionJP }} />
+                    )}
+                  </div>
 
                   {/* Myanmar Translation */}
-                  <p className="text-slate-600 dark:text-slate-300 text-sm mb-6 leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 text-sm mb-6 leading-relaxed font-medium">
                     {q.questionMY}
                   </p>
 
@@ -224,10 +230,13 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
                             Correct Answer ({q.correctOptionId})
                           </span>
                         </div>
-                        <p
-                          className="font-bold text-green-900 dark:text-green-200 text-base leading-relaxed"
-                          dangerouslySetInnerHTML={{ __html: correctOption?.textJP || '' }}
-                        />
+                        <div className="font-bold text-green-900 dark:text-green-200 text-base leading-relaxed font-mono">
+                          {onKanjiClick && correctOption?.textJP ? (
+                            <JapaneseText text={correctOption.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, q.id)} />
+                          ) : (
+                            <span dangerouslySetInnerHTML={{ __html: correctOption?.textJP || '' }} />
+                          )}
+                        </div>
                         <p className="text-sm text-green-800 dark:text-green-300 mt-1 leading-relaxed">
                           {correctOption?.textMY}
                         </p>

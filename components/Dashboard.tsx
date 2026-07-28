@@ -952,12 +952,24 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
     if (showAnswerKey) {
         return (
-            <AnswerKeyView
-                onClose={() => setShowAnswerKey(false)}
-                selectedApp={selectedApp}
-                initialChapter={activeChapter}
-                currentQuestions={onlineQuestions}
-            />
+            <>
+                <AnswerKeyView
+                    onClose={() => setShowAnswerKey(false)}
+                    selectedApp={selectedApp}
+                    initialChapter={activeChapter}
+                    currentQuestions={onlineQuestions}
+                    onKanjiClick={handleKanjiClick}
+                />
+                {(selectedKanji || selectedKanjiChar) && (
+                    <KanjiTooltip
+                        kanjiData={selectedKanji}
+                        kanjiChar={selectedKanjiChar || undefined}
+                        questionId={selectedQuestionId || undefined}
+                        position={tooltipPos}
+                        onClose={() => { setSelectedKanji(null); setSelectedKanjiChar(null); }}
+                    />
+                )}
+            </>
         );
     }
 

@@ -213,7 +213,14 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
 
         <div className="mb-10 min-h-[120px] flex flex-col justify-center text-center sm:text-left">
            <div className={`font-bold text-slate-700 leading-relaxed ${getFontSizeClass('xl')}`}>
-              {language === 'my' ? currentQuestion.questionMY : (
+              {language === 'my' ? (
+                <div className="space-y-3">
+                  <p>{currentQuestion.questionMY}</p>
+                  <div className="font-mono text-sm text-slate-500 font-medium bg-neumorphic-bg shadow-neumorphic-inset p-3.5 sm:p-4 rounded-2xl leading-relaxed">
+                    <JapaneseText text={currentQuestion.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
+                  </div>
+                </div>
+              ) : (
                 <div className="font-mono">
                   <JapaneseText text={currentQuestion.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                 </div>
@@ -249,13 +256,20 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
                 disabled={!isMockExam && isAnswered}
                 className={`w-full p-5 rounded-2xl text-left transition-all duration-300 flex items-center justify-between group ${btnClass}`}
               >
-                <span className={`font-bold ${getFontSizeClass('lg')}`}>
-                   {language === 'my' ? option.textMY : (
+                <div className={`font-bold ${getFontSizeClass('lg')} flex-1 pr-4`}>
+                   {language === 'my' ? (
+                     <div className="space-y-1">
+                       <p>{option.textMY}</p>
+                       <div className={`font-mono text-xs font-semibold ${isCorrect || isWrong ? 'text-white/90' : 'text-slate-500'} opacity-80 mt-1`}>
+                         <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
+                       </div>
+                     </div>
+                   ) : (
                      <div className="font-mono">
                         <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                      </div>
                    )}
-                </span>
+                </div>
                 {!isMockExam && isCorrect && <CheckCircleSolidIcon className="w-6 h-6" />}
                 {!isMockExam && isWrong && <XCircleSolidIcon className="w-6 h-6" />}
               </button>
