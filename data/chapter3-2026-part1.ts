@@ -3,7 +3,7 @@ import { StudyCardData } from '../types';
 export const chapter3Data2026Part1: StudyCardData[] = [
   {
     id: "2026-3-1",
-    questionJP: "<ruby>施工<rt>しこう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>および<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>における<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>工事<rt>こうじ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>マネジメントに<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>1）",
+    questionJP: "<ruby>施工<rt>しこう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>および<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>における<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>工事<rt>こうじ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>マネジメントに<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "ကန်ထရိုက်တာနှင့် သံမဏိထုတ်လုပ်သူတို့၏ သံမဏိတည်ဆောက်ရေး အရည်အသွေး စီမံခန့်ခွဲမှုနှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>施工<rt>しこう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>は、<ruby>品質<rt>ひんしつ</rt></ruby>マネジメントを<ruby>行<rt>おこな</rt></ruby>うために<ruby>有効<rt>ゆうこう</rt></ruby>な<ruby>組織<rt>そしき</rt></ruby><ruby>運用<rt>うんよう</rt></ruby>システムを<ruby>確立<rt>かくりつ</rt></ruby>し、<ruby>運用<rt>うんよう</rt></ruby>しなければならない。JASS 6 では、<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>マネジメントシステムは、<ruby>工事<rt>こうじ</rt></ruby>ごとに<ruby>施工<rt>しこう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>確立<rt>かくりつ</rt></ruby>した<ruby>組織<rt>そしき</rt></ruby><ruby>運用<rt>うんよう</rt></ruby>システムを<ruby>反映<rt>はんえい</rt></ruby>して<ruby>定<rt>さだ</rt></ruby>めることとされている。", textMY: "ကန်ထရိုက်တာသည် QM ကို ထိရောက်စွာလုပ်ဆောင်ရန် ဖွဲ့စည်းပုံစနစ်ကို တည်ထောင်ကျင့်သုံးရမည်။ JASS 6 အရ သံမဏိထုတ်လုပ်သူ၏ QM စနစ်ကို ပရောဂျက်တိုင်းအတွက် ကန်ထရိုက်တာက တည်ထောင်ထားသော စနစ်အပေါ် အခြေခံ၍ သတ်မှတ်ရမည်ဟု ဆိုထားသည်။" },
@@ -21,7 +21,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-2",
-    questionJP: "<ruby>品質<rt>ひんしつ</rt></ruby>マネジメントに<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>2）",
+    questionJP: "<ruby>品質<rt>ひんしつ</rt></ruby>マネジメントに<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "အရည်အသွေး စီမံခန့်ခွဲမှု (Quality Management) နှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) ISO 9000 シリーズにおいて<ruby>品質<rt>ひんしつ</rt></ruby>マネジメントは、<ruby>個々<rt>ここ</rt></ruby>の<ruby>製品<rt>せいひん</rt></ruby>が<ruby>欠陥<rt>けっかん</rt></ruby>なく<ruby>適切<rt>てきせつ</rt></ruby>な<ruby>寸法<rt>すんぽう</rt></ruby>で<ruby>製作<rt>せいさく</rt></ruby>されているかを<ruby>確認<rt>かくにん</rt></ruby>する<ruby>管理<rt>かんり</rt></ruby><ruby>手法<rt>しゅほう</rt></ruby>として<ruby>定義<rt>ていぎ</rt></ruby>され、「<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>」と<ruby>同<rt>おな</rt></ruby>じ<ruby>意味<rt>いみ</rt></ruby>で<ruby>用<rt>もち</rt></ruby>いられている。", textMY: "ISO 9000 စီးရီးတွင် QM သည် ထုတ်ကုန်တစ်ခုချင်းစီ ချို့ယွင်းချက်မရှိ သင့်လျော်သော အတိုင်းအတာဖြင့် ထုတ်လုပ်ထားခြင်း ရှိမရှိ စစ်ဆေးသည့် စီမံခန့်ခွဲမှုနည်းလမ်းအဖြစ် သတ်မှတ်ထားပြီး Quality Control နှင့် အဓိပ္ပာယ်တူ အသုံးပြုသည်။" },
@@ -39,7 +39,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-3",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>3）",
+    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိ၏ အရည်အသွေးအာမခံချက် (Quality Assurance) နှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製品<rt>せいひん</rt></ruby>の<ruby>施工<rt>しこう</rt></ruby><ruby>品質<rt>ひんしつ</rt></ruby>は、<ruby>設計<rt>せっけい</rt></ruby><ruby>品質<rt>ひんしつ</rt></ruby>を<ruby>満足<rt>まんぞく</rt></ruby>するために<ruby>製作<rt>せいさく</rt></ruby>の<ruby>目標<rt>もくひょう</rt></ruby>として<ruby>定<rt>さだ</rt></ruby>めた<ruby>寸法<rt>すんぽう</rt></ruby><ruby>精度<rt>せいど</rt></ruby>や<ruby>要領<rt>ようりょう</rt></ruby>などの<ruby>仕様<rt>しよう</rt></ruby>のことであり、<ruby>施工<rt>しこう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>らが<ruby>保証<rt>ほしょう</rt></ruby>する。", textMY: "သံမဏိထုတ်ကုန်များ၏ ဆောက်လုပ်ရေးအရည်အသွေးဆိုသည်မှာ ဒီဇိုင်းအရည်အသွေး ပြည့်မီစေရန် ရည်ရွယ်သတ်မှတ်ထားသော အတိုင်းအတာ တိကျမှုနှင့် လုပ်ထုံးလုပ်နည်းစသည့် သတ်မှတ်ချက်များဖြစ်ပြီး၊ ကန်ထရိုက်တာများက အာမခံရမည်။" },
@@ -57,7 +57,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-4",
-    questionJP: "JASS 6 の「<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>マネジメント」で<ruby>示<rt>しめ</rt></ruby>された<ruby>機能<rt>きのう</rt></ruby>を<ruby>保有<rt>ほゆう</rt></ruby>し<ruby>実施<rt>じっし</rt></ruby>するうえでの<ruby>注意<rt>ちゅうい</rt></ruby><ruby>点<rt>てん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>4）",
+    questionJP: "JASS 6 の「<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby>マネジメント」で<ruby>示<rt>しめ</rt></ruby>された<ruby>機能<rt>きのう</rt></ruby>を<ruby>保有<rt>ほゆう</rt></ruby>し<ruby>実施<rt>じっし</rt></ruby>するうえでの<ruby>注意<rt>ちゅうい</rt></ruby><ruby>点<rt>てん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "JASS 6 ပါ 'သံမဏိထုတ်လုပ်သူ၏ QM' တွင် ဖော်ပြထားသော လုပ်ဆောင်ချက်များကို ကျင့်သုံးရာတွင် သတိပြုရမည့်အချက်များနှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>経営<rt>けいえい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>は、<ruby>企業<rt>きぎょう</rt></ruby><ruby>理念<rt>りねん</rt></ruby>に<ruby>基<rt>もと</rt></ruby>づき<ruby>品質<rt>ひんしつ</rt></ruby><ruby>方針<rt>ほうしん</rt></ruby>を<ruby>策定<rt>さくてい</rt></ruby>し、<ruby>全社<rt>ぜんしゃ</rt></ruby>に<ruby>周知<rt>しゅうち</rt></ruby><ruby>徹底<rt>てってい</rt></ruby>させる<ruby>必要<rt>ひつよう</rt></ruby>がある。", textMY: "စီမံခန့်ခွဲသူ (Management) သည် ကုမ္ပဏီ၏ အယူအဆအပေါ်အခြေခံ၍ အရည်အသွေးမူဝါဒကို ချမှတ်ပြီး ကုမ္ပဏီတစ်ခုလုံးကို သေချာစွာ အသိပေးရန် လိုအပ်သည်။" },
@@ -75,7 +75,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-5",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>と<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>5）",
+    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>と<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိထုတ်လုပ်သူ၏ အရည်အသွေးအာမခံချက်နှင့် အရည်အသွေးထိန်းချုပ်မှုအကြောင်း အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>は、<ruby>一般<rt>いっぱん</rt></ruby>に「<ruby>消費<rt>しょうひ</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>要求<rt>ようきゅう</rt></ruby>する<ruby>品質<rt>ひんしつ</rt></ruby>が、<ruby>十分<rt>じゅうぶん</rt></ruby>に<ruby>満<rt>み</rt></ruby>たされていることを<ruby>保証<rt>ほしょう</rt></ruby>するために<ruby>生産<rt>せいさん</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>行<rt>おこな</rt></ruby>う<ruby>体系<rt>たいけい</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>活動<rt>かつどう</rt></ruby>」と<ruby>考<rt>かんが</rt></ruby>えられている。", textMY: "အရည်အသွေးအာမခံချက်ဆိုသည်မှာ ယေဘုယျအားဖြင့် 'စားသုံးသူတောင်းဆိုသော အရည်အသွေး ပြည့်မီကြောင်း အာမခံရန် ထုတ်လုပ်သူက လုပ်ဆောင်သော စနစ်တကျ လှုပ်ရှားမှု' ဟု ယူဆကြသည်။" },
@@ -93,7 +93,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-6",
-    questionJP: "<ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>の<ruby>分類<rt>ぶんるい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>6）",
+    questionJP: "<ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>の<ruby>分類<rt>ぶんるい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "နမူနာကောက်ယူစစ်ဆေးခြင်း (Sampling Inspection) အမျိုးအစားခွဲခြားမှုများနှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>の<ruby>型<rt>かた</rt></ruby>による<ruby>分類<rt>ぶんるい</rt></ruby>における<ruby>規準<rt>きじゅん</rt></ruby><ruby>型<rt>がた</rt></ruby>は、<ruby>売手<rt>うりて</rt></ruby>と<ruby>買手<rt>かいて</rt></ruby>に<ruby>対<rt>たい</rt></ruby>する<ruby>保護<rt>ほご</rt></ruby>を<ruby>規定<rt>きてい</rt></ruby>して、<ruby>両方<rt>りょうほう</rt></ruby>の<ruby>要求<rt>ようきゅう</rt></ruby>を<ruby>満足<rt>まんぞく</rt></ruby>させるように<ruby>組<rt>く</rt></ruby>み<ruby>立<rt>た</rt></ruby>てられた<ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>である。それらの<ruby>保護<rt>ほご</rt></ruby>は、<ruby>生産<rt>せいさん</rt></ruby><ruby>者<rt>しゃ</rt></ruby><ruby>危険<rt>きけん</rt></ruby>となる<ruby>確率<rt>かくりつ</rt></ruby>と<ruby>消費<rt>しょうひ</rt></ruby><ruby>者<rt>しゃ</rt></ruby><ruby>危険<rt>きけん</rt></ruby>となる<ruby>確率<rt>かくりつ</rt></ruby>をある<ruby>一定<rt>いってい</rt></ruby>の<ruby>小<rt>ちい</rt></ruby>さな<ruby>値<rt>ね</rt></ruby>にとどめることによって<ruby>与<rt>あた</rt></ruby>えている。", textMY: "Standard Type (規準型) Sampling inspection သည် ရောင်းသူနှင့် ဝယ်သူ နှစ်ဦးစလုံး၏ တောင်းဆိုချက်များကို ပြည့်မီစေရန် ရည်ရွယ်သည်။ ထုတ်လုပ်သူအန္တရာယ် (Producer's risk) နှင့် စားသုံးသူအန္တရာယ် (Consumer's risk) ဖြစ်နိုင်ခြေများကို သေးငယ်သော သတ်မှတ်တန်ဖိုးတစ်ခုအတွင်း ထိန်းထားပေးသည်။" },
@@ -111,7 +111,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-7",
-    questionJP: "<ruby>統計<rt>とうけい</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>7）",
+    questionJP: "<ruby>統計<rt>とうけい</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "စာရင်းအင်းဆိုင်ရာ အရည်အသွေးထိန်းချုပ်မှု (Statistical Quality Control) နှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>近代<rt>きんだい</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>は、<ruby>統計<rt>とうけい</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>手法<rt>しゅほう</rt></ruby>を<ruby>採用<rt>さいよう</rt></ruby>しているので、<ruby>特<rt>とく</rt></ruby>に<ruby>統計<rt>とうけい</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>と<ruby>呼<rt>よ</rt></ruby>ばれることがある。", textMY: "ခေတ်သစ် QM သည် စာရင်းအင်းဆိုင်ရာ နည်းလမ်းများကို အသုံးပြုသောကြောင့် Statistical Quality Control ဟုလည်း ခေါ်ဆိုကြသည်။" },
@@ -129,7 +129,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-8",
-    questionJP: "<ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>と OC <ruby>曲線<rt>きょくせん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>8）",
+    questionJP: "<ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>と OC <ruby>曲線<rt>きょくせん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "Sampling inspection နှင့် OC Curve အကြောင်း အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) ロットの<ruby>不良<rt>ふりょう</rt></ruby><ruby>率<rt>りつ</rt></ruby>を<ruby>横<rt>よこ</rt></ruby><ruby>軸<rt>じく</rt></ruby>に、ロットが<ruby>合格<rt>ごうかく</rt></ruby>する<ruby>確率<rt>かくりつ</rt></ruby>を<ruby>縦<rt>たて</rt></ruby><ruby>軸<rt>じく</rt></ruby>にとり、この<ruby>両者<rt>りょうしゃ</rt></ruby>の<ruby>関係<rt>かんけい</rt></ruby>を<ruby>表<rt>あらわ</rt></ruby>した<ruby>曲線<rt>きょくせん</rt></ruby>を OC <ruby>曲線<rt>きょくせん</rt></ruby>という。", textMY: "အုပ်စု၏ ချို့ယွင်းမှုနှုန်းကို X ဝင်ရိုးတွင်ထားပြီး ထိုအုပ်စု အောင်မြင်မည့် ဖြစ်နိုင်ခြေ (Probability of acceptance) ကို Y ဝင်ရိုးတွင်ထားကာ ၎င်းတို့နှစ်ခု၏ ဆက်သွယ်မှုကို ပြသသော မျဉ်းကွေးကို OC Curve ဟုခေါ်သည်။" },
@@ -147,7 +147,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-9",
-    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>と<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>9）",
+    questionJP: "<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>と<ruby>品質<rt>ひんしつ</rt></ruby><ruby>管理<rt>かんり</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိထုတ်လုပ်သူ၏ အရည်အသွေးအာမခံချက်နှင့် အရည်အသွေးထိန်းချုပ်မှုနှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>品質<rt>ひんしつ</rt></ruby><ruby>保証<rt>ほしょう</rt></ruby>は、<ruby>一般<rt>いっぱん</rt></ruby>に「<ruby>消費<rt>しょうひ</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>要求<rt>ようきゅう</rt></ruby>する<ruby>品質<rt>ひんしつ</rt></ruby>が、<ruby>十分<rt>じゅうぶん</rt></ruby>に<ruby>満<rt>み</rt></ruby>たされていることを<ruby>保証<rt>ほしょう</rt></ruby>するために<ruby>生産<rt>せいさん</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>行<rt>おこな</rt></ruby>う<ruby>体系<rt>たいけい</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>活動<rt>かつどう</rt></ruby>」と<ruby>考<rt>かんが</rt></ruby>えられている。", textMY: "အရည်အသွေးအာမခံချက်ဆိုသည်မှာ ယေဘုယျအားဖြင့် 'စားသုံးသူတောင်းဆိုသော အရည်အသွေး ပြည့်မီကြောင်း အာမခံရန် ထုတ်လုပ်သူက လုပ်ဆောင်သော စနစ်တကျ လှုပ်ရှားမှု' ဟု ယူဆကြသည်။" },
@@ -165,7 +165,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-10",
-    questionJP: "<ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>の<ruby>特徴<rt>とくちょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>10）",
+    questionJP: "<ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>の<ruby>特徴<rt>とくちょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "နမူနာကောက်ယူစစ်ဆေးခြင်း (Sampling Inspection) ၏ လက္ခဏာများနှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>抜取<rt>ぬきと</rt></ruby><ruby>検査<rt>けんさ</rt></ruby>は、<ruby>統計<rt>とうけい</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>手法<rt>しゅほう</rt></ruby>に<ruby>基<rt>もと</rt></ruby>づき、ロットからサンプルを<ruby>抜<rt>ぬ</rt></ruby>き<ruby>取<rt>と</rt></ruby>り、サンプルの<ruby>検査<rt>けんさ</rt></ruby><ruby>結果<rt>けっか</rt></ruby>からロット<ruby>全体<rt>ぜんたい</rt></ruby>の<ruby>合否<rt>ごうひ</rt></ruby>を<ruby>判定<rt>はんてい</rt></ruby>する<ruby>検査<rt>けんさ</rt></ruby><ruby>方法<rt>ほうほう</rt></ruby>である。", textMY: "Sampling inspection သည် စာရင်းအင်းနည်းလမ်းကို အခြေခံ၍ အုပ်စုထဲမှ နမူနာများကို ထုတ်ယူကာ၊ ၎င်းတို့၏ စစ်ဆေးမှုရလဒ်မှတစ်ဆင့် အုပ်စုတစ်ခုလုံး၏ အောင်/ကျုံး ကို ဆုံးဖြတ်သော စစ်ဆေးနည်းဖြစ်သည်။" },
@@ -183,7 +183,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-11",
-    questionJP: "<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>流通<rt>りゅうつう</rt></ruby><ruby>過程<rt>かてい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>11）",
+    questionJP: "<ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>流通<rt>りゅうつう</rt></ruby><ruby>過程<rt>かてい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "သံမဏိပစ္စည်းများ ဖြန့်ဖြူးရောင်းချမှု (Distribution process) နှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>鋼材<rt>こうざい</rt></ruby>の<ruby>流通<rt>りゅうつう</rt></ruby><ruby>過程<rt>かてい</rt></ruby>には、<ruby>鋼材<rt>こうざい</rt></ruby>メーカー、<ruby>商社<rt>しょうしゃ</rt></ruby>、<ruby>問屋<rt>とんや</rt></ruby>、<ruby>中間<rt>ちゅうかん</rt></ruby><ruby>加工<rt>かこう</rt></ruby><ruby>業者<rt>ぎょうしゃ</rt></ruby>、<ruby>鉄骨<rt>てっこつ</rt></ruby><ruby>製作<rt>せいさく</rt></ruby><ruby>作業<rt>さぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>など、<ruby>多<rt>おお</rt></ruby>くの<ruby>企業<rt>きぎょう</rt></ruby>が<ruby>存在<rt>そんざい</rt></ruby>している。", textMY: "သံမဏိဖြန့်ဖြူးမှု လုပ်ငန်းစဉ်တွင် သံမဏိထုတ်လုပ်သည့် စက်ရုံ (Maker)၊ ကုန်သွယ်ရေးကုမ္ပဏီ၊ လက်ကားဒိုင်၊ အလယ်အလတ် ပြုပြင်ထုတ်လုပ်သူ၊ သံမဏိထုတ်လုပ်သူ စသည်ဖြင့် ကုမ္ပဏီများစွာ ပါဝင်နေသည်။" },
@@ -201,7 +201,7 @@ export const chapter3Data2026Part1: StudyCardData[] = [
   },
   {
     id: "2026-3-12",
-    questionJP: "<ruby>材料<rt>ざいりょう</rt></ruby><ruby>試験<rt>しけん</rt></ruby>とその<ruby>説明<rt>せつめい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。（<ruby>問<rt>とい</rt></ruby>12）",
+    questionJP: "<ruby>材料<rt>ざいりょう</rt></ruby><ruby>試験<rt>しけん</rt></ruby>とその<ruby>説明<rt>せつめい</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>次<rt>つぎ</rt></ruby>の<ruby>記述<rt>きじゅつ</rt></ruby>のうち、<ruby>最<rt>もっと</rt></ruby>も<ruby>不<rt>ふ</rt></ruby><ruby>適当<rt>てきとう</rt></ruby>なものはどれか。",
     questionMY: "ပစ္စည်းစမ်းသပ်မှုများနှင့် ၎င်းတို့၏ ရှင်းလင်းချက်များနှင့် ပတ်သက်၍ အောက်ပါတို့အနက် အသင့်လျော်ဆုံးမဟုတ်သည့်အချက်ကို ရွေးချယ်ပါ။",
     options: [
       { id: 1, textJP: "(1) <ruby>引張<rt>ひっぱ</rt></ruby><ruby>試験<rt>しけん</rt></ruby>においては、<ruby>鋼材<rt>こうざい</rt></ruby><ruby>内部<rt>ないぶ</rt></ruby>に<ruby>介在<rt>かいざい</rt></ruby><ruby>物<rt>ぶつ</rt></ruby>、<ruby>偏<rt>へん</rt></ruby><ruby>析<rt>析</rt></ruby>、ラミネーションなどが<ruby>存在<rt>そんざい</rt></ruby>すると、その<ruby>程度<rt>ていど</rt></ruby>に<ruby>応<rt>おう</rt></ruby>じて<ruby>層状<rt>そうじょう</rt></ruby>の<ruby>破断<rt>はだん</rt></ruby><ruby>面<rt>めん</rt></ruby>が<ruby>観察<rt>かんさつ</rt></ruby>されるので、<ruby>試験<rt>しけん</rt></ruby><ruby>片<rt>へん</rt></ruby><ruby>破断<rt>はだん</rt></ruby><ruby>後<rt>ご</rt></ruby>の<ruby>破断<rt>はだん</rt></ruby><ruby>面<rt>めん</rt></ruby>の<ruby>観察<rt>かんさつ</rt></ruby>にも<ruby>注意<rt>ちゅうい</rt></ruby>を<ruby>払<rt>はら</rt></ruby>うとよい。", textMY: "Tensile test (ဆွဲဆန့်စမ်းသပ်မှု) တွင် သံမဏိအတွင်း၌ အညစ်အကြေးများ၊ ခွဲထွက်မှု (Segregation)၊ Lamination များ ရှိနေပါက ၎င်း၏ အတိုင်းအတာပေါ်မူတည်၍ အလွှာလိုက်ပြတ်တောက်နေသော မျက်နှာပြင် (Lamellar tear) ကို တွေ့ရနိုင်သဖြင့် ပြတ်တောက်ပြီးနောက် မျက်နှာပြင်ကို ဂရုတစိုက် လေ့လာသင့်သည်။" },
