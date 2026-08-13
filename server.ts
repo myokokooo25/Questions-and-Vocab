@@ -1,8 +1,11 @@
 import express from "express";
+import dotenv from "dotenv";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import path from "path";
 import cors from "cors";
+
+dotenv.config();
 
 function validateEnvironment() {
   const required = ['GEMINI_API_KEY'];
