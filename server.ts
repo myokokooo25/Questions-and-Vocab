@@ -21,11 +21,6 @@ async function startServer() {
 
   app.use(express.json());
 
-  app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
-    next();
-  });
-
   app.use(cors({
     origin: process.env.ALLOWED_ORIGINS?.split(',') || ['https://questions-and-vocab-4aww.vercel.app', 'http://localhost:3000', 'http://127.0.0.1:3000'],
     credentials: true,
