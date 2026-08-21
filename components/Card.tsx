@@ -290,17 +290,17 @@ const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset overflow-hidden">
+    <div className="bg-neumorphic-bg rounded-3xl sm:rounded-[2.5rem] shadow-neumorphic-outset overflow-hidden">
       <ReportModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} contextInfo={`Question ${data.id}`} />
-      <div className="p-8">
-        <div className='flex flex-col sm:flex-row items-start justify-between mb-8 gap-6 sm:gap-0'>
+      <div className="p-4 sm:p-8">
+        <div className='flex flex-col sm:flex-row items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0'>
             <div className="flex-1 pr-0 sm:pr-6 w-full">
                 <p className="mb-2 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Question {data.id}</p>
                  {language === 'my' ? (
                   <>
                     <p className={`${getFontSizeClass('lg')} font-bold leading-relaxed text-slate-700`}>{data.questionMY}</p>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 w-full">
-                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('sm')} font-semibold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-4 rounded-2xl leading-relaxed`}>
+                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('sm')} font-semibold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-3 sm:py-4 rounded-2xl leading-relaxed`}>
                         <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                       </div>
                       <div className="self-end sm:self-auto">
@@ -311,7 +311,7 @@ const Card: React.FC<CardProps> = ({
                 ) : (
                   <>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 w-full">
-                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('lg')} font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-6 sm:px-8 py-4 sm:py-6 rounded-[2rem] leading-loose`}>
+                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('lg')} font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-8 py-3 sm:py-6 rounded-2xl sm:rounded-[2rem] leading-relaxed sm:leading-loose`}>
                         <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                       </div>
                       <div className="self-end sm:self-auto">
@@ -324,31 +324,31 @@ const Card: React.FC<CardProps> = ({
                   </>
                 )}
             </div>
-            <div className="flex flex-row sm:flex-col gap-3 w-full sm:w-auto justify-end sm:justify-start">
+            <div className="flex flex-row sm:flex-col gap-2 sm:gap-3 w-full sm:w-auto justify-end sm:justify-start">
                  <button 
                     onClick={() => toggleBookmark(data.id)}
-                    className={`p-3.5 rounded-full transition-all duration-300 ${isBookmarked ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-blue-500'}`}
+                    className={`p-2.5 sm:p-3.5 rounded-full transition-all duration-300 ${isBookmarked ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-blue-500'}`}
                 >
-                  <BookmarkIcon className="w-6 h-6" />
+                  <BookmarkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
                 <button
                     onClick={handleGetHint}
                     disabled={isHintLoading || !!hint || isSubmitted}
-                    className={`p-3.5 rounded-full transition-all duration-300 disabled:opacity-30 ${hint ? 'shadow-neumorphic-inset text-amber-600 bg-amber-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-amber-500'}`}
+                    className={`p-2.5 sm:p-3.5 rounded-full transition-all duration-300 disabled:opacity-30 ${hint ? 'shadow-neumorphic-inset text-amber-600 bg-amber-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-amber-500'}`}
                 >
-                    {isHintLoading ? <LoadingSpinnerIcon className="w-6 h-6" /> : <LightBulbIcon className="w-6 h-6" />}
+                    {isHintLoading ? <LoadingSpinnerIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <LightBulbIcon className="w-5 h-5 sm:w-6 sm:h-6" />}
                 </button>
                 <button
                     onClick={() => setIsReportOpen(true)}
-                    className="p-3.5 rounded-full shadow-neumorphic-outset text-slate-400 hover:text-red-500 transition-all duration-300 active:shadow-neumorphic-inset"
+                    className="p-2.5 sm:p-3.5 rounded-full shadow-neumorphic-outset text-slate-400 hover:text-red-500 transition-all duration-300 active:shadow-neumorphic-inset"
                 >
-                    <FlagIcon className="w-6 h-6" />
+                    <FlagIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
             </div>
         </div>
         
         { (hint || hintError) && (
-          <div className="mb-8 p-6 rounded-[2rem] bg-neumorphic-bg shadow-neumorphic-inset border border-amber-400/20">
+          <div className="mb-6 sm:mb-8 p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] bg-neumorphic-bg shadow-neumorphic-inset border border-amber-400/20">
             <h4 className="font-black text-amber-600 flex items-center uppercase text-xs tracking-widest mb-2">
               <LightBulbIcon className="w-4 h-4 mr-2" /> အကူအညီ (Hint)
             </h4>
@@ -357,7 +357,7 @@ const Card: React.FC<CardProps> = ({
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6">
           {(data.options || []).map((option) => {
             const isSelected = selectedOptionId === option.id;
             const isCorrect = isSubmitted && option.id === data.correctOptionId;
@@ -372,11 +372,11 @@ const Card: React.FC<CardProps> = ({
               <div
                 key={option.id}
                 onClick={!isSubmitted ? () => onOptionSelect && onOptionSelect(option.id) : undefined}
-                className={`w-full p-6 rounded-[2rem] transition-all duration-300 flex items-start justify-between text-left ${cardStyle} ${textStyle} group ${!isSubmitted ? 'cursor-pointer' : ''}`}
+                className={`w-full p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] transition-all duration-300 flex items-start justify-between text-left ${cardStyle} ${textStyle} group ${!isSubmitted ? 'cursor-pointer' : ''}`}
                 role="button"
                 aria-disabled={isSubmitted}
               >
-                  <div className="flex-1 pr-6">
+                  <div className="flex-1 pr-3 sm:pr-6">
                      {language === 'my' ? (
                         <>
                             <p className={`font-black ${getFontSizeClass('lg')} mb-1 text-slate-800`}>{option.textMY}</p>
@@ -402,9 +402,9 @@ const Card: React.FC<CardProps> = ({
                     )}
                   </div>
                   {isSubmitted && (
-                    <div className="pt-1">
-                        {isCorrect && <CheckCircleSolidIcon className="w-8 h-8 text-green-500 drop-shadow-sm"/>}
-                        {isIncorrect && <XCircleSolidIcon className="w-8 h-8 text-red-500 drop-shadow-sm"/>}
+                    <div className="pt-1 shrink-0">
+                        {isCorrect && <CheckCircleSolidIcon className="w-7 h-7 sm:w-8 sm:h-8 text-green-500 drop-shadow-sm"/>}
+                        {isIncorrect && <XCircleSolidIcon className="w-7 h-7 sm:w-8 sm:h-8 text-red-500 drop-shadow-sm"/>}
                     </div>
                   )}
               </div>
@@ -413,23 +413,23 @@ const Card: React.FC<CardProps> = ({
         </div>
         
         {language !== 'jp-only' && (
-          <div className="pt-10 mt-4">
-            <div className="flex mb-6 p-2 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-inset">
+          <div className="pt-8 sm:pt-10 mt-4">
+            <div className="flex mb-4 sm:mb-6 p-1.5 sm:p-2 bg-neumorphic-bg rounded-2xl sm:rounded-[2rem] shadow-neumorphic-inset">
               <button
                 onClick={() => setActiveTab('explanation')}
-                className={`flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-widest rounded-[1.5rem] transition-all ${activeTab === 'explanation' ? 'text-slate-700 shadow-neumorphic-outset bg-neumorphic-bg' : 'text-slate-400'}`}
+                className={`flex-1 flex items-center justify-center px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest rounded-xl sm:rounded-[1.5rem] transition-all ${activeTab === 'explanation' ? 'text-slate-700 shadow-neumorphic-outset bg-neumorphic-bg' : 'text-slate-400'}`}
               >
-                <PencilIcon className="w-5 h-5 mr-2" /> Explanation
+                <PencilIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" /> Explanation
               </button>
               <button
                 onClick={() => setActiveTab('vocab')}
-                className={`flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-widest rounded-[1.5rem] transition-all ${activeTab === 'vocab' ? 'text-slate-700 shadow-neumorphic-outset bg-neumorphic-bg' : 'text-slate-400'}`}
+                className={`flex-1 flex items-center justify-center px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest rounded-xl sm:rounded-[1.5rem] transition-all ${activeTab === 'vocab' ? 'text-slate-700 shadow-neumorphic-outset bg-neumorphic-bg' : 'text-slate-400'}`}
               >
-                <AcademicCapIcon className="w-5 h-5 mr-2" /> Vocabulary
+                <AcademicCapIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" /> Vocabulary
               </button>
             </div>
 
-            <div className="p-8 rounded-[2.5rem] bg-neumorphic-bg shadow-neumorphic-inset min-h-[150px]">
+            <div className="p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] bg-neumorphic-bg shadow-neumorphic-inset min-h-[150px]">
               {activeTab === 'explanation' && (
                 <>
                   {isSubmitted ? (

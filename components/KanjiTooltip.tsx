@@ -93,18 +93,22 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
   return (
     <>
       {/* Overlay to catch clicks outside the tooltip */}
-      <div className="fixed inset-0 z-40" onClick={onClose} />
+      <div className="fixed inset-0 z-40 bg-black/30 sm:bg-transparent backdrop-blur-[1px] sm:backdrop-blur-none transition-all" onClick={onClose} />
       
+      {/* Tooltip: Bottom-sheet on mobile (<sm), absolute positioned tooltip on tablet/PC (>=sm) */}
       <div
-        className="absolute z-50 w-72 p-4 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset ring-1 ring-slate-400/20 transition-opacity duration-200 text-neumorphic-text overflow-y-auto max-h-[80vh]"
-        style={{ 
+        className="fixed inset-x-3 bottom-4 sm:bottom-auto sm:inset-x-auto sm:absolute z-50 w-auto sm:w-80 max-w-lg p-5 sm:p-4 bg-neumorphic-bg rounded-3xl sm:rounded-2xl shadow-2xl sm:shadow-neumorphic-outset ring-1 ring-slate-400/20 transition-all duration-200 text-neumorphic-text overflow-y-auto max-h-[85vh] sm:max-h-[80vh]"
+        style={typeof window !== 'undefined' && window.innerWidth >= 640 ? { 
           top: position.top, 
           left: adjustedLeft, 
           transform: 'translateY(10px)',
           maxWidth: 'calc(100vw - 24px)',
-        }}
+        } : undefined}
         onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing it
       >
+        {/* Mobile handle indicator */}
+        <div className="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-3 sm:hidden" />
+
         {kanjiData && (
           <>
             <div className="flex items-start justify-between pb-3 border-b border-slate-400/20">
@@ -125,12 +129,12 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
               </div>
               <div className='text-right pr-6'>
                 <p className="text-base font-bold text-slate-800">{kanjiData.meaning}</p>
-                <p className="mt-0.5 text-base font-bold text-blue-600">{kanjiData.meaningMY}</p>
+                <p className="mt-0.5 text-base font-bold text-blue-600 dark:text-blue-400">{kanjiData.meaningMY}</p>
               </div>
             </div>
             
             <div className="mt-3 text-sm text-slate-600 space-y-1">
-              <p><strong className="font-bold text-slate-700 w-20 inline-block">On'yomi:</strong> <span className="font-mono font-bold text-blue-700 bg-blue-50/70 px-1.5 py-0.5 rounded shadow-sm">{kanjiData.onyomi}</span></p>
+              <p><strong className="font-bold text-slate-700 w-20 inline-block">On'yomi:</strong> <span className="font-mono font-bold text-blue-600 dark:text-blue-300 bg-blue-100/70 dark:bg-blue-900/50 px-1.5 py-0.5 rounded shadow-sm">{kanjiData.onyomi}</span></p>
               <p><strong className="font-bold text-slate-700 w-20 inline-block">Kun'yomi:</strong> <span className="font-mono font-bold text-slate-700">{kanjiData.kunyomi || '-'}</span></p>
             </div>
           </>

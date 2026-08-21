@@ -183,7 +183,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
   const progress = ((currentIndex + 1) / shuffledQuestions.length) * 100;
 
   return (
-    <div className="bg-neumorphic-bg rounded-3xl shadow-neumorphic-outset overflow-hidden relative">
+    <div className="bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-outset overflow-hidden relative">
       <div className="absolute top-0 left-0 h-1.5 bg-slate-200 w-full">
         <div 
           className="h-full bg-blue-600 transition-all duration-500" 
@@ -191,47 +191,47 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
         />
       </div>
 
-      <div className="p-6 md:p-10">
-        <div className="flex justify-between items-center mb-8">
+      <div className="p-4 sm:p-6 md:p-10">
+        <div className="flex justify-between items-center mb-5 sm:mb-8 flex-wrap gap-2">
           <div className="flex items-center gap-2">
-            <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-tighter ${isMockExam ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
+            <span className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-tighter ${isMockExam ? 'bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400'}`}>
                 {isMockExam ? 'Mock Exam' : 'Quiz'}
             </span>
-            <span className="text-sm font-bold text-slate-400">{chapterTitle}</span>
+            <span className="text-xs sm:text-sm font-bold text-slate-400 truncate max-w-[150px] sm:max-w-none">{chapterTitle}</span>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
              {isMockExam && (
-                 <div className={`flex items-center gap-2 font-mono font-black text-lg ${timeLeft < 60 ? 'text-red-500 animate-pulse' : 'text-slate-600'}`}>
-                     <ClockIcon className="w-5 h-5" />
+                 <div className={`flex items-center gap-1.5 sm:gap-2 font-mono font-black text-sm sm:text-lg ${timeLeft < 60 ? 'text-red-500 animate-pulse' : 'text-slate-600'}`}>
+                     <ClockIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                      {formatTime(timeLeft)}
                  </div>
              )}
-             <span className="text-sm font-black text-slate-400">{currentIndex + 1} / {shuffledQuestions.length}</span>
+             <span className="text-xs sm:text-sm font-black text-slate-400">{currentIndex + 1} / {shuffledQuestions.length}</span>
           </div>
         </div>
 
-        <div className="mb-10 min-h-[120px] flex flex-col justify-center text-center sm:text-left">
+        <div className="mb-6 sm:mb-10 min-h-[100px] sm:min-h-[120px] flex flex-col justify-center text-left">
            <div className={`font-bold text-slate-700 leading-relaxed ${getFontSizeClass('xl')}`}>
               {language === 'my' ? (
-                <div className="space-y-3">
-                  <p>{currentQuestion.questionMY}</p>
-                  <div className="font-mono text-sm text-slate-500 font-medium bg-neumorphic-bg shadow-neumorphic-inset p-3.5 sm:p-4 rounded-2xl leading-relaxed">
+                <div className="space-y-2.5 sm:space-y-3">
+                  <p className="text-sm sm:text-base md:text-lg">{currentQuestion.questionMY}</p>
+                  <div className="font-mono text-xs sm:text-sm text-slate-500 font-medium bg-neumorphic-bg shadow-neumorphic-inset p-3 sm:p-4 rounded-xl sm:rounded-2xl leading-relaxed">
                     <JapaneseText text={currentQuestion.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                   </div>
                 </div>
               ) : (
-                <div className="font-mono">
+                <div className="font-mono text-sm sm:text-base md:text-lg">
                   <JapaneseText text={currentQuestion.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                 </div>
               )}
            </div>
            {language === 'jp' && (
-              <p className={`mt-4 text-slate-500 font-medium ${getFontSizeClass('base')}`}>{currentQuestion.questionMY}</p>
+              <p className={`mt-3 sm:mt-4 text-slate-500 font-medium ${getFontSizeClass('base')}`}>{currentQuestion.questionMY}</p>
            )}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {(currentQuestion.options || []).map((option) => {
             const isSelected = isMockExam ? userAnswers[currentIndex] === option.id : selectedOptionId === option.id;
             
@@ -242,7 +242,7 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
             let btnClass = "bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-600";
             
             if (isMockExam) {
-                if (isSelected) btnClass = "bg-blue-50 shadow-neumorphic-inset ring-2 ring-blue-200 text-blue-700";
+                if (isSelected) btnClass = "bg-blue-50/20 shadow-neumorphic-inset ring-2 ring-blue-400 text-blue-700";
             } else {
                 if (isCorrect) btnClass = "bg-green-500 text-white shadow-none ring-4 ring-green-100";
                 else if (isWrong) btnClass = "bg-red-500 text-white shadow-none ring-4 ring-red-100";
@@ -254,33 +254,33 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
                 key={option.id}
                 onClick={() => handleOptionSelect(option.id)}
                 disabled={!isMockExam && isAnswered}
-                className={`w-full p-5 rounded-2xl text-left transition-all duration-300 flex items-center justify-between group ${btnClass}`}
+                className={`w-full p-3.5 sm:p-5 rounded-xl sm:rounded-2xl text-left transition-all duration-300 flex items-center justify-between group ${btnClass}`}
               >
-                <div className={`font-bold ${getFontSizeClass('lg')} flex-1 pr-4`}>
+                <div className={`font-bold ${getFontSizeClass('lg')} flex-1 pr-3 sm:pr-4`}>
                    {language === 'my' ? (
                      <div className="space-y-1">
-                       <p>{option.textMY}</p>
+                       <p className="text-xs sm:text-base">{option.textMY}</p>
                        <div className={`font-mono text-xs font-semibold ${isCorrect || isWrong ? 'text-white/90' : 'text-slate-500'} opacity-80 mt-1`}>
                          <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                        </div>
                      </div>
                    ) : (
-                     <div className="font-mono">
+                     <div className="font-mono text-xs sm:text-base">
                         <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                      </div>
                    )}
                 </div>
-                {!isMockExam && isCorrect && <CheckCircleSolidIcon className="w-6 h-6" />}
-                {!isMockExam && isWrong && <XCircleSolidIcon className="w-6 h-6" />}
+                {!isMockExam && isCorrect && <CheckCircleSolidIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />}
+                {!isMockExam && isWrong && <XCircleSolidIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />}
               </button>
             );
           })}
         </div>
 
-        <div className={`mt-10 transition-all duration-500 ${isMockExam || isAnswered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+        <div className={`mt-6 sm:mt-10 transition-all duration-500 ${isMockExam || isAnswered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
           <button 
             onClick={handleNext}
-            className="w-full py-4 bg-blue-600 text-white rounded-2xl font-black text-lg shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2"
+            className="w-full py-3.5 sm:py-4 bg-blue-600 text-white rounded-xl sm:rounded-2xl font-black text-sm sm:text-lg shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2"
           >
             {currentIndex < shuffledQuestions.length - 1 ? 'Next Question' : 'Finish Exam'}
           </button>

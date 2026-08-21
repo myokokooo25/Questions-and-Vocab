@@ -1053,18 +1053,18 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           isSubmitted={currentSessionAnswer !== null}
         />
         
-        <div className="flex items-center justify-between mt-8 gap-6">
+        <div className="flex items-center justify-between mt-6 sm:mt-8 gap-3 sm:gap-6">
           <button 
               onClick={goToPreviousCard}
               disabled={currentCardIndex === 0}
-              className="flex-1 py-4 text-sm font-black uppercase tracking-widest text-slate-600 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
+              className="flex-1 py-3 sm:py-4 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-slate-600 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
           >
             Prev
           </button>
           <button 
               onClick={goToNextCard}
               disabled={currentCardIndex === filteredData.length - 1}
-              className="flex-1 py-4 text-sm font-black uppercase tracking-widest text-blue-600 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
+              className="flex-1 py-3 sm:py-4 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-blue-600 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
           >
             Next
           </button>
@@ -1279,16 +1279,16 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       )}
       
       <header className="sticky top-0 z-50 w-full bg-neumorphic-bg/80 backdrop-blur-md">
-        <div className="flex items-center justify-between h-20 max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center justify-between h-16 sm:h-20 max-w-6xl px-3 sm:px-6 lg:px-8 mx-auto">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <button
                 onClick={onGoBack}
                 className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all shrink-0"
                 title="Go Back"
               >
-                <ChevronLeftIcon className="w-6 h-6" />
+                <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
-              <h1 className="text-xl font-black text-slate-700 hidden sm:block ml-2 whitespace-nowrap truncate">
+              <h1 className="text-sm sm:text-xl font-black text-slate-700 whitespace-nowrap truncate max-w-[130px] sm:max-w-none">
                 {isOldQuestionMode ? `${selectedApp}年 過去問題` : '鉄骨技術者 試験対策'}
               </h1>
             </div>
@@ -1311,7 +1311,53 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </div>
             )}
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            {/* --- Mobile Header Actions (< sm) --- */}
+            <div className="flex sm:hidden items-center gap-1.5">
+                <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
+                        <SearchIcon className="w-3.5 h-3.5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                    </div>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        className="w-20 focus:w-28 pl-7 pr-2 py-1.5 text-xs font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all"
+                    />
+                </div>
+                <button
+                    onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
+                    className={`p-2 rounded-xl transition-all ${
+                    showOnlyBookmarked
+                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10'
+                        : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700'
+                    }`}
+                    title="Bookmarks"
+                    aria-label="Bookmarks"
+                >
+                    <BookmarkIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={() => setShowDictionary(true)}
+                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all"
+                    title="Technical Dictionary"
+                    aria-label="Technical Dictionary"
+                >
+                    <BookOpenIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={() => setShowMoreMenu(true)}
+                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
+                    title="More Options"
+                    aria-label="More Options"
+                >
+                    <MenuIcon className="w-4 h-4" />
+                    {user?.type === 'trial' && <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full"></span>}
+                </button>
+            </div>
+
+            {/* --- Desktop / Tablet Header Actions (>= sm) --- */}
+            <div className="hidden sm:flex items-center gap-2 sm:gap-3">
                  <div className="relative group">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <SearchIcon className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
@@ -1321,7 +1367,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-24 sm:w-48 pl-9 pr-3 py-2.5 text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
+                        className="w-48 pl-9 pr-3 py-2.5 text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
                     />
                 </div>
                  <button
@@ -1446,11 +1492,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         </div>
       </header>
 
-      <main className="max-w-4xl p-4 mx-auto sm:p-6 lg:p-8 pb-20">
+      <main className="max-w-4xl p-3 sm:p-6 lg:p-8 pb-20">
         
        {!isAdminViewVisible && (
         <>
-            <div className="flex flex-col sm:flex-row items-center justify-between p-4 mb-10 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset gap-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between p-3.5 sm:p-4 mb-6 sm:mb-10 bg-neumorphic-bg rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset gap-4 sm:gap-6">
                 <div className="w-full sm:w-[45%]">
                     <Dropdown
                         options={chapterOptions}
@@ -1460,51 +1506,51 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         disabled={isOldQuestionMode && selectedApp !== '2021'}
                     />
                 </div>
-                <div className="flex gap-4 w-full sm:w-auto">
+                <div className="flex gap-3 sm:gap-4 w-full sm:w-auto">
                     <button
                         onClick={() => setView(view === 'study' ? 'list' : 'study')}
-                        className="flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-wider text-slate-600 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
+                        className="flex-1 flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-600 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
                     >
-                        {view === 'list' ? <BookOpenIcon className="w-5 h-5 mr-2"/> : <ListBulletIcon className="w-5 h-5 mr-2"/>}
+                        {view === 'list' ? <BookOpenIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2"/> : <ListBulletIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2"/>}
                         {view === 'list' ? 'Study' : 'Bank'}
                     </button>
                     <button
                         onClick={() => setView(view === 'quiz' ? 'study' : 'quiz')}
-                        className={`flex-1 flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-wider rounded-2xl transition-all ${view === 'quiz' ? 'text-blue-600 shadow-neumorphic-inset' : 'text-slate-600 bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset'}`}
+                        className={`flex-1 flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all ${view === 'quiz' ? 'text-blue-600 shadow-neumorphic-inset' : 'text-slate-600 bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset'}`}
                     >
-                        <AcademicCapIcon className="w-5 h-5 mr-2"/>
+                        <AcademicCapIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2"/>
                         {view === 'quiz' ? 'Exit' : 'Quiz'}
                     </button>
                 </div>
             </div>
 
             {view !== 'quiz' && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group">
+              <div className="grid grid-cols-3 gap-2.5 sm:gap-6 mb-6 sm:mb-10">
+                  <div className="bg-neumorphic-bg p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset flex flex-col sm:flex-row items-center justify-between text-center sm:text-left group">
                       <div>
-                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Total</p>
-                          <p className="text-3xl font-black text-slate-700">{filteredData.length}</p>
+                          <p className="text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-wider sm:tracking-widest">Total</p>
+                          <p className="text-lg sm:text-3xl font-black text-slate-700">{filteredData.length}</p>
                       </div>
-                      <div className="p-4 rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-blue-500 transition-colors">
-                          <BookOpenIcon className="w-8 h-8"/>
+                      <div className="p-2 sm:p-4 mt-1 sm:mt-0 rounded-xl sm:rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-blue-500 transition-colors">
+                          <BookOpenIcon className="w-4 h-4 sm:w-8 sm:h-8"/>
                       </div>
                   </div>
-                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group">
+                  <div className="bg-neumorphic-bg p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset flex flex-col sm:flex-row items-center justify-between text-center sm:text-left group">
                       <div>
-                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Done</p>
-                          <p className="text-3xl font-black text-slate-700">{answeredCount}</p>
+                          <p className="text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-wider sm:tracking-widest">Done</p>
+                          <p className="text-lg sm:text-3xl font-black text-slate-700">{answeredCount}</p>
                       </div>
-                       <div className="p-4 rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-amber-500 transition-colors">
-                          <PencilIcon className="w-8 h-8"/>
+                       <div className="p-2 sm:p-4 mt-1 sm:mt-0 rounded-xl sm:rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-amber-500 transition-colors">
+                          <PencilIcon className="w-4 h-4 sm:w-8 sm:h-8"/>
                       </div>
                   </div>
-                  <div className="bg-neumorphic-bg p-6 rounded-[2rem] shadow-neumorphic-outset flex items-center justify-between group cursor-pointer hover:scale-[1.02] transition-transform" onClick={startMockExam}>
+                  <div className="bg-neumorphic-bg p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset flex flex-col sm:flex-row items-center justify-between text-center sm:text-left group cursor-pointer hover:scale-[1.02] transition-transform" onClick={startMockExam}>
                       <div>
-                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Mock Exam</p>
-                          <p className="text-3xl font-black text-slate-700">Start</p>
+                          <p className="text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-wider sm:tracking-widest">Mock</p>
+                          <p className="text-lg sm:text-3xl font-black text-slate-700">Start</p>
                       </div>
-                       <div className="p-4 rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-green-500 transition-colors">
-                          <ClockIcon className="w-8 h-8"/>
+                       <div className="p-2 sm:p-4 mt-1 sm:mt-0 rounded-xl sm:rounded-2xl shadow-neumorphic-inset text-slate-400 group-hover:text-green-500 transition-colors">
+                          <ClockIcon className="w-4 h-4 sm:w-8 sm:h-8"/>
                       </div>
                   </div>
               </div>
@@ -1514,6 +1560,140 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
        
        {renderContent()}
       </main>
+
+       {/* Mobile Drawer / Action Sheet Menu (<sm only) */}
+      {showMoreMenu && (
+        <div className="fixed inset-0 z-50 flex items-end sm:hidden bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setShowMoreMenu(false)}>
+          <div 
+            className="w-full max-h-[85vh] overflow-y-auto bg-neumorphic-bg rounded-t-3xl shadow-2xl p-5 border-t border-slate-400/20 animate-in slide-in-from-bottom duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-4" />
+            
+            {/* Header info */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-300/30 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-2xl shadow-neumorphic-inset text-blue-600">
+                  <UsersIcon className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-sm font-black text-slate-800">{user?.userName || 'User Profile'}</p>
+                  <p className="text-xs font-mono text-slate-400 font-bold">{user?.accessKey ? `Key: ${user.accessKey}` : 'Guest'}</p>
+                </div>
+              </div>
+              {user?.type === 'trial' && timeLeft && (
+                <div className="flex items-center px-3 py-1.5 bg-red-100 dark:bg-red-950/40 rounded-xl border border-red-200 dark:border-red-900/40">
+                  <ClockIcon className="w-3.5 h-3.5 text-red-500 mr-1.5 animate-pulse" />
+                  <span className="text-xs font-black text-red-600 dark:text-red-400 font-mono">{timeLeft}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Quick Actions Grid */}
+            <div className="grid grid-cols-2 gap-2.5 mb-4">
+              <button
+                onClick={() => { setShowMoreMenu(false); setShowAnswerKey(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+              >
+                <ListBulletIcon className="w-4 h-4 text-blue-600 shrink-0" />
+                <span>Answer Key</span>
+              </button>
+              <button
+                onClick={() => { setShowMoreMenu(false); setShowProfile(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+              >
+                <UsersIcon className="w-4 h-4 text-indigo-600 shrink-0" />
+                <span>Account Info</span>
+              </button>
+              <button
+                onClick={() => { setShowMoreMenu(false); setShowAppGuide(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+              >
+                <InfoIcon className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>App Guide</span>
+              </button>
+              <button
+                onClick={() => { setShowMoreMenu(false); setShowInstallInfo(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+              >
+                <FolderIcon className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>iOS Install</span>
+              </button>
+            </div>
+
+            {/* Language & Theme & Font Controls */}
+            <div className="space-y-3.5 pt-3 border-t border-slate-300/30">
+              {/* Language Switch */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <GlobeIcon className="w-4 h-4 text-blue-500" /> Language
+                </span>
+                <button 
+                  onClick={toggleLanguage}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-blue-600 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset"
+                >
+                  Switch ({language.toUpperCase()})
+                </button>
+              </div>
+
+              {/* Theme Switch */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <SparkleIcon className="w-4 h-4 text-amber-500" /> Theme
+                </span>
+                <button
+                  onClick={toggleTheme}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-xs font-bold text-slate-700"
+                >
+                  {theme === 'light' ? <><SunIcon className="w-4 h-4 text-amber-500" /> Light</> : theme === 'dark' ? <><MoonIcon className="w-4 h-4 text-blue-400" /> Dark</> : <><SparkleIcon className="w-4 h-4 text-indigo-400" /> Khachannel</>}
+                </button>
+              </div>
+
+              {/* Font Size Switch */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <TextSizeIcon className="w-4 h-4 text-purple-500" /> Font Size
+                </span>
+                <div className="flex gap-1 bg-neumorphic-bg p-1 rounded-xl shadow-neumorphic-inset">
+                  {(['small', 'medium', 'large'] as const).map((sz) => (
+                    <button
+                      key={sz}
+                      onClick={() => setFontSize(sz)}
+                      className={`px-2.5 py-1 text-xs font-bold rounded-lg capitalize transition-all ${fontSize === sz ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500'}`}
+                    >
+                      {sz}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Admin Panel (if admin) */}
+              {user?.isAdmin && (
+                <div className="pt-2 border-t border-slate-300/30">
+                  <button
+                    onClick={() => { setShowMoreMenu(false); setIsAdminViewVisible(!isAdminViewVisible); }}
+                    className="w-full flex items-center justify-center gap-2 p-3 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-purple-600 font-bold text-xs"
+                  >
+                    <SparkleIcon className="w-4 h-4" />
+                    <span>{isAdminViewVisible ? 'Exit Admin View' : 'Open Admin Panel'}</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Logout button */}
+              <div className="pt-2">
+                <button
+                  onClick={() => { setShowMoreMenu(false); setShowLogoutConfirm(true); }}
+                  className="w-full flex items-center justify-center gap-2 p-3 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset text-red-500 hover:text-red-600 active:shadow-neumorphic-inset font-bold text-xs transition-all"
+                >
+                  <LogoutIcon className="w-4 h-4" />
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">

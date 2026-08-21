@@ -35,33 +35,33 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
   const [showInstallInfo, setShowInstallInfo] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-neumorphic-bg relative">
+    <div className="flex flex-col items-center justify-center min-h-screen p-3 sm:p-6 bg-neumorphic-bg relative">
       <button
         onClick={() => setShowInstallInfo(true)}
-        className="absolute top-6 right-6 p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
         title="iOS Install Guide"
       >
-        <InfoIcon className="w-6 h-6" />
+        <InfoIcon className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
 
       {showInstallInfo && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-           <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset p-8 max-w-md w-full animate-in zoom-in-95 duration-300">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="p-4 bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl">
-                  <InfoIcon className="w-8 h-8 text-blue-600" />
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+           <div className="bg-neumorphic-bg rounded-3xl sm:rounded-[2.5rem] shadow-neumorphic-outset p-5 sm:p-8 max-w-md w-full animate-in zoom-in-95 duration-300">
+              <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                <div className="p-3 sm:p-4 bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl shrink-0">
+                  <InfoIcon className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black text-slate-700 leading-tight">သင့် iPhone သို့မဟုတ် iPad တွင် App အဖြစ် ထည့်သွင်းအသုံးပြုနည်း</h2>
-                  <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mt-2">Add to Home Screen</p>
+                  <h2 className="text-lg sm:text-2xl font-black text-slate-700 leading-tight">သင့် iPhone သို့မဟုတ် iPad တွင် App အဖြစ် ထည့်သွင်းအသုံးပြုနည်း</h2>
+                  <p className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest mt-1 sm:mt-2">Add to Home Screen</p>
                 </div>
               </div>
-              <div className="p-6 bg-neumorphic-bg shadow-neumorphic-inset rounded-[2rem] space-y-4 text-sm text-slate-600 leading-relaxed max-h-[60vh] overflow-y-auto">
+              <div className="p-4 sm:p-6 bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl sm:rounded-[2rem] space-y-3 sm:space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed max-h-[60vh] overflow-y-auto">
                   <p>ဤ App ကို သင့်စက်ပစ္စည်း၏ Home Screen ပေါ်တွင် ပုံမှန် App တစ်ခုကဲ့သို့ ထည့်သွင်းအသုံးပြုနိုင်ပါသည်။ ဤသို့ပြုလုပ်ခြင်းဖြင့် Safari Address Bar များမပါဝင်ဘဲ Full-screen (မျက်နှာပြင်အပြည့်) စနစ်ဖြင့် ပိုမိုရှင်းလင်းလွယ်ကူစွာ အသုံးပြုနိုင်မည်ဖြစ်ပါသည်။</p>
                   
-                  <p className="font-bold text-slate-700 mt-4">လုပ်ဆောင်ရမည့် အဆင့်များ</p>
+                  <p className="font-bold text-slate-700 mt-3 sm:mt-4">လုပ်ဆောင်ရမည့် အဆင့်များ</p>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     <div>
                       <p className="font-bold text-slate-700">အဆင့် (၁) - Safari ဖြင့် ဝင်ရောက်ခြင်း</p>
                       <p>သင့် iPhone/iPad ရှိ Safari Browser ကိုအသုံးပြု၍ ဤ App ၏ Link ကို ဖွင့်ပါ။<br/>
@@ -84,11 +84,11 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                     </div>
                   </div>
 
-                  <p className="mt-4">ယခုဆိုလျှင် သင့်ဖုန်း၏ Home Screen ပေါ်တွင် App Icon လေး ရောက်ရှိသွားပြီဖြစ်၍ နောက်နောင်တွင် အခြား Application များကဲ့သို့ပင် တိုက်ရိုက်နှိပ်၍ အလွယ်တကူ ဝင်ရောက်အသုံးပြုနိုင်ပြီ ဖြစ်ပါသည်။</p>
+                  <p className="mt-3 sm:mt-4">ယခုဆိုလျှင် သင့်ဖုန်း၏ Home Screen ပေါ်တွင် App Icon လေး ရောက်ရှိသွားပြီဖြစ်၍ နောက်နောင်တွင် အခြား Application များကဲ့သို့ပင် တိုက်ရိုက်နှိပ်၍ အလွယ်တကူ ဝင်ရောက်အသုံးပြုနိုင်ပြီ ဖြစ်ပါသည်။</p>
               </div>
               <button
                 onClick={() => setShowInstallInfo(false)}
-                className="w-full py-4 mt-6 text-sm font-black uppercase tracking-widest text-slate-700 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
+                className="w-full py-3 sm:py-4 mt-4 sm:mt-6 text-xs sm:text-sm font-black uppercase tracking-widest text-slate-700 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all"
               >
                 Close
               </button>
@@ -96,30 +96,30 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
         </div>
       )}
 
-      <div className="text-center mb-12">
-        <div className="inline-block p-6 bg-neumorphic-bg rounded-full shadow-neumorphic-outset mb-6">
-          <LogoIcon className="w-16 h-16 text-blue-600" />
+      <div className="text-center mb-8 sm:mb-12 mt-4 sm:mt-0">
+        <div className="inline-block p-4 sm:p-6 bg-neumorphic-bg rounded-full shadow-neumorphic-outset mb-4 sm:mb-6">
+          <LogoIcon className="w-12 h-12 sm:w-16 sm:h-16 text-blue-600" />
         </div>
-        <h1 className="text-3xl md:text-4xl font-black tracking-tight text-slate-700">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-700">
           鉄骨製作管理技術者 試験対策
         </h1>
-        <p className="mt-3 text-lg font-medium text-slate-500">
+        <p className="mt-2 sm:mt-3 text-sm sm:text-lg font-medium text-slate-500">
           学習モードを選択してください (Select a Mode)
         </p>
       </div>
 
-      <div className="w-full max-w-5xl space-y-10">
+      <div className="w-full max-w-5xl space-y-6 sm:space-y-10">
         {/* Study Guide Section */}
-        <div className="bg-neumorphic-bg rounded-[3rem] shadow-neumorphic-inset p-8 sm:p-10 mb-10">
-            <div className="flex items-center gap-4 mb-6 ml-2">
-                <InfoIcon className="w-7 h-7 text-blue-600" />
-                <h2 className="text-xl font-black text-slate-600 uppercase tracking-[0.1em]">Study Guide (လေ့လာရန်အကြံပြုချက်)</h2>
+        <div className="bg-neumorphic-bg rounded-3xl sm:rounded-[3rem] shadow-neumorphic-inset p-5 sm:p-10 mb-6 sm:mb-10">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 ml-1 sm:ml-2">
+                <InfoIcon className="w-5 h-5 sm:w-7 sm:h-7 text-blue-600 shrink-0" />
+                <h2 className="text-base sm:text-xl font-black text-slate-600 uppercase tracking-wider sm:tracking-[0.1em]">Study Guide (လေ့လာရန်အကြံပြုချက်)</h2>
             </div>
-            <div className="space-y-4 text-slate-600 font-medium leading-relaxed">
+            <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
               <p>
                 <span className="font-bold text-slate-700">၁၀ လပိုင်း ၁၇ ရက်နေ့ (October 17)</span> စာမေးပွဲအတွက် အချိန် {monthsLeft > 0 ? `(${toMyanmarNumerals(monthsLeft)}) လခန့် ` : ''}({toMyanmarNumerals(daysLeft)} ရက်ခန့်) ကျန်သေးသဖြင့် အောက်ပါအတိုင်း လေ့လာရန် အကြံပြုအပ်ပါသည်။
               </p>
-              <ul className="list-disc list-inside space-y-2 ml-2">
+              <ul className="list-disc list-inside space-y-2 ml-1 sm:ml-2">
                 <li>
                   <span className="font-bold text-slate-700">ဘယ်အခန်းက စလုပ်ရမလဲ?</span> <br/>
                   - <span className="text-blue-600 font-bold">Chapter 1 မှ စတင်ပါ</span>။ အခြေခံသဘောတရားများဖြစ်သဖြင့် Chapter 1 ကို သေချာနားလည်မှ ကျန်အခန်းများကို ဆက်သွားရန် ပိုလွယ်ကူပါမည်။
@@ -137,63 +137,63 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
         </div>
 
         {/* Main Categories */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <button
             onClick={() => onSelectApp('2026')}
-            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+            className="p-5 sm:p-8 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
           >
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-emerald-600 group-hover:scale-110 transition-transform">
-                  <BookOpenIcon className="w-8 h-8" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-emerald-600 group-hover:scale-110 transition-transform shrink-0">
+                  <BookOpenIcon className="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
               <div>
-                  <h2 className="text-xl font-black text-slate-700">2026 Chapter Study</h2>
-                  <p className="mt-1 text-sm text-slate-500 font-medium italic">New practice questions.</p>
+                  <h2 className="text-lg sm:text-xl font-black text-slate-700">2026 Chapter Study</h2>
+                  <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-slate-500 font-medium italic">New practice questions.</p>
               </div>
             </div>
           </button>
 
           <button
             onClick={() => onSelectApp('2026-level2')}
-            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+            className="p-5 sm:p-8 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
           >
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-emerald-600 group-hover:scale-110 transition-transform">
-                  <BookOpenIcon className="w-8 h-8" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-emerald-600 group-hover:scale-110 transition-transform shrink-0">
+                  <BookOpenIcon className="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
               <div>
-                  <h2 className="text-xl font-black text-slate-700">2026 Chapter Study 2級</h2>
-                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Level 2 practice questions.</p>
+                  <h2 className="text-lg sm:text-xl font-black text-slate-700">2026 Chapter Study 2級</h2>
+                  <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-slate-500 font-medium italic">Level 2 practice questions.</p>
               </div>
             </div>
           </button>
 
           <button
             onClick={() => onSelectApp('main')}
-            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+            className="p-5 sm:p-8 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
           >
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform">
-                  <BookOpenIcon className="w-8 h-8" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform shrink-0">
+                  <BookOpenIcon className="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
               <div>
-                  <h2 className="text-xl font-black text-slate-700">2022-2025 Chapter Study</h2>
-                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Practice questions by chapter.</p>
+                  <h2 className="text-lg sm:text-xl font-black text-slate-700">2022-2025 Chapter Study</h2>
+                  <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-slate-500 font-medium italic">Practice questions by chapter.</p>
               </div>
             </div>
           </button>
 
           <button
             onClick={() => onSelectApp('flashcards')}
-            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+            className="p-5 sm:p-8 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
           >
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-purple-600 group-hover:scale-110 transition-transform">
-                  <AcademicCapIcon className="w-8 h-8" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-purple-600 group-hover:scale-110 transition-transform shrink-0">
+                  <AcademicCapIcon className="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
               <div>
-                  <h2 className="text-xl font-black text-slate-700">Vocabulary Cards</h2>
-                  <p className="mt-1 text-sm text-slate-500 font-medium italic">Practice technical vocabulary.</p>
+                  <h2 className="text-lg sm:text-xl font-black text-slate-700">Vocabulary Cards</h2>
+                  <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-slate-500 font-medium italic">Practice technical vocabulary.</p>
               </div>
             </div>
           </button>
@@ -201,21 +201,21 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
           {/* Technical Dictionary Card */}
           <button
             onClick={() => onSelectApp('dictionary')}
-            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group md:col-span-2 relative overflow-hidden"
+            className="p-5 sm:p-8 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group md:col-span-2 relative overflow-hidden"
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-indigo-600 group-hover:scale-110 transition-transform">
-                    <BookOpenIcon className="w-8 h-8" />
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-indigo-600 group-hover:scale-110 transition-transform shrink-0">
+                    <BookOpenIcon className="w-6 h-6 sm:w-8 sm:h-8" />
                 </div>
                 <div>
                     <div className="flex items-center gap-2">
-                      <h2 className="text-xl font-black text-slate-700">Technical Dictionary (ဝေါဟာရ အဘိဓာန်)</h2>
-                      <span className="px-2 py-0.5 text-[10px] font-black rounded-md bg-indigo-100 text-indigo-700 uppercase">
+                      <h2 className="text-lg sm:text-xl font-black text-slate-700">Technical Dictionary (ဝေါဟာရ အဘိဓာန်)</h2>
+                      <span className="px-2 py-0.5 text-[10px] font-black rounded-md bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 uppercase">
                         All Vocab
                       </span>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500 font-medium italic">
+                    <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-slate-500 font-medium italic">
                       Read-only dictionary with search, pronunciation, duplicate-merging & complete definitions.
                     </p>
                 </div>
@@ -230,39 +230,39 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
         </div>
 
         {/* Old Questions Section */}
-        <div className="bg-neumorphic-bg rounded-[3rem] shadow-neumorphic-inset p-8 sm:p-10">
-            <div className="flex items-center gap-4 mb-8 ml-2">
-                <PencilIcon className="w-7 h-7 text-green-600" />
-                <h2 className="text-xl font-black text-slate-600 uppercase tracking-[0.2em]">Old Questions (過去問題)</h2>
+        <div className="bg-neumorphic-bg rounded-3xl sm:rounded-[3rem] shadow-neumorphic-inset p-5 sm:p-10">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8 ml-1 sm:ml-2">
+                <PencilIcon className="w-5 h-5 sm:w-7 sm:h-7 text-green-600 shrink-0" />
+                <h2 className="text-base sm:text-xl font-black text-slate-600 uppercase tracking-wider sm:tracking-[0.2em]">Old Questions (過去問題)</h2>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 mb-10">
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-6 mb-6 sm:mb-10">
                 {oldYears.map(year => (
                     <button
                         key={year}
                         onClick={() => onSelectApp(year)}
-                        className="p-6 sm:p-8 text-center bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
+                        className="p-4 sm:p-8 text-center bg-neumorphic-bg rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group"
                     >
-                        <span className="block text-2xl sm:text-4xl font-black text-slate-700 group-hover:text-green-600 transition-colors">{year}</span>
-                        <span className="text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest mt-1 block">Year</span>
+                        <span className="block text-xl sm:text-4xl font-black text-slate-700 group-hover:text-green-600 transition-colors">{year}</span>
+                        <span className="text-[10px] sm:text-xs font-black text-slate-400 uppercase tracking-widest mt-0.5 sm:mt-1 block">Year</span>
                     </button>
                 ))}
             </div>
             
             {/* Resource Files Section */}
-            <div className="pt-8 border-t border-slate-300/30">
+            <div className="pt-6 sm:pt-8 border-t border-slate-300/30">
                 <a
                   href="https://drive.google.com/drive/folders/1ylAMH4TR3VJOHF_njeHyLWQtTX2zXTZ4?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-8 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 group"
+                  className="flex items-center justify-between p-4 sm:p-8 bg-neumorphic-bg rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 group"
                 >
-                  <div className="flex items-center gap-6">
-                    <div className="p-4 bg-neumorphic-bg rounded-2xl shadow-neumorphic-inset text-amber-600 group-hover:rotate-12 transition-transform">
-                        <FolderIcon className="w-8 h-8" />
+                  <div className="flex items-center gap-3 sm:gap-6">
+                    <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-inset text-amber-600 group-hover:rotate-12 transition-transform shrink-0">
+                        <FolderIcon className="w-6 h-6 sm:w-8 sm:h-8" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-black text-slate-700">Resource Files (လေ့လာရန်ဖိုင်များ)</h2>
-                        <p className="text-sm text-slate-500 font-medium">Access supplementary study materials in Google Drive.</p>
+                        <h2 className="text-base sm:text-xl font-black text-slate-700">Resource Files (လေ့လာရန်ဖိုင်များ)</h2>
+                        <p className="text-xs sm:text-sm text-slate-500 font-medium">Access supplementary study materials in Google Drive.</p>
                     </div>
                   </div>
                   <div className="hidden sm:block p-3 rounded-full bg-neumorphic-bg shadow-neumorphic-outset group-hover:shadow-neumorphic-inset transition-all">

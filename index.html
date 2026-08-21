@@ -26,10 +26,16 @@
               'neumorphic-bg': 'rgb(var(--color-neumorphic-bg) / <alpha-value>)',
               'neumorphic-text': 'rgb(var(--color-neumorphic-text) / <alpha-value>)',
               slate: {
+                50: 'rgb(var(--color-slate-50) / <alpha-value>)',
+                100: 'rgb(var(--color-slate-100) / <alpha-value>)',
+                200: 'rgb(var(--color-slate-200) / <alpha-value>)',
+                300: 'rgb(var(--color-slate-300) / <alpha-value>)',
                 400: 'rgb(var(--color-slate-400) / <alpha-value>)',
                 500: 'rgb(var(--color-slate-500) / <alpha-value>)',
                 600: 'rgb(var(--color-slate-600) / <alpha-value>)',
                 700: 'rgb(var(--color-slate-700) / <alpha-value>)',
+                800: 'rgb(var(--color-slate-800) / <alpha-value>)',
+                900: 'rgb(var(--color-slate-900) / <alpha-value>)',
               },
             },
             boxShadow: {
@@ -44,13 +50,19 @@
     <style>
       :root {
         --color-neumorphic-bg: 236 240 243;
-        --color-neumorphic-text: 71 85 105;
+        --color-neumorphic-text: 51 65 85;
         --color-neumorphic-shadow-dark: 190 198 212;
         --color-neumorphic-shadow-light: 255 255 255;
+        --color-slate-50: 248 250 252;
+        --color-slate-100: 241 245 249;
+        --color-slate-200: 226 232 240;
+        --color-slate-300: 203 213 225;
         --color-slate-400: 148 163 184;
         --color-slate-500: 100 116 139;
         --color-slate-600: 71 85 105;
         --color-slate-700: 51 65 85;
+        --color-slate-800: 30 41 59;
+        --color-slate-900: 15 23 42;
         --shadow-outset: 8px 8px 16px rgb(var(--color-neumorphic-shadow-dark)), -8px -8px 16px rgb(var(--color-neumorphic-shadow-light));
         --shadow-inset: inset 6px 6px 12px rgb(var(--color-neumorphic-shadow-dark)), inset -6px -6px 12px rgb(var(--color-neumorphic-shadow-light));
         --shadow-sm: 4px 4px 8px rgb(var(--color-neumorphic-shadow-dark)), -4px -4px 8px rgb(var(--color-neumorphic-shadow-light));
@@ -62,10 +74,16 @@
         --color-neumorphic-text: 240 236 227;
         --color-neumorphic-shadow-dark: 10 10 10;
         --color-neumorphic-shadow-light: 10 10 10;
+        --color-slate-50: 20 20 20;
+        --color-slate-100: 30 30 30;
+        --color-slate-200: 45 45 45;
+        --color-slate-300: 75 75 75;
         --color-slate-400: 154 154 154;
         --color-slate-500: 217 179 64;
         --color-slate-600: 240 236 227;
-        --color-slate-700: 217 179 64;
+        --color-slate-700: 245 220 120;
+        --color-slate-800: 255 255 255;
+        --color-slate-900: 255 255 255;
         
         --shadow-outset: 0 0 0 1px #2a2a2a;
         --shadow-inset: inset 0 0 0 1px #d9b340;
@@ -75,13 +93,19 @@
       html.khachannel body { background-color: #0a0a0a; }
       html.dark {
         --color-neumorphic-bg: 30 35 45;
-        --color-neumorphic-text: 203 213 225;
+        --color-neumorphic-text: 226 232 240;
         --color-neumorphic-shadow-dark: 18 22 28;
         --color-neumorphic-shadow-light: 42 48 62;
+        --color-slate-50: 30 41 59;
+        --color-slate-100: 38 48 64;
+        --color-slate-200: 51 65 85;
+        --color-slate-300: 71 85 105;
         --color-slate-400: 156 163 175;
-        --color-slate-500: 161 161 170;
+        --color-slate-500: 180 190 205;
         --color-slate-600: 203 213 225;
         --color-slate-700: 229 231 240;
+        --color-slate-800: 248 250 252;
+        --color-slate-900: 255 255 255;
       }
       
       html {
@@ -96,6 +120,12 @@
         font-weight: 600;
         text-align: center;
         color: #2563eb;
+      }
+      html.dark rt {
+        color: #93c5fd;
+      }
+      html.khachannel rt {
+        color: #fbbf24;
       }
       .perspective { perspective: 1000px; }
       .preserve-3d { transform-style: preserve-3d; }

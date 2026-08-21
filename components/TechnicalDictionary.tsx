@@ -489,7 +489,7 @@ export const TechnicalDictionary: React.FC<TechnicalDictionaryProps> = ({ onGoBa
                             <JapaneseText text={entry.term} onKanjiClick={handleKanjiClick} />
                           </span>
                           {entry.reading && (
-                            <span className="text-sm font-semibold text-blue-600/90 font-mono">
+                            <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 font-mono">
                               ({entry.reading})
                             </span>
                           )}
@@ -503,14 +503,14 @@ export const TechnicalDictionary: React.FC<TechnicalDictionaryProps> = ({ onGoBa
                         {/* Badges: Frequency, Types, Chapters */}
                         <div className="flex flex-wrap items-center gap-1.5 pt-1">
                           {entry.frequency > 1 && (
-                            <span className="px-2 py-0.5 text-[10px] font-black rounded-md bg-purple-100/70 text-purple-700 shadow-neumorphic-inset">
+                            <span className="px-2 py-0.5 text-[10px] font-black rounded-md bg-purple-100/70 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 shadow-neumorphic-inset">
                               မေးခွန်း {entry.frequency} ခုတွင်ပါရှိ
                             </span>
                           )}
                           {entry.types.map(t => (
                             <span
                               key={t}
-                              className="px-2 py-0.5 text-[10px] font-bold rounded-md bg-slate-200/60 text-slate-600 shadow-neumorphic-inset"
+                              className="px-2 py-0.5 text-[10px] font-bold rounded-md bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 shadow-neumorphic-inset"
                             >
                               {t}
                             </span>
@@ -570,7 +570,7 @@ export const TechnicalDictionary: React.FC<TechnicalDictionaryProps> = ({ onGoBa
                       {entry.sourceQuestions.slice(0, 4).map(q => (
                         <span
                           key={q}
-                          className="px-2 py-0.5 text-[10px] font-mono font-bold rounded-md bg-blue-50 text-blue-600 shadow-sm border border-blue-100"
+                          className="px-2 py-0.5 text-[10px] font-mono font-bold rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 shadow-sm border border-blue-100 dark:border-blue-800/40"
                         >
                           {q}
                         </span>
