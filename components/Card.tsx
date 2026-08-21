@@ -300,7 +300,7 @@ const Card: React.FC<CardProps> = ({
                   <>
                     <p className={`${getFontSizeClass('lg')} font-bold leading-relaxed text-slate-700`}>{data.questionMY}</p>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 w-full">
-                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('sm')} text-slate-500 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-4 rounded-2xl leading-relaxed`}>
+                      <div className={`flex-1 w-full font-mono ${getFontSizeClass('sm')} font-semibold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-4 sm:px-6 py-4 rounded-2xl leading-relaxed`}>
                         <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                       </div>
                       <div className="self-end sm:self-auto">
@@ -379,9 +379,9 @@ const Card: React.FC<CardProps> = ({
                   <div className="flex-1 pr-6">
                      {language === 'my' ? (
                         <>
-                            <p className={`font-black ${getFontSizeClass('lg')} mb-1`}>{option.textMY}</p>
-                            <div className="flex items-center gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                <div className={`font-mono ${getFontSizeClass('sm')} font-bold`}>
+                            <p className={`font-black ${getFontSizeClass('lg')} mb-1 text-slate-800`}>{option.textMY}</p>
+                            <div className="flex items-center gap-3 mt-2 text-slate-700">
+                                <div className={`font-mono ${getFontSizeClass('sm')} font-bold text-slate-800`}>
                                     <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                                 </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
@@ -390,13 +390,13 @@ const Card: React.FC<CardProps> = ({
                     ) : (
                         <>
                             <div className="flex items-center gap-3">
-                                <div className={`font-mono font-black ${getFontSizeClass('lg')}`}>
+                                <div className={`font-mono font-black ${getFontSizeClass('lg')} text-slate-800`}>
                                     <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
                                 </div>
                                 <AudioButton text={option.textJP} id={`opt-${data.id}-${option.id}`} />
                             </div>
                              {language === 'jp' && (
-                                <p className={`mt-2 ${getFontSizeClass('sm')} font-bold opacity-60 italic`}>{option.textMY}</p>
+                                <p className={`mt-2 ${getFontSizeClass('sm')} font-bold text-slate-600 italic`}>{option.textMY}</p>
                             )}
                         </>
                     )}

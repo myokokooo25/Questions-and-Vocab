@@ -8,10 +8,11 @@ import AuthScreen from './components/Login';
 import Dashboard from './components/Dashboard';
 import WelcomeScreen from './components/WelcomeScreen';
 import FlashcardApp from './vocabulary-flashcards/App';
+import TechnicalDictionary from './components/TechnicalDictionary';
 import InstallPrompt from './components/InstallPrompt';
 import { ChevronLeftIcon } from './components/Icons';
 
-type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards';
+type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards' | 'dictionary';
 
 const FlashcardAppWrapper: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   return (
@@ -70,6 +71,7 @@ const AppContent: React.FC = () => {
       <InstallPrompt />
       { (selectedApp === 'main' || selectedApp === '2026' || selectedApp === '2026-level2' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025'} onGoBack={handleGoBack} /> }
       { selectedApp === 'flashcards' && <FlashcardAppWrapper onGoBack={handleGoBack} /> }
+      { selectedApp === 'dictionary' && <TechnicalDictionary onGoBack={handleGoBack} /> }
     </div>
   );
 };

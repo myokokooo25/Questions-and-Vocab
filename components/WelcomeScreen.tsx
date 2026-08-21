@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon } from './Icons';
 
 interface WelcomeScreenProps {
-  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards') => void;
+  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary') => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
@@ -194,6 +194,36 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
               <div>
                   <h2 className="text-xl font-black text-slate-700">Vocabulary Cards</h2>
                   <p className="mt-1 text-sm text-slate-500 font-medium italic">Practice technical vocabulary.</p>
+              </div>
+            </div>
+          </button>
+
+          {/* Technical Dictionary Card */}
+          <button
+            onClick={() => onSelectApp('dictionary')}
+            className="p-8 text-left bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group md:col-span-2 relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-4 bg-neumorphic-bg rounded-3xl shadow-neumorphic-inset text-indigo-600 group-hover:scale-110 transition-transform">
+                    <BookOpenIcon className="w-8 h-8" />
+                </div>
+                <div>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-xl font-black text-slate-700">Technical Dictionary (ဝေါဟာရ အဘိဓာန်)</h2>
+                      <span className="px-2 py-0.5 text-[10px] font-black rounded-md bg-indigo-100 text-indigo-700 uppercase">
+                        All Vocab
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-slate-500 font-medium italic">
+                      Read-only dictionary with search, pronunciation, duplicate-merging & complete definitions.
+                    </p>
+                </div>
+              </div>
+              <div className="hidden sm:block p-3 rounded-full bg-neumorphic-bg shadow-neumorphic-outset group-hover:shadow-neumorphic-inset transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5 text-indigo-500">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
               </div>
             </div>
           </button>

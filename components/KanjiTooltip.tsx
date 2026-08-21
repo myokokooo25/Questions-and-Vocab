@@ -109,7 +109,7 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
           <>
             <div className="flex items-start justify-between pb-3 border-b border-slate-400/20">
               <div className="flex items-center gap-3">
-                <p className="text-5xl font-semibold leading-none text-slate-700">{kanjiData.character}</p>
+                <p className="text-5xl font-black font-mono leading-none text-slate-800 tracking-tight">{kanjiData.character}</p>
                 <button
                   onClick={() => handlePlayAudio(kanjiData.onyomi || kanjiData.character, 'kanji-main')}
                   className={`p-1.5 rounded-full transition-all ${
@@ -124,14 +124,14 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
                 </button>
               </div>
               <div className='text-right pr-6'>
-                <p className="text-lg font-semibold text-slate-700">{kanjiData.meaning}</p>
-                <p className="mt-1 text-lg font-semibold text-slate-600">{kanjiData.meaningMY}</p>
+                <p className="text-base font-bold text-slate-800">{kanjiData.meaning}</p>
+                <p className="mt-0.5 text-base font-bold text-blue-600">{kanjiData.meaningMY}</p>
               </div>
             </div>
             
-            <div className="mt-3 text-sm text-slate-600">
-              <p><strong className="font-semibold text-slate-700 w-20 inline-block">On'yomi:</strong> {kanjiData.onyomi}</p>
-              <p className="mt-1"><strong className="font-semibold text-slate-700 w-20 inline-block">Kun'yomi:</strong> {kanjiData.kunyomi}</p>
+            <div className="mt-3 text-sm text-slate-600 space-y-1">
+              <p><strong className="font-bold text-slate-700 w-20 inline-block">On'yomi:</strong> <span className="font-mono font-bold text-blue-700 bg-blue-50/70 px-1.5 py-0.5 rounded shadow-sm">{kanjiData.onyomi}</span></p>
+              <p><strong className="font-bold text-slate-700 w-20 inline-block">Kun'yomi:</strong> <span className="font-mono font-bold text-slate-700">{kanjiData.kunyomi || '-'}</span></p>
             </div>
           </>
         )}
@@ -139,7 +139,7 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
         {!kanjiData && (
             <div className="pb-3 border-b border-slate-400/20 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <p className="text-4xl font-semibold leading-none text-slate-700">{character}</p>
+                <p className="text-5xl font-black font-mono leading-none text-slate-800">{character}</p>
                 <button
                   onClick={() => handlePlayAudio(character, 'kanji-char')}
                   className={`p-1.5 rounded-full transition-all ${
@@ -159,17 +159,17 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
 
         {relatedWords.length > 0 && (
           <div className={`mt-3 ${kanjiData ? 'pt-3 border-t border-slate-400/20' : ''}`}>
-             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Related Vocabulary</h4>
+             <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Related Vocabulary</h4>
              <ul className="space-y-2">
                 {relatedWords.map((word, idx) => {
                    const wordAudioKey = `related-${word.id}-${idx}`;
                    const isPlaying = playingAudioKey === wordAudioKey;
                    return (
-                    <li key={`${word.id}-${idx}`} className="text-sm p-1.5 rounded-lg transition-colors hover:bg-slate-100/40">
+                    <li key={`${word.id}-${idx}`} className="text-sm p-2 rounded-xl transition-colors bg-neumorphic-bg shadow-neumorphic-inset">
                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-baseline gap-2">
-                             <span className="font-bold text-slate-700">{word.kanji}</span>
-                             {word.reading && <span className="text-xs text-slate-500">({word.reading})</span>}
+                          <div className="flex items-baseline gap-2 flex-wrap">
+                             <span className="font-black font-mono text-slate-800">{word.kanji}</span>
+                             {word.reading && <span className="text-xs font-bold text-blue-600">({word.reading})</span>}
                           </div>
                           <button
                             onClick={() => handlePlayAudio(word.reading || word.kanji, wordAudioKey)}
@@ -184,7 +184,7 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
                             <SpeakerIcon className="w-3.5 h-3.5" />
                           </button>
                        </div>
-                       <div className="text-slate-600 text-xs mt-0.5">
+                       <div className="text-slate-600 font-medium text-xs mt-1">
                           {word.burmese} {word.english ? ` - ${word.english}` : ''}
                        </div>
                     </li>

@@ -19,6 +19,7 @@ import KanjiTooltip from './KanjiTooltip';
 import { supabase } from '../lib/supabase';
 import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
 import AnswerKeyView from './AnswerKeyView';
+import TechnicalDictionary from './TechnicalDictionary';
 
 interface HistoryEntry {
   deviceId: string;
@@ -41,6 +42,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
   const [showAnswerKey, setShowAnswerKey] = useState(false);
+  const [showDictionary, setShowDictionary] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
@@ -1074,6 +1076,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   return (
     <div className="min-h-screen bg-neumorphic-bg">
+       {/* Dictionary Modal Overlay */}
+       {showDictionary && (
+         <div className="fixed inset-0 z-[70] overflow-y-auto bg-neumorphic-bg">
+           <TechnicalDictionary onGoBack={() => setShowDictionary(false)} />
+         </div>
+       )}
+
        {/* Tooltip */}
        {(selectedKanji || selectedKanjiChar) && (
           <KanjiTooltip
@@ -1332,6 +1341,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     title="Answer Key"
                 >
                     <ListBulletIcon className="w-5 h-5" />
+                </button>
+                <button
+                    onClick={() => setShowDictionary(true)}
+                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all"
+                    title="Technical Dictionary (ဝေါဟာရ အဘိဓာန်)"
+                >
+                    <BookOpenIcon className="w-5 h-5" />
                 </button>
                 {user?.isAdmin && (
                     <button
