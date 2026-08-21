@@ -223,7 +223,7 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center p-4 sm:p-8 bg-neumorphic-bg text-neumorphic-text">
+        <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col items-center p-3 sm:p-8 bg-neumorphic-bg text-neumorphic-text">
             {(selectedKanji || selectedKanjiChar) && (
                 <KanjiTooltip
                     kanjiData={selectedKanji}
@@ -232,54 +232,54 @@ const App: React.FC = () => {
                     onClose={() => { setSelectedKanji(null); setSelectedKanjiChar(null); }}
                 />
             )}
-            <header className="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center mb-6 gap-6">
+            <header className="w-full max-w-5xl max-w-full overflow-hidden flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 sm:gap-6">
                  <div className="text-center sm:text-left">
-                    <h1 className="text-3xl font-black text-slate-700 tracking-tight">Technical Vocabulary</h1>
-                    <p className="text-slate-500 font-bold italic">Interactive Flashcards</p>
+                    <h1 className="text-2xl sm:text-3xl font-black text-slate-700 tracking-tight">Technical Vocabulary</h1>
+                    <p className="text-slate-500 font-bold italic text-sm sm:text-base">Interactive Flashcards</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <button onClick={toggleTheme} className="p-4 rounded-2xl shadow-neumorphic-outset text-slate-500 active:shadow-neumorphic-inset transition-all">{theme === 'light' ? <MoonIcon className="w-6 h-6" /> : theme === 'dark' ? <SparkleIcon className="w-6 h-6 text-amber-500" /> : <SunIcon className="w-6 h-6" />}</button>
+                    <button onClick={toggleTheme} className="p-3 sm:p-4 rounded-2xl shadow-neumorphic-outset text-slate-500 active:shadow-neumorphic-inset transition-all" aria-label="Toggle theme">{theme === 'light' ? <MoonIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : theme === 'dark' ? <SparkleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" /> : <SunIcon className="w-5 h-5 sm:w-6 sm:h-6" />}</button>
                 </div>
             </header>
 
             {/* Supabase Connection Status Banner */}
-            <div className="w-full max-w-5xl mb-10">
+            <div className="w-full max-w-5xl max-w-full overflow-hidden mb-6 sm:mb-10">
                 {!supabaseStatus.isConnected ? (
-                    <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 text-sm font-bold flex flex-col sm:flex-row justify-between items-center gap-3">
-                        <div className="flex items-center gap-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-red-600 inline-block animate-pulse"></span>
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 text-xs sm:text-sm font-bold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 w-full min-w-0 max-w-full overflow-hidden">
+                        <div className="flex items-start gap-2 min-w-0 flex-1 break-words [overflow-wrap:anywhere]">
+                            <span className="w-2.5 h-2.5 rounded-full bg-red-600 inline-block animate-pulse shrink-0 mt-1"></span>
                             <span>Supabase ချိတ်ဆက်မှုမရသေးပါ: {supabaseStatus.error || 'အကြောင်းပြချက်မသိရ'}</span>
                         </div>
-                        <span className="text-xs bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono">Error</span>
+                        <span className="text-[10px] sm:text-xs bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono shrink-0 self-end sm:self-auto">Error</span>
                     </div>
                 ) : supabaseStatus.rowCount === 0 ? (
-                    <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 text-amber-600 dark:text-amber-400 text-sm font-bold flex flex-col sm:flex-row justify-between items-center gap-3">
-                        <div className="flex items-center gap-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block animate-pulse"></span>
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 text-amber-600 dark:text-amber-400 text-xs sm:text-sm font-bold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 w-full min-w-0 max-w-full overflow-hidden">
+                        <div className="flex items-start gap-2 min-w-0 flex-1 break-words [overflow-wrap:anywhere]">
+                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block animate-pulse shrink-0 mt-1"></span>
                             <span>Supabase တွင် စကားလုံးအချက်အလက်မရှိသေးပါ။ Dashboard တက်ဘ်ရှိ "Upload All Vocabulary to Database" ကိုအရင်နှိပ်ပါ။</span>
                         </div>
-                        <span className="text-xs bg-amber-100 dark:bg-amber-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono">No Data</span>
+                        <span className="text-[10px] sm:text-xs bg-amber-100 dark:bg-amber-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono shrink-0 self-end sm:self-auto">No Data</span>
                     </div>
                 ) : (
-                    <div className="p-4 rounded-2xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/40 text-green-700 dark:text-green-400 text-sm font-bold flex flex-col sm:flex-row justify-between items-center gap-3">
-                        <div className="flex items-center gap-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/40 text-green-700 dark:text-green-400 text-xs sm:text-sm font-bold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 w-full min-w-0 max-w-full overflow-hidden">
+                        <div className="flex items-start gap-2 min-w-0 flex-1 break-words [overflow-wrap:anywhere]">
+                            <span className="w-2.5 h-2.5 rounded-full bg-green-500 inline-block shrink-0 mt-1"></span>
                             <span>Supabase ချိတ်ဆက်မှု အဆင်ပြေပါသည် (စကားလုံး စုစုပေါင်း: {supabaseStatus.rowCount} လုံး၊ AI ရှင်းလင်းချက်ရှိပြီးသား: {supabaseStatus.hasExplanationsCount} လုံး)</span>
                         </div>
-                        <span className="text-xs bg-green-100 dark:bg-green-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono">Connected</span>
+                        <span className="text-[10px] sm:text-xs bg-green-100 dark:bg-green-900/30 px-3 py-1 rounded-full uppercase tracking-wider font-mono shrink-0 self-end sm:self-auto">Connected</span>
                     </div>
                 )}
             </div>
             
-            <nav className="w-full max-w-4xl mb-12">
-                <div className="bg-neumorphic-bg shadow-neumorphic-inset p-2 rounded-3xl flex flex-wrap justify-center gap-2">
+            <nav className="w-full max-w-4xl max-w-full overflow-hidden mb-8 sm:mb-12">
+                <div className="bg-neumorphic-bg shadow-neumorphic-inset p-1.5 sm:p-2 rounded-2xl sm:rounded-3xl flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-full overflow-hidden">
                     {['dashboard', 'flashcard', 'list', 'study', 'quiz'].map(m => (
-                        <button key={m} onClick={() => { setActiveStudyDay(null); setViewMode(m as ViewMode); }} className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${getTabClass(m)}`}>{m}</button>
+                        <button key={m} onClick={() => { setActiveStudyDay(null); setViewMode(m as ViewMode); }} className={`px-3.5 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs font-black uppercase tracking-wider sm:tracking-widest transition-all ${getTabClass(m)}`}>{m}</button>
                     ))}
                 </div>
             </nav>
 
-            <main className="w-full flex-grow flex flex-col items-center justify-center max-w-5xl">
+            <main className="w-full max-w-5xl max-w-full overflow-hidden flex-grow flex flex-col items-center justify-center">
                 {viewMode === 'dashboard' && <Dashboard totalWords={vocabulary.length} learnedWordsCount={allLearnedWords.length} studyProgress={flashcardData.progress} totalDays={TOTAL_STUDY_DAYS} onNavigate={setViewMode} />}
                 {viewMode === 'study' && <StudyPlan studyProgress={flashcardData.progress} onSelectDay={handleSelectDay} totalDays={TOTAL_STUDY_DAYS} wordsPerDay={WORDS_PER_DAY} />}
                 {viewMode === 'quiz' && <Quiz learnedWords={allLearnedWords} onQuizComplete={() => setViewMode('study')} vocabulary={vocabulary} />}
@@ -287,13 +287,19 @@ const App: React.FC = () => {
                 {viewMode === 'list' && <ListView words={filteredWords} isEditMode={false} setWords={setVocabulary} categories={categories.slice(1)} markedAsLearned={markedAsLearnedSet} onToggleMarkedAsLearned={toggleFlashcardLearned} onPlayAudio={playWordAudio} loadingAudioId={loadingAudioId} onKanjiClick={handleKanjiClick} />}
             </main>
             
-            <footer className="w-full max-w-5xl mt-12 mb-8">
-                <div className="bg-neumorphic-bg shadow-neumorphic-outset p-6 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-6">
-                   <div className={`flex items-center gap-4 w-full md:w-auto`}>
-                        <div className="bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl"><select value={currentCategory} onChange={e => setCurrentCategory(e.target.value)} className="bg-transparent font-bold border-none outline-none text-slate-600 p-3 appearance-none">{categories.map(c => <option key={c} value={c}>{c}</option>)}</select></div>
-                        <div className="bg-neumorphic-bg shadow-neumorphic-inset rounded-2xl flex-grow"><input type="search" placeholder="Search..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="bg-transparent border-none outline-none font-bold text-slate-600 p-3 w-full md:w-48"/></div>
+            <footer className="w-full max-w-5xl max-w-full overflow-hidden mt-8 sm:mt-12 mb-8">
+                <div className="bg-neumorphic-bg shadow-neumorphic-outset p-4 sm:p-6 rounded-2xl sm:rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 max-w-full overflow-hidden">
+                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full md:w-auto min-w-0 max-w-full">
+                        <div className="bg-neumorphic-bg shadow-neumorphic-inset rounded-xl sm:rounded-2xl w-full sm:w-auto min-w-0 max-w-full overflow-hidden">
+                            <select value={currentCategory} onChange={e => setCurrentCategory(e.target.value)} className="bg-transparent font-bold border-none outline-none text-slate-600 p-2.5 sm:p-3 appearance-none w-full text-xs sm:text-sm">
+                                {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+                        </div>
+                        <div className="bg-neumorphic-bg shadow-neumorphic-inset rounded-xl sm:rounded-2xl flex-grow w-full sm:w-auto min-w-0 max-w-full overflow-hidden">
+                            <input type="search" placeholder="Search..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="bg-transparent border-none outline-none font-bold text-slate-600 p-2.5 sm:p-3 w-full md:w-48 text-xs sm:text-sm"/>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+                    <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 w-full md:w-auto min-w-0 max-w-full">
                         {viewMode !== 'flashcard' && (
                             <>
                                 <button
@@ -306,22 +312,22 @@ const App: React.FC = () => {
                                         navigator.clipboard.writeText(exportData);
                                         alert('Copied to clipboard! You can now paste this into the Quizlet Import page.');
                                     }}
-                                    className="px-6 py-3 shrink-0 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-2xl text-sm font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 transition-all"
+                                    className="px-4 sm:px-6 py-2.5 sm:py-3 shrink-0 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-blue-600 hover:text-blue-700 transition-all w-full sm:w-auto text-center"
                                     title="Copy vocabulary to paste into Quizlet"
                                 >
                                     Export for Quizlet
                                 </button>
-                                <div className="text-slate-500 shrink-0 font-bold px-2">
+                                <div className="text-slate-500 shrink-0 font-bold px-2 text-center text-xs sm:text-sm">
                                     Total: {filteredWords.length}
                                 </div>
                             </>
                         )}
                     </div>
                     {viewMode === 'flashcard' && (
-                        <div className="flex items-center gap-6">
-                            <button onClick={handlePrev} className="p-4 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-full disabled:opacity-30" disabled={filteredWords.length < 2}><ArrowLeftIcon /></button>
-                            <button onClick={handleFlip} className="px-10 py-4 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-full text-sm font-black uppercase tracking-widest text-slate-700">Flip</button>
-                            <button onClick={handleNext} className="p-4 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-full disabled:opacity-30" disabled={filteredWords.length < 2}><ArrowRightIcon /></button>
+                        <div className="flex items-center justify-center gap-3 sm:gap-6 w-full sm:w-auto">
+                            <button onClick={handlePrev} className="p-3 sm:p-4 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-full disabled:opacity-30" disabled={filteredWords.length < 2} aria-label="Previous word"><ArrowLeftIcon /></button>
+                            <button onClick={handleFlip} className="px-6 sm:px-10 py-3 sm:py-4 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-full text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-slate-700">Flip</button>
+                            <button onClick={handleNext} className="p-3 sm:p-4 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset rounded-full disabled:opacity-30" disabled={filteredWords.length < 2} aria-label="Next word"><ArrowRightIcon /></button>
                         </div>
                     )}
                 </div>

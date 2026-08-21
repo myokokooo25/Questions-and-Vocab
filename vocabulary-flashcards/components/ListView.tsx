@@ -32,56 +32,60 @@ const ReadOnlyView: React.FC<{
     );
   }
   return (
-    <div className="w-full max-w-4xl bg-neumorphic-bg shadow-neumorphic-inset rounded-xl overflow-hidden p-2 flex flex-col">
-      {/* Header */}
-      <div className="p-1 sm:p-2 shrink-0">
-        <div className="grid grid-cols-[40px_40px_1fr_1fr_1fr_1fr] w-full text-left gap-2">
-            <div className="p-3 sm:p-4"></div> {/* Placeholder for checkmark */}
-            <div className="p-3 sm:p-4"></div> {/* Placeholder for audio */}
-            <div className="p-3 sm:p-4 text-blue-600 font-semibold text-sm">Kanji</div>
-            <div className="p-3 sm:p-4 text-blue-600 font-semibold text-sm">Reading</div>
-            <div className="p-3 sm:p-4 text-blue-600 font-semibold text-sm">English</div>
-            <div className="p-3 sm:p-4 text-blue-600 font-semibold text-sm">Burmese</div>
-        </div>
-      </div>
-      
-      <div className="h-px bg-neumorphic-shadow-dark/20 mx-4 shrink-0"></div>
-      
-      {/* Body */}
-      <div className="overflow-y-auto max-h-[55vh] p-2 space-y-3">
-        {words.map((word) => {
-            const isLearned = markedAsLearned.has(word.id);
-            const isAudioLoading = loadingAudioId === word.id;
-            return (
-            <div key={word.id} className="bg-neumorphic-bg shadow-neumorphic-outset p-3 sm:p-4 rounded-lg grid grid-cols-[40px_40px_1fr_1fr_1fr_1fr] gap-2 w-full text-left transition-shadow duration-200 hover:shadow-neumorphic-inset">
-                <div className="self-center justify-self-center">
-                    <button 
-                        onClick={() => onToggleMarkedAsLearned(word.id)}
-                        className={`p-1 rounded-full transition-colors ${isLearned ? 'text-green-500' : 'text-slate-300 hover:text-green-400'}`}
-                        aria-label={isLearned ? "Mark as not learned" : "Mark as learned"}
-                    >
-                        <CheckCircleIcon solid={isLearned} className="w-6 h-6" />
-                    </button>
-                </div>
-                <div className="self-center justify-self-center">
-                    <button 
-                        onClick={() => onPlayAudio(word)}
-                        disabled={loadingAudioId !== null} // Disable if ANY audio is loading to prevent overlap
-                        className={`p-1 rounded-full transition-colors text-slate-400 hover:text-blue-500 disabled:opacity-50`}
-                        aria-label="Play pronunciation"
-                    >
-                        <SpeakerIcon isLoading={isAudioLoading} className="w-5 h-5" />
-                    </button>
-                </div>
-                <div className="font-bold text-md sm:text-lg truncate self-center text-slate-700">
-                    <JapaneseText text={word.kanji} onKanjiClick={onKanjiClick} />
-                </div>
-                <p className="text-slate-600 text-sm sm:text-base truncate self-center">{word.reading}</p>
-                <p className="text-slate-600 text-sm sm:text-base self-center">{word.english}</p>
-                <p className="text-slate-600 text-sm sm:text-base self-center">{word.burmese}</p>
+    <div className="w-full max-w-4xl bg-neumorphic-bg shadow-neumorphic-inset rounded-xl overflow-hidden p-2 flex flex-col max-w-full">
+      <div className="overflow-x-auto w-full">
+        <div className="min-w-[550px] sm:min-w-0">
+          {/* Header */}
+          <div className="p-1 sm:p-2 shrink-0">
+            <div className="grid grid-cols-[40px_40px_1fr_1fr_1fr_1fr] w-full text-left gap-2">
+                <div className="p-2 sm:p-4"></div> {/* Placeholder for checkmark */}
+                <div className="p-2 sm:p-4"></div> {/* Placeholder for audio */}
+                <div className="p-2 sm:p-4 text-blue-600 font-semibold text-xs sm:text-sm">Kanji</div>
+                <div className="p-2 sm:p-4 text-blue-600 font-semibold text-xs sm:text-sm">Reading</div>
+                <div className="p-2 sm:p-4 text-blue-600 font-semibold text-xs sm:text-sm">English</div>
+                <div className="p-2 sm:p-4 text-blue-600 font-semibold text-xs sm:text-sm">Burmese</div>
             </div>
-            );
-        })}
+          </div>
+          
+          <div className="h-px bg-neumorphic-shadow-dark/20 mx-4 shrink-0"></div>
+          
+          {/* Body */}
+          <div className="overflow-y-auto max-h-[55vh] p-2 space-y-3">
+            {words.map((word) => {
+                const isLearned = markedAsLearned.has(word.id);
+                const isAudioLoading = loadingAudioId === word.id;
+                return (
+                <div key={word.id} className="bg-neumorphic-bg shadow-neumorphic-outset p-3 sm:p-4 rounded-lg grid grid-cols-[40px_40px_1fr_1fr_1fr_1fr] gap-2 w-full text-left transition-shadow duration-200 hover:shadow-neumorphic-inset">
+                    <div className="self-center justify-self-center">
+                        <button 
+                            onClick={() => onToggleMarkedAsLearned(word.id)}
+                            className={`p-1 rounded-full transition-colors ${isLearned ? 'text-green-500' : 'text-slate-300 hover:text-green-400'}`}
+                            aria-label={isLearned ? "Mark as not learned" : "Mark as learned"}
+                        >
+                            <CheckCircleIcon solid={isLearned} className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </button>
+                    </div>
+                    <div className="self-center justify-self-center">
+                        <button 
+                            onClick={() => onPlayAudio(word)}
+                            disabled={loadingAudioId !== null} // Disable if ANY audio is loading to prevent overlap
+                            className={`p-1 rounded-full transition-colors text-slate-400 hover:text-blue-500 disabled:opacity-50`}
+                            aria-label="Play pronunciation"
+                        >
+                            <SpeakerIcon isLoading={isAudioLoading} className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </button>
+                    </div>
+                    <div className="font-bold text-sm sm:text-lg truncate self-center text-slate-700">
+                        <JapaneseText text={word.kanji} onKanjiClick={onKanjiClick} />
+                    </div>
+                    <p className="text-slate-600 text-xs sm:text-base truncate self-center">{word.reading}</p>
+                    <p className="text-slate-600 text-xs sm:text-base self-center break-words">{word.english}</p>
+                    <p className="text-slate-600 text-xs sm:text-base self-center break-words">{word.burmese}</p>
+                </div>
+                );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -211,27 +211,27 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
           </div>
         </div>
 
-        <div className="mb-6 sm:mb-10 min-h-[100px] sm:min-h-[120px] flex flex-col justify-center text-left">
-           <div className={`font-bold text-slate-700 leading-relaxed ${getFontSizeClass('xl')}`}>
+        <div className="mb-6 sm:mb-10 min-h-[100px] sm:min-h-[120px] flex flex-col justify-center text-left w-full min-w-0">
+           <div className={`font-bold text-slate-700 leading-relaxed ${getFontSizeClass('xl')} break-words [overflow-wrap:anywhere]`}>
               {language === 'my' ? (
-                <div className="space-y-2.5 sm:space-y-3">
-                  <p className="text-sm sm:text-base md:text-lg">{currentQuestion.questionMY}</p>
-                  <div className="font-mono text-xs sm:text-sm text-slate-500 font-medium bg-neumorphic-bg shadow-neumorphic-inset p-3 sm:p-4 rounded-xl sm:rounded-2xl leading-relaxed">
+                <div className="space-y-2.5 sm:space-y-3 w-full min-w-0">
+                  <p className="text-sm sm:text-base md:text-lg break-words [overflow-wrap:anywhere]">{currentQuestion.questionMY}</p>
+                  <div className="font-mono text-xs sm:text-sm text-slate-500 font-medium bg-neumorphic-bg shadow-neumorphic-inset p-3 sm:p-4 rounded-xl sm:rounded-2xl leading-relaxed break-words [overflow-wrap:anywhere]">
                     <JapaneseText text={currentQuestion.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                   </div>
                 </div>
               ) : (
-                <div className="font-mono text-sm sm:text-base md:text-lg">
+                <div className="font-mono text-sm sm:text-base md:text-lg break-words [overflow-wrap:anywhere]">
                   <JapaneseText text={currentQuestion.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                 </div>
               )}
            </div>
            {language === 'jp' && (
-              <p className={`mt-3 sm:mt-4 text-slate-500 font-medium ${getFontSizeClass('base')}`}>{currentQuestion.questionMY}</p>
+              <p className={`mt-3 sm:mt-4 text-slate-500 font-medium ${getFontSizeClass('base')} break-words [overflow-wrap:anywhere]`}>{currentQuestion.questionMY}</p>
            )}
         </div>
 
-        <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-3 sm:space-y-4 w-full min-w-0">
           {(currentQuestion.options || []).map((option) => {
             const isSelected = isMockExam ? userAnswers[currentIndex] === option.id : selectedOptionId === option.id;
             
@@ -254,24 +254,24 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
                 key={option.id}
                 onClick={() => handleOptionSelect(option.id)}
                 disabled={!isMockExam && isAnswered}
-                className={`w-full p-3.5 sm:p-5 rounded-xl sm:rounded-2xl text-left transition-all duration-300 flex items-center justify-between group ${btnClass}`}
+                className={`w-full p-3.5 sm:p-5 rounded-xl sm:rounded-2xl text-left transition-all duration-300 flex items-start justify-between group min-w-0 overflow-hidden ${btnClass}`}
               >
-                <div className={`font-bold ${getFontSizeClass('lg')} flex-1 pr-3 sm:pr-4`}>
+                <div className={`font-bold ${getFontSizeClass('lg')} flex-1 min-w-0 pr-2 sm:pr-4`}>
                    {language === 'my' ? (
-                     <div className="space-y-1">
-                       <p className="text-xs sm:text-base">{option.textMY}</p>
-                       <div className={`font-mono text-xs font-semibold ${isCorrect || isWrong ? 'text-white/90' : 'text-slate-500'} opacity-80 mt-1`}>
+                     <div className="space-y-1 w-full min-w-0">
+                       <p className="text-xs sm:text-base break-words [overflow-wrap:anywhere]">{option.textMY}</p>
+                       <div className={`font-mono text-xs font-semibold ${isCorrect || isWrong ? 'text-white/90' : 'text-slate-500'} opacity-80 mt-1 break-words [overflow-wrap:anywhere]`}>
                          <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                        </div>
                      </div>
                    ) : (
-                     <div className="font-mono text-xs sm:text-base">
+                     <div className="font-mono text-xs sm:text-base break-words [overflow-wrap:anywhere]">
                         <JapaneseText text={option.textJP} onKanjiClick={(k, e) => onKanjiClick(k, e, currentQuestion.id)} />
                      </div>
                    )}
                 </div>
-                {!isMockExam && isCorrect && <CheckCircleSolidIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />}
-                {!isMockExam && isWrong && <XCircleSolidIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />}
+                {!isMockExam && isCorrect && <CheckCircleSolidIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 ml-1 mt-0.5" />}
+                {!isMockExam && isWrong && <XCircleSolidIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 ml-1 mt-0.5" />}
               </button>
             );
           })}
