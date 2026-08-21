@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Kanji } from '../types';
 import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
 import { vocabularyData as questionVocabData } from '../data/vocab';
+import { SpeakerIcon } from './Icons';
+import { playJapaneseAudio, stopAudio } from '../lib/audio';
 
 interface KanjiTooltipProps {
   kanjiData: Kanji | null;
@@ -13,7 +15,30 @@ interface KanjiTooltipProps {
 
 const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, questionId, position, onClose }) => {
   const character = kanjiData?.character || kanjiChar;
+  const [playingAudioKey, setPlayingAudioKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+    };
+  }, []);
+
   if (!character) return null;
+
+  const handlePlayAudio = (text: string, key: string) => {
+    if (playingAudioKey === key) {
+      stopAudio();
+      setPlayingAudioKey(null);
+      return;
+    }
+
+    setPlayingAudioKey(key);
+    playJapaneseAudio(text, {
+      onStart: () => setPlayingAudioKey(key),
+      onEnd: () => setPlayingAudioKey(null),
+      onError: () => setPlayingAudioKey(null)
+    });
+  };
 
   // Search for vocabulary words containing this Kanji
   let relatedWords = vocabularyData.filter(v => v.kanji.includes(character));
@@ -83,8 +108,22 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
         {kanjiData && (
           <>
             <div className="flex items-start justify-between pb-3 border-b border-slate-400/20">
-              <p className="text-5xl font-semibold leading-none text-slate-700">{kanjiData.character}</p>
-              <div className='text-right'>
+              <div className="flex items-center gap-3">
+                <p className="text-5xl font-semibold leading-none text-slate-700">{kanjiData.character}</p>
+                <button
+                  onClick={() => handlePlayAudio(kanjiData.onyomi || kanjiData.character, 'kanji-main')}
+                  className={`p-1.5 rounded-full transition-all ${
+                    playingAudioKey === 'kanji-main'
+                      ? 'text-blue-600 bg-blue-100/60 shadow-neumorphic-inset animate-pulse'
+                      : 'text-slate-400 hover:text-blue-500 shadow-neumorphic-outset active:shadow-neumorphic-inset'
+                  }`}
+                  title="Listen pronunciation"
+                  aria-label="Listen pronunciation"
+                >
+                  <SpeakerIcon className="w-4 h-4" />
+                </button>
+              </div>
+              <div className='text-right pr-6'>
                 <p className="text-lg font-semibold text-slate-700">{kanjiData.meaning}</p>
                 <p className="mt-1 text-lg font-semibold text-slate-600">{kanjiData.meaningMY}</p>
               </div>
@@ -99,8 +138,22 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
 
         {!kanjiData && (
             <div className="pb-3 border-b border-slate-400/20 flex items-center justify-between">
-              <p className="text-4xl font-semibold leading-none text-slate-700">{character}</p>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Kanji Info</p>
+              <div className="flex items-center gap-3">
+                <p className="text-4xl font-semibold leading-none text-slate-700">{character}</p>
+                <button
+                  onClick={() => handlePlayAudio(character, 'kanji-char')}
+                  className={`p-1.5 rounded-full transition-all ${
+                    playingAudioKey === 'kanji-char'
+                      ? 'text-blue-600 bg-blue-100/60 shadow-neumorphic-inset animate-pulse'
+                      : 'text-slate-400 hover:text-blue-500 shadow-neumorphic-outset active:shadow-neumorphic-inset'
+                  }`}
+                  title="Listen pronunciation"
+                  aria-label="Listen pronunciation"
+                >
+                  <SpeakerIcon className="w-4 h-4" />
+                </button>
+              </div>
+              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider pr-6">Kanji Info</p>
             </div>
         )}
 
@@ -108,17 +161,35 @@ const KanjiTooltip: React.FC<KanjiTooltipProps> = ({ kanjiData, kanjiChar, quest
           <div className={`mt-3 ${kanjiData ? 'pt-3 border-t border-slate-400/20' : ''}`}>
              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Related Vocabulary</h4>
              <ul className="space-y-2">
-                {relatedWords.map((word, idx) => (
-                   <li key={`${word.id}-${idx}`} className="text-sm">
-                      <div className="flex items-baseline gap-2">
-                         <span className="font-bold text-slate-700">{word.kanji}</span>
-                         {word.reading && <span className="text-xs text-slate-500">({word.reading})</span>}
-                      </div>
-                      <div className="text-slate-600 text-xs">
-                         {word.burmese} {word.english ? ` - ${word.english}` : ''}
-                      </div>
-                   </li>
-                ))}
+                {relatedWords.map((word, idx) => {
+                   const wordAudioKey = `related-${word.id}-${idx}`;
+                   const isPlaying = playingAudioKey === wordAudioKey;
+                   return (
+                    <li key={`${word.id}-${idx}`} className="text-sm p-1.5 rounded-lg transition-colors hover:bg-slate-100/40">
+                       <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-baseline gap-2">
+                             <span className="font-bold text-slate-700">{word.kanji}</span>
+                             {word.reading && <span className="text-xs text-slate-500">({word.reading})</span>}
+                          </div>
+                          <button
+                            onClick={() => handlePlayAudio(word.reading || word.kanji, wordAudioKey)}
+                            className={`p-1 rounded-full shrink-0 transition-all ${
+                              isPlaying 
+                                ? 'text-blue-600 bg-blue-100/60 shadow-neumorphic-inset animate-pulse' 
+                                : 'text-slate-400 hover:text-blue-500 shadow-neumorphic-outset active:shadow-neumorphic-inset'
+                            }`}
+                            title="Play pronunciation"
+                            aria-label="Play pronunciation"
+                          >
+                            <SpeakerIcon className="w-3.5 h-3.5" />
+                          </button>
+                       </div>
+                       <div className="text-slate-600 text-xs mt-0.5">
+                          {word.burmese} {word.english ? ` - ${word.english}` : ''}
+                       </div>
+                    </li>
+                   );
+                })}
              </ul>
           </div>
         )}

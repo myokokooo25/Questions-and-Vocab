@@ -9,6 +9,7 @@ import JapaneseText from './JapaneseText';
 import { vocabularyData } from '../data/vocab';
 import ReportModal from './ReportModal';
 import { supabase } from '../lib/supabase';
+import { playJapaneseAudio, playSequentialJapaneseAudio, stopAudio, cleanJapaneseForTTS } from '../lib/audio';
 
 // Helper function to prepare text for TTS by removing furigana annotations.
 const stripHtml = (html: string): string => {
@@ -71,9 +72,10 @@ const Card: React.FC<CardProps> = ({
   const [hintError, setHintError] = useState<string | null>(null);
   
   const [audioPlayingId, setAudioPlayingId] = useState<string | null>(null);
+  const [isPlayingAllVocab, setIsPlayingAllVocab] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
 
-  // Clear states when question changes
+  // Clear states and stop audio when question changes
   useEffect(() => {
     setAiExplanation(data.ai_explanation || null);
     setIsAiLoading(false);
@@ -82,10 +84,12 @@ const Card: React.FC<CardProps> = ({
     setIsHintLoading(false);
     setHintError(null);
     setAudioPlayingId(null);
-    // Cancel any ongoing speech when card changes
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    setIsPlayingAllVocab(false);
+    stopAudio();
+
+    return () => {
+      stopAudio();
+    };
   }, [data.id, data.ai_explanation]);
 
   const handleGetHint = async () => {
@@ -219,44 +223,71 @@ const Card: React.FC<CardProps> = ({
   };
 
   const handlePlayAudio = (textToSpeak: string, id: string) => {
-    if (!('speechSynthesis' in window)) return;
-
-    // Stop current speech
-    window.speechSynthesis.cancel();
+    if (isPlayingAllVocab) {
+      stopAudio();
+      setIsPlayingAllVocab(false);
+    }
 
     if (audioPlayingId === id) {
+      stopAudio();
       setAudioPlayingId(null);
       return;
     }
 
-    const cleanText = stripHtml(textToSpeak);
-    if (!cleanText.trim()) return;
+    const success = playJapaneseAudio(textToSpeak, {
+      onStart: () => setAudioPlayingId(id),
+      onEnd: () => setAudioPlayingId(null),
+      onError: () => setAudioPlayingId(null)
+    });
 
-    setAudioPlayingId(id);
+    if (!success) {
+      setAudioPlayingId(null);
+    }
+  };
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'ja-JP';
-    utterance.rate = 0.9; 
-    
-    const voices = window.speechSynthesis.getVoices();
-    const jaVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP'));
-    if (jaVoice) utterance.voice = jaVoice;
+  const handleTogglePlayAllVocab = () => {
+    if (isPlayingAllVocab) {
+      stopAudio();
+      setIsPlayingAllVocab(false);
+      setAudioPlayingId(null);
+      return;
+    }
 
-    utterance.onend = () => setAudioPlayingId(null);
-    utterance.onerror = () => setAudioPlayingId(null);
+    if (!vocabData || vocabData.length === 0) return;
 
-    window.speechSynthesis.speak(utterance);
+    setIsPlayingAllVocab(true);
+    const playlist = vocabData.map((item, idx) => ({
+      id: `vocab-${data.id}-${idx}`,
+      text: item.jp
+    }));
+
+    playSequentialJapaneseAudio(
+      playlist,
+      (activeId) => setAudioPlayingId(activeId),
+      () => {
+        setIsPlayingAllVocab(false);
+        setAudioPlayingId(null);
+      }
+    );
   };
   
-  const AudioButton = ({ text, id }: { text: string, id: string }) => (
-    <button
-      onClick={(e) => { e.stopPropagation(); handlePlayAudio(text, id); }}
-      className={`p-2 rounded-full shrink-0 shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all ${audioPlayingId === id ? 'text-blue-500 shadow-neumorphic-inset' : 'text-slate-400 hover:text-blue-500'}`}
-      aria-label="Play audio"
-    >
-      <SpeakerIcon className="w-4 h-4" />
-    </button>
-  );
+  const AudioButton = ({ text, id, title }: { text: string, id: string, title?: string }) => {
+    const isPlaying = audioPlayingId === id;
+    return (
+      <button
+        onClick={(e) => { e.stopPropagation(); handlePlayAudio(text, id); }}
+        className={`p-2 rounded-full shrink-0 transition-all duration-200 ${
+          isPlaying 
+            ? 'text-blue-600 bg-blue-100/60 shadow-neumorphic-inset scale-105 ring-2 ring-blue-400/40 animate-pulse' 
+            : 'text-slate-400 hover:text-blue-500 shadow-neumorphic-outset active:shadow-neumorphic-inset'
+        }`}
+        title={title || (isPlaying ? "Stop audio" : "Listen pronunciation")}
+        aria-label={title || (isPlaying ? "Stop audio" : "Listen pronunciation")}
+      >
+        <SpeakerIcon className="w-4 h-4" />
+      </button>
+    );
+  };
 
   return (
     <div className="bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset overflow-hidden">
@@ -459,29 +490,85 @@ const Card: React.FC<CardProps> = ({
               {activeTab === 'vocab' && (
                   <div className="animate-in fade-in duration-500">
                   {vocabData && vocabData.length > 0 ? (
-                      <div className="overflow-x-auto">
-                      <table className="w-full text-left text-slate-600">
-                          <thead className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">
-                          <tr>
-                              <th className="px-4 py-3">Term</th>
-                              <th className="px-4 py-3">Meaning</th>
-                          </tr>
-                          </thead>
-                          <tbody className="font-bold text-sm">
-                          {vocabData.map((item, index) => (
-                              <tr key={index} className="border-t border-slate-300/20 group">
-                              <td className="px-4 py-4 font-mono text-slate-700 group-hover:text-blue-600 transition-colors">
-                                <JapaneseText text={item.jp} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
-                              </td>
-                              <td className="px-4 py-4">{item.my}</td>
+                      <div className="space-y-4">
+                        {/* Vocab Header Actions */}
+                        <div className="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-slate-300/30">
+                          <div className="flex items-center gap-2">
+                            <span className="px-2.5 py-1 text-xs font-black rounded-lg bg-blue-100/50 text-blue-600 shadow-neumorphic-inset">
+                              {vocabData.length} Words
+                            </span>
+                            <span className="text-xs font-bold text-slate-400">
+                              နှိပ်၍ အသံထွက် နားထောင်နိုင်ပါသည်
+                            </span>
+                          </div>
+                          
+                          <button
+                            onClick={handleTogglePlayAllVocab}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-200 ${
+                              isPlayingAllVocab
+                                ? 'text-red-500 bg-red-50/50 shadow-neumorphic-inset animate-pulse ring-1 ring-red-400/30'
+                                : 'text-blue-600 bg-neumorphic-bg shadow-neumorphic-outset hover:text-blue-700 active:shadow-neumorphic-inset'
+                            }`}
+                            title={isPlayingAllVocab ? "Stop Audio Playlist" : "Play All Vocabulary Audio"}
+                          >
+                            <SpeakerIcon className={`w-4 h-4 ${isPlayingAllVocab ? 'animate-bounce' : ''}`} />
+                            <span>{isPlayingAllVocab ? 'အသံရပ်မည် (Stop)' : 'အားလုံး အသံဖွင့်မည် (Play All)'}</span>
+                          </button>
+                        </div>
+
+                        {/* Vocab Table */}
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-slate-600">
+                            <thead className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">
+                              <tr>
+                                <th className="px-3 py-3 w-12 text-center">Audio</th>
+                                <th className="px-4 py-3">Term (ဂျပန်)</th>
+                                <th className="px-4 py-3">Meaning (မြန်မာ)</th>
                               </tr>
-                          ))}
-                          </tbody>
-                      </table>
+                            </thead>
+                            <tbody className="font-bold text-sm">
+                              {vocabData.map((item, index) => {
+                                const rowAudioId = `vocab-${data.id}-${index}`;
+                                const isRowPlaying = audioPlayingId === rowAudioId;
+                                return (
+                                  <tr 
+                                    key={index} 
+                                    className={`border-t border-slate-300/20 group transition-all duration-200 rounded-xl ${
+                                      isRowPlaying ? 'bg-blue-50/20 shadow-neumorphic-inset text-blue-700 font-extrabold' : 'hover:bg-slate-50/5'
+                                    }`}
+                                  >
+                                    <td className="px-3 py-3 text-center align-middle">
+                                      <AudioButton 
+                                        text={item.jp} 
+                                        id={rowAudioId} 
+                                        title={`Play pronunciation for ${item.jp}`} 
+                                      />
+                                    </td>
+                                    <td className="px-4 py-4 font-mono text-slate-700 group-hover:text-blue-600 transition-colors align-middle">
+                                      <div className="flex items-center gap-2">
+                                        <JapaneseText text={item.jp} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
+                                        {(item as any).type && (
+                                          <span className="text-[10px] font-sans font-semibold px-2 py-0.5 rounded-md bg-slate-200/50 text-slate-500 shadow-neumorphic-inset">
+                                            {(item as any).type}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </td>
+                                    <td className="px-4 py-4 align-middle">
+                                      <span className={isRowPlaying ? 'text-blue-600' : 'text-slate-600'}>
+                                        {item.my}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                   ) : (
                       <div className="text-center py-10 opacity-40">
-                          <AcademicCapIcon className="w-12 h-12 mb-2 text-slate-300" />
+                          <AcademicCapIcon className="w-12 h-12 mb-2 text-slate-300 mx-auto" />
                           <p className="font-bold text-slate-500 uppercase tracking-widest text-xs">No vocabulary for this item</p>
                       </div>
                   )}
