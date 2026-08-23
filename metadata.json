@@ -1,5 +1,8 @@
 {
   "name": "Japanese Structural Engineering Exam Study App",
   "description": "ဤ App သည် ဂျပန်နိုင်ငံ၏ 鉄骨製作管理技術者 (Steel Frame Production Management Engineer) စာမေးပွဲဖြေဆိုရန် လေ့လာနေသူများအတွက် ရည်ရွယ်ပါသည်။ စာမေးပွဲမေးခွန်းဟောင်းများနှင့် ၎င်းတို့၏ ရှင်းလင်းချက်များ၊ သက်ဆိုင်ရာ ဝေါဟာရများကို စုစည်းပေးထားပါသည်။",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

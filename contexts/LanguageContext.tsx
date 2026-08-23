@@ -4,12 +4,13 @@ import { Language } from '../types';
 interface LanguageContextType {
   language: Language;
   toggleLanguage: () => void;
+  setLanguage: (lang: Language) => void;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>(() => {
+  const [language, setLanguageState] = useState<Language>(() => {
     try {
       const storedLanguage = localStorage.getItem('language_preference');
       if (storedLanguage === 'jp' || storedLanguage === 'my' || storedLanguage === 'jp-only') {
@@ -30,14 +31,18 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [language]);
 
   const toggleLanguage = () => {
-    setLanguage(prevLanguage => {
+    setLanguageState(prevLanguage => {
       if (prevLanguage === 'my') return 'jp';
       if (prevLanguage === 'jp') return 'jp-only';
       return 'my'; // from 'jp-only' back to 'my'
     });
   };
 
-  const value = { language, toggleLanguage };
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+  };
+
+  const value = { language, toggleLanguage, setLanguage };
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 };

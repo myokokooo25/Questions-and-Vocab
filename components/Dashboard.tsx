@@ -36,7 +36,7 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const { user, logout, syncLocalKeys } = useAuth();
-  const { language, toggleLanguage } = useLanguage();
+  const { language, toggleLanguage, setLanguage } = useLanguage();
   const { theme, toggleTheme, fontSize, setFontSize } = useTheme();
   const { bookmarkedIds, studyHistory, recordAnswer } = useProgress(); 
   
@@ -131,6 +131,31 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               ? `2026-level2-${activeChapter}`
               : activeChapter.toString();
 
+      // Prepare localData as base reference
+      let localData: StudyCardData[] = [];
+      if (isOldQuestionMode) {
+         if (selectedApp === '2021') {
+             localData = chapter2021Data;
+         } else {
+             const oldDataMap: Record<string, StudyCardData[]> = {
+                '2022': chapter2022Data,
+                '2023': chapter2023Data,
+                '2024': chapter2024Data,
+                '2025': chapter2025Data,
+              };
+              localData = oldDataMap[selectedApp] || [];
+         }
+      } else if (selectedApp === '2026') {
+          localData = studyDataByChapter2026[activeChapter] || [];
+      } else if (selectedApp === '2026-level2') {
+          localData = studyDataByChapter2026Level2[activeChapter] || [];
+      } else {
+          localData = studyDataByChapter[activeChapter] || [];
+      }
+
+      const localMap = new Map<string, StudyCardData>();
+      localData.forEach(item => localMap.set(String(item.id), item));
+
       try {
         let query = supabase.from('questions').select('*');
         
@@ -146,72 +171,51 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         if (error) throw error;
 
         if (data && data.length > 0 && !(selectedApp === '2021' && data.length < 50)) {
-          // Map DB columns to StudyCardData interface
-          const mappedQuestions: StudyCardData[] = data.map((q: any) => ({
-            id: q.id,
-            category: q.category,
-            questionJP: q.question_jp,
-            questionMY: q.question_my,
-            options: q.options,
-            correctOptionId: q.correct_option_id,
-            explanation: q.explanation,
-            ai_explanation: q.ai_explanation
-          }));
+          // Map DB columns to StudyCardData interface with local fallback for Myanmar translations
+          const mappedQuestions: StudyCardData[] = data.map((q: any) => {
+            const local = localMap.get(String(q.id));
+            const questionMY = (q.question_my && typeof q.question_my === 'string' && q.question_my.trim() !== '')
+              ? q.question_my
+              : (local?.questionMY || '');
+            
+            // Ensure options have textMY
+            let options = local?.options || [];
+            if (q.options && Array.isArray(q.options) && q.options.length > 0) {
+              options = q.options.map((opt: any, idx: number) => {
+                const localOpt = local?.options?.[idx];
+                return {
+                  id: opt.id ?? (idx + 1),
+                  textJP: opt.textJP || opt.text_jp || localOpt?.textJP || '',
+                  textMY: (opt.textMY && typeof opt.textMY === 'string' && opt.textMY.trim() !== '')
+                    ? opt.textMY
+                    : (opt.text_my || localOpt?.textMY || '')
+                };
+              });
+            }
+
+            return {
+              id: String(q.id),
+              category: q.category || local?.category || '',
+              questionJP: q.question_jp || local?.questionJP || '',
+              questionMY: questionMY,
+              options: options,
+              correctOptionId: q.correct_option_id ?? local?.correctOptionId ?? 1,
+              explanation: q.explanation || local?.explanation,
+              ai_explanation: q.ai_explanation || local?.ai_explanation
+            };
+          });
           
           // Sort by ID to ensure order
-           mappedQuestions.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+          mappedQuestions.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
 
           setOnlineQuestions(mappedQuestions);
         } else {
-          // If no data in DB, use local data
-          let localData: StudyCardData[] = [];
-          if (isOldQuestionMode) {
-             if (selectedApp === '2021') {
-                 localData = chapter2021Data;
-             } else {
-                 const oldDataMap: Record<string, StudyCardData[]> = {
-                    '2022': chapter2022Data,
-                    '2023': chapter2023Data,
-                    '2024': chapter2024Data,
-                    '2025': chapter2025Data,
-                  };
-                  localData = oldDataMap[selectedApp] || [];
-             }
-          } else if (selectedApp === '2026') {
-              localData = studyDataByChapter2026[activeChapter] || [];
-          } else if (selectedApp === '2026-level2') {
-              localData = studyDataByChapter2026Level2[activeChapter] || [];
-          } else {
-              localData = studyDataByChapter[activeChapter] || [];
-          }
           setOnlineQuestions(localData);
         }
       } catch (err: any) {
         // Silent fallback for missing table or connection issues
-        // Only log if it's NOT the expected "table missing" error to keep console clean for user
         if (err.code !== 'PGRST205') {
              console.warn("Using local data due to DB error:", err.message);
-        }
-        
-        let localData: StudyCardData[] = [];
-        if (isOldQuestionMode) {
-           if (selectedApp === '2021') {
-               localData = chapter2021Data;
-           } else {
-               const oldDataMap: Record<string, StudyCardData[]> = {
-                  '2022': chapter2022Data,
-                  '2023': chapter2023Data,
-                  '2024': chapter2024Data,
-                  '2025': chapter2025Data,
-                };
-                localData = oldDataMap[selectedApp] || [];
-           }
-        } else if (selectedApp === '2026') {
-            localData = studyDataByChapter2026[activeChapter] || [];
-        } else if (selectedApp === '2026-level2') {
-            localData = studyDataByChapter2026Level2[activeChapter] || [];
-        } else {
-            localData = studyDataByChapter[activeChapter] || [];
         }
         setOnlineQuestions(localData);
       } finally {
@@ -1346,6 +1350,19 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <BookOpenIcon className="w-4 h-4" />
                 </button>
                 <button
+                    onClick={toggleLanguage}
+                    className={`px-2.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 ${
+                      language === 'my' 
+                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' 
+                        : 'shadow-neumorphic-outset text-slate-500'
+                    }`}
+                    title="Toggle Language (ဘာသာစကားပြောင်းရန်)"
+                    aria-label="Toggle Language"
+                >
+                    <GlobeIcon className="w-3.5 h-3.5" />
+                    <span>{language === 'my' ? '🇲🇲 MM' : language === 'jp' ? '🇯🇵+MM' : '🇯🇵 JP'}</span>
+                </button>
+                <button
                     onClick={() => setShowMoreMenu(true)}
                     className="p-2 rounded-xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
                     title="More Options"
@@ -1428,10 +1445,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </button>
                 <button
                     onClick={toggleLanguage}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
-                    title="Language"
+                    className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl text-xs font-black transition-all ${
+                      language === 'my' 
+                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' 
+                        : 'shadow-neumorphic-outset text-slate-600 hover:text-slate-800 active:shadow-neumorphic-inset'
+                    }`}
+                    title="Toggle Language: Burmese / Japanese / JP Only"
                 >
-                    <GlobeIcon className="w-5 h-5" />
+                    <GlobeIcon className="w-4 h-4 text-blue-500" />
+                    <span>{language === 'my' ? '🇲🇲 မြန်မာ' : language === 'jp' ? '🇯🇵+🇲🇲' : '🇯🇵 Only'}</span>
                 </button>
                 <div className="relative">
                     <button
@@ -1624,16 +1646,30 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             {/* Language & Theme & Font Controls */}
             <div className="space-y-3.5 pt-3 border-t border-slate-300/30">
               {/* Language Switch */}
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-2">
                 <span className="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <GlobeIcon className="w-4 h-4 text-blue-500" /> Language
+                  <GlobeIcon className="w-4 h-4 text-blue-500" /> Language (ဘာသာစကား)
                 </span>
-                <button 
-                  onClick={toggleLanguage}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-blue-600 bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset"
-                >
-                  Switch ({language.toUpperCase()})
-                </button>
+                <div className="grid grid-cols-3 gap-1.5 bg-neumorphic-bg p-1 rounded-xl shadow-neumorphic-inset">
+                  <button
+                    onClick={() => setLanguage('my')}
+                    className={`py-1.5 px-2 text-xs font-black rounded-lg transition-all text-center ${language === 'my' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}
+                  >
+                    🇲🇲 မြန်မာ
+                  </button>
+                  <button
+                    onClick={() => setLanguage('jp')}
+                    className={`py-1.5 px-2 text-xs font-black rounded-lg transition-all text-center ${language === 'jp' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}
+                  >
+                    🇯🇵 JP+🇲🇲
+                  </button>
+                  <button
+                    onClick={() => setLanguage('jp-only')}
+                    className={`py-1.5 px-2 text-xs font-black rounded-lg transition-all text-center ${language === 'jp-only' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}
+                  >
+                    🇯🇵 JP Only
+                  </button>
+                </div>
               </div>
 
               {/* Theme Switch */}
