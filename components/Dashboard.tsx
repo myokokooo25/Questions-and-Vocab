@@ -304,103 +304,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     setSearchQuery(value);
   };
 
-  // --- MIGRATION LOGIC ---
-  // --- MIGRATION LOGIC FOR 2026 ---
-  const handleMigrate2026DataToDB = async () => {
-      setMigrationStatus("Starting migration for 2026 data...");
-      setIsSyncing(true);
-      try {
-          const allDataToUpload: {category: string, data: StudyCardData[]}[] = [];
-          
-          for (let i = 1; i <= 5; i++) {
-              if (studyDataByChapter2026[i]) {
-                  allDataToUpload.push({ category: `2026-${i}`, data: studyDataByChapter2026[i] });
-              }
-              if (studyDataByChapter2026Level2[i]) {
-                  allDataToUpload.push({ category: `2026-level2-${i}`, data: studyDataByChapter2026Level2[i] });
-              }
-          }
-
-          let successCount = 0;
-          let failCount = 0;
-          let lastError = '';
-
-          setMigrationStatus("Checking database for existing records...");
-          const { data: existingRows, error: fetchErr } = await supabase
-            .from('questions')
-            .select('id, ai_explanation');
-
-          if (fetchErr) {
-            console.error("Error fetching existing rows:", fetchErr);
-          }
-
-          const existingMap = new Map<string, string | null>(
-            existingRows?.map(row => [String(row.id), row.ai_explanation]) || []
-          );
-
-          setMigrationStatus("Synchronizing 2026 questions (preserving existing AI explanations)...");
-
-          for (const group of allDataToUpload) {
-              for (const q of group.data) {
-                  const idStr = String(q.id);
-                  const existingExplanation = existingMap.get(idStr);
-                  
-                  const finalExplanation = existingExplanation || q.ai_explanation || null;
-
-                  const payload = {
-                      id: q.id,
-                      category: group.category,
-                      question_jp: q.questionJP,
-                      question_my: q.questionMY,
-                      options: q.options, // Supabase handles JSON automatically
-                      correct_option_id: q.correctOptionId,
-                      explanation: q.explanation,
-                      ai_explanation: finalExplanation
-                  };
-
-                  const { error } = await supabase.from('questions').upsert(payload);
-                  if (error) {
-                      console.error(`Error migrating question ${q.id}:`, error);
-                      failCount++;
-                      lastError = error.message;
-                  } else {
-                      successCount++;
-                  }
-                  
-                  setMigrationStatus(`Migrated ${successCount} 2026 questions... ${failCount > 0 ? `(${failCount} failed)` : ''}`);
-              }
-          }
-
-          if (failCount > 0) {
-              setMigrationStatus(`Completed with errors. Success: ${successCount}, Failed: ${failCount}. Last error: ${lastError}`);
-          } else {
-              setMigrationStatus(`Successfully migrated ${successCount} 2026 questions!`);
-          }
-      } catch (error: any) {
-          console.error("Migration failed:", error);
-          setMigrationStatus(`Migration failed: ${error.message}`);
-      } finally {
-          setIsSyncing(false);
-          setTimeout(() => setMigrationStatus(''), 5000);
-      }
-  };
-
-  React.useEffect(() => {
-    if (localStorage.getItem('force_migrate_2026_v14') !== 'done') {
-      localStorage.setItem('force_migrate_2026_v14', 'done');
-      handleMigrate2026DataToDB();
-    }
-  }, []);
-
-  const handleMigrateDataToDB = async () => {
-      setMigrationStatus("Starting migration...");
+  // --- FORCE UPDATE ALL QUESTIONS TO SUPABASE (PRESERVING AI EXPLANATION) ---
+  const handleForceUpdateAllToDB = async () => {
+      setMigrationStatus("🚀 Starting Force Update to Supabase (Preserving AI Explanation)...");
       setIsSyncing(true);
 
       try {
-          const allDataToUpload: {category: string, data: StudyCardData[]}[] = [];
+          const allDataToUpload: { category: string; data: StudyCardData[] }[] = [];
 
-          // 1. Gather all local data
-          // Chapters 1-5
+          // 1. Chapters 1-5 (Main)
           for (let i = 1; i <= 5; i++) {
               if (studyDataByChapter[i]) {
                   allDataToUpload.push({ category: i.toString(), data: studyDataByChapter[i] });
@@ -412,7 +324,8 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                   allDataToUpload.push({ category: `2026-level2-${i}`, data: studyDataByChapter2026Level2[i] });
               }
           }
-          // Years
+
+          // 2. Past Question Sets (2021-2025)
           if (chapter2021Parts[1]) allDataToUpload.push({ category: '2021-1', data: chapter2021Parts[1] });
           if (chapter2021Parts[2]) allDataToUpload.push({ category: '2021-2', data: chapter2021Parts[2] });
           if (chapter2021Parts[3]) allDataToUpload.push({ category: '2021-3', data: chapter2021Parts[3] });
@@ -421,66 +334,98 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           allDataToUpload.push({ category: '2024', data: chapter2024Data });
           allDataToUpload.push({ category: '2025', data: chapter2025Data });
 
-          let successCount = 0;
-          let failCount = 0;
-          let lastError = '';
-
-          setMigrationStatus("Checking database for existing records...");
+          // Fetch existing AI explanations from Supabase to preserve them
+          setMigrationStatus("Fetching existing AI Explanations from Supabase...");
           const { data: existingRows, error: fetchErr } = await supabase
             .from('questions')
             .select('id, ai_explanation');
 
           if (fetchErr) {
-            console.error("Error fetching existing rows:", fetchErr);
+            console.warn("Error fetching existing AI explanations:", fetchErr.message);
           }
 
-          const existingMap = new Map<string, string | null>(
-            existingRows?.map(row => [String(row.id), row.ai_explanation]) || []
-          );
+          const existingMap = new Map<string, string | null>();
+          if (existingRows) {
+            existingRows.forEach(row => {
+              if (row.ai_explanation && typeof row.ai_explanation === 'string' && row.ai_explanation.trim() !== '') {
+                existingMap.set(String(row.id), row.ai_explanation);
+              }
+            });
+          }
 
-          setMigrationStatus("Synchronizing questions (preserving existing AI explanations)...");
-
+          const allRecords: any[] = [];
           for (const group of allDataToUpload) {
               for (const q of group.data) {
                   const idStr = String(q.id);
-                  const existingExplanation = existingMap.get(idStr);
-                  
-                  const finalExplanation = existingExplanation || q.ai_explanation || null;
+                  // Preserve existing Supabase AI explanation if present
+                  const preservedExplanation = existingMap.get(idStr) || q.ai_explanation || null;
 
-                  const payload = {
-                      id: q.id,
+                  allRecords.push({
+                      id: String(q.id),
                       category: group.category,
                       question_jp: q.questionJP,
                       question_my: q.questionMY,
-                      options: q.options, // Supabase handles JSON automatically
+                      options: q.options,
                       correct_option_id: q.correctOptionId,
                       explanation: q.explanation,
-                      ai_explanation: finalExplanation
-                  };
-
-                  const { error } = await supabase.from('questions').upsert(payload);
-                  if (error) {
-                      console.error("Migration error for", q.id, error);
-                      lastError = error.message;
-                      failCount++;
-                  } else {
-                      successCount++;
-                  }
+                      ai_explanation: preservedExplanation
+                  });
               }
           }
 
-          if (failCount > 0) {
-             setMigrationStatus(`Migration Finished. Success: ${successCount}, Failed: ${failCount}. Last Error: ${lastError}`);
-          } else {
-             setMigrationStatus(`Migration Complete. Successfully uploaded ${successCount} questions.`);
+          setMigrationStatus(`Updating ${allRecords.length} questions into Supabase in batches...`);
+
+          const BATCH_SIZE = 50;
+          let successCount = 0;
+          let failCount = 0;
+          let lastError = '';
+
+          for (let i = 0; i < allRecords.length; i += BATCH_SIZE) {
+              const batch = allRecords.slice(i, i + BATCH_SIZE);
+              const { error } = await supabase.from('questions').upsert(batch, { onConflict: 'id' });
+
+              if (error) {
+                  console.error(`Batch upsert error at index ${i}:`, error.message);
+                  for (const item of batch) {
+                      const { error: singleErr } = await supabase.from('questions').upsert(item, { onConflict: 'id' });
+                      if (singleErr) {
+                          failCount++;
+                          lastError = singleErr.message;
+                      } else {
+                          successCount++;
+                      }
+                  }
+              } else {
+                  successCount += batch.length;
+              }
+
+              setMigrationStatus(`Force updating... ${successCount}/${allRecords.length} questions updated (${Math.round((successCount / allRecords.length) * 100)}%)`);
           }
-      } catch (err: any) {
-          console.error("Fatal migration error:", err);
-          setMigrationStatus(`Fatal Error: ${err.message}`);
+
+          if (failCount > 0) {
+              setMigrationStatus(`Force update finished with ${failCount} errors. Successfully updated: ${successCount}. Last error: ${lastError}`);
+          } else {
+              setMigrationStatus(`✅ Supabase Force Update Complete! All ${successCount} questions updated (AI Explanations preserved).`);
+          }
+      } catch (error: any) {
+          console.error("Force update failed:", error);
+          setMigrationStatus(`Force update failed: ${error.message}`);
       } finally {
           setIsSyncing(false);
+          setTimeout(() => setMigrationStatus(''), 8000);
       }
   };
+
+  const handleMigrate2026DataToDB = handleForceUpdateAllToDB;
+  const handleMigrateDataToDB = handleForceUpdateAllToDB;
+
+  React.useEffect(() => {
+    const SYNC_KEY = 'force_update_supabase_preserve_ai_v2026_final';
+    if (localStorage.getItem(SYNC_KEY) !== 'completed') {
+      localStorage.setItem(SYNC_KEY, 'completed');
+      handleForceUpdateAllToDB();
+    }
+  }, []);
 
   const handleMigrateVocabToDB = async () => {
       setMigrationStatus("Clearing old vocabulary data...");
@@ -762,11 +707,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     Admin Dashboard
                 </h2>
                 <div className='flex gap-3 flex-wrap'>
-                    <button onClick={handleMigrateDataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
-                         {isSyncing ? 'Migrating Questions...' : 'Migrate Questions'}
-                    </button>
-                    <button onClick={handleMigrate2026DataToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
-                         {isSyncing ? 'Migrating 2026...' : 'Migrate 2026 Questions'}
+                    <button onClick={handleForceUpdateAllToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg text-xs font-black uppercase tracking-wider text-white disabled:opacity-50 flex items-center gap-1.5">
+                         <SparkleIcon className="w-4 h-4 text-amber-300" />
+                         {isSyncing ? 'Force Updating to Supabase...' : '⚡ Force Update All Questions (Preserve AI)'}
                     </button>
                     <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-emerald-600 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
                          {isSyncingVocab ? 'Migrating 399 Flashcards...' : 'Migrate 399 Flashcards'}
@@ -1515,6 +1458,26 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       </header>
 
       <main className="max-w-4xl p-3 sm:p-6 lg:p-8 pb-20">
+        {migrationStatus && (
+          <div className="mb-6 p-4 bg-slate-900/90 border border-blue-500/40 text-slate-100 rounded-2xl shadow-xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2">
+            <div className="flex items-center gap-3">
+              {isSyncing ? (
+                <div className="w-5 h-5 border-2 border-amber-400 border-t-transparent rounded-full animate-spin shrink-0" />
+              ) : (
+                <CheckCircleSolidIcon className="w-5 h-5 text-emerald-400 shrink-0" />
+              )}
+              <p className="text-xs sm:text-sm font-bold font-mono text-emerald-300">{migrationStatus}</p>
+            </div>
+            {!isSyncing && (
+              <button 
+                onClick={() => setMigrationStatus('')}
+                className="text-xs text-slate-400 hover:text-white px-2.5 py-1 bg-slate-800 rounded-lg transition-colors"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        )}
         
        {!isAdminViewVisible && (
         <>
@@ -1640,6 +1603,14 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               >
                 <FolderIcon className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>iOS Install</span>
+              </button>
+              <button
+                onClick={() => { setShowMoreMenu(false); handleForceUpdateAllToDB(); }}
+                disabled={isSyncing}
+                className="col-span-2 flex items-center justify-center gap-2 p-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white text-xs font-black transition-all shadow-md disabled:opacity-50"
+              >
+                <SparkleIcon className="w-4 h-4 text-amber-300" />
+                <span>{isSyncing ? 'Force Updating to Supabase...' : '⚡ Force Update DB (AI Explanation မထိခိုက်)'}</span>
               </button>
             </div>
 
