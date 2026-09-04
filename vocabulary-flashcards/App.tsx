@@ -232,7 +232,7 @@ const App: React.FC = () => {
                     onClose={() => { setSelectedKanji(null); setSelectedKanjiChar(null); }}
                 />
             )}
-            <header className="w-full max-w-5xl max-w-full overflow-hidden flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 sm:gap-6">
+            <header className="w-full max-w-5xl mx-auto overflow-hidden flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 sm:gap-6">
                  <div className="text-center sm:text-left">
                     <h1 className="text-2xl sm:text-3xl font-black text-slate-700 tracking-tight">Technical Vocabulary</h1>
                     <p className="text-slate-500 font-bold italic text-sm sm:text-base">Interactive Flashcards</p>
@@ -243,7 +243,7 @@ const App: React.FC = () => {
             </header>
 
             {/* Supabase Connection Status Banner */}
-            <div className="w-full max-w-5xl max-w-full overflow-hidden mb-6 sm:mb-10">
+            <div className="w-full max-w-5xl mx-auto overflow-hidden mb-6 sm:mb-10">
                 {!supabaseStatus.isConnected ? (
                     <div className="p-3.5 sm:p-4 rounded-2xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 text-xs sm:text-sm font-bold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 w-full min-w-0 max-w-full overflow-hidden">
                         <div className="flex items-start gap-2 min-w-0 flex-1 break-words [overflow-wrap:anywhere]">
@@ -271,7 +271,7 @@ const App: React.FC = () => {
                 )}
             </div>
             
-            <nav className="w-full max-w-4xl max-w-full overflow-hidden mb-8 sm:mb-12">
+            <nav className="w-full max-w-4xl mx-auto overflow-hidden mb-8 sm:mb-12">
                 <div className="bg-neumorphic-bg shadow-neumorphic-inset p-1.5 sm:p-2 rounded-2xl sm:rounded-3xl flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-full overflow-hidden">
                     {['dashboard', 'flashcard', 'list', 'study', 'quiz'].map(m => (
                         <button key={m} onClick={() => { setActiveStudyDay(null); setViewMode(m as ViewMode); }} className={`px-3.5 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl text-[11px] sm:text-xs font-black uppercase tracking-wider sm:tracking-widest transition-all ${getTabClass(m)}`}>{m}</button>
@@ -279,7 +279,7 @@ const App: React.FC = () => {
                 </div>
             </nav>
 
-            <main className="w-full max-w-5xl max-w-full overflow-hidden flex-grow flex flex-col items-center justify-center">
+            <main className="w-full max-w-5xl mx-auto overflow-hidden flex-grow flex flex-col items-center justify-center">
                 {viewMode === 'dashboard' && <Dashboard totalWords={vocabulary.length} learnedWordsCount={allLearnedWords.length} studyProgress={flashcardData.progress} totalDays={TOTAL_STUDY_DAYS} onNavigate={setViewMode} />}
                 {viewMode === 'study' && <StudyPlan studyProgress={flashcardData.progress} onSelectDay={handleSelectDay} totalDays={TOTAL_STUDY_DAYS} wordsPerDay={WORDS_PER_DAY} />}
                 {viewMode === 'quiz' && <Quiz learnedWords={allLearnedWords} onQuizComplete={() => setViewMode('study')} vocabulary={vocabulary} />}
@@ -287,7 +287,7 @@ const App: React.FC = () => {
                 {viewMode === 'list' && <ListView words={filteredWords} isEditMode={false} setWords={setVocabulary} categories={categories.slice(1)} markedAsLearned={markedAsLearnedSet} onToggleMarkedAsLearned={toggleFlashcardLearned} onPlayAudio={playWordAudio} loadingAudioId={loadingAudioId} onKanjiClick={handleKanjiClick} />}
             </main>
             
-            <footer className="w-full max-w-5xl max-w-full overflow-hidden mt-8 sm:mt-12 mb-8">
+            <footer className="w-full max-w-5xl mx-auto overflow-hidden mt-8 sm:mt-12 mb-8">
                 <div className="bg-neumorphic-bg shadow-neumorphic-outset p-4 sm:p-6 rounded-2xl sm:rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 max-w-full overflow-hidden">
                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full md:w-auto min-w-0 max-w-full">
                         <div className="bg-neumorphic-bg shadow-neumorphic-inset rounded-xl sm:rounded-2xl w-full sm:w-auto min-w-0 max-w-full overflow-hidden">

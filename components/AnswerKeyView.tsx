@@ -100,44 +100,46 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
   return (
     <div className="fixed inset-0 z-[60] bg-neumorphic-bg flex flex-col text-slate-700 dark:text-slate-200">
       {/* Header */}
-      <header className="shrink-0 flex items-center justify-between p-4 sm:p-6 shadow-neumorphic-outset bg-neumorphic-bg z-10">
-        <div className="flex items-center gap-3 sm:gap-4">
-          <button
-            onClick={onClose}
-            className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 active:shadow-neumorphic-inset transition-all"
-            title="Go Back"
-          >
-            <ChevronLeftIcon className="w-6 h-6" />
-          </button>
-          <div>
-            <h1 className="text-lg sm:text-xl font-black text-slate-800 dark:text-slate-100">
-              Answer Key ({currentCategoryObj.label})
-            </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
-              {filteredData.length} Questions / Answer Keys
-            </p>
+      <header className="shrink-0 shadow-neumorphic-outset bg-neumorphic-bg z-10 p-4 sm:p-6">
+        <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <button
+              onClick={onClose}
+              className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 active:shadow-neumorphic-inset transition-all"
+              title="Go Back"
+            >
+              <ChevronLeftIcon className="w-6 h-6" />
+            </button>
+            <div>
+              <h1 className="text-lg sm:text-xl font-black text-slate-800 dark:text-slate-100">
+                Answer Key ({currentCategoryObj.label})
+              </h1>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
+                {filteredData.length} Questions / Answer Keys
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Search Input */}
-        <div className="relative w-36 sm:w-64">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <SearchIcon className="w-4 h-4 text-slate-400" />
+          {/* Search Input */}
+          <div className="relative w-36 sm:w-64">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <SearchIcon className="w-4 h-4 text-slate-400" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search Q or Answer..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-slate-700 dark:text-slate-200 placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
+            />
           </div>
-          <input
-            type="text"
-            placeholder="Search Q or Answer..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-slate-700 dark:text-slate-200 placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
-          />
         </div>
       </header>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-8 flex flex-col items-center">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8 flex flex-col items-center w-full">
         {/* Category Selector Bar */}
-        <div className="w-full max-w-4xl mb-6">
+        <div className="w-full max-w-4xl lg:max-w-5xl mx-auto mb-6">
           <div className="bg-neumorphic-bg shadow-neumorphic-inset p-2 rounded-3xl flex flex-wrap gap-1.5 sm:gap-2">
             {CATEGORIES.map((cat) => (
               <button
@@ -161,7 +163,7 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
 
         {/* Chapter Bar (Only for Chapter-based categories: 2026 Level 1, 2026 Level 2, Main) */}
         {isChapterBased && (
-          <div className="w-full max-w-4xl mb-8">
+          <div className="w-full max-w-4xl lg:max-w-5xl mx-auto mb-8">
             <div className="bg-neumorphic-bg shadow-neumorphic-inset p-2 rounded-3xl flex flex-wrap gap-2">
               {chapters.map((ch) => (
                 <button
@@ -184,7 +186,7 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
         )}
 
         {/* Answer Cards List */}
-        <div className="w-full max-w-4xl space-y-6">
+        <div className="w-full max-w-4xl lg:max-w-5xl mx-auto space-y-6">
           {filteredData.length === 0 ? (
             <div className="text-center p-12 bg-neumorphic-bg shadow-neumorphic-outset rounded-3xl text-slate-500 dark:text-slate-400 font-bold">
               {searchQuery ? `No answers found matching "${searchQuery}".` : `No data available for ${currentCategoryObj.label}${isChapterBased ? ` Chapter ${activeChapter}` : ''}.`}

@@ -197,3 +197,9 @@ export const MenuIcon = ({ className = "w-6 h-6" }) => (
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
   </svg>
 );
+
+export const ScaleIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-16.5-.52c-1.01.143-2.01.317-3 .52m0 0l2.625 7.875c.348 1.044 1.325 1.755 2.425 1.755h.3c1.1 0 2.077-.711 2.425-1.755L8.25 5.49m0 0a49.124 49.124 0 017.5 0m0 0l2.625 7.875c.348 1.044 1.325 1.755 2.425 1.755h.3c1.1 0 2.077-.711 2.425-1.755L18.75 5.49" />
+  </svg>
+);

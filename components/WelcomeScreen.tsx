@@ -1,12 +1,16 @@
 
 import React, { useState } from 'react';
-import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon } from './Icons';
+import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon } from './Icons';
+import DailyTrackerWidget from './DailyTrackerWidget';
+import { useProgress } from '../contexts/ProgressContext';
 
 interface WelcomeScreenProps {
-  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary') => void;
+  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points') => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
+  const { weakQuestions } = useProgress();
+  const weakCount = Object.keys(weakQuestions).length;
 
   const calculateDaysLeft = () => {
     const today = new Date();
@@ -35,7 +39,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
   const [showInstallInfo, setShowInstallInfo] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-3 sm:p-6 bg-neumorphic-bg relative">
+    <div className="flex flex-col items-center justify-center min-h-screen p-3 sm:p-6 bg-neumorphic-bg relative w-full">
       <button
         onClick={() => setShowInstallInfo(true)}
         className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
@@ -108,7 +112,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
         </p>
       </div>
 
-      <div className="w-full max-w-5xl space-y-6 sm:space-y-10">
+      <div className="w-full max-w-5xl mx-auto space-y-6 sm:space-y-10">
+        {/* Daily Tracker & Exam Countdown Widget */}
+        <DailyTrackerWidget onStartPractice={() => onSelectApp('2026')} />
+
         {/* Study Guide Section */}
         <div className="bg-neumorphic-bg rounded-3xl sm:rounded-[3rem] shadow-neumorphic-inset p-5 sm:p-10 mb-6 sm:mb-10">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 ml-1 sm:ml-2">
@@ -134,6 +141,65 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                 </li>
               </ul>
             </div>
+        </div>
+
+        {/* Priority Quick Access: Weak Points & Cheat Sheet */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          {/* Weak Points Notebook */}
+          <button
+            onClick={() => onSelectApp('weak-points')}
+            className="p-5 sm:p-7 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group border border-red-500/20"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-red-500 group-hover:scale-110 transition-transform shrink-0">
+                  <PencilIcon className="w-6 h-6 sm:w-8 sm:h-8" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-base sm:text-lg font-black text-slate-700">အမှားမှတ်စု (Weak Points)</h2>
+                    {weakCount > 0 ? (
+                      <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 font-mono">
+                        {weakCount} ပုဒ်
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600">
+                        အမှားမရှိပါ
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-0.5 text-xs text-slate-500 font-medium">
+                    မှားယွင်းခဲ့သော မေးခွန်းများအား သီးသန့်ပြန်လည်လေ့ကျင့်ရန်။
+                  </p>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          {/* Cheat Sheet */}
+          <button
+            onClick={() => onSelectApp('cheat-sheet')}
+            className="p-5 sm:p-7 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group border border-amber-500/20"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-amber-500 group-hover:scale-110 transition-transform shrink-0">
+                  <ScaleIcon className="w-6 h-6 sm:w-8 sm:h-8" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-base sm:text-lg font-black text-slate-700">鉄骨 基準・数値まとめ</h2>
+                    <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700">
+                      Cheat Sheet
+                    </span>
+                  </div>
+                  <p className="mt-0.5 text-xs text-slate-500 font-medium">
+                    HTB(TC) bolt၊ အပေါက်ဖောက်ခြင်း၊ Stud၊ ဂဟေအပူချိန် ဖော်မြူလာနှင့် စံနှုန်း (၇၀) ခု။
+                  </p>
+                </div>
+              </div>
+            </div>
+          </button>
         </div>
 
         {/* Main Categories */}

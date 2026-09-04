@@ -5,6 +5,7 @@ import { CheckCircleSolidIcon, XCircleSolidIcon, LoadingSpinnerIcon, RefreshIcon
 import JapaneseText from './JapaneseText';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useProgress } from '../contexts/ProgressContext';
 
 interface ChapterQuizProps {
   questions: StudyCardData[];
@@ -18,6 +19,7 @@ interface ChapterQuizProps {
 const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onExit, onKanjiClick, isMockExam = false, timeLimit }) => {
   const { language } = useLanguage();
   const { fontSize } = useTheme();
+  const { recordWrongQuestion, incrementDailyAnswered, recordAnswer } = useProgress();
 
   const getFontSizeClass = (baseSize: 'sm' | 'base' | 'lg' | 'xl') => {
     switch (fontSize) {
@@ -89,8 +91,12 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
         if (isAnswered) return;
         setSelectedOptionId(optionId);
         setIsAnswered(true);
+        incrementDailyAnswered();
+        recordAnswer(String(currentQuestion.id), optionId);
         if (optionId === currentQuestion.correctOptionId) {
           setScore(prev => prev + 1);
+        } else {
+          recordWrongQuestion(currentQuestion, optionId);
         }
     }
   };
@@ -114,8 +120,15 @@ const ChapterQuiz: React.FC<ChapterQuizProps> = ({ questions, chapterTitle, onEx
   const handleFinishMockExam = () => {
       let newScore = 0;
       shuffledQuestions.forEach((q, idx) => {
-          if (userAnswers[idx] === q.correctOptionId) {
-              newScore++;
+          const userAns = userAnswers[idx];
+          if (userAns !== undefined) {
+              incrementDailyAnswered();
+              recordAnswer(String(q.id), userAns);
+              if (userAns === q.correctOptionId) {
+                  newScore++;
+              } else {
+                  recordWrongQuestion(q, userAns);
+              }
           }
       });
       setScore(newScore);

@@ -11,7 +11,7 @@ import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon } from './Icons';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
@@ -20,6 +20,8 @@ import { supabase } from '../lib/supabase';
 import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
 import AnswerKeyView from './AnswerKeyView';
 import TechnicalDictionary from './TechnicalDictionary';
+import CheatSheetView from './CheatSheetView';
+import WeakPointNotebook from './WeakPointNotebook';
 
 interface HistoryEntry {
   deviceId: string;
@@ -38,11 +40,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const { user, logout, syncLocalKeys } = useAuth();
   const { language, toggleLanguage, setLanguage } = useLanguage();
   const { theme, toggleTheme, fontSize, setFontSize } = useTheme();
-  const { bookmarkedIds, studyHistory, recordAnswer } = useProgress(); 
+  const { bookmarkedIds, studyHistory, recordAnswer, weakQuestions, recordWrongQuestion, incrementDailyAnswered } = useProgress(); 
   
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
   const [showAnswerKey, setShowAnswerKey] = useState(false);
   const [showDictionary, setShowDictionary] = useState(false);
+  const [showCheatSheet, setShowCheatSheet] = useState(false);
+  const [showWeakPoints, setShowWeakPoints] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
@@ -615,6 +619,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     if (currentSessionAnswer !== null) return; // Prevent changing answer in current session view
     setCurrentSessionAnswer(optionId);
     recordAnswer(cardId, optionId);
+    incrementDailyAnswered();
+    const currentCard = filteredData[currentCardIndex];
+    if (currentCard && optionId !== currentCard.correctOptionId) {
+      recordWrongQuestion(currentCard, optionId);
+    }
   };
 
   const startMockExam = () => {
@@ -899,6 +908,18 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         )
     }
 
+    if (showWeakPoints) {
+        return <WeakPointNotebook onGoBack={() => setShowWeakPoints(false)} />;
+    }
+
+    if (showCheatSheet) {
+        return <CheatSheetView onGoBack={() => setShowCheatSheet(false)} />;
+    }
+
+    if (showDictionary) {
+        return <TechnicalDictionary onGoBack={() => setShowDictionary(false)} />;
+    }
+
     if (showAnswerKey) {
         return (
             <>
@@ -1022,7 +1043,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
 
   return (
-    <div className="min-h-screen bg-neumorphic-bg">
+    <div className="min-h-screen bg-neumorphic-bg flex flex-col">
        {/* Dictionary Modal Overlay */}
        {showDictionary && (
          <div className="fixed inset-0 z-[70] overflow-y-auto bg-neumorphic-bg">
@@ -1342,6 +1363,25 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <BookmarkIcon className="w-5 h-5" />
                 </button>
                 <button
+                    onClick={() => setShowWeakPoints(true)}
+                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all relative"
+                    title="Weak Points Notebook (အမှားမှတ်စု)"
+                >
+                    <PencilIcon className="w-5 h-5" />
+                    {Object.keys(weakQuestions).length > 0 && (
+                      <span className="absolute -top-1 -right-1 px-1.5 py-0.2 text-[10px] font-black rounded-full bg-red-500 text-white min-w-[18px] text-center shadow">
+                        {Object.keys(weakQuestions).length}
+                      </span>
+                    )}
+                </button>
+                <button
+                    onClick={() => setShowCheatSheet(true)}
+                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-amber-500 active:shadow-neumorphic-inset transition-all"
+                    title="Cheat Sheet (စံနှုန်းနှင့် ဖော်မြူလာ)"
+                >
+                    <ScaleIcon className="w-5 h-5" />
+                </button>
+                <button
                     onClick={() => setShowAnswerKey(true)}
                     className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all"
                     title="Answer Key"
@@ -1457,7 +1497,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         </div>
       </header>
 
-      <main className="max-w-4xl p-3 sm:p-6 lg:p-8 pb-20">
+      <main className="w-full max-w-4xl lg:max-w-5xl mx-auto p-3 sm:p-6 lg:p-8 pb-20">
         {migrationStatus && (
           <div className="mb-6 p-4 bg-slate-900/90 border border-blue-500/40 text-slate-100 rounded-2xl shadow-xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2">
             <div className="flex items-center gap-3">
@@ -1577,11 +1617,32 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             {/* Quick Actions Grid */}
             <div className="grid grid-cols-2 gap-2.5 mb-4">
               <button
+                onClick={() => { setShowMoreMenu(false); setShowWeakPoints(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all relative"
+              >
+                <PencilIcon className="w-4 h-4 text-red-500 shrink-0" />
+                <span>အမှားမှတ်စု ({Object.keys(weakQuestions).length})</span>
+              </button>
+              <button
+                onClick={() => { setShowMoreMenu(false); setShowCheatSheet(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+              >
+                <ScaleIcon className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>Cheat Sheet</span>
+              </button>
+              <button
                 onClick={() => { setShowMoreMenu(false); setShowAnswerKey(true); }}
                 className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
               >
                 <ListBulletIcon className="w-4 h-4 text-blue-600 shrink-0" />
                 <span>Answer Key</span>
+              </button>
+              <button
+                onClick={() => { setShowMoreMenu(false); setShowDictionary(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+              >
+                <BookOpenIcon className="w-4 h-4 text-indigo-600 shrink-0" />
+                <span>Dictionary</span>
               </button>
               <button
                 onClick={() => { setShowMoreMenu(false); setShowProfile(true); }}
@@ -1652,7 +1713,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                   onClick={toggleTheme}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-xs font-bold text-slate-700"
                 >
-                  {theme === 'light' ? <><SunIcon className="w-4 h-4 text-amber-500" /> Light</> : theme === 'dark' ? <><MoonIcon className="w-4 h-4 text-blue-400" /> Dark</> : <><SparkleIcon className="w-4 h-4 text-indigo-400" /> Khachannel</>}
+                  {theme === 'light' ? <><SunIcon className="w-4 h-4 text-amber-500" /> Light</> : theme === 'dark' ? <><MoonIcon className="w-4 h-4 text-blue-400" /> Dark</> : <><SparkleIcon className="w-4 h-4 text-amber-400" /> Gold</>}
                 </button>
               </div>
 

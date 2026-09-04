@@ -234,7 +234,7 @@ export const TechnicalDictionary: React.FC<TechnicalDictionaryProps> = ({ onGoBa
   };
 
   return (
-    <div className="min-h-screen bg-neumorphic-bg text-slate-700 py-6 px-3 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-neumorphic-bg text-slate-700 py-6 px-3 sm:px-6 lg:px-8 w-full flex flex-col items-center">
       {/* Kanji Tooltip Modal */}
       {selectedKanjiChar && (
         <KanjiTooltip
@@ -257,7 +257,7 @@ export const TechnicalDictionary: React.FC<TechnicalDictionaryProps> = ({ onGoBa
         </div>
       )}
 
-      <div className="max-w-6xl mx-auto space-y-6">
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto space-y-6">
         {/* Header Bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 p-4 sm:p-6 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset">
           <div className="flex items-center gap-4">
