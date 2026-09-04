@@ -1,12 +1,13 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Theme = 'light' | 'dark' | 'gold';
+export type Theme = 'light' | 'dark' | 'gold' | 'mono';
 type FontSize = 'small' | 'medium' | 'large';
 
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
   fontSize: FontSize;
   setFontSize: (size: FontSize) => void;
 }
@@ -14,10 +15,10 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
+  const [theme, setThemeState] = useState<Theme>(() => {
     try {
       const storedTheme = localStorage.getItem('app_theme');
-      if (storedTheme === 'dark' || storedTheme === 'light' || storedTheme === 'gold') {
+      if (storedTheme === 'dark' || storedTheme === 'light' || storedTheme === 'gold' || storedTheme === 'mono') {
         return storedTheme;
       }
       if (storedTheme === 'khachannel') {
@@ -46,7 +47,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove('light', 'dark', 'gold', 'khachannel');
+    root.classList.remove('light', 'dark', 'gold', 'khachannel', 'mono');
     root.classList.add(theme);
     try {
       localStorage.setItem('app_theme', theme);
@@ -64,11 +65,20 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
   };
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : prevTheme === 'dark' ? 'gold' : 'light'));
+  const setTheme = (newTheme: Theme) => {
+    setThemeState(newTheme);
   };
 
-  const value = { theme, toggleTheme, fontSize, setFontSize };
+  const toggleTheme = () => {
+    setThemeState(prevTheme => {
+      if (prevTheme === 'light') return 'dark';
+      if (prevTheme === 'dark') return 'gold';
+      if (prevTheme === 'gold') return 'mono';
+      return 'light';
+    });
+  };
+
+  const value = { theme, toggleTheme, setTheme, fontSize, setFontSize };
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

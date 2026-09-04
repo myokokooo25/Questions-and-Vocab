@@ -109,8 +109,9 @@ export interface Question {
 
 ### Available Themes
 1. **Light Mode (`html.light`)**: Soft neutral slate/gray neumorphic background (`#e0e5ec`).
-2. **Dark Mode (`html.dark`)**: Modern slate navy neumorphic dark palette (`#1e232d`).
+2. **Dark Mode (`html.dark`)**: High-contrast, eye-safe slate navy dark theme (`#151a23` soothing dark canvas, crisp luminous typography with >6:1 contrast ratio, high-visibility cyan `#38bdf8` Furigana `<rt>`, and subtle 1px border outlines on cards).
 3. **Gold Mode (`html.gold`)**: Premium luxury dark & gold theme (`#0a0a0a` background, `#d9b340` gold accents, `#fbbf24` ruby text).
+4. **Minimalist Black & White (`html.mono`)**: Pure high-contrast black & white minimalist theme. Strictly flat 1px crisp borders, zero blurry drop-shadows or shade, zero glassmorphism blur, clean readable typography.
 
 ### Styling Rules
 - Use Tailwind utility classes with custom shadow tokens:

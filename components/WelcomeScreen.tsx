@@ -1,14 +1,16 @@
 
 import React, { useState } from 'react';
-import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon } from './Icons';
+import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon } from './Icons';
 import DailyTrackerWidget from './DailyTrackerWidget';
 import { useProgress } from '../contexts/ProgressContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface WelcomeScreenProps {
-  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points') => void;
+  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator') => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
+  const { theme, toggleTheme } = useTheme();
   const { weakQuestions } = useProgress();
   const weakCount = Object.keys(weakQuestions).length;
 
@@ -40,13 +42,25 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-3 sm:p-6 bg-neumorphic-bg relative w-full">
-      <button
-        onClick={() => setShowInstallInfo(true)}
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
-        title="iOS Install Guide"
-      >
-        <InfoIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-      </button>
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2 z-10">
+        <button
+          onClick={toggleTheme}
+          className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+          title={`Theme: ${theme === 'light' ? 'Light' : theme === 'dark' ? 'Dark' : theme === 'gold' ? 'Gold' : 'Minimalist B&W (အဖြူအမည်း)'}`}
+        >
+          {theme === 'light' ? <SunIcon className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" /> :
+           theme === 'dark' ? <MoonIcon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" /> :
+           theme === 'gold' ? <SparkleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" /> :
+           <ContrastIcon className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900 dark:text-slate-100" />}
+        </button>
+        <button
+          onClick={() => setShowInstallInfo(true)}
+          className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
+          title="iOS Install Guide"
+        >
+          <InfoIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+      </div>
 
       {showInstallInfo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -143,8 +157,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
             </div>
         </div>
 
-        {/* Priority Quick Access: Weak Points & Cheat Sheet */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        {/* Priority Quick Access: Weak Points, Cheat Sheet & Engineering Calculator */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {/* Weak Points Notebook */}
           <button
             onClick={() => onSelectApp('weak-points')}
@@ -157,7 +171,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-base sm:text-lg font-black text-slate-700">အမှားမှတ်စု (Weak Points)</h2>
+                    <h2 className="text-base sm:text-lg font-black text-slate-700">အမှားမှတ်စု</h2>
                     {weakCount > 0 ? (
                       <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 font-mono">
                         {weakCount} ပုဒ်
@@ -169,7 +183,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                     )}
                   </div>
                   <p className="mt-0.5 text-xs text-slate-500 font-medium">
-                    မှားယွင်းခဲ့သော မေးခွန်းများအား သီးသန့်ပြန်လည်လေ့ကျင့်ရန်။
+                    မှားယွင်းခဲ့သော မေးခွန်းများအား သီးသန့်ပြန်လေ့ကျင့်ရန်။
                   </p>
                 </div>
               </div>
@@ -188,13 +202,38 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-base sm:text-lg font-black text-slate-700">鉄骨 基準・数値まとめ</h2>
+                    <h2 className="text-base sm:text-lg font-black text-slate-700">基準・数値まとめ</h2>
                     <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700">
                       Cheat Sheet
                     </span>
                   </div>
                   <p className="mt-0.5 text-xs text-slate-500 font-medium">
-                    HTB(TC) bolt၊ အပေါက်ဖောက်ခြင်း၊ Stud၊ ဂဟေအပူချိန် ဖော်မြူလာနှင့် စံနှုန်း (၇၀) ခု။
+                    HTB bolt၊ အပေါက်ဖောက်၊ Stud၊ ဂဟေအပူချိန် စံနှုန်း (၇၀) ခု။
+                  </p>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          {/* Engineering Calculator */}
+          <button
+            onClick={() => onSelectApp('calculator')}
+            className="p-5 sm:p-7 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group border border-blue-500/20"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform shrink-0">
+                  <CalculatorIcon className="w-6 h-6 sm:w-8 sm:h-8" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-base sm:text-lg font-black text-slate-700">工学計算機</h2>
+                    <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-blue-100 dark:bg-blue-950/40 text-blue-700">
+                      Calculator
+                    </span>
+                  </div>
+                  <p className="mt-0.5 text-xs text-slate-500 font-medium">
+                    溶接入熱 (Heat Input) နှင့် Stud အလျား တွက်ချက်မှု။
                   </p>
                 </div>
               </div>

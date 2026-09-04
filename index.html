@@ -91,22 +91,143 @@
       }
       html.gold .bg-neumorphic-bg, html.khachannel .bg-neumorphic-bg { background-color: #121212; }
       html.gold body, html.khachannel body { background-color: #0a0a0a; }
+      /* -------------------------------------------------------------------------
+         DARK THEME (HIGH-LEGIBILITY REFINED SLATE DARK)
+         High contrast typography, vibrant furigana, sharp boundary definition
+         ------------------------------------------------------------------------- */
       html.dark {
-        --color-neumorphic-bg: 30 35 45;
-        --color-neumorphic-text: 226 232 240;
-        --color-neumorphic-shadow-dark: 18 22 28;
-        --color-neumorphic-shadow-light: 42 48 62;
-        --color-slate-50: 30 41 59;
-        --color-slate-100: 38 48 64;
-        --color-slate-200: 51 65 85;
-        --color-slate-300: 71 85 105;
-        --color-slate-400: 156 163 175;
-        --color-slate-500: 180 190 205;
-        --color-slate-600: 203 213 225;
-        --color-slate-700: 229 231 240;
-        --color-slate-800: 248 250 252;
+        --color-neumorphic-bg: 21 26 35; /* #151a23 - Deep soothing dark slate */
+        --color-neumorphic-text: 243 244 246; /* #f3f4f6 - Crisp bright text */
+        --color-neumorphic-shadow-dark: 10 13 18;
+        --color-neumorphic-shadow-light: 38 46 62;
+        
+        --color-slate-50: 27 34 46;
+        --color-slate-100: 36 45 61;
+        --color-slate-200: 55 68 90;
+        --color-slate-300: 148 163 184; /* Muted text / dividers: very legible */
+        --color-slate-400: 195 206 222; /* Secondary text, Question IDs, icons: crystal clear (5.8:1+) */
+        --color-slate-500: 216 225 236; /* Subtitles & AI explanations: crisp & sharp */
+        --color-slate-600: 232 238 245; /* Body text & options: high contrast */
+        --color-slate-700: 243 246 250; /* Headings & titles: vivid bright */
+        --color-slate-800: 255 255 255; /* Highlights & main labels: pure white */
         --color-slate-900: 255 255 255;
+        
+        /* Tactical elevation with subtle 1px border definition so cards never blur into background */
+        --shadow-outset: 0 0 0 1px rgba(255, 255, 255, 0.08), 6px 6px 16px rgba(0, 0, 0, 0.45), -3px -3px 10px rgba(255, 255, 255, 0.03);
+        --shadow-inset: inset 0 0 0 1px rgba(255, 255, 255, 0.07), inset 4px 4px 8px rgba(0, 0, 0, 0.5);
+        --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.08), 3px 3px 6px rgba(0, 0, 0, 0.35);
       }
+      html.dark body {
+        background-color: #151a23;
+        color: #f3f4f6;
+      }
+      html.dark .bg-neumorphic-bg {
+        background-color: #151a23;
+      }
+      /* Vivid, high-visibility Furigana (Untouched as requested) */
+      html.dark rt {
+        color: #38bdf8 !important; /* Sky cyan - pops vividly above kanji */
+        font-weight: 700 !important;
+        font-size: 0.7em !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+      }
+      /* Ensure Kanji characters have 100% identical color contrast to Hiragana and Katakana in Dark Mode */
+      html.dark ruby {
+        color: inherit !important;
+      }
+      html.dark ruby > span,
+      html.dark span[title*="Kanji"] {
+        color: inherit !important;
+      }
+      /* Ensure vibrant contrast for status / action colors in dark mode */
+      html.dark .text-blue-600 { color: #60a5fa !important; }
+      html.dark .text-blue-500 { color: #38bdf8 !important; }
+      html.dark .text-green-600 { color: #4ade80 !important; }
+      html.dark .text-red-600 { color: #f87171 !important; }
+      html.dark .text-amber-600 { color: #fbbf24 !important; }
+      html.dark .text-amber-500 { color: #fcd34d !important; }
+
+      /* Clear, non-blurry inputs in dark mode */
+      html.dark input, 
+      html.dark textarea, 
+      html.dark select {
+        color: #ffffff !important;
+        background-color: #1a202c !important;
+      }
+
+      /* Distinct header in dark mode */
+      html.dark header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+
+      /* -------------------------------------------------------------------------
+         MONO / MINIMALIST B&W THEME (ရိုးရှင်း အဖြူအမည်း - Zero Glass, Zero Shade)
+         Pure crisp 1px borders, zero blurry drop-shadows, zero glassmorphism
+         ------------------------------------------------------------------------- */
+      html.mono {
+        --color-neumorphic-bg: 255 255 255;
+        --color-neumorphic-text: 15 23 42;
+        --color-neumorphic-shadow-dark: 226 232 240;
+        --color-neumorphic-shadow-light: 255 255 255;
+        --color-slate-50: 255 255 255;
+        --color-slate-100: 248 250 252;
+        --color-slate-200: 226 232 240;
+        --color-slate-300: 203 213 225;
+        --color-slate-400: 100 116 139;
+        --color-slate-500: 71 85 105;
+        --color-slate-600: 51 65 85;
+        --color-slate-700: 30 41 59;
+        --color-slate-800: 15 23 42;
+        --color-slate-900: 0 0 0;
+        
+        --shadow-outset: 0 0 0 1px #d1d5db;
+        --shadow-inset: inset 0 0 0 1.5px #0f172a;
+        --shadow-sm: 0 0 0 1px #e5e7eb;
+      }
+      html.mono body {
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+      html.mono .bg-neumorphic-bg {
+        background-color: #ffffff;
+      }
+      html.mono rt {
+        color: #0f172a;
+        font-weight: 700;
+      }
+      /* Remove all glassmorphism blur and text-shadows */
+      html.mono * {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        text-shadow: none !important;
+      }
+      /* Pure flat crisp 1px outlines - no soft/blurry shades */
+      html.mono .shadow-neumorphic-outset {
+        box-shadow: 0 0 0 1px #d1d5db !important;
+      }
+      html.mono .shadow-neumorphic-inset {
+        box-shadow: inset 0 0 0 1.5px #0f172a !important;
+      }
+      html.mono .shadow-neumorphic-sm {
+        box-shadow: 0 0 0 1px #e5e7eb !important;
+      }
+      html.mono .shadow,
+      html.mono .shadow-sm,
+      html.mono .shadow-md,
+      html.mono .shadow-lg,
+      html.mono .shadow-xl,
+      html.mono .shadow-2xl {
+        box-shadow: 0 0 0 1px #e2e8f0 !important;
+      }
+      html.mono button:active.shadow-neumorphic-outset,
+      html.mono .active\:shadow-neumorphic-inset:active {
+        box-shadow: inset 0 0 0 2px #0f172a !important;
+      }
+      html.mono header {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+
       
       html, body {
         overflow-x: hidden;
@@ -132,9 +253,6 @@
         font-weight: 600;
         text-align: center;
         color: #2563eb;
-      }
-      html.dark rt {
-        color: #93c5fd;
       }
       html.gold rt, html.khachannel rt {
         color: #fbbf24;

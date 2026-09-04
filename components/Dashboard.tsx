@@ -11,7 +11,7 @@ import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon } from './Icons';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
@@ -39,7 +39,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const { user, logout, syncLocalKeys } = useAuth();
   const { language, toggleLanguage, setLanguage } = useLanguage();
-  const { theme, toggleTheme, fontSize, setFontSize } = useTheme();
+  const { theme, toggleTheme, setTheme, fontSize, setFontSize } = useTheme();
   const { bookmarkedIds, studyHistory, recordAnswer, weakQuestions, recordWrongQuestion, incrementDailyAnswered } = useProgress(); 
   
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
@@ -1475,9 +1475,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <button
                     onClick={toggleTheme}
                     className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
-                    title="Theme"
+                    title={`Theme: ${theme === 'light' ? 'Light' : theme === 'dark' ? 'Dark' : theme === 'gold' ? 'Gold' : 'Minimalist B&W (အဖြူအမည်း)'}`}
                 >
-                    {theme === 'light' ? <MoonIcon className="w-5 h-5" /> : theme === 'dark' ? <SparkleIcon className="w-5 h-5 text-amber-500" /> : <SunIcon className="w-5 h-5" />}
+                    {theme === 'light' ? <SunIcon className="w-5 h-5 text-amber-500" /> : theme === 'dark' ? <MoonIcon className="w-5 h-5 text-blue-400" /> : theme === 'gold' ? <SparkleIcon className="w-5 h-5 text-amber-400" /> : <ContrastIcon className="w-5 h-5 text-slate-900 dark:text-slate-100" />}
                 </button>
                 <button
                     onClick={() => setShowInstallInfo(true)}
@@ -1709,12 +1709,26 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <span className="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                   <SparkleIcon className="w-4 h-4 text-amber-500" /> Theme
                 </span>
-                <button
-                  onClick={toggleTheme}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-xs font-bold text-slate-700"
-                >
-                  {theme === 'light' ? <><SunIcon className="w-4 h-4 text-amber-500" /> Light</> : theme === 'dark' ? <><MoonIcon className="w-4 h-4 text-blue-400" /> Dark</> : <><SparkleIcon className="w-4 h-4 text-amber-400" /> Gold</>}
-                </button>
+                <div className="flex gap-1 bg-neumorphic-bg p-1 rounded-xl shadow-neumorphic-inset">
+                  {(['light', 'dark', 'gold', 'mono'] as const).map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setTheme(t)}
+                      className={`px-2 py-1 text-xs font-bold rounded-lg capitalize transition-all flex items-center gap-1 ${
+                        theme === t
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'text-slate-500 hover:text-slate-700'
+                      }`}
+                      title={t === 'mono' ? 'Minimalist Black & White (No shade/glass)' : t}
+                    >
+                      {t === 'light' ? <SunIcon className="w-3.5 h-3.5" /> :
+                       t === 'dark' ? <MoonIcon className="w-3.5 h-3.5" /> :
+                       t === 'gold' ? <SparkleIcon className="w-3.5 h-3.5" /> :
+                       <ContrastIcon className="w-3.5 h-3.5" />}
+                      <span>{t === 'mono' ? 'B&W' : t}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Font Size Switch */}

@@ -11,10 +11,11 @@ import FlashcardApp from './vocabulary-flashcards/App';
 import TechnicalDictionary from './components/TechnicalDictionary';
 import CheatSheetView from './components/CheatSheetView';
 import WeakPointNotebook from './components/WeakPointNotebook';
+import EngineeringCalculator from './components/EngineeringCalculator';
 import InstallPrompt from './components/InstallPrompt';
 import { ChevronLeftIcon } from './components/Icons';
 
-type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points';
+type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator';
 
 const FlashcardAppWrapper: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   return (
@@ -79,6 +80,7 @@ const AppContent: React.FC = () => {
         { selectedApp === 'dictionary' && <TechnicalDictionary onGoBack={handleGoBack} /> }
         { selectedApp === 'cheat-sheet' && <CheatSheetView onGoBack={handleGoBack} /> }
         { selectedApp === 'weak-points' && <WeakPointNotebook onGoBack={handleGoBack} /> }
+        { selectedApp === 'calculator' && <EngineeringCalculator onGoBack={handleGoBack} /> }
       </div>
     </div>
   );

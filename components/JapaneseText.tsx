@@ -19,7 +19,7 @@ const JapaneseText: React.FC<JapaneseTextProps> = ({ text, onKanjiClick }) => {
       if (kanjiRegex.test(part) && part.length === 1) {
         if (!onKanjiClick) {
           return (
-            <span key={`${part}-${index}`} className="font-bold text-slate-800 dark:text-slate-100">
+            <span key={`${part}-${index}`} className="font-bold text-inherit">
               {part}
             </span>
           );
@@ -31,7 +31,7 @@ const JapaneseText: React.FC<JapaneseTextProps> = ({ text, onKanjiClick }) => {
               e.stopPropagation(); // Prevent the parent button from being clicked
               onKanjiClick(part, e);
             }}
-            className="cursor-pointer font-bold text-slate-800 dark:text-slate-100 hover:text-blue-500 dark:hover:text-blue-300 hover:bg-blue-500/20 px-0.5 rounded transition-all duration-150 inline border-b border-dashed border-blue-400/40 hover:border-blue-400"
+            className="cursor-pointer font-bold text-inherit hover:text-blue-500 dark:hover:text-blue-300 hover:bg-blue-500/20 px-0.5 rounded transition-all duration-150 inline border-b border-dashed border-blue-400/40 hover:border-blue-400"
             title={`Kanji အဓိပ္ပာယ် ကြည့်ရန် နှိပ်ပါ: ${part}`}
           >
             {part}
