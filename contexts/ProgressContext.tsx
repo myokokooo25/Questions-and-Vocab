@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react';
 import { useAuth } from './AuthContext';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { StudyCardData } from '../types';
 
 // Define the shape of our Flashcard Progress data
@@ -136,8 +136,8 @@ export const ProgressProvider: React.FC<{ children: ReactNode }> = ({ children }
         console.error("Error loading local progress", e);
       }
 
-      // If user is logged in with a DB ID, try to fetch from Supabase
-      if (user && user.dbId) {
+      // If user is logged in with a DB ID and Supabase is configured, try to fetch from Supabase
+      if (user && user.dbId && isSupabaseConfigured) {
         try {
           const { data, error } = await supabase
             .from('user_progress')
@@ -194,7 +194,7 @@ export const ProgressProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   // 3. Persist to Supabase (Debounced)
   const saveToSupabase = async () => {
-    if (!user || !user.dbId) return;
+    if (!user || !user.dbId || !isSupabaseConfigured) return;
 
     try {
       const payload = {

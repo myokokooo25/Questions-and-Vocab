@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '../types';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface AuthContextType {
   user: User | null;
@@ -90,7 +90,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           }
 
           // Security check if DB is available
-          if (storedUser.isAdmin && storedUser.accessKey !== 'MANOEL' && storedUser.accessKey !== 'ADMIN') {
+          if (isSupabaseConfigured && storedUser.isAdmin && storedUser.accessKey !== 'MANOEL' && storedUser.accessKey !== 'ADMIN') {
              try {
                const { data } = await supabase
                   .from('access_codes')
@@ -166,6 +166,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
 
     try {
+      // If Supabase is not configured, fall directly to fallback authentication
+      if (!isSupabaseConfigured) {
+        const isFallbackKey = FALLBACK_KEYS.includes(upperAccessKey) || upperAccessKey === '420' || upperAccessKey.startsWith('DEMO') || upperAccessKey.startsWith('TEST');
+        if (isFallbackKey) {
+          const userData = createFallbackUser();
+          localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(userData));
+          setUser(userData);
+          setLoading(false);
+          return true;
+        } else {
+          setError('Database offline. Enter 420 or TEST to log in.');
+          setLoading(false);
+          return false;
+        }
+      }
+
       // 1. Fetch Code Data from Supabase
       const { data, error: dbError } = await supabase
         .from('access_codes')

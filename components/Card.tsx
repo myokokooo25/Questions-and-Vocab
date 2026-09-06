@@ -8,7 +8,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import JapaneseText from './JapaneseText';
 import { vocabularyData } from '../data/vocab';
 import ReportModal from './ReportModal';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { playJapaneseAudio, playSequentialJapaneseAudio, stopAudio, cleanJapaneseForTTS } from '../lib/audio';
 
 // Helper function to prepare text for TTS by removing furigana annotations.
@@ -202,17 +202,18 @@ const Card: React.FC<CardProps> = ({
         ai_explanation: formatted
       };
 
-      const { error } = await supabase
-        .from('questions')
-        .upsert(payload);
-        
-      if (error) {
-        console.error("Failed to save AI explanation to DB:", error);
-        setAiError(`Database Error: ${error.message} (Please check Supabase RLS policies or column names)`);
-      } else {
-        // Update local reference so it doesn't refetch if clicked again without forceNew
-        data.ai_explanation = formatted;
+      if (isSupabaseConfigured) {
+        const { error } = await supabase
+          .from('questions')
+          .upsert(payload);
+          
+        if (error) {
+          console.warn("Failed to save AI explanation to DB:", error.message);
+        }
       }
+
+      // Always update local reference so user can see it
+      data.ai_explanation = formatted;
 
     } catch (err: any) {
       setAiError(`Error: ${err.message || 'Unknown error'}`);

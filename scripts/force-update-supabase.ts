@@ -11,10 +11,12 @@ const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://kdulrcovfiqbsenevo
 const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 if (!supabaseKey) {
-  console.warn('Note: VITE_SUPABASE_ANON_KEY is not set in process.env. If running locally, set VITE_SUPABASE_ANON_KEY.');
+  console.error('❌ Error: VITE_SUPABASE_ANON_KEY or SUPABASE_SERVICE_ROLE_KEY is not set.');
+  console.error('Please provide VITE_SUPABASE_ANON_KEY in your environment to run this update.');
+  process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey || 'dummy');
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function forceUpdateSupabase() {
   console.log('🚀 Starting Force Update of questions to Supabase (preserving AI explanation)...');
@@ -49,7 +51,9 @@ async function forceUpdateSupabase() {
     .select('id, ai_explanation');
 
   if (fetchErr) {
-    console.warn('Could not fetch existing AI explanations:', fetchErr.message);
+    console.error('❌ CRITICAL ERROR fetching existing AI explanations:', fetchErr.message);
+    console.error('Aborting force update to prevent loss of existing AI explanations.');
+    process.exit(1);
   }
 
   const existingMap = new Map<string, string | null>();

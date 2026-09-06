@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BookOpenIcon, PencilSquareIcon, ListBulletIcon, RectangleStackIcon } from './Icons';
-import { supabase } from '../../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { vocabularyData } from '../data/vocabulary';
 
 type ViewMode = 'dashboard' | 'flashcard' | 'list' | 'study' | 'quiz';
@@ -22,6 +22,10 @@ const Dashboard: React.FC<DashboardProps> = ({ totalWords, learnedWordsCount, st
   const progressPercentage = totalDays > 0 ? Math.round((totalStudiedDays / totalDays) * 100) : 0;
 
   const handleMigrate = async () => {
+    if (!isSupabaseConfigured) {
+      setMigrationStatus("Supabase API key is not configured. Database synchronization unavailable.");
+      return;
+    }
     setIsMigrating(true);
     setMigrationStatus("Checking database for existing records...");
     let successCount = 0;

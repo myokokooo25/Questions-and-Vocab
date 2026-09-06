@@ -16,7 +16,7 @@ import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
 import KanjiTooltip from './KanjiTooltip';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { vocabularyData } from '../vocabulary-flashcards/data/vocabulary';
 import AnswerKeyView from './AnswerKeyView';
 import TechnicalDictionary from './TechnicalDictionary';
@@ -161,6 +161,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       localData.forEach(item => localMap.set(String(item.id), item));
 
       try {
+        if (!isSupabaseConfigured) {
+          setOnlineQuestions(localData);
+          return;
+        }
+
         let query = supabase.from('questions').select('*');
         
         if (selectedApp === '2021') {
@@ -249,7 +254,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   // --- REALTIME PRESENCE ---
   useEffect(() => {
-    if (!user) return;
+    if (!user || !isSupabaseConfigured) return;
 
     const channel = supabase.channel('online-users', {
       config: {
@@ -310,6 +315,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   // --- FORCE UPDATE ALL QUESTIONS TO SUPABASE (PRESERVING AI EXPLANATION) ---
   const handleForceUpdateAllToDB = async () => {
+      if (!isSupabaseConfigured) {
+          console.warn("Supabase is not configured or invalid API key. Skipping database upload.");
+          setMigrationStatus("Supabase is not configured. Running offline with local questions.");
+          setTimeout(() => setMigrationStatus(''), 4000);
+          return;
+      }
+
       setMigrationStatus("🚀 Starting Force Update to Supabase (Preserving AI Explanation)...");
       setIsSyncing(true);
 
@@ -345,7 +357,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             .select('id, ai_explanation');
 
           if (fetchErr) {
-            console.warn("Error fetching existing AI explanations:", fetchErr.message);
+            console.warn("Notice fetching existing AI explanations:", fetchErr.message);
+            if (fetchErr.message?.includes('Invalid API key') || fetchErr.message?.includes('JWT') || fetchErr.message?.includes('apikey')) {
+              setMigrationStatus("Supabase API key is invalid or lacks access. Running in local offline mode.");
+              setIsSyncing(false);
+              setTimeout(() => setMigrationStatus(''), 6000);
+              return;
+            }
           }
 
           const existingMap = new Map<string, string | null>();
@@ -389,6 +407,12 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               const { error } = await supabase.from('questions').upsert(batch, { onConflict: 'id' });
 
               if (error) {
+                  if (error.message?.includes('Invalid API key') || error.message?.includes('JWT') || error.message?.includes('apikey')) {
+                      console.warn("Supabase upsert stopped: Invalid or unauthorized API key.");
+                      setMigrationStatus("Supabase API key is invalid. Continuing in local offline mode.");
+                      failCount += (allRecords.length - successCount);
+                      break;
+                  }
                   console.error(`Batch upsert error at index ${i}:`, error.message);
                   for (const item of batch) {
                       const { error: singleErr } = await supabase.from('questions').upsert(item, { onConflict: 'id' });
@@ -423,15 +447,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const handleMigrate2026DataToDB = handleForceUpdateAllToDB;
   const handleMigrateDataToDB = handleForceUpdateAllToDB;
 
-  React.useEffect(() => {
-    const SYNC_KEY = 'force_update_supabase_preserve_ai_v2026_final';
-    if (localStorage.getItem(SYNC_KEY) !== 'completed') {
-      localStorage.setItem(SYNC_KEY, 'completed');
-      handleForceUpdateAllToDB();
-    }
-  }, []);
-
   const handleMigrateVocabToDB = async () => {
+      if (!isSupabaseConfigured) {
+          setMigrationStatus("Supabase API key is not configured.");
+          return;
+      }
       setMigrationStatus("Clearing old vocabulary data...");
       setIsSyncingVocab(true);
 
@@ -490,6 +510,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   };
 
   const handleBulkUpload = async () => {
+    if (!isSupabaseConfigured) {
+      setMigrationStatus("Supabase API key is not configured. Bulk upload unavailable.");
+      return;
+    }
     if (!bulkJson.trim()) {
       setMigrationStatus("Please paste JSON data first.");
       return;
@@ -1256,8 +1280,14 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               >
                 <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
-              <h1 className="text-sm sm:text-xl font-black text-slate-700 whitespace-nowrap truncate max-w-[130px] sm:max-w-none">
-                {isOldQuestionMode ? `${selectedApp}年 過去問題` : '鉄骨技術者 試験対策'}
+              <h1 className="text-sm sm:text-xl font-black text-slate-700 whitespace-nowrap truncate max-w-[150px] sm:max-w-none">
+                {isOldQuestionMode 
+                  ? `${selectedApp}年 過去問題` 
+                  : selectedApp === '2026'
+                    ? '2026 Chapter Study'
+                    : selectedApp === '2026-level2'
+                      ? '2026 Level 2 Study'
+                      : '2022-2025 Chapter Study'}
               </h1>
             </div>
             

@@ -168,3 +168,5 @@ npm run start
 3. **Never hardcode secrets**: Access `GEMINI_API_KEY` on the server-side via `process.env.GEMINI_API_KEY`.
 4. **Preserve User Settings**: Maintain user preferences stored in `localStorage` (`app_theme`, `app_fontSize`, `user_answers`, `bookmarks`).
 5. **No Regressions on Mobile/Tablet**: Test responsive breakpoints when tweaking desktop PC styles.
+6. **Strict Supabase Sync Permission**: NEVER execute or trigger updates/modifications to the Supabase database (`questions`, `vocabulary_flashcards`, etc.) unless the user explicitly requests/commands it in that turn. Unprompted automatic database syncs are strictly forbidden.
+7. **Supabase AI Explanation Preservation**: When an explicit Force Update or sync to Supabase is performed upon user request, the existing `ai_explanation` field in Supabase MUST always be preserved and never overwritten or erased.
