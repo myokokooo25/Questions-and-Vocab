@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { LogoIcon, BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon } from './Icons';
+import React, { useState, useRef } from 'react';
+import { BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon } from './Icons';
 import DailyTrackerWidget from './DailyTrackerWidget';
 import { useProgress } from '../contexts/ProgressContext';
 import { useTheme } from '../contexts/ThemeContext';
@@ -13,6 +13,48 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
   const { theme, toggleTheme } = useTheme();
   const { weakQuestions } = useProgress();
   const weakCount = Object.keys(weakQuestions).length;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [iconTimestamp, setIconTimestamp] = useState(Date.now());
+  const [isUploadingIcon, setIsUploadingIcon] = useState(false);
+  const [uploadSuccessMsg, setUploadSuccessMsg] = useState<string | null>(null);
+
+  const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingIcon(true);
+    setUploadSuccessMsg(null);
+    try {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const base64 = reader.result as string;
+          const res = await fetch('/api/update-icon', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ imageBase64: base64 }),
+          });
+          const data = await res.json();
+          if (data.success) {
+            setIconTimestamp(Date.now());
+            setUploadSuccessMsg('✅ မူရင်းပုံဖြင့် အောင်မြင်စွာ အစားထိုးပြီးပါပြီ!');
+            setTimeout(() => setUploadSuccessMsg(null), 5000);
+          } else {
+            alert(data.error || 'Failed to update icon');
+          }
+        } catch (err: any) {
+          alert('Upload failed: ' + err.message);
+        } finally {
+          setIsUploadingIcon(false);
+        }
+      };
+      reader.readAsDataURL(file);
+    } catch (err: any) {
+      alert(err.message || 'Error reading file');
+      setIsUploadingIcon(false);
+    }
+  };
 
   const calculateDaysLeft = () => {
     const today = new Date();
@@ -115,14 +157,48 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
       )}
 
       <div className="text-center mb-8 sm:mb-12 mt-4 sm:mt-0">
-        <div className="inline-block p-4 sm:p-6 bg-neumorphic-bg rounded-full shadow-neumorphic-outset mb-4 sm:mb-6">
-          <LogoIcon className="w-12 h-12 sm:w-16 sm:h-16 text-blue-600" />
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          accept="image/*" 
+          className="hidden" 
+          onChange={handleIconUpload} 
+        />
+
+        <div className="flex flex-col items-center justify-center mb-4 sm:mb-6">
+          <div 
+            onClick={() => fileInputRef.current?.click()}
+            title="Tekkotsu Pass"
+            className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl shadow-neumorphic-outset cursor-pointer transition-transform hover:scale-105 active:scale-95 overflow-hidden flex items-center justify-center"
+          >
+            <img 
+              src={`/icon-192.png?t=${iconTimestamp}`} 
+              alt="Tekkotsu Pass App Icon" 
+              className="w-full h-full object-contain rounded-3xl"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+
+          {uploadSuccessMsg && (
+            <div className="mt-2 px-3 py-1 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded-xl animate-in fade-in duration-300">
+              {uploadSuccessMsg}
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <span className="px-2.5 py-0.5 text-[11px] font-black rounded-full bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border border-blue-500/20">
+            STUDY • PRACTICE • PASS
+          </span>
+          <span className="px-2.5 py-0.5 text-[11px] font-black rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+            1級・2級 合格
+          </span>
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-700">
-          鉄骨製作管理技術者 試験対策
+          Tekkotsu Pass <span className="text-blue-600 font-extrabold text-xl sm:text-2xl block sm:inline sm:ml-2">鉄骨製作管理技術者</span>
         </h1>
         <p className="mt-2 sm:mt-3 text-sm sm:text-lg font-medium text-slate-500">
-          学習モードを選択してください (Select a Mode)
+          一歩ずつ合格へ (Study Step by Step to Pass)
         </p>
       </div>
 

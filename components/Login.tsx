@@ -177,11 +177,11 @@ const AuthScreen: React.FC = () => {
 
       <div className="w-full max-w-sm p-10 space-y-8 bg-neumorphic-bg rounded-[2.5rem] shadow-neumorphic-outset">
         <div className="flex flex-col items-center justify-center text-center">
-            <div className="p-6 bg-neumorphic-bg rounded-full shadow-neumorphic-outset mb-2">
-              <LogoIcon className="w-12 h-12 text-blue-600" />
+            <div className="w-16 h-16 rounded-2xl shadow-neumorphic-outset mb-2 overflow-hidden flex items-center justify-center">
+              <img src="/icon-192.png" alt="Tekkotsu Pass Logo" className="w-full h-full object-contain rounded-2xl" referrerPolicy="no-referrer" />
             </div>
-            <h1 className="mt-4 text-2xl font-black tracking-tight text-slate-700">
-                鉄骨製作管理技術者<br/>試験対策
+            <h1 className="mt-3 text-2xl font-black tracking-tight text-slate-700">
+                Tekkotsu Pass<br/><span className="text-sm font-bold text-blue-600">鉄骨製作管理技術者 試験対策</span>
             </h1>
             <div className="mt-2 flex items-center gap-2">
                 <span className={`w-2 h-2 rounded-full ${authError && authError.includes('Database') ? 'bg-red-500' : 'bg-green-500'} animate-pulse`}></span>

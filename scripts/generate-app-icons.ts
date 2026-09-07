@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+import fs from 'fs';
+import path from 'path';
+import sharp from 'sharp';
+
+// High-fidelity SVG recreating the user's exact "TEKKOTSU PASS" logo design
+const tekkotsuPassSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
     <!-- Background Gradient -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -280,4 +285,48 @@
         font-weight="600" 
         letter-spacing="6" 
         fill="#64748b">STUDY  •  PRACTICE  •  PASS</text>
-</svg>
+</svg>`;
+
+async function generateAppIcons() {
+  const publicDir = path.resolve('public');
+
+  // Save master SVG
+  const svgPath = path.join(publicDir, 'icon.svg');
+  fs.writeFileSync(svgPath, tekkotsuPassSvg);
+  console.log('Saved icon.svg');
+
+  // Generate 512x512 PNG
+  await sharp(Buffer.from(tekkotsuPassSvg))
+    .resize(512, 512)
+    .png()
+    .toFile(path.join(publicDir, 'icon-512.png'));
+  console.log('Saved icon-512.png');
+
+  // Generate 192x192 PNG
+  await sharp(Buffer.from(tekkotsuPassSvg))
+    .resize(192, 192)
+    .png()
+    .toFile(path.join(publicDir, 'icon-192.png'));
+  console.log('Saved icon-192.png');
+
+  // Generate 180x180 apple-touch-icon.png
+  await sharp(Buffer.from(tekkotsuPassSvg))
+    .resize(180, 180)
+    .png()
+    .toFile(path.join(publicDir, 'apple-touch-icon.png'));
+  console.log('Saved apple-touch-icon.png');
+
+  // Generate 64x64 favicon.png
+  await sharp(Buffer.from(tekkotsuPassSvg))
+    .resize(64, 64)
+    .png()
+    .toFile(path.join(publicDir, 'favicon.png'));
+  console.log('Saved favicon.png');
+
+  console.log('Tekkotsu Pass icons generated successfully!');
+}
+
+generateAppIcons().catch(err => {
+  console.error('Error generating icons:', err);
+  process.exit(1);
+});

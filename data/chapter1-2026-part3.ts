@@ -30,11 +30,11 @@ export const chapter1Data2026Part3: StudyCardData[] = [
       { id: 4, textJP: "(4) トルシア<ruby>形高力<rt>がたこうりょく</rt></ruby>ボルトは、ピンテールの<ruby>破断<rt>はだん</rt></ruby>によって<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>締付<rt>しめつ</rt></ruby>けトルクの<ruby>管理<rt>かんり</rt></ruby>を<ruby>可能<rt>かのう</rt></ruby>にしたものである。<ruby>専用<rt>せんよう</rt></ruby>の<ruby>締付<rt>しめつ</rt></ruby>け<ruby>具<rt>ぐ</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>容易<rt>ようい</rt></ruby>に<ruby>施工可能<rt>せこうかのう</rt></ruby>であり、<ruby>目視<rt>もくし</rt></ruby>のみによる<ruby>品質管理<rt>ひんしつかんり</rt></ruby>が<ruby>可能<rt>かのう</rt></ruby>なことから<ruby>広<rt>ひろ</rt></ruby>く<ruby>用<rt>もち</rt></ruby>いられている。", textMY: "Torque-shear (Torshear) type high-strength bolt သည် Pintail (အမြီးပိုင်း) ပြတ်တောက်သွားခြင်းဖြင့် လိုအပ်သော ကျပ်အား (Tightening Torque) ကို ထိန်းချုပ်နိုင်စေရန် ပြုလုပ်ထားခြင်းဖြစ်သည်။ သီးသန့်ကျပ်သည့်ကိရိယာဖြင့် လွယ်ကူစွာ တပ်ဆင်နိုင်ပြီး မျက်စိဖြင့်ကြည့်ရုံဖြင့် အရည်အသွေးထိန်းချုပ်နိုင်သောကြောင့် ကျယ်ပြန့်စွာ အသုံးပြုကြသည်။" },
       { id: 5, textJP: "(5) <ruby>摩擦面<rt>まさつめん</rt></ruby>に<ruby>発生<rt>はっせい</rt></ruby>させるさびの<ruby>程度<rt>ていど</rt></ruby>は、<ruby>摩擦面<rt>まさつめん</rt></ruby>が<ruby>一様<rt>いちよう</rt></ruby>に<ruby>赤<rt>あか</rt></ruby>く<ruby>見<rt>み</rt></ruby>える<ruby>程度<rt>ていど</rt></ruby>が<ruby>適当<rt>てきとう</rt></ruby>であり、<ruby>浮<rt>う</rt></ruby>きさびとなったものはワイヤブラシなどで<ruby>取<rt>と</rt></ruby>り<ruby>除<rt>のぞ</rt></ruby>かなければならない。また、<ruby>組立<rt>くみたて</rt></ruby>てに<ruby>際<rt>さい</rt></ruby>しては、<ruby>摩擦面<rt>まさつめん</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>にごみなどの<ruby>異物<rt>いぶつ</rt></ruby>をはさまないように<ruby>注意<rt>ちゅうい</rt></ruby>する。", textMY: "Friction မျက်နှာပြင်တွင် ဖြစ်ပေါ်စေသော သံချေးအခြေအနေသည် မျက်နှာပြင်တစ်ခုလုံး ညီညာစွာ အနီရောင်သန်းနေသည့် အတိုင်းအတာဆိုလျှင် သင့်လျော်ပြီး၊ ဖောင်းကြွနေသော သံချေး (Loose rust) များကို Wire brush ဖြင့် ဖယ်ရှားရမည်။ ထို့အပြင် တပ်ဆင်ရာတွင် Friction မျက်နှာပြင်များကြား အမှိုက်စသည့် ပြင်ပပစ္စည်းများ မညပ်စေရန် သတိပြုရမည်။" }
     ],
-    correctOptionId: 1,
+    correctOptionId: 2,
     explanation: {
-      titleMY: "ရှင်းလင်းချက် - 摩擦接合と引張接合の併用",
-      reasonMY: "Friction connection နှင့် Tension connection တို့သည် အားလွှဲပြောင်းပုံ (Mechanism) မတူညီသောကြောင့် ၎င်းတို့နှစ်ခုကို တစ်နေရာတည်းတွင် တွဲဖက်၍ (併用) အသုံးမပြုနိုင်ပါ။ (Independent သီးခြားစီသာ သုံးရပါမည်။)",
-      memoryTipMY: "အားလွှဲပြောင်းပုံမတူတဲ့ Friction နဲ့ Tension ကို ရောသုံးလို့မရပါဘူး။"
+      titleMY: "ရှင်းလင်းချက် - トルク係数値 (Torque Coefficient Value)",
+      reasonMY: "High-strength bolt သို့မဟုတ် Nut ၏ ရစ်သွားနေရာများတွင် ထိခိုက်ရာ (打痕)၊ အမှိုက် (ごみ) သို့မဟုတ် သံချေး (さび) များ ကပ်ငြိနေပါက ပွတ်တိုက်မှုပိုများလာပြီး Torque Coefficient Value (k) သည် 'ကြီးမားလာမည် (大きくなる)' ဖြစ်ပါသည်။ 'လျော့ကျသွားမည် (低下し)' ဟု ဖော်ပြထားခြင်းမှာ မှားယွင်းသဖြင့် အသင့်လျော်ဆုံးမဟုတ်သော (အဖြေမှန်) မှာ (၂) ဖြစ်ပါသည်။",
+      memoryTipMY: "ရစ်သွားမှာ သံချေး၊ အမှိုက်တွေ ကပ်နေရင် ပွတ်တိုက်မှုတက်ပြီး Torque Coefficient Value (k) ပိုကြီးလာ (大きくなる) ပါတယ်၊ မလျော့ပါဘူး။"
     }
   },
   {

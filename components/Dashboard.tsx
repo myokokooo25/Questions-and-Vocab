@@ -444,7 +444,143 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       }
   };
 
-  const handleMigrate2026DataToDB = handleForceUpdateAllToDB;
+  // --- UPDATE 2026 QUESTIONS ONLY TO SUPABASE (PRESERVING AI EXPLANATION) ---
+  const handleUpdate2026OnlyToDB = async () => {
+      if (!isSupabaseConfigured) {
+          // Attempt via server endpoint first
+          setMigrationStatus("🚀 Checking server Supabase configuration for 2026 update...");
+          try {
+              const res = await fetch('/api/update-2026-questions', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({})
+              });
+              const data = await res.json();
+              if (res.ok && data.success) {
+                  setMigrationStatus(`✅ 2026 မေးခွန်းများ (${data.result.successCount} ခု) Supabase သို့ အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ! (AI Explanation ${data.result.preservedAiCount} ခုကို ထိန်းသိမ်းထားရှိပါသည်)`);
+                  setTimeout(() => setMigrationStatus(''), 8000);
+                  return;
+              } else {
+                  console.warn("Server update endpoint response:", data);
+                  setMigrationStatus("💡 မေးခွန်း ၂၉၂ ပုဒ်လုံး App ထဲတွင် အပြည့်အစုံ ရှိနေပြီး ပုံမှန်လေ့ကျင့်နိုင်ပါသည်။ Supabase Cloud သို့ လှမ်းတင်ရန် Supabase Key ထည့်သွင်းထားရန် လိုအပ်ပါသည်။");
+                  setTimeout(() => setMigrationStatus(''), 7000);
+                  return;
+              }
+          } catch (e: any) {
+              setMigrationStatus("💡 မေးခွန်း ၂၉၂ ပုဒ်လုံး App ထဲတွင် အပြည့်အစုံ ရှိနေပြီး ပုံမှန်လေ့ကျင့်နိုင်ပါသည်။ (Running in Local Mode)");
+              setTimeout(() => setMigrationStatus(''), 7000);
+              return;
+          }
+      }
+
+      setMigrationStatus("🚀 2026 မေးခွန်းများကို Supabase သို့ စတင် Update ပြုလုပ်နေပါသည် (AI Explanation မထိခိုက်စေရန် ထိန်းသိမ်းထားပါသည်)...");
+      setIsSyncing(true);
+
+      try {
+          const all2026Data: { category: string; data: StudyCardData[] }[] = [];
+
+          // 1. 2026 Level 1 (Chapters 1-5)
+          for (let i = 1; i <= 5; i++) {
+              if (studyDataByChapter2026[i]) {
+                  all2026Data.push({ category: `2026-${i}`, data: studyDataByChapter2026[i] });
+              }
+          }
+
+          // 2. 2026 Level 2 (Chapters 1-5)
+          for (let i = 1; i <= 5; i++) {
+              if (studyDataByChapter2026Level2[i]) {
+                  all2026Data.push({ category: `2026-level2-${i}`, data: studyDataByChapter2026Level2[i] });
+              }
+          }
+
+          const allQuestionIds: string[] = [];
+          all2026Data.forEach(g => g.data.forEach(q => allQuestionIds.push(String(q.id))));
+
+          setMigrationStatus(`🔍 ရှိပြီးသား AI Explanation များကို စစ်ဆေးရယူနေပါသည်... (${allQuestionIds.length} questions)`);
+
+          // Fetch existing AI explanations in chunks of 100
+          const existingMap = new Map<string, string | null>();
+          const CHUNK = 100;
+          for (let i = 0; i < allQuestionIds.length; i += CHUNK) {
+              const chunkIds = allQuestionIds.slice(i, i + CHUNK);
+              const { data: rows, error: fErr } = await supabase
+                  .from('questions')
+                  .select('id, ai_explanation')
+                  .in('id', chunkIds);
+
+              if (fErr) {
+                  console.warn("Notice fetching AI explanations:", fErr.message);
+              } else if (rows) {
+                  rows.forEach(r => {
+                      if (r.ai_explanation && typeof r.ai_explanation === 'string' && r.ai_explanation.trim() !== '') {
+                          existingMap.set(String(r.id), r.ai_explanation);
+                      }
+                  });
+              }
+          }
+
+          const recordsToUpsert: any[] = [];
+          for (const group of all2026Data) {
+              for (const q of group.data) {
+                  const idStr = String(q.id);
+                  const preservedExplanation = existingMap.get(idStr) || q.ai_explanation || null;
+                  recordsToUpsert.push({
+                      id: idStr,
+                      category: group.category,
+                      question_jp: q.questionJP,
+                      question_my: q.questionMY,
+                      options: q.options,
+                      correct_option_id: q.correctOptionId,
+                      explanation: q.explanation,
+                      ai_explanation: preservedExplanation
+                  });
+              }
+          }
+
+          setMigrationStatus(`2026 မေးခွန်း ${recordsToUpsert.length} ခုကို Supabase ထဲသို့ Batch ဖြင့် ထည့်သွင်းနေပါသည်...`);
+
+          const BATCH_SIZE = 50;
+          let successCount = 0;
+          let failCount = 0;
+          let lastError = '';
+
+          for (let i = 0; i < recordsToUpsert.length; i += BATCH_SIZE) {
+              const batch = recordsToUpsert.slice(i, i + BATCH_SIZE);
+              const { error } = await supabase.from('questions').upsert(batch, { onConflict: 'id' });
+
+              if (error) {
+                  console.error(`Batch error at ${i}:`, error.message);
+                  for (const item of batch) {
+                      const { error: sErr } = await supabase.from('questions').upsert(item, { onConflict: 'id' });
+                      if (sErr) {
+                          failCount++;
+                          lastError = sErr.message;
+                      } else {
+                          successCount++;
+                      }
+                  }
+              } else {
+                  successCount += batch.length;
+              }
+
+              setMigrationStatus(`2026 Update: ${successCount}/${recordsToUpsert.length} (${Math.round((successCount / recordsToUpsert.length) * 100)}%)`);
+          }
+
+          if (failCount > 0) {
+              setMigrationStatus(`2026 မေးခွန်း ${successCount} ခု အောင်မြင်စွာ update လုပ်ပြီး၊ ${failCount} ခု error ဖြစ်ခဲ့ပါသည်။`);
+          } else {
+              setMigrationStatus(`✅ 2026 မေးခွန်း အားလုံး (${successCount} ခု) Supabase ထဲသို့ အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ! (AI Explanations: ${existingMap.size} ခု ထိန်းသိမ်းထားပါသည်)`);
+          }
+      } catch (err: any) {
+          console.error("2026 Update error:", err);
+          setMigrationStatus(`Update မအောင်မြင်ပါ: ${err.message}`);
+      } finally {
+          setIsSyncing(false);
+          setTimeout(() => setMigrationStatus(''), 8000);
+      }
+  };
+
+  const handleMigrate2026DataToDB = handleUpdate2026OnlyToDB;
   const handleMigrateDataToDB = handleForceUpdateAllToDB;
 
   const handleMigrateVocabToDB = async () => {
@@ -740,6 +876,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     Admin Dashboard
                 </h2>
                 <div className='flex gap-3 flex-wrap'>
+                    <button onClick={handleUpdate2026OnlyToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg text-xs font-black uppercase tracking-wider text-white disabled:opacity-50 flex items-center gap-1.5">
+                         <SparkleIcon className="w-4 h-4 text-emerald-200" />
+                         {isSyncing ? 'Updating 2026 DB...' : '⚡ Update 2026 Questions (292 Qs)'}
+                    </button>
                     <button onClick={handleForceUpdateAllToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg text-xs font-black uppercase tracking-wider text-white disabled:opacity-50 flex items-center gap-1.5">
                          <SparkleIcon className="w-4 h-4 text-amber-300" />
                          {isSyncing ? 'Force Updating to Supabase...' : '⚡ Force Update All Questions (Preserve AI)'}
@@ -1696,12 +1836,20 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <span>iOS Install</span>
               </button>
               <button
+                onClick={() => { setShowMoreMenu(false); handleUpdate2026OnlyToDB(); }}
+                disabled={isSyncing}
+                className="col-span-2 flex items-center justify-center gap-2 p-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 active:scale-[0.98] text-white text-xs font-black transition-all shadow-md disabled:opacity-50"
+              >
+                <SparkleIcon className="w-4 h-4 text-emerald-200" />
+                <span>{isSyncing ? 'Updating 2026 to Supabase...' : '⚡ 2026 Questions Update (292 Qs)'}</span>
+              </button>
+              <button
                 onClick={() => { setShowMoreMenu(false); handleForceUpdateAllToDB(); }}
                 disabled={isSyncing}
                 className="col-span-2 flex items-center justify-center gap-2 p-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white text-xs font-black transition-all shadow-md disabled:opacity-50"
               >
                 <SparkleIcon className="w-4 h-4 text-amber-300" />
-                <span>{isSyncing ? 'Force Updating to Supabase...' : '⚡ Force Update DB (AI Explanation မထိခိုက်)'}</span>
+                <span>{isSyncing ? 'Force Updating to Supabase...' : '⚡ Force Update All DB (AI မထိခိုက်)'}</span>
               </button>
             </div>
 

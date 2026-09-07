@@ -1,20 +1,27 @@
 {
-  "name": "鉄骨製作管理技術者 試験対策",
-  "short_name": "鉄骨試験",
-  "description": "鉄骨製作管理技術者 試験対策アプリ",
+  "name": "Tekkotsu Pass - 鉄骨製作管理技術者 試験対策",
+  "short_name": "Tekkotsu Pass",
+  "description": "Tekkotsu Pass - Japanese Steel Structure Fabrication Management Exam Study & Flashcards (鉄骨製作管理技術者 1級・2級)",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#0ea5e9",
+  "background_color": "#ffffff",
+  "theme_color": "#0284c7",
   "icons": [
     {
-      "src": "https://api.dicebear.com/7.x/shapes/svg?seed=steel&backgroundColor=0ea5e9",
+      "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "https://api.dicebear.com/7.x/shapes/svg?seed=steel&backgroundColor=0ea5e9",
+      "src": "/icon-512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
       "type": "image/svg+xml"
     }
   ]

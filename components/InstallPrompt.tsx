@@ -63,9 +63,9 @@ export const InstallPrompt: React.FC = () => {
     <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] animate-in slide-in-from-bottom-full duration-300">
       <div className="bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset p-4 ring-1 ring-slate-400/20 max-w-md mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <img src="/icon.svg" alt="App Icon" className="w-12 h-12 rounded-xl object-cover bg-slate-100" />
+          <img src="/icon-192.png" alt="Tekkotsu Pass Icon" className="w-12 h-12 rounded-xl object-cover shadow-sm shrink-0" referrerPolicy="no-referrer" />
           <div>
-            <h3 className="font-bold text-slate-800 dark:text-slate-100">Install App</h3>
+            <h3 className="font-bold text-slate-800 dark:text-slate-100">Tekkotsu Pass (鉄骨試験)</h3>
             {isIOS ? (
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Tap <span className="inline-block px-1 border border-slate-300 dark:border-slate-600 rounded bg-slate-100 dark:bg-slate-700">Share</span> and <strong>Add to Home Screen</strong>

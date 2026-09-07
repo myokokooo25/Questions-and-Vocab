@@ -9,7 +9,8 @@
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
-    "force-update:db": "tsx scripts/force-update-supabase.ts"
+    "force-update:db": "tsx scripts/force-update-supabase.ts",
+    "update:2026-db": "tsx scripts/update-2026-supabase.ts"
   },
   "dependencies": {
     "@google/genai": "^1.27.0",
@@ -22,6 +23,7 @@
     "google-translate-api-x": "^10.7.3",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
+    "lucide-react": "^1.41.0",
     "pdf-parse": "^2.4.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
@@ -34,6 +36,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.0.0",
     "esbuild": "^0.28.2",
+    "sharp": "^0.35.4",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0",
