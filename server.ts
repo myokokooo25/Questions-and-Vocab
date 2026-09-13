@@ -28,6 +28,10 @@ async function startServer() {
   }));
 
   // API routes FIRST
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok" });
+  });
+
   app.post("/api/update-icon", async (req, res) => {
     try {
       const { imageBase64 } = req.body;
@@ -268,7 +272,7 @@ async function startServer() {
       etag: false,
     }));
 
-    app.get('*', (req, res) => {
+    app.get('*all', (req, res) => {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.sendFile(path.join(distPath, 'index.html'));
     });

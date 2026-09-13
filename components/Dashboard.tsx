@@ -1411,16 +1411,21 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       )}
       
       <header className="sticky top-0 z-50 w-full bg-neumorphic-bg/80 backdrop-blur-md">
-        <div className="flex items-center justify-between h-16 sm:h-20 max-w-6xl px-3 sm:px-6 lg:px-8 mx-auto">
-            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        <div className="flex items-center justify-between h-16 sm:h-20 max-w-6xl px-3 sm:px-6 lg:px-8 mx-auto gap-2">
+            {/* Left: Back to Dashboard Button & Title (Protected with shrink-0 and z-20 so it is never obscured) */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-20">
               <button
                 onClick={onGoBack}
-                className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 active:shadow-neumorphic-inset transition-all shrink-0"
-                title="Go Back"
+                className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-2.5 rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 active:shadow-neumorphic-inset transition-all shrink-0 z-20 bg-neumorphic-bg ring-1 ring-slate-400/20 hover:ring-blue-500/40"
+                title="Dashboard သို့ ပြန်သွားရန် (Back to Dashboard)"
+                aria-label="Back to Dashboard"
               >
-                <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400 shrink-0" />
+                <span className="hidden md:inline-block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                  Dashboard
+                </span>
               </button>
-              <h1 className="text-sm sm:text-xl font-black text-slate-700 whitespace-nowrap truncate max-w-[150px] sm:max-w-none">
+              <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-black text-slate-700 dark:text-slate-200 whitespace-nowrap truncate max-w-[110px] xs:max-w-[150px] sm:max-w-[190px] md:max-w-[240px] lg:max-w-none">
                 {isOldQuestionMode 
                   ? `${selectedApp}年 過去問題` 
                   : selectedApp === '2026'
@@ -1431,26 +1436,27 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </h1>
             </div>
             
-            {/* --- Trial Timer Display in Header --- */}
-            {user?.type === 'trial' && timeLeft && (
-                <div className="hidden sm:flex items-center px-4 py-2 bg-red-100 rounded-xl border border-red-200">
-                    <ClockIcon className="w-4 h-4 text-red-500 mr-2 animate-pulse" />
-                    <span className="text-xs font-black text-red-600 font-mono tracking-widest">{timeLeft}</span>
-                </div>
-            )}
+            {/* --- Center: Status Badges (Visible on larger screens so they never crowd the Back button) --- */}
+            <div className="hidden xl:flex items-center gap-2 shrink-0">
+              {user?.type === 'trial' && timeLeft && (
+                  <div className="flex items-center px-3.5 py-1.5 bg-red-100 dark:bg-red-950/40 rounded-xl border border-red-200 dark:border-red-900/40">
+                      <ClockIcon className="w-4 h-4 text-red-500 mr-2 animate-pulse" />
+                      <span className="text-xs font-black text-red-600 dark:text-red-400 font-mono tracking-widest">{timeLeft}</span>
+                  </div>
+              )}
 
-            {/* --- Device Count Display --- */}
-            {user && onlineUsers.find(ou => ou.key === user.accessKey) && (
-                <div className="hidden sm:flex items-center px-4 py-2 bg-blue-50 rounded-xl border border-blue-100 shadow-sm">
-                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse mr-2"></span>
-                    <span className="text-xs font-bold text-blue-700">
-                        {onlineUsers.find(ou => ou.key === user.accessKey)?.count} Device(s) Active
-                    </span>
-                </div>
-            )}
+              {user && onlineUsers.find(ou => ou.key === user.accessKey) && (
+                  <div className="flex items-center px-3.5 py-1.5 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-100 dark:border-blue-900/40 shadow-sm">
+                      <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse mr-2"></span>
+                      <span className="text-xs font-bold text-blue-700 dark:text-blue-400">
+                          {onlineUsers.find(ou => ou.key === user.accessKey)?.count} Device(s) Active
+                      </span>
+                  </div>
+              )}
+            </div>
 
             {/* --- Mobile Header Actions (< sm) --- */}
-            <div className="flex sm:hidden items-center gap-1.5">
+            <div className="flex sm:hidden items-center gap-1.5 shrink-0">
                 <div className="relative group">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
                         <SearchIcon className="w-3.5 h-3.5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
@@ -1460,12 +1466,12 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-20 focus:w-28 pl-7 pr-2 py-1.5 text-xs font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all"
+                        className="w-16 focus:w-24 pl-7 pr-2 py-1.5 text-xs font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all"
                     />
                 </div>
                 <button
                     onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
-                    className={`p-2 rounded-xl transition-all ${
+                    className={`p-2 rounded-xl transition-all shrink-0 ${
                     showOnlyBookmarked
                         ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10'
                         : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700'
@@ -1477,7 +1483,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </button>
                 <button
                     onClick={() => setShowDictionary(true)}
-                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all"
+                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0"
                     title="Technical Dictionary"
                     aria-label="Technical Dictionary"
                 >
@@ -1485,7 +1491,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </button>
                 <button
                     onClick={toggleLanguage}
-                    className={`px-2.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 ${
+                    className={`px-2 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 shrink-0 ${
                       language === 'my' 
                         ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' 
                         : 'shadow-neumorphic-outset text-slate-500'
@@ -1494,11 +1500,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     aria-label="Toggle Language"
                 >
                     <GlobeIcon className="w-3.5 h-3.5" />
-                    <span>{language === 'my' ? '🇲🇲 MM' : language === 'jp' ? '🇯🇵+MM' : '🇯🇵 JP'}</span>
+                    <span>{language === 'my' ? '🇲🇲' : language === 'jp' ? '🇯🇵+🇲🇲' : '🇯🇵'}</span>
                 </button>
                 <button
                     onClick={() => setShowMoreMenu(true)}
-                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
+                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative shrink-0"
                     title="More Options"
                     aria-label="More Options"
                 >
@@ -1508,7 +1514,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             </div>
 
             {/* --- Desktop / Tablet Header Actions (>= sm) --- */}
-            <div className="hidden sm:flex items-center gap-2 sm:gap-3">
+            <div className="hidden sm:flex items-center gap-1.5 lg:gap-2 shrink-0">
                  <div className="relative group">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <SearchIcon className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
@@ -1518,12 +1524,12 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-48 pl-9 pr-3 py-2.5 text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
+                        className="w-28 md:w-36 lg:w-48 pl-9 pr-3 py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
                     />
                 </div>
                  <button
                     onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
-                    className={`p-2 sm:p-3 rounded-2xl transition-all ${
+                    className={`p-2 sm:p-2.5 rounded-2xl transition-all shrink-0 ${
                     showOnlyBookmarked
                         ? 'shadow-neumorphic-inset text-blue-600'
                         : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700'
@@ -1534,7 +1540,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </button>
                 <button
                     onClick={() => setShowWeakPoints(true)}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all relative"
+                    className="hidden lg:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all relative shrink-0"
                     title="Weak Points Notebook (အမှားမှတ်စု)"
                 >
                     <PencilIcon className="w-5 h-5" />
@@ -1546,21 +1552,21 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </button>
                 <button
                     onClick={() => setShowCheatSheet(true)}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-amber-500 active:shadow-neumorphic-inset transition-all"
+                    className="hidden xl:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-amber-500 active:shadow-neumorphic-inset transition-all shrink-0"
                     title="Cheat Sheet (စံနှုန်းနှင့် ဖော်မြူလာ)"
                 >
                     <ScaleIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={() => setShowAnswerKey(true)}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all"
+                    className="hidden md:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all shrink-0"
                     title="Answer Key"
                 >
                     <ListBulletIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={() => setShowDictionary(true)}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all"
+                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0"
                     title="Technical Dictionary (ဝေါဟာရ အဘိဓာန်)"
                 >
                     <BookOpenIcon className="w-5 h-5" />
@@ -1568,7 +1574,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 {user?.isAdmin && (
                     <button
                         onClick={() => setIsAdminViewVisible(!isAdminViewVisible)}
-                        className={`p-2 sm:p-3 rounded-2xl transition-all ${
+                        className={`p-2 sm:p-2.5 rounded-2xl transition-all shrink-0 ${
                         isAdminViewVisible
                             ? 'shadow-neumorphic-inset text-purple-600'
                             : 'shadow-neumorphic-outset text-slate-400 hover:text-purple-600'
@@ -1580,25 +1586,25 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 )}
                 <button
                     onClick={() => setShowProfile(true)}
-                    className="flex items-center gap-2 p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative"
+                    className="hidden lg:flex items-center gap-2 p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative shrink-0"
                     title="Account"
                 >
                     <UsersIcon className="w-5 h-5" />
-                    <span className="hidden md:block text-xs font-bold text-slate-600 max-w-[80px] truncate">
+                    <span className="hidden xl:block text-xs font-bold text-slate-600 max-w-[80px] truncate">
                         {user?.userName || 'Profile'}
                     </span>
                     {user?.type === 'trial' && <span className="absolute top-2 right-2 w-2 h-2 bg-amber-500 rounded-full border border-white"></span>}
                 </button>
                 <button
                     onClick={() => setShowAppGuide(true)}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all"
+                    className="hidden xl:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all shrink-0"
                     title="App Guide"
                 >
                     <InfoIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={toggleLanguage}
-                    className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl text-xs font-black transition-all ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-black transition-all shrink-0 ${
                       language === 'my' 
                         ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' 
                         : 'shadow-neumorphic-outset text-slate-600 hover:text-slate-800 active:shadow-neumorphic-inset'
@@ -1608,10 +1614,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <GlobeIcon className="w-4 h-4 text-blue-500" />
                     <span>{language === 'my' ? '🇲🇲 မြန်မာ' : language === 'jp' ? '🇯🇵+🇲🇲' : '🇯🇵 Only'}</span>
                 </button>
-                <div className="relative">
+                <div className="relative hidden xl:block">
                     <button
                         onClick={() => setShowFontSizeMenu(!showFontSizeMenu)}
-                        className={`p-2 sm:p-3 rounded-2xl transition-all ${showFontSizeMenu ? 'shadow-neumorphic-inset text-slate-700' : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset'}`}
+                        className={`p-2 sm:p-2.5 rounded-2xl transition-all shrink-0 ${showFontSizeMenu ? 'shadow-neumorphic-inset text-slate-700' : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset'}`}
                         title="Font Size"
                     >
                         <TextSizeIcon className="w-5 h-5" />
@@ -1644,22 +1650,32 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </div>
                 <button
                     onClick={toggleTheme}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all shrink-0"
                     title={`Theme: ${theme === 'light' ? 'Light' : theme === 'dark' ? 'Dark' : theme === 'gold' ? 'Gold' : 'Minimalist B&W (အဖြူအမည်း)'}`}
                 >
                     {theme === 'light' ? <SunIcon className="w-5 h-5 text-amber-500" /> : theme === 'dark' ? <MoonIcon className="w-5 h-5 text-blue-400" /> : theme === 'gold' ? <SparkleIcon className="w-5 h-5 text-amber-400" /> : <ContrastIcon className="w-5 h-5 text-slate-900 dark:text-slate-100" />}
                 </button>
                 <button
                     onClick={() => setShowInstallInfo(true)}
-                    className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
+                    className="hidden xl:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all shrink-0"
                     title="iOS Install Guide"
                 >
                     <InfoIcon className="w-5 h-5" />
                 </button>
+                {/* On medium/tablet screens (< xl), show More Menu button so all options are reachable without crowding */}
                 <button
-                onClick={() => setShowLogoutConfirm(true)}
-                className="p-2 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all"
-                title="Logout"
+                    onClick={() => setShowMoreMenu(true)}
+                    className="flex xl:hidden p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 active:shadow-neumorphic-inset transition-all shrink-0 relative"
+                    title="More Options"
+                    aria-label="More Options"
+                >
+                    <MenuIcon className="w-5 h-5" />
+                    {user?.type === 'trial' && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full"></span>}
+                </button>
+                <button
+                    onClick={() => setShowLogoutConfirm(true)}
+                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all shrink-0"
+                    title="Logout"
                 >
                     <LogoutIcon className="w-5 h-5" />
                 </button>
@@ -1756,32 +1772,42 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
        {renderContent()}
       </main>
 
-       {/* Mobile Drawer / Action Sheet Menu (<sm only) */}
+        {/* Drawer / Action Sheet Menu (< xl) */}
       {showMoreMenu && (
-        <div className="fixed inset-0 z-50 flex items-end sm:hidden bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setShowMoreMenu(false)}>
+        <div className="fixed inset-0 z-50 flex items-end xl:hidden bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setShowMoreMenu(false)}>
           <div 
-            className="w-full max-h-[85vh] overflow-y-auto bg-neumorphic-bg rounded-t-3xl shadow-2xl p-5 border-t border-slate-400/20 animate-in slide-in-from-bottom duration-300"
+            className="w-full max-h-[85vh] overflow-y-auto bg-neumorphic-bg rounded-t-3xl shadow-2xl p-5 border-t border-slate-400/20 animate-in slide-in-from-bottom duration-300 max-w-lg mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-4" />
             
             {/* Header info */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-300/30 mb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-2xl shadow-neumorphic-inset text-blue-600">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-300/30 mb-4 gap-2">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="p-2.5 rounded-2xl shadow-neumorphic-inset text-blue-600 shrink-0">
                   <UsersIcon className="w-6 h-6" />
                 </div>
-                <div>
-                  <p className="text-sm font-black text-slate-800">{user?.userName || 'User Profile'}</p>
-                  <p className="text-xs font-mono text-slate-400 font-bold">{user?.accessKey ? `Key: ${user.accessKey}` : 'Guest'}</p>
+                <div className="min-w-0">
+                  <p className="text-sm font-black text-slate-800 truncate">{user?.userName || 'User Profile'}</p>
+                  <p className="text-xs font-mono text-slate-400 font-bold truncate">{user?.accessKey ? `Key: ${user.accessKey}` : 'Guest'}</p>
                 </div>
               </div>
-              {user?.type === 'trial' && timeLeft && (
-                <div className="flex items-center px-3 py-1.5 bg-red-100 dark:bg-red-950/40 rounded-xl border border-red-200 dark:border-red-900/40">
-                  <ClockIcon className="w-3.5 h-3.5 text-red-500 mr-1.5 animate-pulse" />
-                  <span className="text-xs font-black text-red-600 dark:text-red-400 font-mono">{timeLeft}</span>
-                </div>
-              )}
+              <div className="flex flex-col items-end gap-1.5 shrink-0">
+                {user?.type === 'trial' && timeLeft && (
+                  <div className="flex items-center px-3 py-1.5 bg-red-100 dark:bg-red-950/40 rounded-xl border border-red-200 dark:border-red-900/40">
+                    <ClockIcon className="w-3.5 h-3.5 text-red-500 mr-1.5 animate-pulse" />
+                    <span className="text-xs font-black text-red-600 dark:text-red-400 font-mono">{timeLeft}</span>
+                  </div>
+                )}
+                {user && onlineUsers.find(ou => ou.key === user.accessKey) && (
+                  <div className="flex items-center px-2.5 py-1 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-100 dark:border-blue-900/40">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse mr-1.5"></span>
+                    <span className="text-[11px] font-bold text-blue-700 dark:text-blue-400">
+                      {onlineUsers.find(ou => ou.key === user.accessKey)?.count} Device(s)
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Quick Actions Grid */}
