@@ -1,9 +1,10 @@
 
 import React, { useState, useRef } from 'react';
-import { BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon } from './Icons';
+import { BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon, RefreshIcon } from './Icons';
 import DailyTrackerWidget from './DailyTrackerWidget';
 import { useProgress } from '../contexts/ProgressContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { forceAppUpdateAndRefresh } from './PWAUpdatePrompt';
 
 interface WelcomeScreenProps {
   onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator') => void;
@@ -81,10 +82,24 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
 
   const oldYears = ['2021', '2022', '2023', '2024', '2025'] as const;
   const [showInstallInfo, setShowInstallInfo] = useState(false);
+  const [isRefreshingApp, setIsRefreshingApp] = useState(false);
+
+  const handleManualRefresh = async () => {
+    setIsRefreshingApp(true);
+    await forceAppUpdateAndRefresh();
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-3 sm:p-6 bg-neumorphic-bg relative w-full">
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2 z-10">
+        <button
+          onClick={handleManualRefresh}
+          disabled={isRefreshingApp}
+          className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all"
+          title="Check Update & Refresh App (ဗားရှင်းအသစ် စစ်ဆေးပြီး Refresh လုပ်မည်)"
+        >
+          <RefreshIcon className={`w-5 h-5 sm:w-6 sm:h-6 ${isRefreshingApp ? 'animate-spin text-indigo-600' : ''}`} />
+        </button>
         <button
           onClick={toggleTheme}
           className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"

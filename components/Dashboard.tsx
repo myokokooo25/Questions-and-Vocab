@@ -23,6 +23,7 @@ import TechnicalDictionary from './TechnicalDictionary';
 import CheatSheetView from './CheatSheetView';
 import WeakPointNotebook from './WeakPointNotebook';
 import { AccessCodeManagement } from './AccessCodeManagement';
+import { forceAppUpdateAndRefresh } from './PWAUpdatePrompt';
 
 interface HistoryEntry {
   deviceId: string;
@@ -55,6 +56,12 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [showInstallInfo, setShowInstallInfo] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [timeLeft, setTimeLeft] = useState<string>('');
+  const [isRefreshingApp, setIsRefreshingApp] = useState(false);
+
+  const handleManualRefresh = async () => {
+    setIsRefreshingApp(true);
+    await forceAppUpdateAndRefresh();
+  };
 
   // Questions State
   const [onlineQuestions, setOnlineQuestions] = useState<StudyCardData[]>([]);
@@ -1760,6 +1767,14 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     {theme === 'light' ? <SunIcon className="w-5 h-5 text-amber-500" /> : theme === 'dark' ? <MoonIcon className="w-5 h-5 text-blue-400" /> : theme === 'gold' ? <SparkleIcon className="w-5 h-5 text-amber-400" /> : <ContrastIcon className="w-5 h-5 text-slate-900 dark:text-slate-100" />}
                 </button>
                 <button
+                    onClick={handleManualRefresh}
+                    disabled={isRefreshingApp}
+                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0"
+                    title="Check Update & Refresh App (ဗားရှင်းအသစ် စစ်ဆေးပြီး Refresh လုပ်မည်)"
+                >
+                    <RefreshIcon className={`w-5 h-5 ${isRefreshingApp ? 'animate-spin text-indigo-600' : ''}`} />
+                </button>
+                <button
                     onClick={() => setShowInstallInfo(true)}
                     className="hidden xl:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all shrink-0"
                     title="iOS Install Guide"
@@ -2053,6 +2068,19 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                   </button>
                 </div>
               )}
+
+              {/* Check Update & Refresh (For PWA Home Screen users) */}
+              <div className="pt-2 border-t border-slate-300/30">
+                <button
+                  onClick={() => { setShowMoreMenu(false); handleManualRefresh(); }}
+                  disabled={isRefreshingApp}
+                  className="w-full flex items-center justify-center gap-2 p-3 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-indigo-600 dark:text-indigo-400 font-bold text-xs hover:text-indigo-700 transition-all"
+                >
+                  <RefreshIcon className={`w-4 h-4 ${isRefreshingApp ? 'animate-spin' : ''}`} />
+                  <span>{isRefreshingApp ? 'Checking Updates & Refreshing...' : 'Check Update & Refresh (ဗားရှင်းအသစ် စစ်ဆေးမည်)'}</span>
+                </button>
+                <p className="text-[10px] text-center text-slate-400 mt-1">PWA Home Screen မှ အသုံးပြုနေသူများ အသစ်ထွက်ရှိမှု စစ်ဆေးရန်</p>
+              </div>
 
               {/* Logout button */}
               <div className="pt-2">

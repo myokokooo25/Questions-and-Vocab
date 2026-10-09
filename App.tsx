@@ -13,6 +13,7 @@ import CheatSheetView from './components/CheatSheetView';
 import WeakPointNotebook from './components/WeakPointNotebook';
 import EngineeringCalculator from './components/EngineeringCalculator';
 import InstallPrompt from './components/InstallPrompt';
+import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 import { ChevronLeftIcon } from './components/Icons';
 
 type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator';
@@ -73,6 +74,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center">
+      <PWAUpdatePrompt />
       <InstallPrompt />
       <div className="w-full flex-1 flex flex-col">
         { (selectedApp === 'main' || selectedApp === '2026' || selectedApp === '2026-level2' || isOldQuestionMode) && <Dashboard selectedApp={selectedApp as 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025'} onGoBack={handleGoBack} /> }
