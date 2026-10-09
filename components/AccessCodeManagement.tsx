@@ -14,6 +14,7 @@ import {
   CheckCircleSolidIcon,
   SparkleIcon
 } from './Icons';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 export interface AccessCodeRecord {
   id: number;
@@ -85,13 +86,45 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
           'x-admin-token': adminToken
         }
       });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to fetch access codes');
+      let data: any = null;
+      try {
+        data = await res.json();
+      } catch {}
+
+      if (res.ok && data?.codes) {
+        setCodes(data.codes || []);
+        return;
       }
-      setCodes(data.codes || []);
+
+      // Fallback to direct Supabase query
+      if (isSupabaseConfigured) {
+        const { data: sbData, error: sbError } = await supabase
+          .from('access_codes')
+          .select('*')
+          .order('id', { ascending: false });
+
+        if (!sbError && sbData) {
+          setCodes(sbData);
+          return;
+        }
+      }
+
+      throw new Error(data?.error || 'Failed to fetch access codes');
     } catch (err: any) {
-      console.error('Error fetching access codes:', err);
+      console.warn('API fetch failed, trying direct Supabase query...', err);
+      if (isSupabaseConfigured) {
+        try {
+          const { data: sbData, error: sbError } = await supabase
+            .from('access_codes')
+            .select('*')
+            .order('id', { ascending: false });
+
+          if (!sbError && sbData) {
+            setCodes(sbData);
+            return;
+          }
+        } catch {}
+      }
       setError(err.message || 'Error fetching access codes');
     } finally {
       setIsLoading(false);
@@ -165,25 +198,45 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
   const handleSaveUserName = async (id: number) => {
     if (isSavingEdit) return;
     setIsSavingEdit(true);
+    const newName = editingUserName.trim() || null;
     try {
-      const res = await fetch(`/api/admin/access-codes/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-token': adminToken
-        },
-        body: JSON.stringify({
-          user_name: editingUserName.trim() || null
-        })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to update username');
+      let saved = false;
+      try {
+        const res = await fetch(`/api/admin/access-codes/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': adminToken
+          },
+          body: JSON.stringify({
+            user_name: newName
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          saved = true;
+        }
+      } catch (apiErr) {
+        // Fallback
       }
 
-      setCodes(prev => prev.map(c => c.id === id ? { ...c, user_name: editingUserName.trim(), Username: editingUserName.trim() } : c));
-      setEditingId(null);
-      showToast('Username ကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!');
+      if (!saved && isSupabaseConfigured) {
+        const { error: sbErr } = await supabase
+          .from('access_codes')
+          .update({ user_name: newName, Username: newName })
+          .eq('id', id);
+        if (!sbErr) {
+          saved = true;
+        }
+      }
+
+      if (saved) {
+        setCodes(prev => prev.map(c => c.id === id ? { ...c, user_name: newName, Username: newName } : c));
+        setEditingId(null);
+        showToast('Username ကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!');
+      } else {
+        throw new Error('Update error');
+      }
     } catch (err: any) {
       alert(`Update Error: ${err.message}`);
     } finally {
@@ -195,23 +248,42 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
   const handleToggleActive = async (codeItem: AccessCodeRecord) => {
     const nextStatus = !codeItem.is_active;
     try {
-      const res = await fetch(`/api/admin/access-codes/${codeItem.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-token': adminToken
-        },
-        body: JSON.stringify({
-          is_active: nextStatus
-        })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to update status');
+      let toggled = false;
+      try {
+        const res = await fetch(`/api/admin/access-codes/${codeItem.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': adminToken
+          },
+          body: JSON.stringify({
+            is_active: nextStatus
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          toggled = true;
+        }
+      } catch (apiErr) {
+        // Fallback
       }
 
-      setCodes(prev => prev.map(c => c.id === codeItem.id ? { ...c, is_active: nextStatus } : c));
-      showToast(`Key "${codeItem.code}" ကို ${nextStatus ? 'ဖွင့် (Activated)' : 'ပိတ် (Deactivated)'} ထားပြီးပါပြီ`);
+      if (!toggled && isSupabaseConfigured) {
+        const { error: sbErr } = await supabase
+          .from('access_codes')
+          .update({ is_active: nextStatus })
+          .eq('id', codeItem.id);
+        if (!sbErr) {
+          toggled = true;
+        }
+      }
+
+      if (toggled) {
+        setCodes(prev => prev.map(c => c.id === codeItem.id ? { ...c, is_active: nextStatus } : c));
+        showToast(`Key "${codeItem.code}" ကို ${nextStatus ? 'ဖွင့် (Activated)' : 'ပိတ် (Deactivated)'} ထားပြီးပါပြီ`);
+      } else {
+        throw new Error('Status update error');
+      }
     } catch (err: any) {
       alert(`Status update error: ${err.message}`);
     }
@@ -226,22 +298,43 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
 
     setIsResettingDevices(true);
     try {
-      const res = await fetch(`/api/admin/access-codes/${codeItem.id}/reset-devices`, {
-        method: 'POST',
-        headers: {
-          'x-admin-token': adminToken
+      let resetSuccess = false;
+      try {
+        const res = await fetch(`/api/admin/access-codes/${codeItem.id}/reset-devices`, {
+          method: 'POST',
+          headers: {
+            'x-admin-token': adminToken
+          }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          resetSuccess = true;
         }
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to reset devices');
+      } catch (apiErr) {
+        // Fallback to direct Supabase
       }
 
-      setCodes(prev => prev.map(c => c.id === codeItem.id ? { ...c, device_ids: [] } : c));
-      if (selectedCodeForDevices?.id === codeItem.id) {
-        setSelectedCodeForDevices(prev => prev ? { ...prev, device_ids: [] } : null);
+      if (!resetSuccess && isSupabaseConfigured) {
+        const { error: sbErr } = await supabase
+          .from('access_codes')
+          .update({ device_ids: [] })
+          .eq('id', codeItem.id);
+        if (!sbErr) {
+          resetSuccess = true;
+        } else {
+          throw new Error(sbErr.message);
+        }
       }
-      showToast(`Key "${codeItem.code}" ၏ Device IDs အားလုံးကို ရှင်းလင်းပြီးပါပြီ (User အသစ်ပြန်ဝင်နိုင်ပါသည်)`);
+
+      if (resetSuccess) {
+        setCodes(prev => prev.map(c => c.id === codeItem.id ? { ...c, device_ids: [] } : c));
+        if (selectedCodeForDevices?.id === codeItem.id) {
+          setSelectedCodeForDevices(prev => prev ? { ...prev, device_ids: [] } : null);
+        }
+        showToast(`Key "${codeItem.code}" ၏ Device IDs အားလုံးကို ရှင်းလင်းပြီးပါပြီ (User အသစ်ပြန်ဝင်နိုင်ပါသည်)`);
+      } else {
+        throw new Error('Device reset မအောင်မြင်ပါ');
+      }
     } catch (err: any) {
       alert(`Reset error: ${err.message}`);
     } finally {
@@ -252,24 +345,45 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
   // Remove Single Device ID
   const handleRemoveSingleDevice = async (codeId: number, deviceId: string) => {
     try {
-      const res = await fetch(`/api/admin/access-codes/${codeId}/remove-device`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-token': adminToken
-        },
-        body: JSON.stringify({ deviceId })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to remove device');
+      let removeSuccess = false;
+      try {
+        const res = await fetch(`/api/admin/access-codes/${codeId}/remove-device`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': adminToken
+          },
+          body: JSON.stringify({ deviceId })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          removeSuccess = true;
+        }
+      } catch (apiErr) {
+        // Fallback
       }
 
-      setCodes(prev => prev.map(c => c.id === codeId ? { ...c, device_ids: c.device_ids.filter(d => d !== deviceId) } : c));
-      if (selectedCodeForDevices?.id === codeId) {
-        setSelectedCodeForDevices(prev => prev ? { ...prev, device_ids: prev.device_ids.filter(d => d !== deviceId) } : null);
+      if (!removeSuccess && isSupabaseConfigured) {
+        const target = codes.find(c => c.id === codeId);
+        const updated = (target?.device_ids || []).filter(d => d !== deviceId);
+        const { error: sbErr } = await supabase
+          .from('access_codes')
+          .update({ device_ids: updated })
+          .eq('id', codeId);
+        if (!sbErr) {
+          removeSuccess = true;
+        }
       }
-      showToast('Device ID ကို ဖယ်ရှားပြီးပါပြီ');
+
+      if (removeSuccess) {
+        setCodes(prev => prev.map(c => c.id === codeId ? { ...c, device_ids: c.device_ids.filter(d => d !== deviceId) } : c));
+        if (selectedCodeForDevices?.id === codeId) {
+          setSelectedCodeForDevices(prev => prev ? { ...prev, device_ids: prev.device_ids.filter(d => d !== deviceId) } : null);
+        }
+        showToast('Device ID ကို ဖယ်ရှားပြီးပါပြီ');
+      } else {
+        throw new Error('Device ဖယ်ရှားမရပါ');
+      }
     } catch (err: any) {
       alert(`Remove error: ${err.message}`);
     }

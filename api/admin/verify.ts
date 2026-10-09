@@ -15,7 +15,15 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { password } = req.body || {};
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        body = {};
+      }
+    }
+    const { password } = body || {};
     if (!password || typeof password !== 'string') {
       return res.status(400).json({ error: 'Password is required' });
     }

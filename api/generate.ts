@@ -21,7 +21,15 @@ export default async function handler(req: any, res: any) {
   }
   
   try {
-    const { prompt } = req.body;
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        body = {};
+      }
+    }
+    const { prompt } = body || {};
     if (!prompt) {
       res.status(400).json({ error: "No prompt provided" });
       return;

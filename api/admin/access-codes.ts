@@ -11,11 +11,21 @@ export default async function handler(req: any, res: any) {
     return res.status(200).end();
   }
 
+  // Safe parse body if string
+  let parsedBody = req.body;
+  if (typeof parsedBody === 'string') {
+    try {
+      parsedBody = JSON.parse(parsedBody);
+    } catch (e) {
+      parsedBody = {};
+    }
+  }
+
   // 1. Verify Admin Token
   const token = (req.headers['x-admin-token'] as string) || 
                 (req.headers['authorization'] as string)?.replace('Bearer ', '') ||
                 req.query?.token ||
-                req.body?.adminToken;
+                parsedBody?.adminToken;
 
   if (!isValidAdminToken(token)) {
     return res.status(401).json({ error: 'Admin authentication required' });
@@ -23,6 +33,11 @@ export default async function handler(req: any, res: any) {
 
   // 2. Parse Sub-path / Action from URL or query
   let actionPath = req.query?.actionPath as string;
+  if (Array.isArray(req.query?.action)) {
+    actionPath = req.query.action.join('/');
+  } else if (typeof req.query?.action === 'string') {
+    actionPath = req.query.action;
+  }
   if (!actionPath && req.url) {
     const split = req.url.split('/access-codes/')[1];
     if (split) {
@@ -53,7 +68,7 @@ export default async function handler(req: any, res: any) {
     // B. Sub-action: Remove single device ID
     if (subAction === 'remove-device') {
       if (!targetId) return res.status(400).json({ error: 'ID is required' });
-      const { deviceId } = req.body || {};
+      const { deviceId } = parsedBody || {};
       if (!deviceId) return res.status(400).json({ error: 'deviceId is required' });
 
       const { data: current, error: fetchErr } = await client
@@ -80,7 +95,7 @@ export default async function handler(req: any, res: any) {
     // C. Single Item by ID: PUT (Update) or DELETE (Delete)
     if (targetId && !subAction) {
       if (req.method === 'PUT') {
-        const { user_name, memo, type, is_active } = req.body || {};
+        const { user_name, memo, type, is_active } = parsedBody || {};
         const updateData: any = {};
         if (user_name !== undefined) {
           updateData.user_name = user_name?.trim() || null;
@@ -123,7 +138,7 @@ export default async function handler(req: any, res: any) {
     }
 
     if (req.method === 'POST') {
-      const { code, user_name, memo, type, is_active } = req.body || {};
+      const { code, user_name, memo, type, is_active } = parsedBody || {};
       if (!code || typeof code !== 'string' || !code.trim()) {
         return res.status(400).json({ error: 'Access Code is required' });
       }

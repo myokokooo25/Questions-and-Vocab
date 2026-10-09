@@ -6,7 +6,7 @@ const DEFAULT_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd
 
 function getValidSupabaseUrl(): string {
   try {
-    const raw = (import.meta as any).env?.VITE_SUPABASE_URL;
+    const raw = (import.meta as any).env?.VITE_SUPABASE_URL || (globalThis as any).process?.env?.VITE_SUPABASE_URL;
     if (typeof raw === 'string' && raw.trim() !== '' && raw !== 'undefined' && raw !== 'null') {
       const trimmed = raw.trim();
       if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
@@ -19,7 +19,7 @@ function getValidSupabaseUrl(): string {
 
 function getValidSupabaseKey(): string {
   try {
-    const raw = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
+    const raw = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || (globalThis as any).process?.env?.VITE_SUPABASE_ANON_KEY;
     if (typeof raw === 'string' && raw.trim() !== '' && raw !== 'undefined' && raw !== 'null') {
       const trimmed = raw.trim();
       if (trimmed.length > 30 && !trimmed.includes('placeholder')) {
