@@ -235,7 +235,31 @@ async function startServer() {
   const adminSessionTokens = new Map<string, number>();
 
   function isValidAdminToken(token?: string | null): boolean {
-    if (!token) return false;
+    if (!token || typeof token !== 'string') return false;
+    
+    // Check HMAC-signed format (adm_<expiry>_<hmac>)
+    if (token.startsWith('adm_')) {
+      const parts = token.split('_');
+      if (parts.length >= 3) {
+        const expiry = parseInt(parts[1], 10);
+        const providedHmac = parts.slice(2).join('_');
+        if (!isNaN(expiry) && Date.now() <= expiry) {
+          const payload = `admin_${expiry}`;
+          const expectedHmac = crypto.createHmac('sha256', ADMIN_PASSWORD).update(payload).digest('hex');
+          try {
+            const bufA = Buffer.from(providedHmac, 'hex');
+            const bufB = Buffer.from(expectedHmac, 'hex');
+            if (bufA.length === bufB.length && crypto.timingSafeEqual(bufA, bufB)) {
+              return true;
+            }
+          } catch {
+            // fallthrough
+          }
+        }
+      }
+    }
+
+    // In-memory token fallback
     const expiry = adminSessionTokens.get(token);
     if (!expiry) return false;
     if (Date.now() > expiry) {
@@ -255,9 +279,11 @@ async function startServer() {
       }
 
       if (password.trim() === ADMIN_PASSWORD) {
-        const token = 'adm_' + crypto.randomBytes(32).toString('hex');
-        // Valid for 8 hours
+        // Issue HMAC-signed token (valid for 8 hours)
         const expiry = Date.now() + 8 * 60 * 60 * 1000;
+        const payload = `admin_${expiry}`;
+        const hmac = crypto.createHmac('sha256', ADMIN_PASSWORD).update(payload).digest('hex');
+        const token = `adm_${expiry}_${hmac}`;
         adminSessionTokens.set(token, expiry);
 
         console.log(`[Admin] Successful Admin authentication at ${new Date().toISOString()}`);

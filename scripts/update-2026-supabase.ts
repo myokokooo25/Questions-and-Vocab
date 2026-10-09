@@ -127,7 +127,7 @@ export async function update2026QuestionsToSupabase(customClient = supabase) {
 }
 
 // Auto-run if executed directly via CLI
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (typeof process !== 'undefined' && process.argv[1] && process.argv[1].includes('update-2026-supabase')) {
   update2026QuestionsToSupabase()
     .then(() => {
       console.log('Done.');
