@@ -222,8 +222,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           const currentDevices = data.device_ids || [];
           
           if (!currentDevices.includes(deviceId)) {
-              if (upperAccessKey !== 'BESTFRIEND' && upperAccessKey !== 'MANOEL' && upperAccessKey !== 'ADMIN') {
-                  const limit = upperAccessKey.startsWith('CHANSU14-') ? 20 : 3;
+              if (upperAccessKey !== 'MANOEL' && upperAccessKey !== 'ADMIN') {
+                  const limit = (upperAccessKey.startsWith('CHANSU14-') || upperAccessKey === 'BESTFRIEND') ? 20 : 3;
                   if (currentDevices.length >= limit) {
                       setError(`Device Limit Reached (Max ${limit} Devices). Contact Admin.`);
                       setLoading(false);

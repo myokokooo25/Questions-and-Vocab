@@ -1,8 +1,19 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem('app_theme') || 'dark';
+          if (t === 'khachannel') t = 'gold';
+          document.documentElement.className = t;
+        } catch (e) {
+          document.documentElement.className = 'dark';
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -150,6 +161,16 @@
       html.dark .text-red-600 { color: #f87171 !important; }
       html.dark .text-amber-600 { color: #fbbf24 !important; }
       html.dark .text-amber-500 { color: #fcd34d !important; }
+
+      /* High-visibility typography safeguards in dark mode to prevent dark-on-dark text */
+      html.dark .text-slate-100,
+      html.dark [class*="text-slate-100"] {
+        color: #ffffff !important;
+      }
+      html.dark .text-slate-200,
+      html.dark [class*="text-slate-200"] {
+        color: #f3f4f6 !important;
+      }
 
       /* Clear, non-blurry inputs in dark mode */
       html.dark input, 

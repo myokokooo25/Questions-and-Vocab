@@ -3,6 +3,8 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import path from "path";
 import cors from "cors";
+import crypto from "crypto";
+import { createClient } from "@supabase/supabase-js";
 
 function validateEnvironment() {
   const required = ['GEMINI_API_KEY'];
@@ -227,9 +229,327 @@ async function startServer() {
     }
   });
 
+  // --- SECURE BACKEND ADMIN AUTHENTICATION ---
+  // The Admin Master Password (255214) is kept strictly on the backend and NEVER exposed to frontend bundles.
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '255214';
+  const adminSessionTokens = new Map<string, number>();
+
+  function isValidAdminToken(token?: string | null): boolean {
+    if (!token) return false;
+    const expiry = adminSessionTokens.get(token);
+    if (!expiry) return false;
+    if (Date.now() > expiry) {
+      adminSessionTokens.delete(token);
+      return false;
+    }
+    return true;
+  }
+
+  // 1. Verify Admin Password & Issue Token
+  app.post("/api/admin/verify", (req, res) => {
+    try {
+      const { password } = req.body || {};
+      if (!password || typeof password !== 'string') {
+        res.status(400).json({ error: "Password is required" });
+        return;
+      }
+
+      if (password.trim() === ADMIN_PASSWORD) {
+        const token = 'adm_' + crypto.randomBytes(32).toString('hex');
+        // Valid for 8 hours
+        const expiry = Date.now() + 8 * 60 * 60 * 1000;
+        adminSessionTokens.set(token, expiry);
+
+        console.log(`[Admin] Successful Admin authentication at ${new Date().toISOString()}`);
+        res.json({ 
+          success: true, 
+          token, 
+          message: "Admin verified successfully",
+          expiresIn: 8 * 3600
+        });
+      } else {
+        console.warn(`[Admin] Failed Admin password attempt at ${new Date().toISOString()}`);
+        res.status(401).json({ 
+          success: false, 
+          error: "စကားဝှက် မှားယွင်းနေပါသည် (Invalid Admin Password)" 
+        });
+      }
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Internal server error" });
+    }
+  });
+
+  // 2. Verify Existing Token (Session restore on reload)
+  app.post("/api/admin/verify-token", (req, res) => {
+    const token = (req.headers['x-admin-token'] as string) || req.body?.token;
+    if (isValidAdminToken(token)) {
+      res.json({ valid: true });
+    } else {
+      res.status(401).json({ valid: false, error: "Session expired or invalid" });
+    }
+  });
+
+  // 3. Admin Logout (Revoke Token)
+  app.post("/api/admin/logout", (req, res) => {
+    const token = (req.headers['x-admin-token'] as string) || req.body?.token;
+    if (token) {
+      adminSessionTokens.delete(token);
+    }
+    res.json({ success: true, message: "Admin logged out successfully" });
+  });
+
+  const getSupabaseAdmin = () => {
+    const url = 'https://kdulrcovfiqbsenevowc.supabase.co';
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY || 
+                (process.env.VITE_SUPABASE_URL && process.env.VITE_SUPABASE_URL.startsWith('ey') ? process.env.VITE_SUPABASE_URL : '') ||
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkdWxyY292ZmlxYnNlbmV2b3djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyOTQ1NzcsImV4cCI6MjA4Njg3MDU3N30.XF7ENOM8-XrLKBYgZU0ut1S9swE5_w0CUcNG7VTOKFQ';
+    return createClient(url, key);
+  };
+
+  // --- ACCESS CODES MANAGEMENT APIS (Protected by Admin Token) ---
+
+  // 1. Get All Access Codes
+  app.get("/api/admin/access-codes", async (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || (req.query?.token as string);
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const client = getSupabaseAdmin();
+      const { data, error } = await client
+        .from('access_codes')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      res.json({ success: true, codes: data || [] });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to fetch access codes" });
+    }
+  });
+
+  // 2. Add New Access Code
+  app.post("/api/admin/access-codes", async (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || req.body?.adminToken;
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const { code, user_name, memo, type, is_active } = req.body || {};
+      if (!code || typeof code !== 'string' || !code.trim()) {
+        res.status(400).json({ error: "Access Code is required" });
+        return;
+      }
+
+      const cleanCode = code.trim().toUpperCase();
+      const client = getSupabaseAdmin();
+
+      // Check if code already exists
+      const { data: existing } = await client
+        .from('access_codes')
+        .select('id, code')
+        .eq('code', cleanCode)
+        .maybeSingle();
+
+      if (existing) {
+        res.status(400).json({ error: `Access Code "${cleanCode}" already exists in database` });
+        return;
+      }
+
+      const newCodeObj = {
+        code: cleanCode,
+        user_name: user_name?.trim() || null,
+        Username: user_name?.trim() || null,
+        memo: memo?.trim() || 'Permanent Key',
+        type: type === 'trial' ? 'trial' : 'permanent',
+        is_active: is_active !== false,
+        device_ids: []
+      };
+
+      const { data, error } = await client
+        .from('access_codes')
+        .insert(newCodeObj)
+        .select();
+
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      res.json({ success: true, code: data?.[0] });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to add access code" });
+    }
+  });
+
+  // 3. Update Access Code (Username, memo, type, active status)
+  app.put("/api/admin/access-codes/:id", async (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || req.body?.adminToken;
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const id = req.params.id;
+      const { user_name, memo, type, is_active } = req.body || {};
+
+      const updateData: any = {};
+      if (user_name !== undefined) {
+        updateData.user_name = user_name?.trim() || null;
+        updateData.Username = user_name?.trim() || null;
+      }
+      if (memo !== undefined) {
+        updateData.memo = memo;
+      }
+      if (type !== undefined) {
+        updateData.type = type;
+      }
+      if (is_active !== undefined) {
+        updateData.is_active = Boolean(is_active);
+      }
+
+      const client = getSupabaseAdmin();
+      const { data, error } = await client
+        .from('access_codes')
+        .update(updateData)
+        .eq('id', id)
+        .select();
+
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      res.json({ success: true, code: data?.[0] });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to update access code" });
+    }
+  });
+
+  // 4. Reset All Connected Devices for an Access Code
+  app.post("/api/admin/access-codes/:id/reset-devices", async (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || req.body?.adminToken;
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const id = req.params.id;
+      const client = getSupabaseAdmin();
+      const { data, error } = await client
+        .from('access_codes')
+        .update({ device_ids: [] })
+        .eq('id', id)
+        .select();
+
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      res.json({ success: true, message: "Device history cleared successfully", code: data?.[0] });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to reset devices" });
+    }
+  });
+
+  // 5. Remove Single Device ID from an Access Code
+  app.post("/api/admin/access-codes/:id/remove-device", async (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || req.body?.adminToken;
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const id = req.params.id;
+      const { deviceId } = req.body || {};
+      if (!deviceId) {
+        res.status(400).json({ error: "deviceId is required" });
+        return;
+      }
+
+      const client = getSupabaseAdmin();
+      const { data: current, error: fetchErr } = await client
+        .from('access_codes')
+        .select('device_ids')
+        .eq('id', id)
+        .single();
+
+      if (fetchErr || !current) {
+        res.status(404).json({ error: "Access code not found" });
+        return;
+      }
+
+      const currentDevices: string[] = current.device_ids || [];
+      const updatedDevices = currentDevices.filter(d => d !== deviceId);
+
+      const { data, error } = await client
+        .from('access_codes')
+        .update({ device_ids: updatedDevices })
+        .eq('id', id)
+        .select();
+
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      res.json({ success: true, message: "Device removed", code: data?.[0] });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to remove device" });
+    }
+  });
+
+  // 6. Delete Access Code
+  app.delete("/api/admin/access-codes/:id", async (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || req.body?.adminToken;
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const id = req.params.id;
+      const client = getSupabaseAdmin();
+      const { error } = await client
+        .from('access_codes')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+
+      res.json({ success: true, message: "Access code deleted successfully" });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to delete access code" });
+    }
+  });
+
   // 2026 Questions Supabase Update Endpoint (Preserves existing AI Explanations)
+  // Protected with Admin Token
   app.post("/api/update-2026-questions", async (req, res) => {
     try {
+      const adminToken = (req.headers['x-admin-token'] as string) || req.body?.adminToken;
+      if (!isValidAdminToken(adminToken)) {
+        res.status(401).json({ 
+          error: "Admin authentication required. Please unlock admin panel with password." 
+        });
+        return;
+      }
+
       const { supabaseKey } = req.body || {};
       const defaultAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkdWxyY292ZmlxYnNlbmV2b3djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyOTQ1NzcsImV4cCI6MjA4Njg3MDU3N30.XF7ENOM8-XrLKBYgZU0ut1S9swE5_w0CUcNG7VTOKFQ';
       const keyToUse = supabaseKey || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || defaultAnonKey;

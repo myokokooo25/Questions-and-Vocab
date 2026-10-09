@@ -32,7 +32,13 @@ import {
   Calculator,
   Flame,
   Zap,
-  Contrast
+  Contrast,
+  Lock,
+  Key,
+  Smartphone,
+  Plus,
+  Check,
+  X
 } from 'lucide-react';
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
@@ -201,4 +207,28 @@ export const BoltIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props 
 
 export const ContrastIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
   <Contrast className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const LockClosedIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Lock className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const KeyIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Key className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const PlusIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Plus className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const SmartphoneIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Smartphone className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const CheckIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Check className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const XIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <X className={className} strokeWidth={2} {...(props as any)} />
 );

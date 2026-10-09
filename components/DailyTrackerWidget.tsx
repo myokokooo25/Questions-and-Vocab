@@ -60,38 +60,38 @@ export const DailyTrackerWidget: React.FC<DailyTrackerWidgetProps> = ({ onStartP
             </span>
           </div>
 
-          <h3 className="text-base sm:text-lg font-black text-slate-800 dark:text-slate-100 tracking-tight mb-2">
+          <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white tracking-tight mb-2">
             鉄骨製作管理技術者 試験
           </h3>
 
           <div className="grid grid-cols-4 gap-2 text-center my-1">
             <div className="p-2 sm:p-2.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset">
-              <span className="block text-lg sm:text-2xl font-black text-slate-800 dark:text-slate-100 font-mono">
+              <span className="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white font-mono">
                 {timeLeft.days}
               </span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Days</span>
+              <span className="text-[10px] font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wider">Days</span>
             </div>
             <div className="p-2 sm:p-2.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset">
-              <span className="block text-lg sm:text-2xl font-black text-slate-800 dark:text-slate-100 font-mono">
+              <span className="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white font-mono">
                 {timeLeft.hours}
               </span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Hrs</span>
+              <span className="text-[10px] font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wider">Hrs</span>
             </div>
             <div className="p-2 sm:p-2.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset">
-              <span className="block text-lg sm:text-2xl font-black text-slate-800 dark:text-slate-100 font-mono">
+              <span className="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white font-mono">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Min</span>
+              <span className="text-[10px] font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wider">Min</span>
             </div>
             <div className="p-2 sm:p-2.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset">
-              <span className="block text-lg sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">
+              <span className="block text-lg sm:text-2xl font-black text-amber-500 dark:text-amber-300 font-mono">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sec</span>
+              <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sec</span>
             </div>
           </div>
 
-          <p className="text-[11px] text-slate-400 font-medium mt-2">
+          <p className="text-[11px] text-slate-500 dark:text-slate-300 font-medium mt-2">
             စာမေးပွဲကျင်းပမည့်နေ့: ၂၀၂၆ ခုနှစ် အောက်တိုဘာ ၁၇ ရက် (စနေနေ့)
           </p>
         </div>

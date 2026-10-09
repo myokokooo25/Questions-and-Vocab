@@ -11,7 +11,7 @@ import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon } from './Icons';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon, LockClosedIcon, KeyIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
@@ -22,6 +22,7 @@ import AnswerKeyView from './AnswerKeyView';
 import TechnicalDictionary from './TechnicalDictionary';
 import CheatSheetView from './CheatSheetView';
 import WeakPointNotebook from './WeakPointNotebook';
+import { AccessCodeManagement } from './AccessCodeManagement';
 
 interface HistoryEntry {
   deviceId: string;
@@ -240,8 +241,22 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [view, setView] = useState<'study' | 'list' | 'quiz'>('study');
   const [currentSessionAnswer, setCurrentSessionAnswer] = useState<number | null>(null);
 
-  // Admin View State
+  // Admin View & Server Verification State
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
+  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
+  const [adminToken, setAdminToken] = useState<string>(() => {
+    try {
+      return sessionStorage.getItem('admin_token') || '';
+    } catch {
+      return '';
+    }
+  });
+  const [adminActiveTab, setAdminActiveTab] = useState<'access_codes' | 'questions' | 'activity'>('access_codes');
+  const [showAdminPasswordModal, setShowAdminPasswordModal] = useState(false);
+  const [adminPasswordInput, setAdminPasswordInput] = useState('');
+  const [showAdminPasswordText, setShowAdminPasswordText] = useState(false);
+  const [adminPasswordError, setAdminPasswordError] = useState('');
+  const [isVerifyingAdminPassword, setIsVerifyingAdminPassword] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
   const [onlineUsers, setOnlineUsers] = useState<{key: string, userName: string, count: number}[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -251,6 +266,94 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [isBulkUploading, setIsBulkUploading] = useState(false);
   
   const DEVICE_HISTORY_KEY = 'auth_device_history';
+
+  // Check existing admin session token on mount
+  useEffect(() => {
+    const token = sessionStorage.getItem('admin_token');
+    if (token) {
+      fetch('/api/admin/verify-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': token }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.valid) {
+          setIsAdminUnlocked(true);
+          setAdminToken(token);
+        } else {
+          sessionStorage.removeItem('admin_token');
+          setIsAdminUnlocked(false);
+          setAdminToken('');
+        }
+      })
+      .catch(() => {
+        // offline or network fallback
+      });
+    }
+  }, []);
+
+  const handleOpenAdminPanel = () => {
+    if (isAdminUnlocked) {
+      setIsAdminViewVisible(prev => !prev);
+    } else {
+      setAdminPasswordInput('');
+      setAdminPasswordError('');
+      setShowAdminPasswordModal(true);
+    }
+  };
+
+  const handleVerifyAdminPassword = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!adminPasswordInput.trim()) {
+      setAdminPasswordError('Admin Password (PIN) ရိုက်ထည့်ပေးပါခင်ဗျာ');
+      return;
+    }
+
+    setIsVerifyingAdminPassword(true);
+    setAdminPasswordError('');
+
+    try {
+      const res = await fetch('/api/admin/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPasswordInput.trim() })
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success && data.token) {
+        sessionStorage.setItem('admin_token', data.token);
+        setAdminToken(data.token);
+        setIsAdminUnlocked(true);
+        setShowAdminPasswordModal(false);
+        setIsAdminViewVisible(true);
+        setAdminPasswordInput('');
+      } else {
+        setAdminPasswordError(data.error || 'စကားဝှက် မှားယွင်းနေပါသည် (Invalid Password)');
+      }
+    } catch (err: any) {
+      setAdminPasswordError('ဆာဗာသို့ ချိတ်ဆက်၍ မရပါ (Network Error)');
+    } finally {
+      setIsVerifyingAdminPassword(false);
+    }
+  };
+
+  const handleLockAdmin = async () => {
+    const token = sessionStorage.getItem('admin_token');
+    if (token) {
+      try {
+        await fetch('/api/admin/logout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-token': token }
+        });
+      } catch (e) {
+        // ignore
+      }
+      sessionStorage.removeItem('admin_token');
+      setAdminToken('');
+    }
+    setIsAdminUnlocked(false);
+    setIsAdminViewVisible(false);
+  };
 
   // --- REALTIME PRESENCE ---
   useEffect(() => {
@@ -452,7 +555,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           try {
               const res = await fetch('/api/update-2026-questions', {
                   method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
+                  headers: { 
+                      'Content-Type': 'application/json',
+                      'x-admin-token': sessionStorage.getItem('admin_token') || ''
+                  },
                   body: JSON.stringify({})
               });
               const data = await res.json();
@@ -868,45 +974,111 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const renderContent = () => {
     if (isAdminViewVisible) {
       return (
-         <div className="space-y-4 p-6 rounded-[2rem] shadow-neumorphic-inset bg-slate-800 text-slate-100">
-            {/* Admin Dashboard content... */}
-             <div className="flex flex-col sm:flex-row justify-between items-center pb-4 border-b border-slate-700 gap-4">
-                <h2 className="text-2xl font-bold flex items-center gap-3">
-                    <ClockIcon className="w-8 h-8 text-blue-400" />
-                    Admin Dashboard
-                </h2>
-                <div className='flex gap-3 flex-wrap'>
-                    <button onClick={handleUpdate2026OnlyToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg text-xs font-black uppercase tracking-wider text-white disabled:opacity-50 flex items-center gap-1.5">
-                         <SparkleIcon className="w-4 h-4 text-emerald-200" />
-                         {isSyncing ? 'Updating 2026 DB...' : '⚡ Update 2026 Questions (292 Qs)'}
+         <div className="space-y-5 p-5 sm:p-7 rounded-[2rem] shadow-neumorphic-inset bg-slate-850 text-slate-100">
+             {/* Admin Dashboard Header */}
+             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-slate-700/80 gap-4">
+                <div className="flex items-center gap-3">
+                    <ClockIcon className="w-8 h-8 text-blue-400 shrink-0" />
+                    <div>
+                      <h2 className="text-xl sm:text-2xl font-black flex items-center gap-2">
+                        Admin Dashboard
+                        <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono font-medium">AUTHENTICATED</span>
+                      </h2>
+                      <p className="text-xs text-slate-400">Master Session: {user?.userName || user?.accessKey} (Protected with 255214)</p>
+                    </div>
+                </div>
+                <div className='flex gap-2.5 items-center flex-wrap'>
+                    <button onClick={loadHistoryData} className="p-2.5 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors shadow-lg border border-slate-700/80" title="Refresh">
+                        <RefreshIcon className="w-4 h-4 text-slate-300" />
                     </button>
-                    <button onClick={handleForceUpdateAllToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg text-xs font-black uppercase tracking-wider text-white disabled:opacity-50 flex items-center gap-1.5">
-                         <SparkleIcon className="w-4 h-4 text-amber-300" />
-                         {isSyncing ? 'Force Updating to Supabase...' : '⚡ Force Update All Questions (Preserve AI)'}
-                    </button>
-                    <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-4 py-2 bg-emerald-600 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
-                         {isSyncingVocab ? 'Migrating 399 Flashcards...' : 'Migrate 399 Flashcards'}
-                    </button>
-                    <button onClick={loadHistoryData} className="p-3 bg-slate-700 rounded-xl hover:bg-slate-600 transition-colors shadow-lg" title="Refresh History">
-                        <RefreshIcon className="w-5 h-5" />
+                    <button onClick={handleLockAdmin} className="px-3.5 py-2.5 bg-rose-600/90 hover:bg-rose-600 text-white rounded-xl transition-all shadow-lg text-xs font-bold flex items-center gap-1.5 active:scale-95" title="Lock Admin & Exit">
+                        <LockClosedIcon className="w-4 h-4" />
+                        <span>Lock & Exit</span>
                     </button>
                 </div>
             </div>
-            
-            {migrationStatus && (
-                <div className="p-3 bg-slate-700 rounded-xl text-center">
-                    <p className="text-sm font-mono text-green-400">{migrationStatus}</p>
-                </div>
+
+            {/* Admin Tabs Navigation */}
+            <div className="flex items-center gap-2 border-b border-slate-700/60 pb-2 overflow-x-auto custom-scrollbar">
+              <button
+                onClick={() => setAdminActiveTab('access_codes')}
+                className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shrink-0 ${
+                  adminActiveTab === 'access_codes'
+                    ? 'bg-purple-600 text-white shadow-lg'
+                    : 'bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+              >
+                <KeyIcon className="w-4 h-4" />
+                <span>🔑 Access Codes & Devices (Supabase)</span>
+              </button>
+
+              <button
+                onClick={() => setAdminActiveTab('questions')}
+                className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shrink-0 ${
+                  adminActiveTab === 'questions'
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+              >
+                <SparkleIcon className="w-4 h-4" />
+                <span>⚡ Questions & Database Sync</span>
+              </button>
+
+              <button
+                onClick={() => setAdminActiveTab('activity')}
+                className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shrink-0 ${
+                  adminActiveTab === 'activity'
+                    ? 'bg-emerald-600 text-white shadow-lg'
+                    : 'bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+              >
+                <UsersIcon className="w-4 h-4" />
+                <span>👥 Activity & Login History</span>
+              </button>
+            </div>
+
+            {/* TAB 1: ACCESS CODES & DEVICE MANAGEMENT */}
+            {adminActiveTab === 'access_codes' && (
+              <AccessCodeManagement adminToken={adminToken} />
             )}
 
-            <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-700 space-y-4">
-                <h3 className="text-lg font-bold text-slate-200">Bulk Add Questions (JSON)</h3>
-                <p className="text-xs text-slate-400">Paste an array of question objects here. Make sure the format matches the standard JSON structure.</p>
-                <textarea 
-                    value={bulkJson}
-                    onChange={(e) => setBulkJson(e.target.value)}
-                    className="w-full h-48 bg-slate-800 border border-slate-600 rounded-xl p-4 text-sm font-mono text-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder={`[
+            {/* TAB 2: QUESTIONS & DATABASE SYNC */}
+            {adminActiveTab === 'questions' && (
+              <div className="space-y-4">
+                <div className="p-4 bg-slate-900/60 rounded-2xl border border-slate-700/80 flex flex-wrap gap-3 items-center justify-between">
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-200">Database Synchronization</h4>
+                      <p className="text-xs text-slate-400">စာမေးပွဲမေးခွန်းများနှင့် ဝေါဟာရများကို Supabase သို့ Update လုပ်ခြင်း</p>
+                    </div>
+                    <div className="flex gap-2.5 flex-wrap items-center">
+                        <button onClick={handleUpdate2026OnlyToDB} disabled={isSyncing || isSyncingVocab} className="px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg text-xs font-black uppercase tracking-wider text-white disabled:opacity-50 flex items-center gap-1.5">
+                             <SparkleIcon className="w-4 h-4 text-emerald-200" />
+                             {isSyncing ? 'Updating 2026 DB...' : 'Update 2026 Questions (292 Qs)'}
+                        </button>
+                        <button onClick={handleForceUpdateAllToDB} disabled={isSyncing || isSyncingVocab} className="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg text-xs font-black uppercase tracking-wider text-white disabled:opacity-50 flex items-center gap-1.5">
+                             <SparkleIcon className="w-4 h-4 text-amber-300" />
+                             {isSyncing ? 'Force Updating...' : 'Force Update All (Preserve AI)'}
+                        </button>
+                        <button onClick={handleMigrateVocabToDB} disabled={isSyncing || isSyncingVocab} className="px-3.5 py-2 bg-emerald-600 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50">
+                             {isSyncingVocab ? 'Migrating 399 Flashcards...' : 'Migrate 399 Flashcards'}
+                        </button>
+                    </div>
+                </div>
+
+                {migrationStatus && (
+                    <div className="p-3 bg-slate-800 rounded-xl text-center border border-slate-700">
+                        <p className="text-xs font-mono text-green-400">{migrationStatus}</p>
+                    </div>
+                )}
+
+                <div className="bg-slate-900/60 p-6 rounded-2xl border border-slate-700/80 space-y-4">
+                    <h3 className="text-base font-bold text-slate-200">Bulk Add Questions (JSON)</h3>
+                    <p className="text-xs text-slate-400">Paste an array of question objects here. Make sure the format matches the standard JSON structure.</p>
+                    <textarea 
+                        value={bulkJson}
+                        onChange={(e) => setBulkJson(e.target.value)}
+                        className="w-full h-48 bg-slate-800 border border-slate-600 rounded-xl p-4 text-xs font-mono text-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder={`[
   {
     "id": "new-1",
     "category": "1",
@@ -924,77 +1096,84 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }
   }
 ]`}
-                />
-                <div className="flex justify-end">
-                    <button 
-                        onClick={handleBulkUpload} 
-                        disabled={isBulkUploading || !bulkJson.trim()} 
-                        className="px-6 py-3 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-sm font-bold uppercase tracking-wider disabled:opacity-50"
-                    >
-                        {isBulkUploading ? 'Uploading...' : 'Upload JSON'}
-                    </button>
-                </div>
-            </div>
-            
-            <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-700 space-y-4">
-                <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-slate-200 flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                        Online Users (Realtime)
-                    </h3>
-                    <span className="text-xs font-bold bg-slate-800 px-3 py-1 rounded-full text-slate-300">
-                        {onlineUsers.length} Active Keys
-                    </span>
-                </div>
-                
-                {onlineUsers.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        {onlineUsers.map((ou) => (
-                            <div key={ou.key} className="p-3 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
-                                <div className="flex flex-col">
-                                    <span className="font-bold text-sm text-slate-200">{ou.userName}</span>
-                                    <span className="font-mono text-xs text-blue-400">{ou.key}</span>
-                                </div>
-                                <span className="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded-md">
-                                    {ou.count} {ou.count === 1 ? 'device' : 'devices'}
-                                </span>
-                            </div>
-                        ))}
+                    />
+                    <div className="flex justify-end">
+                        <button 
+                            onClick={handleBulkUpload} 
+                            disabled={isBulkUploading || !bulkJson.trim()} 
+                            className="px-5 py-2.5 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors shadow-lg text-xs font-bold uppercase tracking-wider disabled:opacity-50"
+                        >
+                            {isBulkUploading ? 'Uploading...' : 'Upload JSON'}
+                        </button>
                     </div>
-                ) : (
-                    <p className="text-center text-slate-400 py-6 font-medium text-sm">No other users online right now.</p>
-                )}
-            </div>
+                </div>
+              </div>
+            )}
 
-            <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-700 space-y-4">
-                <h3 className="text-lg font-bold text-slate-200">Local Login History</h3>
-                <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
-                    {historyData.length > 0 ? (
-                        <ul className="space-y-4">
-                            {historyData.slice().reverse().map((entry, index) => {
-                             const isFailure = entry.status === 'failure';
-                            return (
-                                <li key={index} className={`p-4 rounded-2xl border text-sm flex items-start justify-between gap-4 ${isFailure ? 'bg-red-900/20 border-red-500/50' : 'bg-slate-900/60 border-green-500/30'}`}>
-                                    <div className="space-y-1">
-                                      <p className="flex items-center gap-2">
-                                           {isFailure ? <span className="text-red-500 font-bold">Failed</span> : <span className="text-green-500 font-bold">Success</span>}
-                                          <span className="font-mono text-slate-300">{entry.accessKey}</span>
-                                      </p>
-                                      <p className="text-xs text-slate-400">ID: {entry.deviceId}</p>
+            {/* TAB 3: ACTIVITY & LOGIN HISTORY */}
+            {adminActiveTab === 'activity' && (
+              <div className="space-y-4">
+                <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-700/80 space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-base font-bold text-slate-200 flex items-center gap-2">
+                            <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
+                            Online Users (Realtime)
+                        </h3>
+                        <span className="text-xs font-bold bg-slate-800 px-3 py-1 rounded-full text-slate-300">
+                            {onlineUsers.length} Active Keys
+                        </span>
+                    </div>
+                    
+                    {onlineUsers.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            {onlineUsers.map((ou) => (
+                                <div key={ou.key} className="p-3 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-sm text-slate-200">{ou.userName}</span>
+                                        <span className="font-mono text-xs text-blue-400">{ou.key}</span>
                                     </div>
-                                    <div className="text-right text-xs text-slate-400 whitespace-nowrap">
-                                        <p>{new Date(entry.timestamp).toLocaleDateString()}</p>
-                                        <p>{new Date(entry.timestamp).toLocaleTimeString()}</p>
-                                    </div>
-                                </li>
-                            );
-                        })}
-                        </ul>
+                                    <span className="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded-md">
+                                        {ou.count} {ou.count === 1 ? 'device' : 'devices'}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
                     ) : (
-                        <p className="text-center text-slate-400 py-12 font-medium">No login history found.</p>
+                        <p className="text-center text-slate-400 py-6 font-medium text-xs">No other users online right now.</p>
                     )}
                 </div>
-            </div>
+
+                <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-700/80 space-y-4">
+                    <h3 className="text-base font-bold text-slate-200">Local Login History</h3>
+                    <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
+                        {historyData.length > 0 ? (
+                            <ul className="space-y-3">
+                                {historyData.slice().reverse().map((entry, index) => {
+                                 const isFailure = entry.status === 'failure';
+                                return (
+                                    <li key={index} className={`p-3.5 rounded-2xl border text-xs flex items-start justify-between gap-4 ${isFailure ? 'bg-red-900/20 border-red-500/50' : 'bg-slate-900/60 border-green-500/30'}`}>
+                                        <div className="space-y-1">
+                                          <p className="flex items-center gap-2">
+                                               {isFailure ? <span className="text-red-500 font-bold">Failed</span> : <span className="text-green-500 font-bold">Success</span>}
+                                              <span className="font-mono text-slate-300">{entry.accessKey}</span>
+                                          </p>
+                                          <p className="text-[11px] text-slate-400">ID: {entry.deviceId}</p>
+                                        </div>
+                                        <div className="text-right text-[11px] text-slate-400 whitespace-nowrap">
+                                            <p>{new Date(entry.timestamp).toLocaleDateString()}</p>
+                                            <p>{new Date(entry.timestamp).toLocaleTimeString()}</p>
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                            </ul>
+                        ) : (
+                            <p className="text-center text-slate-400 py-8 font-medium text-xs">No login history found.</p>
+                        )}
+                    </div>
+                </div>
+              </div>
+            )}
         </div>
       );
     }
@@ -1573,7 +1752,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </button>
                 {user?.isAdmin && (
                     <button
-                        onClick={() => setIsAdminViewVisible(!isAdminViewVisible)}
+                        onClick={handleOpenAdminPanel}
                         className={`p-2 sm:p-2.5 rounded-2xl transition-all shrink-0 ${
                         isAdminViewVisible
                             ? 'shadow-neumorphic-inset text-purple-600'
@@ -1861,22 +2040,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 <FolderIcon className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>iOS Install</span>
               </button>
-              <button
-                onClick={() => { setShowMoreMenu(false); handleUpdate2026OnlyToDB(); }}
-                disabled={isSyncing}
-                className="col-span-2 flex items-center justify-center gap-2 p-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 active:scale-[0.98] text-white text-xs font-black transition-all shadow-md disabled:opacity-50"
-              >
-                <SparkleIcon className="w-4 h-4 text-emerald-200" />
-                <span>{isSyncing ? 'Updating 2026 to Supabase...' : '⚡ 2026 Questions Update (292 Qs)'}</span>
-              </button>
-              <button
-                onClick={() => { setShowMoreMenu(false); handleForceUpdateAllToDB(); }}
-                disabled={isSyncing}
-                className="col-span-2 flex items-center justify-center gap-2 p-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white text-xs font-black transition-all shadow-md disabled:opacity-50"
-              >
-                <SparkleIcon className="w-4 h-4 text-amber-300" />
-                <span>{isSyncing ? 'Force Updating to Supabase...' : '⚡ Force Update All DB (AI မထိခိုက်)'}</span>
-              </button>
             </div>
 
             {/* Language & Theme & Font Controls */}
@@ -1957,7 +2120,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               {user?.isAdmin && (
                 <div className="pt-2 border-t border-slate-300/30">
                   <button
-                    onClick={() => { setShowMoreMenu(false); setIsAdminViewVisible(!isAdminViewVisible); }}
+                    onClick={() => { setShowMoreMenu(false); handleOpenAdminPanel(); }}
                     className="w-full flex items-center justify-center gap-2 p-3 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-purple-600 font-bold text-xs"
                   >
                     <SparkleIcon className="w-4 h-4" />
@@ -1978,6 +2141,91 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Admin Master Password Verification Modal */}
+      {showAdminPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-neumorphic-bg rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 animate-in zoom-in-95 duration-200 border border-slate-700/20">
+                <div className="flex items-center gap-3 mb-4 text-purple-600">
+                    <div className="p-3 rounded-2xl shadow-neumorphic-outset bg-neumorphic-bg text-purple-600">
+                        <LockClosedIcon className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Admin Master Verification</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">Server Double-Lock Authentication</p>
+                    </div>
+                </div>
+
+                <p className="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                    MANOEL ၏ Admin လုပ်ပိုင်ခွင့်ကို အသုံးပြုရန် Server Master Password (PIN) ကို ထည့်သွင်းပေးပါခင်ဗျာ။
+                </p>
+
+                <form onSubmit={handleVerifyAdminPassword} className="space-y-4">
+                    <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+                            Admin Master Password (PIN)
+                        </label>
+                        <div className="relative">
+                            <input
+                                type={showAdminPasswordText ? "text" : "password"}
+                                value={adminPasswordInput}
+                                onChange={(e) => {
+                                    setAdminPasswordInput(e.target.value);
+                                    if (adminPasswordError) setAdminPasswordError('');
+                                }}
+                                autoFocus
+                                placeholder="••••••"
+                                className="w-full px-4 py-3 rounded-2xl bg-neumorphic-bg shadow-neumorphic-inset text-slate-800 dark:text-slate-100 font-mono tracking-widest text-lg outline-none focus:ring-2 focus:ring-purple-500/50 transition-all pr-14"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowAdminPasswordText(!showAdminPasswordText)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-purple-600 px-2 py-1"
+                            >
+                                {showAdminPasswordText ? "Hide" : "Show"}
+                            </button>
+                        </div>
+                        {adminPasswordError && (
+                            <p className="text-xs text-rose-500 font-semibold mt-2 animate-in fade-in">
+                                ⚠️ {adminPasswordError}
+                            </p>
+                        )}
+                    </div>
+
+                    <div className="flex gap-3 pt-2">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setShowAdminPasswordModal(false);
+                                setAdminPasswordInput('');
+                                setAdminPasswordError('');
+                            }}
+                            className="flex-1 px-4 py-3 rounded-2xl shadow-neumorphic-outset text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white active:shadow-neumorphic-inset transition-all font-bold text-sm"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={isVerifyingAdminPassword || !adminPasswordInput.trim()}
+                            className="flex-1 px-4 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg hover:from-purple-500 hover:to-indigo-500 active:scale-98 transition-all font-bold text-sm disabled:opacity-50 flex items-center justify-center gap-2"
+                        >
+                            {isVerifyingAdminPassword ? (
+                                <>
+                                    <LoadingSpinnerIcon className="w-4 h-4" />
+                                    <span>Verifying...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <KeyIcon className="w-4 h-4" />
+                                    <span>Verify & Unlock</span>
+                                </>
+                            )}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
       )}
 
