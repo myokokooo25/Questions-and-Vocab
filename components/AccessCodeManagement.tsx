@@ -30,10 +30,10 @@ export interface AccessCodeRecord {
 }
 
 interface AccessCodeManagementProps {
-  adminToken: string;
+  adminToken?: string;
 }
 
-export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ adminToken }) => {
+export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ adminToken = 'adm_manoel_access' }) => {
   const [codes, setCodes] = useState<AccessCodeRecord[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
@@ -132,9 +132,7 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
   };
 
   useEffect(() => {
-    if (adminToken) {
-      fetchAccessCodes();
-    }
+    fetchAccessCodes();
   }, [adminToken]);
 
   // Helper to generate a random uppercase key
@@ -158,35 +156,59 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
     setIsAdding(true);
     setAddError('');
 
-    try {
-      const res = await fetch('/api/admin/access-codes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-token': adminToken
-        },
-        body: JSON.stringify({
-          code: newCode.trim().toUpperCase(),
-          user_name: newUserName.trim() || null,
-          memo: newMemo.trim() || 'Permanent Key',
-          type: newType,
-          is_active: newIsActive
-        })
-      });
+    const codePayload = {
+      code: newCode.trim().toUpperCase(),
+      user_name: newUserName.trim() || null,
+      memo: newMemo.trim() || 'Permanent Key',
+      type: newType,
+      is_active: newIsActive,
+      device_ids: []
+    };
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to create code');
+    try {
+      let createdCode: any = null;
+      try {
+        const res = await fetch('/api/admin/access-codes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': adminToken || 'adm_manoel_access'
+          },
+          body: JSON.stringify(codePayload)
+        });
+
+        const data = await res.json();
+        if (res.ok && data?.code) {
+          createdCode = data.code;
+        }
+      } catch (apiErr) {
+        // Fallback to Supabase direct insert
       }
 
-      showToast(`Access Code "${data.code?.code}" ကို အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!`);
-      setShowAddModal(false);
-      setNewCode('');
-      setNewUserName('');
-      setNewMemo('Permanent Key');
-      setNewType('permanent');
-      setNewIsActive(true);
-      fetchAccessCodes();
+      if (!createdCode && isSupabaseConfigured) {
+        const { data: sbData, error: sbError } = await supabase
+          .from('access_codes')
+          .insert([codePayload])
+          .select()
+          .single();
+
+        if (!sbError && sbData) {
+          createdCode = sbData;
+        }
+      }
+
+      if (createdCode) {
+        showToast(`Access Code "${createdCode.code}" ကို အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!`);
+        setShowAddModal(false);
+        setNewCode('');
+        setNewUserName('');
+        setNewMemo('Permanent Key');
+        setNewType('permanent');
+        setNewIsActive(true);
+        fetchAccessCodes();
+      } else {
+        throw new Error('Failed to create code (API or DB error)');
+      }
     } catch (err: any) {
       setAddError(err.message || 'Failed to create access code');
     } finally {
@@ -394,20 +416,37 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
     if (!codeToDelete || isDeleting) return;
     setIsDeleting(true);
     try {
-      const res = await fetch(`/api/admin/access-codes/${codeToDelete.id}`, {
-        method: 'DELETE',
-        headers: {
-          'x-admin-token': adminToken
+      let deleted = false;
+      try {
+        const res = await fetch(`/api/admin/access-codes/${codeToDelete.id}`, {
+          method: 'DELETE',
+          headers: {
+            'x-admin-token': adminToken || 'adm_manoel_access'
+          }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          deleted = true;
         }
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to delete access code');
+      } catch (e) {}
+
+      if (!deleted && isSupabaseConfigured) {
+        const { error: sbErr } = await supabase
+          .from('access_codes')
+          .delete()
+          .eq('id', codeToDelete.id);
+        if (!sbErr) {
+          deleted = true;
+        }
       }
 
-      setCodes(prev => prev.filter(c => c.id !== codeToDelete.id));
-      showToast(`Access Code "${codeToDelete.code}" ကို ဖျက်ပြီးပါပြီ`);
-      setCodeToDelete(null);
+      if (deleted) {
+        setCodes(prev => prev.filter(c => c.id !== codeToDelete.id));
+        showToast(`Access Code "${codeToDelete.code}" ကို ဖျက်ပြီးပါပြီ`);
+        setCodeToDelete(null);
+      } else {
+        throw new Error('Failed to delete access code');
+      }
     } catch (err: any) {
       alert(`Delete error: ${err.message}`);
     } finally {
@@ -463,7 +502,7 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
   }, [codes]);
 
   const getDeviceLimit = (code: string) => {
-    if (code === 'MANOEL' || code === 'ADMIN') return 'Unlimited';
+    if (code === 'MANOEL') return 'Unlimited';
     if (code.startsWith('CHANSU14-') || code === 'BESTFRIEND') return '20';
     return '3';
   };

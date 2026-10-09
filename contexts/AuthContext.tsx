@@ -66,7 +66,7 @@ const LOGGED_IN_USER_KEY = 'auth_loggedInUser_key';
 const DEVICE_HISTORY_KEY = 'auth_device_history';
 
 // Fallback keys in case DB is not set up or offline
-const FALLBACK_KEYS: string[] = ['420', 'MANOEL', 'BESTFRIEND', 'DEMO', 'ADMIN', 'STUDENT', 'FREE', 'VIP', 'TEST', '2026', 'MYOKOKOOO'];
+const FALLBACK_KEYS: string[] = ['420', 'MANOEL', 'BESTFRIEND', 'DEMO', 'STUDENT', 'FREE', 'VIP', 'TEST', '2026', 'MYOKOKOOO'];
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -90,7 +90,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           }
 
           // Security check if DB is available
-          if (isSupabaseConfigured && storedUser.isAdmin && storedUser.accessKey !== 'MANOEL' && storedUser.accessKey !== 'ADMIN') {
+          if (isSupabaseConfigured && storedUser.isAdmin && storedUser.accessKey !== 'MANOEL') {
              try {
                const { data } = await supabase
                   .from('access_codes')
@@ -161,7 +161,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       userName: userName || 'User',
       type: 'permanent',
       dbId: undefined,
-      isAdmin: upperAccessKey === 'MANOEL' || upperAccessKey === 'ADMIN',
+      isAdmin: upperAccessKey === 'MANOEL',
       loggedInAt: new Date().toISOString()
     });
 
@@ -213,7 +213,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           userName: userName || data.user_name || 'Unknown',
           type: data.type || 'permanent',
           dbId: data.id,
-          isAdmin: upperAccessKey === 'MANOEL' || upperAccessKey === 'ADMIN',
+          isAdmin: upperAccessKey === 'MANOEL',
           loggedInAt: new Date().toISOString()
       };
 
@@ -222,7 +222,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           const currentDevices = data.device_ids || [];
           
           if (!currentDevices.includes(deviceId)) {
-              if (upperAccessKey !== 'MANOEL' && upperAccessKey !== 'ADMIN') {
+              if (upperAccessKey !== 'MANOEL') {
                   const limit = (upperAccessKey.startsWith('CHANSU14-') || upperAccessKey === 'BESTFRIEND') ? 20 : 3;
                   if (currentDevices.length >= limit) {
                       setError(`Device Limit Reached (Max ${limit} Devices). Contact Admin.`);

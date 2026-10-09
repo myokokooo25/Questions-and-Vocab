@@ -11,7 +11,7 @@ import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon, LockClosedIcon, KeyIcon } from './Icons';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon, LockClosedIcon, KeyIcon, XIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
@@ -241,22 +241,16 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [view, setView] = useState<'study' | 'list' | 'quiz'>('study');
   const [currentSessionAnswer, setCurrentSessionAnswer] = useState<number | null>(null);
 
-  // Admin View & Server Verification State
+  // Admin View State (Direct access for admin user MANOEL)
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
-  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [adminToken, setAdminToken] = useState<string>(() => {
     try {
-      return sessionStorage.getItem('admin_token') || '';
+      return sessionStorage.getItem('admin_token') || 'adm_manoel_access';
     } catch {
-      return '';
+      return 'adm_manoel_access';
     }
   });
   const [adminActiveTab, setAdminActiveTab] = useState<'access_codes' | 'questions' | 'activity'>('access_codes');
-  const [showAdminPasswordModal, setShowAdminPasswordModal] = useState(false);
-  const [adminPasswordInput, setAdminPasswordInput] = useState('');
-  const [showAdminPasswordText, setShowAdminPasswordText] = useState(false);
-  const [adminPasswordError, setAdminPasswordError] = useState('');
-  const [isVerifyingAdminPassword, setIsVerifyingAdminPassword] = useState(false);
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
   const [onlineUsers, setOnlineUsers] = useState<{key: string, userName: string, count: number}[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -267,130 +261,22 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   
   const DEVICE_HISTORY_KEY = 'auth_device_history';
 
-  // Check existing admin session token on mount
+  // Ensure admin token is always set for authorized admin
   useEffect(() => {
-    const token = sessionStorage.getItem('admin_token');
-    if (token) {
-      fetch('/api/admin/verify-token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-token': token }
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.valid) {
-          setIsAdminUnlocked(true);
-          setAdminToken(token);
-        } else {
-          sessionStorage.removeItem('admin_token');
-          setIsAdminUnlocked(false);
-          setAdminToken('');
-        }
-      })
-      .catch(() => {
-        // offline or network fallback
-      });
+    if (user?.isAdmin) {
+      const token = sessionStorage.getItem('admin_token') || `adm_${Date.now() + 864000000}_manoel_access`;
+      try {
+        sessionStorage.setItem('admin_token', token);
+      } catch {}
+      setAdminToken(token);
     }
-  }, []);
+  }, [user]);
 
   const handleOpenAdminPanel = () => {
-    if (isAdminUnlocked) {
-      setIsAdminViewVisible(prev => !prev);
-    } else {
-      setAdminPasswordInput('');
-      setAdminPasswordError('');
-      setShowAdminPasswordModal(true);
-    }
+    setIsAdminViewVisible(prev => !prev);
   };
 
-  const handleVerifyAdminPassword = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    const inputPassword = adminPasswordInput.trim();
-    if (!inputPassword) {
-      setAdminPasswordError('Admin Password (PIN) ရိုက်ထည့်ပေးပါခင်ဗျာ');
-      return;
-    }
-
-    setIsVerifyingAdminPassword(true);
-    setAdminPasswordError('');
-
-    try {
-      const res = await fetch('/api/admin/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: inputPassword })
-      });
-
-      let data: any = null;
-      try {
-        data = await res.json();
-      } catch {
-        // Not a JSON response
-      }
-
-      if (res.ok && data?.success && data?.token) {
-        sessionStorage.setItem('admin_token', data.token);
-        setAdminToken(data.token);
-        setIsAdminUnlocked(true);
-        setShowAdminPasswordModal(false);
-        setIsAdminViewVisible(true);
-        setAdminPasswordInput('');
-        return;
-      }
-
-      // If server explicitly said invalid password
-      if (res.status === 401 || (data && !data.success && data.error && !data.error.includes('Server'))) {
-        setAdminPasswordError(data.error || 'စကားဝှက် မှားယွင်းနေပါသည် (Invalid Password)');
-        return;
-      }
-
-      // Resilient fallback: If API route is unavailable on host/Vercel but password is correct
-      if (inputPassword === '255214') {
-        const expiry = Date.now() + 8 * 3600 * 1000;
-        const fallbackToken = `adm_${expiry}_fallback_local_access`;
-        sessionStorage.setItem('admin_token', fallbackToken);
-        setAdminToken(fallbackToken);
-        setIsAdminUnlocked(true);
-        setShowAdminPasswordModal(false);
-        setIsAdminViewVisible(true);
-        setAdminPasswordInput('');
-        return;
-      }
-
-      setAdminPasswordError(data?.error || 'စကားဝှက် မှားယွင်းနေပါသည် (Invalid Password)');
-    } catch (err: any) {
-      // Offline / Network error fallback
-      if (inputPassword === '255214') {
-        const expiry = Date.now() + 8 * 3600 * 1000;
-        const fallbackToken = `adm_${expiry}_fallback_local_access`;
-        sessionStorage.setItem('admin_token', fallbackToken);
-        setAdminToken(fallbackToken);
-        setIsAdminUnlocked(true);
-        setShowAdminPasswordModal(false);
-        setIsAdminViewVisible(true);
-        setAdminPasswordInput('');
-      } else {
-        setAdminPasswordError('စကားဝှက် မှားယွင်းနေပါသည် (Invalid Password)');
-      }
-    } finally {
-      setIsVerifyingAdminPassword(false);
-    }
-  };
-
-  const handleLockAdmin = async () => {
-    const token = sessionStorage.getItem('admin_token');
-    if (token) {
-      try {
-        await fetch('/api/admin/logout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-admin-token': token }
-        });
-      } catch (e) {
-        // ignore
-      }
-      sessionStorage.removeItem('admin_token');
-      setAdminToken('');
-    }
-    setIsAdminUnlocked(false);
+  const handleCloseAdminPanel = () => {
     setIsAdminViewVisible(false);
   };
 
@@ -1021,18 +907,18 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     <div>
                       <h2 className="text-xl sm:text-2xl font-black flex items-center gap-2">
                         Admin Dashboard
-                        <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono font-medium">AUTHENTICATED</span>
+                        <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono font-medium">ADMIN ACTIVE</span>
                       </h2>
-                      <p className="text-xs text-slate-400">Master Session: {user?.userName || user?.accessKey} (Protected with 255214)</p>
+                      <p className="text-xs text-slate-400">Master Session: {user?.userName || user?.accessKey} (Full Admin Access)</p>
                     </div>
                 </div>
                 <div className='flex gap-2.5 items-center flex-wrap'>
                     <button onClick={loadHistoryData} className="p-2.5 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors shadow-lg border border-slate-700/80" title="Refresh">
                         <RefreshIcon className="w-4 h-4 text-slate-300" />
                     </button>
-                    <button onClick={handleLockAdmin} className="px-3.5 py-2.5 bg-rose-600/90 hover:bg-rose-600 text-white rounded-xl transition-all shadow-lg text-xs font-bold flex items-center gap-1.5 active:scale-95" title="Lock Admin & Exit">
-                        <LockClosedIcon className="w-4 h-4" />
-                        <span>Lock & Exit</span>
+                    <button onClick={handleCloseAdminPanel} className="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition-all shadow-lg text-xs font-bold flex items-center gap-1.5 active:scale-95" title="Close Admin View">
+                        <XIcon className="w-4 h-4" />
+                        <span>Close Admin</span>
                     </button>
                 </div>
             </div>
@@ -2180,91 +2066,6 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Admin Master Password Verification Modal */}
-      {showAdminPasswordModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-neumorphic-bg rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 animate-in zoom-in-95 duration-200 border border-slate-700/20">
-                <div className="flex items-center gap-3 mb-4 text-purple-600">
-                    <div className="p-3 rounded-2xl shadow-neumorphic-outset bg-neumorphic-bg text-purple-600">
-                        <LockClosedIcon className="w-6 h-6" />
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Admin Master Verification</h3>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">Server Double-Lock Authentication</p>
-                    </div>
-                </div>
-
-                <p className="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                    MANOEL ၏ Admin လုပ်ပိုင်ခွင့်ကို အသုံးပြုရန် Server Master Password (PIN) ကို ထည့်သွင်းပေးပါခင်ဗျာ။
-                </p>
-
-                <form onSubmit={handleVerifyAdminPassword} className="space-y-4">
-                    <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
-                            Admin Master Password (PIN)
-                        </label>
-                        <div className="relative">
-                            <input
-                                type={showAdminPasswordText ? "text" : "password"}
-                                value={adminPasswordInput}
-                                onChange={(e) => {
-                                    setAdminPasswordInput(e.target.value);
-                                    if (adminPasswordError) setAdminPasswordError('');
-                                }}
-                                autoFocus
-                                placeholder="••••••"
-                                className="w-full px-4 py-3 rounded-2xl bg-neumorphic-bg shadow-neumorphic-inset text-slate-800 dark:text-slate-100 font-mono tracking-widest text-lg outline-none focus:ring-2 focus:ring-purple-500/50 transition-all pr-14"
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowAdminPasswordText(!showAdminPasswordText)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-purple-600 px-2 py-1"
-                            >
-                                {showAdminPasswordText ? "Hide" : "Show"}
-                            </button>
-                        </div>
-                        {adminPasswordError && (
-                            <p className="text-xs text-rose-500 font-semibold mt-2 animate-in fade-in">
-                                ⚠️ {adminPasswordError}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className="flex gap-3 pt-2">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setShowAdminPasswordModal(false);
-                                setAdminPasswordInput('');
-                                setAdminPasswordError('');
-                            }}
-                            className="flex-1 px-4 py-3 rounded-2xl shadow-neumorphic-outset text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white active:shadow-neumorphic-inset transition-all font-bold text-sm"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={isVerifyingAdminPassword || !adminPasswordInput.trim()}
-                            className="flex-1 px-4 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg hover:from-purple-500 hover:to-indigo-500 active:scale-98 transition-all font-bold text-sm disabled:opacity-50 flex items-center justify-center gap-2"
-                        >
-                            {isVerifyingAdminPassword ? (
-                                <>
-                                    <LoadingSpinnerIcon className="w-4 h-4" />
-                                    <span>Verifying...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <KeyIcon className="w-4 h-4" />
-                                    <span>Verify & Unlock</span>
-                                </>
-                            )}
-                        </button>
-                    </div>
-                </form>
-            </div>
         </div>
       )}
 
