@@ -38,7 +38,12 @@ import {
   Smartphone,
   Plus,
   Check,
-  X
+  X,
+  MessageSquare,
+  Send,
+  Bot,
+  Copy,
+  User
 } from 'lucide-react';
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
@@ -231,4 +236,24 @@ export const CheckIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props
 
 export const XIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
   <X className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const ChatIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <MessageSquare className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const SendIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Send className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const BotIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Bot className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const CopyIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <Copy className={className} strokeWidth={2} {...(props as any)} />
+);
+
+export const UserIcon: React.FC<IconProps> = ({ className = 'w-5 h-5', ...props }) => (
+  <User className={className} strokeWidth={2} {...(props as any)} />
 );

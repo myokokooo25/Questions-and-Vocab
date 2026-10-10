@@ -5,6 +5,52 @@
     <meta charset="UTF-8" />
     <script>
       (function() {
+        // Safe Vite HMR WebSocket handling in AI Studio preview environment
+        try {
+          var OrigWS = window.WebSocket;
+          if (OrigWS) {
+            var MockWS = function(url, protocols) {
+              if (protocols === 'vite-hmr' || (typeof url === 'string' && (url.indexOf('vite') !== -1 || url.indexOf('@vite') !== -1))) {
+                var target = new EventTarget();
+                target.readyState = 1;
+                target.bufferedAmount = 0;
+                target.extensions = '';
+                target.protocol = 'vite-hmr';
+                target.url = url;
+                target.binaryType = 'blob';
+                target.send = function() {};
+                target.close = function() {};
+                return target;
+              }
+              return new OrigWS(url, protocols);
+            };
+            MockWS.CONNECTING = 0;
+            MockWS.OPEN = 1;
+            MockWS.CLOSING = 2;
+            MockWS.CLOSED = 3;
+            MockWS.prototype = OrigWS.prototype;
+            window.WebSocket = MockWS;
+          }
+        } catch (e) {}
+
+        // Suppress Vite HMR WebSocket errors in dev environment
+        window.addEventListener('error', function(e) {
+          var msg = (e && (e.message || (e.error && e.error.message))) || '';
+          if (typeof msg === 'string' && (msg.indexOf('WebSocket') !== -1 || msg.indexOf('[vite]') !== -1)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(e) {
+          var reason = (e && e.reason && (e.reason.message || e.reason)) || '';
+          if (typeof reason === 'string' && (reason.indexOf('WebSocket') !== -1 || reason.indexOf('[vite]') !== -1)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        }, true);
+
         try {
           var t = localStorage.getItem('app_theme') || 'dark';
           if (t === 'khachannel') t = 'gold';

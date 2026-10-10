@@ -229,6 +229,75 @@ async function startServer() {
     }
   });
 
+  // Multi-turn Gemini Chatbot Endpoint
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { messages, model, systemInstruction } = req.body;
+
+      if (!Array.isArray(messages) || messages.length === 0) {
+        res.status(400).json({ error: "Messages array is required." });
+        return;
+      }
+
+      // Support user custom API key (e.g. user entered their own Gemini API key)
+      const customApiKey = (req.headers['x-custom-api-key'] as string) || req.body?.customApiKey;
+      const apiKey = (customApiKey && typeof customApiKey === 'string' && customApiKey.trim().startsWith('AIza'))
+        ? customApiKey.trim()
+        : process.env.GEMINI_API_KEY;
+
+      if (!apiKey) {
+        res.status(500).json({ error: "GEMINI_API_KEY is not configured on the server, and no valid custom key provided." });
+        return;
+      }
+
+      // Valid model check based on user request:
+      // "Use gemini-3.1-pro-preview for particularly complex tasks, gemini-3.5-flash for general tasks, and gemini-3.1-flash-lite for tasks that should happen fast."
+      let targetModel = 'gemini-3.5-flash';
+      if (model === 'gemini-3.1-pro-preview') {
+        targetModel = 'gemini-3.1-pro-preview';
+      } else if (model === 'gemini-3.1-flash-lite') {
+        targetModel = 'gemini-3.1-flash-lite';
+      } else if (model === 'gemini-3.5-flash') {
+        targetModel = 'gemini-3.5-flash';
+      }
+
+      const defaultSystemInstruction = `You are "Tekkotsu Assistant" (鉄骨製作管理 AIアシスタント), an expert AI engineering assistant and tutor for Myanmar engineers and students preparing for the Japanese Steel Structure Fabrication Management Technical Examination (鉄骨製作管理技術者 1級・2級) and related technical exams (JASS 6, JIS, Architectural Institute of Japan).
+Guidelines:
+1. Bilingual Explanation: Provide explanations with authentic Japanese technical terms (include Furigana or Hiragana readings when helpful) and crystal-clear Burmese (Myanmar) explanations.
+2. Engineering Accuracy: Strictly reference JASS 6 (建築工事標準仕様書 JASS 6 鉄骨工事), JIS Z 3801/3841, JIS B 1186 (High-strength bolts), and standard architectural steel fabrication guidelines.
+3. Exam-Oriented: Highlight exam traps, mnemonics, tolerance values (e.g. e ≦ t/15, ±2mm, 30mm deck protrusion, 25mm cover), and step-by-step formula calculations (Q = (60 * E * I) / (v * 1000)).
+4. Tone: Encouraging, respectful, professional, and clear.`;
+
+      const ai = new GoogleGenAI({ apiKey });
+
+      // Format multi-turn conversation contents for @google/genai
+      const formattedContents = messages.map((m: { role: 'user' | 'model' | 'assistant'; text: string }) => ({
+        role: m.role === 'assistant' ? 'model' : m.role,
+        parts: [{ text: m.text }]
+      }));
+
+      const response = await ai.models.generateContent({
+        model: targetModel,
+        contents: formattedContents,
+        config: {
+          systemInstruction: systemInstruction || defaultSystemInstruction,
+        }
+      });
+
+      if (!response.text) {
+        throw new Error('Invalid response format from Gemini');
+      }
+
+      res.json({
+        text: response.text,
+        model: targetModel,
+      });
+    } catch (error: any) {
+      console.error("Gemini Chat Error:", error);
+      res.status(500).json({ error: error.message || "An error occurred during chat generation" });
+    }
+  });
+
   // --- SECURE BACKEND ADMIN AUTHENTICATION ---
   // The Admin Master Password (255214) is kept strictly on the backend and NEVER exposed to frontend bundles.
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '255214';
@@ -336,6 +405,267 @@ async function startServer() {
                 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkdWxyY292ZmlxYnNlbmV2b3djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyOTQ1NzcsImV4cCI6MjA4Njg3MDU3N30.XF7ENOM8-XrLKBYgZU0ut1S9swE5_w0CUcNG7VTOKFQ';
     return createClient(url, key);
   };
+
+  // --- USER LIVE PRESENCE & HEARTBEAT TRACKING ---
+  interface ActiveUserSession {
+    accessKey: string;
+    userName: string;
+    lastActive: number;
+    action?: string;
+    details?: string;
+    ip?: string;
+  }
+
+  const activeUserSessions = new Map<string, ActiveUserSession>();
+
+  // Cleanup sessions older than 24h periodically
+  setInterval(() => {
+    const now = Date.now();
+    for (const [key, session] of activeUserSessions.entries()) {
+      if (now - session.lastActive > 24 * 60 * 60 * 1000) {
+        activeUserSessions.delete(key);
+      }
+    }
+  }, 5 * 60 * 1000);
+
+  // 1. Client Heartbeat (Called by active users every 30-45 seconds)
+  app.post("/api/activity/heartbeat", (req, res) => {
+    try {
+      const { accessKey, userName, action, details } = req.body || {};
+      if (!accessKey || typeof accessKey !== 'string') {
+        res.status(400).json({ error: "accessKey required" });
+        return;
+      }
+
+      const cleanKey = accessKey.trim().toUpperCase();
+      const ip = (req.headers['x-forwarded-for'] as string) || req.socket.remoteAddress || 'unknown';
+
+      activeUserSessions.set(cleanKey, {
+        accessKey: cleanKey,
+        userName: userName?.trim() || activeUserSessions.get(cleanKey)?.userName || 'Student',
+        lastActive: Date.now(),
+        action: action || 'Active on App',
+        details: details || '',
+        ip: ip.split(',')[0].trim(),
+      });
+
+      res.json({ success: true, timestamp: Date.now() });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to record heartbeat" });
+    }
+  });
+
+  // 2. Real-time Online Users (Protected by Admin Token)
+  app.get("/api/admin/online-users", (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || (req.query?.token as string);
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const now = Date.now();
+      const onlineUsers: any[] = [];
+      const idleUsers: any[] = [];
+      const recentUsers: any[] = [];
+
+      for (const [, session] of activeUserSessions.entries()) {
+        const diff = now - session.lastActive;
+        const item = {
+          key: session.accessKey,
+          userName: session.userName,
+          lastActive: session.lastActive,
+          lastActiveAgoSeconds: Math.floor(diff / 1000),
+          action: session.action,
+          details: session.details,
+          status: diff < 3 * 60 * 1000 ? 'online' : (diff < 15 * 60 * 1000 ? 'idle' : 'recent')
+        };
+
+        if (diff < 3 * 60 * 1000) {
+          onlineUsers.push(item);
+        } else if (diff < 15 * 60 * 1000) {
+          idleUsers.push(item);
+        } else {
+          recentUsers.push(item);
+        }
+      }
+
+      res.json({
+        success: true,
+        onlineCount: onlineUsers.length,
+        onlineUsers,
+        idleUsers,
+        recentUsers,
+        totalActiveToday: activeUserSessions.size
+      });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to fetch online users" });
+    }
+  });
+
+  // 3. User Study Analytics & Progress (Protected by Admin Token)
+  // Provides comprehensive metrics on who has studied how much
+  app.get("/api/admin/user-study-analytics", async (req, res) => {
+    try {
+      const token = (req.headers['x-admin-token'] as string) || (req.query?.token as string);
+      if (!isValidAdminToken(token)) {
+        res.status(401).json({ error: "Admin authentication required" });
+        return;
+      }
+
+      const client = getSupabaseAdmin();
+      const [codesResult, progResult] = await Promise.all([
+        client.from('access_codes').select('*').order('id', { ascending: false }),
+        client.from('user_progress').select('*')
+      ]);
+
+      if (codesResult.error) {
+        throw new Error(`Failed to load access codes: ${codesResult.error.message}`);
+      }
+
+      const codes = codesResult.data || [];
+      const progs = progResult.data || [];
+
+      // Map progress by access_code_id
+      const progMap = new Map<number | string, any>();
+      progs.forEach((p: any) => {
+        if (p.access_code_id !== undefined && p.access_code_id !== null) {
+          progMap.set(p.access_code_id, p);
+        }
+      });
+
+      const now = Date.now();
+      let totalQuestionsAnsweredSum = 0;
+      let totalFlashcardsLearnedSum = 0;
+      let totalBookmarksSum = 0;
+      let activeLearnersCount = 0;
+      let onlineNowCount = 0;
+
+      const userAnalyticsList = codes.map((c: any) => {
+        // Find progress record
+        const p = progMap.get(c.id);
+        const studyHist = (p && typeof p.study_history === 'object' && p.study_history !== null)
+          ? p.study_history
+          : {};
+        const qCount = Object.keys(studyHist).length;
+
+        const fcLearned = (p && p.flashcard_data && Array.isArray(p.flashcard_data.learned))
+          ? p.flashcard_data.learned.length
+          : 0;
+
+        const bmCount = (p && Array.isArray(p.bookmarks))
+          ? p.bookmarks.length
+          : 0;
+
+        totalQuestionsAnsweredSum += qCount;
+        totalFlashcardsLearnedSum += fcLearned;
+        totalBookmarksSum += bmCount;
+
+        if (qCount > 0 || fcLearned > 0) {
+          activeLearnersCount++;
+        }
+
+        // Live Presence check
+        const upperCode = (c.code || '').trim().toUpperCase();
+        const liveSession = activeUserSessions.get(upperCode);
+        const liveDiff = liveSession ? now - liveSession.lastActive : Infinity;
+        
+        // Also check if updated_at in user_progress was within the last 5 minutes
+        const updatedTime = p?.updated_at ? new Date(p.updated_at).getTime() : 0;
+        const updatedDiff = updatedTime > 0 ? now - updatedTime : Infinity;
+
+        const isOnline = liveDiff < 3 * 60 * 1000 || updatedDiff < 4 * 60 * 1000;
+        const isIdle = !isOnline && (liveDiff < 15 * 60 * 1000 || updatedDiff < 15 * 60 * 1000);
+
+        if (isOnline) {
+          onlineNowCount++;
+        }
+
+        const deviceList = Array.isArray(c.device_ids) ? c.device_ids : [];
+
+        // Chapter breakdown calculation
+        const chapterCounts: Record<string, number> = {
+          ch1: 0,
+          ch2: 0,
+          ch3: 0,
+          ch4: 0,
+          ch5: 0,
+          pastExams: 0,
+          other: 0,
+        };
+
+        Object.keys(studyHist).forEach((qid: string) => {
+          const lower = qid.toLowerCase();
+          if (lower.includes('ch1') || lower.includes('c1-') || lower.includes('chapter1')) chapterCounts.ch1++;
+          else if (lower.includes('ch2') || lower.includes('c2-') || lower.includes('chapter2')) chapterCounts.ch2++;
+          else if (lower.includes('ch3') || lower.includes('c3-') || lower.includes('chapter3')) chapterCounts.ch3++;
+          else if (lower.includes('ch4') || lower.includes('c4-') || lower.includes('chapter4')) chapterCounts.ch4++;
+          else if (lower.includes('ch5') || lower.includes('c5-') || lower.includes('chapter5')) chapterCounts.ch5++;
+          else if (lower.includes('202') || lower.includes('past')) chapterCounts.pastExams++;
+          else chapterCounts.other++;
+        });
+
+        // Determine last active timestamp
+        let lastActiveAt: string | null = null;
+        if (liveSession) {
+          lastActiveAt = new Date(liveSession.lastActive).toISOString();
+        } else if (p?.updated_at) {
+          lastActiveAt = p.updated_at;
+        } else if (c.first_used_at) {
+          lastActiveAt = c.first_used_at;
+        } else {
+          lastActiveAt = c.created_at || null;
+        }
+
+        return {
+          id: c.id,
+          code: c.code,
+          userName: c.Username || c.user_name || 'Student',
+          memo: c.memo || '',
+          type: c.type || 'permanent',
+          isActive: c.is_active !== false,
+          deviceCount: deviceList.length,
+          deviceIds: deviceList,
+          questionsAnswered: qCount,
+          flashcardsLearned: fcLearned,
+          bookmarksCount: bmCount,
+          chapterCounts,
+          isOnline,
+          isIdle,
+          status: isOnline ? 'online' : (isIdle ? 'idle' : 'offline'),
+          currentAction: liveSession?.action || (isOnline ? 'Studying Questions' : ''),
+          createdAt: c.created_at,
+          firstUsedAt: c.first_used_at,
+          lastActiveAt,
+          updatedAt: p?.updated_at || null
+        };
+      });
+
+      // Sort by questionsAnswered desc by default, with online users prioritized
+      userAnalyticsList.sort((a: any, b: any) => {
+        if (a.isOnline && !b.isOnline) return -1;
+        if (!a.isOnline && b.isOnline) return 1;
+        return b.questionsAnswered - a.questionsAnswered;
+      });
+
+      res.json({
+        success: true,
+        summary: {
+          totalStudents: codes.length,
+          activeLearnersCount,
+          onlineNowCount,
+          totalQuestionsAnsweredSum,
+          totalFlashcardsLearnedSum,
+          totalBookmarksSum,
+          lastRefreshedAt: new Date().toISOString()
+        },
+        users: userAnalyticsList
+      });
+    } catch (err: any) {
+      console.error("[Admin Study Analytics Error]:", err);
+      res.status(500).json({ error: err.message || "Failed to compile study analytics" });
+    }
+  });
 
   // --- ACCESS CODES MANAGEMENT APIS (Protected by Admin Token) ---
 
@@ -610,7 +940,7 @@ async function startServer() {
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, hmr: false },
       appType: "spa",
     });
     app.use(vite.middlewares);

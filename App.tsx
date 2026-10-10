@@ -12,11 +12,12 @@ import TechnicalDictionary from './components/TechnicalDictionary';
 import CheatSheetView from './components/CheatSheetView';
 import WeakPointNotebook from './components/WeakPointNotebook';
 import EngineeringCalculator from './components/EngineeringCalculator';
+import GeminiChatbot from './components/GeminiChatbot';
 import InstallPrompt from './components/InstallPrompt';
 import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 import { ChevronLeftIcon } from './components/Icons';
 
-type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator';
+type AppMode = 'main' | '2026' | '2026-level2' | '2021' | '2022' | '2023' | '2024' | '2025' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator' | 'gemini-tutor';
 
 const FlashcardAppWrapper: React.FC<{ onGoBack: () => void }> = ({ onGoBack }) => {
   return (
@@ -83,6 +84,7 @@ const AppContent: React.FC = () => {
         { selectedApp === 'cheat-sheet' && <CheatSheetView onGoBack={handleGoBack} /> }
         { selectedApp === 'weak-points' && <WeakPointNotebook onGoBack={handleGoBack} /> }
         { selectedApp === 'calculator' && <EngineeringCalculator onGoBack={handleGoBack} /> }
+        { selectedApp === 'gemini-tutor' && <GeminiChatbot onGoBack={handleGoBack} /> }
       </div>
     </div>
   );

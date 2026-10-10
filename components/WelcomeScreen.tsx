@@ -1,13 +1,13 @@
 
 import React, { useState, useRef } from 'react';
-import { BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon, RefreshIcon } from './Icons';
+import { BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon, RefreshIcon, BotIcon } from './Icons';
 import DailyTrackerWidget from './DailyTrackerWidget';
 import { useProgress } from '../contexts/ProgressContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { forceAppUpdateAndRefresh } from './PWAUpdatePrompt';
 
 interface WelcomeScreenProps {
-  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator') => void;
+  onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator' | 'gemini-tutor') => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
@@ -248,8 +248,34 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
             </div>
         </div>
 
-        {/* Priority Quick Access: Weak Points, Cheat Sheet & Engineering Calculator */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        {/* Priority Quick Access: AI Tutor, Weak Points, Cheat Sheet & Engineering Calculator */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {/* Tekkotsu Sensei AI Tutor (Gemini Multi-turn Chat) */}
+          <button
+            onClick={() => onSelectApp('gemini-tutor')}
+            className="p-5 sm:p-7 text-left bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all duration-300 focus:outline-none group border border-indigo-500/30 relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-indigo-600 group-hover:scale-110 transition-transform shrink-0">
+                  <BotIcon className="w-6 h-6 sm:w-8 sm:h-8" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-base sm:text-lg font-black text-slate-700 dark:text-slate-200">Tekkotsu Assistant</h2>
+                    <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 flex items-center gap-1 font-mono">
+                      <SparkleIcon className="w-2.5 h-2.5 text-amber-500" />
+                      <span>AI Chat</span>
+                    </span>
+                  </div>
+                  <p className="mt-0.5 text-xs text-slate-500 font-medium">
+                    Gemini ဖြင့် စာမေးပွဲမေးခွန်း၊ စံနှုန်းနှင့် တွက်နည်းများ မေးမြန်းရန်။
+                  </p>
+                </div>
+              </div>
+            </div>
+          </button>
+
           {/* Weak Points Notebook */}
           <button
             onClick={() => onSelectApp('weak-points')}

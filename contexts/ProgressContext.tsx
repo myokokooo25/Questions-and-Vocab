@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useRe
 import { useAuth } from './AuthContext';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { StudyCardData } from '../types';
+import { sendHeartbeat } from '../lib/heartbeat';
 
 // Define the shape of our Flashcard Progress data
 export interface FlashcardProgressData {
@@ -277,6 +278,9 @@ export const ProgressProvider: React.FC<{ children: ReactNode }> = ({ children }
           ...prev,
           [questionId]: optionId
       }));
+      if (user?.accessKey) {
+        sendHeartbeat(user.accessKey, user.userName, 'Answering Questions');
+      }
   };
 
   const recordWrongQuestion = (question: StudyCardData, selectedOptionId?: number) => {

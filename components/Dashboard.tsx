@@ -11,7 +11,7 @@ import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon, LockClosedIcon, KeyIcon, XIcon } from './Icons';
+import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon, LockClosedIcon, KeyIcon, XIcon, BotIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
 import { kanjiDictionary } from '../data/kanji';
@@ -22,7 +22,9 @@ import AnswerKeyView from './AnswerKeyView';
 import TechnicalDictionary from './TechnicalDictionary';
 import CheatSheetView from './CheatSheetView';
 import WeakPointNotebook from './WeakPointNotebook';
+import GeminiChatbot from './GeminiChatbot';
 import { AccessCodeManagement } from './AccessCodeManagement';
+import { UserStudyAnalytics } from './UserStudyAnalytics';
 import { forceAppUpdateAndRefresh } from './PWAUpdatePrompt';
 
 interface HistoryEntry {
@@ -49,6 +51,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [showDictionary, setShowDictionary] = useState(false);
   const [showCheatSheet, setShowCheatSheet] = useState(false);
   const [showWeakPoints, setShowWeakPoints] = useState(false);
+  const [showGeminiTutor, setShowGeminiTutor] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
@@ -325,6 +328,35 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
       supabase.removeChannel(channel);
     };
   }, [user]);
+
+  // --- REALTIME ONLINE USERS POLLING VIA BACKEND ---
+  useEffect(() => {
+    if (!user?.isAdmin) return;
+
+    const fetchOnlineUsers = async () => {
+      try {
+        const res = await fetch('/api/admin/online-users', {
+          headers: { 'x-admin-token': adminToken }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.onlineUsers)) {
+            setOnlineUsers(data.onlineUsers.map((ou: any) => ({
+              key: ou.key,
+              userName: ou.userName,
+              count: 1
+            })));
+          }
+        }
+      } catch (err) {
+        // Fallback to supabase presence
+      }
+    };
+
+    fetchOnlineUsers();
+    const interval = setInterval(fetchOnlineUsers, 15000);
+    return () => clearInterval(interval);
+  }, [user, adminToken]);
 
   const loadHistoryData = () => {
     try {
@@ -964,8 +996,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     : 'bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                 }`}
               >
-                <UsersIcon className="w-4 h-4" />
-                <span>👥 Activity & Login History</span>
+                <AcademicCapIcon className="w-4 h-4" />
+                <span>📊 Student Learning Progress & Live Activity (သင်ယူမှု မှတ်တမ်း)</span>
+                {onlineUsers.length > 0 && (
+                  <span className="bg-emerald-400 text-black px-1.5 py-0.5 rounded-full text-[10px] font-black">
+                    {onlineUsers.length}
+                  </span>
+                )}
               </button>
             </div>
 
@@ -1042,69 +1079,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </div>
             )}
 
-            {/* TAB 3: ACTIVITY & LOGIN HISTORY */}
+            {/* TAB 3: STUDENT LEARNING PROGRESS & LIVE ACTIVITY */}
             {adminActiveTab === 'activity' && (
-              <div className="space-y-4">
-                <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-700/80 space-y-4">
-                    <div className="flex items-center justify-between">
-                        <h3 className="text-base font-bold text-slate-200 flex items-center gap-2">
-                            <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
-                            Online Users (Realtime)
-                        </h3>
-                        <span className="text-xs font-bold bg-slate-800 px-3 py-1 rounded-full text-slate-300">
-                            {onlineUsers.length} Active Keys
-                        </span>
-                    </div>
-                    
-                    {onlineUsers.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                            {onlineUsers.map((ou) => (
-                                <div key={ou.key} className="p-3 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-between">
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-sm text-slate-200">{ou.userName}</span>
-                                        <span className="font-mono text-xs text-blue-400">{ou.key}</span>
-                                    </div>
-                                    <span className="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded-md">
-                                        {ou.count} {ou.count === 1 ? 'device' : 'devices'}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-center text-slate-400 py-6 font-medium text-xs">No other users online right now.</p>
-                    )}
-                </div>
-
-                <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-700/80 space-y-4">
-                    <h3 className="text-base font-bold text-slate-200">Local Login History</h3>
-                    <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
-                        {historyData.length > 0 ? (
-                            <ul className="space-y-3">
-                                {historyData.slice().reverse().map((entry, index) => {
-                                 const isFailure = entry.status === 'failure';
-                                return (
-                                    <li key={index} className={`p-3.5 rounded-2xl border text-xs flex items-start justify-between gap-4 ${isFailure ? 'bg-red-900/20 border-red-500/50' : 'bg-slate-900/60 border-green-500/30'}`}>
-                                        <div className="space-y-1">
-                                          <p className="flex items-center gap-2">
-                                               {isFailure ? <span className="text-red-500 font-bold">Failed</span> : <span className="text-green-500 font-bold">Success</span>}
-                                              <span className="font-mono text-slate-300">{entry.accessKey}</span>
-                                          </p>
-                                          <p className="text-[11px] text-slate-400">ID: {entry.deviceId}</p>
-                                        </div>
-                                        <div className="text-right text-[11px] text-slate-400 whitespace-nowrap">
-                                            <p>{new Date(entry.timestamp).toLocaleDateString()}</p>
-                                            <p>{new Date(entry.timestamp).toLocaleTimeString()}</p>
-                                        </div>
-                                    </li>
-                                );
-                            })}
-                            </ul>
-                        ) : (
-                            <p className="text-center text-slate-400 py-8 font-medium text-xs">No login history found.</p>
-                        )}
-                    </div>
-                </div>
-              </div>
+              <UserStudyAnalytics adminToken={adminToken} />
             )}
         </div>
       );
@@ -1181,6 +1158,10 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </ul>
             </div>
         )
+    }
+
+    if (showGeminiTutor) {
+        return <GeminiChatbot onGoBack={() => setShowGeminiTutor(false)} />;
     }
 
     if (showWeakPoints) {
@@ -1682,6 +1663,14 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 >
                     <BookOpenIcon className="w-5 h-5" />
                 </button>
+                <button
+                    onClick={() => setShowGeminiTutor(true)}
+                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0 flex items-center gap-1.5"
+                    title="Tekkotsu Assistant (Gemini AI Chatbot) - စာမေးပွဲမေးခွန်းနှင့် တွက်နည်းများ မေးမြန်းရန်"
+                >
+                    <BotIcon className="w-5 h-5 text-indigo-500" />
+                    <span className="hidden xl:inline text-xs font-bold text-indigo-600 dark:text-indigo-400">AI Assistant</span>
+                </button>
                 {user?.isAdmin && (
                     <button
                         onClick={handleOpenAdminPanel}
@@ -2054,6 +2043,17 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                     </button>
                   ))}
                 </div>
+              </div>
+
+              {/* Tekkotsu Assistant AI Chat */}
+              <div className="pt-2 border-t border-slate-300/30">
+                <button
+                  onClick={() => { setShowMoreMenu(false); setShowGeminiTutor(true); }}
+                  className="w-full flex items-center justify-center gap-2 p-3 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset active:shadow-neumorphic-inset text-indigo-600 dark:text-indigo-400 font-bold text-xs"
+                >
+                  <BotIcon className="w-4 h-4 text-indigo-500" />
+                  <span>Tekkotsu Assistant (AI Chatbot)</span>
+                </button>
               </div>
 
               {/* Admin Panel (if admin) */}

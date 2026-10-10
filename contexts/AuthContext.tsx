@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '../types';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { sendHeartbeat } from '../lib/heartbeat';
 
 interface AuthContextType {
   user: User | null;
@@ -148,6 +149,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     initializeAuth();
   }, []);
+
+  // Periodic live presence heartbeat to backend
+  useEffect(() => {
+    if (!user) return;
+
+    // Send immediate heartbeat on login / load
+    sendHeartbeat(user.accessKey, user.userName, 'Active on App');
+
+    const interval = setInterval(() => {
+      sendHeartbeat(user.accessKey, user.userName, 'Studying / Active');
+    }, 35000);
+
+    const onFocus = () => {
+      sendHeartbeat(user.accessKey, user.userName, 'Focused App Window');
+    };
+
+    window.addEventListener('focus', onFocus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', onFocus);
+    };
+  }, [user]);
 
   const login = async (accessKey: string, userName: string = ''): Promise<boolean> => {
     setError(null);
