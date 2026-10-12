@@ -240,23 +240,33 @@ async function startServer() {
       }
 
       // Support user custom API key (e.g. user entered their own Gemini API key)
+      const adminTokenHeader = req.headers['x-admin-token'] as string;
+      const isAdminUser = req.headers['x-is-admin'] === 'true' || 
+                          req.body?.isAdmin === true || 
+                          isValidAdminToken(adminTokenHeader) ||
+                          (typeof req.body?.userName === 'string' && (req.body.userName.trim().toUpperCase() === 'MANOEL' || req.body.userName.trim().toUpperCase() === 'MYOKO')) ||
+                          (typeof req.body?.accessKey === 'string' && req.body.accessKey.trim().toUpperCase() === 'MANOEL');
+      
       const customApiKey = (req.headers['x-custom-api-key'] as string) || req.body?.customApiKey;
-      const apiKey = (customApiKey && typeof customApiKey === 'string' && customApiKey.trim().startsWith('AIza'))
-        ? customApiKey.trim()
-        : process.env.GEMINI_API_KEY;
+      
+      let apiKey = process.env.GEMINI_API_KEY || '';
+      // Only use custom key if NOT admin and key looks valid
+      if (!isAdminUser && customApiKey && typeof customApiKey === 'string' && customApiKey.trim().startsWith('AIza')) {
+        apiKey = customApiKey.trim();
+      }
 
       if (!apiKey) {
-        res.status(500).json({ error: "GEMINI_API_KEY is not configured on the server, and no valid custom key provided." });
+        res.status(500).json({ error: "GEMINI_API_KEY is not configured on the server." });
         return;
       }
 
-      // Valid model check based on user request:
-      // "Use gemini-3.1-pro-preview for particularly complex tasks, gemini-3.5-flash for general tasks, and gemini-3.1-flash-lite for tasks that should happen fast."
       let targetModel = 'gemini-3.5-flash';
       if (model === 'gemini-3.1-pro-preview') {
         targetModel = 'gemini-3.1-pro-preview';
       } else if (model === 'gemini-3.1-flash-lite') {
         targetModel = 'gemini-3.1-flash-lite';
+      } else if (model === 'gemini-3.8-flash') {
+        targetModel = 'gemini-3.8-flash';
       } else if (model === 'gemini-3.5-flash') {
         targetModel = 'gemini-3.5-flash';
       }
@@ -268,29 +278,78 @@ Guidelines:
 3. Exam-Oriented: Highlight exam traps, mnemonics, tolerance values (e.g. e ≦ t/15, ±2mm, 30mm deck protrusion, 25mm cover), and step-by-step formula calculations (Q = (60 * E * I) / (v * 1000)).
 4. Tone: Encouraging, respectful, professional, and clear.`;
 
-      const ai = new GoogleGenAI({ apiKey });
-
-      // Format multi-turn conversation contents for @google/genai
-      const formattedContents = messages.map((m: { role: 'user' | 'model' | 'assistant'; text: string }) => ({
-        role: m.role === 'assistant' ? 'model' : m.role,
-        parts: [{ text: m.text }]
+      // Sanitize multi-turn conversation contents for @google/genai
+      const validMessages = messages.filter((m: any) => m && typeof m.text === 'string' && m.text.trim().length > 0);
+      let formattedContents = validMessages.map((m: { role: 'user' | 'model' | 'assistant'; text: string }) => ({
+        role: (m.role === 'assistant' || m.role === 'model') ? 'model' : 'user',
+        parts: [{ text: m.text.trim() }]
       }));
 
-      const response = await ai.models.generateContent({
-        model: targetModel,
-        contents: formattedContents,
-        config: {
-          systemInstruction: systemInstruction || defaultSystemInstruction,
-        }
-      });
+      // Ensure the first message starts with role: 'user' as strictly required by Gemini API
+      while (formattedContents.length > 0 && formattedContents[0].role !== 'user') {
+        formattedContents.shift();
+      }
+      if (formattedContents.length === 0) {
+        formattedContents = [{ role: 'user', parts: [{ text: messages[messages.length - 1]?.text || 'Hello' }] }];
+      }
 
-      if (!response.text) {
+      let responseText = '';
+      let usedModel = targetModel;
+
+      const fallbackModelCandidates = [targetModel, 'gemini-3.5-flash', 'gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-3.1-pro-preview'];
+      const uniqueModels = Array.from(new Set(fallbackModelCandidates));
+
+      let lastError: any = null;
+      for (const mName of uniqueModels) {
+        try {
+          const ai = new GoogleGenAI({ apiKey });
+          const response = await ai.models.generateContent({
+            model: mName,
+            contents: formattedContents,
+            config: {
+              systemInstruction: systemInstruction || defaultSystemInstruction,
+            }
+          });
+          if (response.text) {
+            responseText = response.text;
+            usedModel = mName;
+            break;
+          }
+        } catch (mErr: any) {
+          lastError = mErr;
+          console.warn(`[AI Chat] Attempt with model ${mName} failed:`, mErr.message);
+          // If custom key failed, retry current model with server GEMINI_API_KEY
+          if (apiKey !== process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY) {
+            try {
+              const aiServer = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+              const response = await aiServer.models.generateContent({
+                model: mName,
+                contents: formattedContents,
+                config: { systemInstruction: systemInstruction || defaultSystemInstruction }
+              });
+              if (response.text) {
+                responseText = response.text;
+                usedModel = mName;
+                break;
+              }
+            } catch (serverFallbackErr) {
+              console.warn(`[AI Chat] Server key fallback for ${mName} also failed:`, serverFallbackErr);
+            }
+          }
+        }
+      }
+
+      if (!responseText) {
+        throw lastError || new Error('Invalid response from Gemini AI');
+      }
+
+      if (!responseText) {
         throw new Error('Invalid response format from Gemini');
       }
 
       res.json({
-        text: response.text,
-        model: targetModel,
+        text: responseText,
+        model: usedModel,
       });
     } catch (error: any) {
       console.error("Gemini Chat Error:", error);

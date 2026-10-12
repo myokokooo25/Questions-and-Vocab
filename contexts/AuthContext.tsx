@@ -90,8 +90,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(storedUser));
           }
 
-          // Security check if DB is available
-          if (isSupabaseConfigured && storedUser.isAdmin && storedUser.accessKey !== 'MANOEL') {
+          // Check if admin or Manoel user
+          const isManoelAdmin = storedUser.accessKey?.toUpperCase() === 'MANOEL' || 
+                                storedUser.userName?.toUpperCase() === 'MANOEL' || 
+                                storedUser.userName?.toUpperCase() === 'MYOKO' ||
+                                sessionStorage.getItem('admin_token') != null;
+
+          if (isManoelAdmin) {
+            storedUser.isAdmin = true;
+            localStorage.setItem(LOGGED_IN_USER_KEY, JSON.stringify(storedUser));
+          } else if (isSupabaseConfigured && storedUser.isAdmin) {
              try {
                const { data } = await supabase
                   .from('access_codes')
@@ -232,12 +240,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return false;
       }
 
+      const isManoelAdmin = upperAccessKey === 'MANOEL' || 
+                            userName?.trim().toUpperCase() === 'MANOEL' || 
+                            userName?.trim().toUpperCase() === 'MYOKO' ||
+                            data?.code?.toUpperCase() === 'MANOEL';
+
       let userData: User = { 
           accessKey: upperAccessKey,
           userName: userName || data.user_name || 'Unknown',
           type: data.type || 'permanent',
           dbId: data.id,
-          isAdmin: upperAccessKey === 'MANOEL',
+          isAdmin: Boolean(isManoelAdmin),
           loggedInAt: new Date().toISOString()
       };
 

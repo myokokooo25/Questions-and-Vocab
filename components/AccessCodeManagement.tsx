@@ -43,6 +43,7 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'inactive' | 'with_devices'>('all');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'code' | 'devices'>('newest');
+  const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
 
   // Add Modal State
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
@@ -564,55 +565,81 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
         </div>
       </div>
 
-      {/* Metrics Row */}
+      {/* Metrics Row - High Contrast Luminous Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-3.5 bg-slate-800/80 rounded-2xl border border-slate-700/60">
-          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Access Codes</p>
-          <p className="text-2xl font-black text-slate-100 mt-1">{stats.total}</p>
+        <div className="p-4 bg-slate-900 rounded-2xl border-2 border-slate-700 shadow-xl">
+          <p className="text-xs font-black text-slate-300 uppercase tracking-wider">Total Access Codes</p>
+          <p className="text-3xl font-black text-white mt-1">{stats.total}</p>
         </div>
-        <div className="p-3.5 bg-slate-800/80 rounded-2xl border border-slate-700/60">
-          <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Active Keys</p>
-          <p className="text-2xl font-black text-emerald-400 mt-1">{stats.active}</p>
+        <div className="p-4 bg-slate-900 rounded-2xl border-2 border-emerald-500/50 shadow-xl">
+          <p className="text-xs font-black text-emerald-300 uppercase tracking-wider">Active Keys (ဖွင့်ထား)</p>
+          <p className="text-3xl font-black text-emerald-400 mt-1">{stats.active}</p>
         </div>
-        <div className="p-3.5 bg-slate-800/80 rounded-2xl border border-slate-700/60">
-          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Inactive / Disabled</p>
-          <p className="text-2xl font-black text-slate-400 mt-1">{stats.inactive}</p>
+        <div className="p-4 bg-slate-900 rounded-2xl border-2 border-rose-500/50 shadow-xl">
+          <p className="text-xs font-black text-rose-300 uppercase tracking-wider">Inactive / Disabled</p>
+          <p className="text-3xl font-black text-rose-400 mt-1">{stats.inactive}</p>
         </div>
-        <div className="p-3.5 bg-slate-800/80 rounded-2xl border border-slate-700/60">
-          <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wider">Connected Devices</p>
-          <p className="text-2xl font-black text-blue-400 mt-1">
+        <div className="p-4 bg-slate-900 rounded-2xl border-2 border-sky-500/50 shadow-xl">
+          <p className="text-xs font-black text-sky-300 uppercase tracking-wider">Connected Devices</p>
+          <p className="text-3xl font-black text-sky-400 mt-1">
             {stats.totalDevicesConnected}
-            <span className="text-xs font-normal text-slate-400 ml-1.5">({stats.withDevices} users)</span>
+            <span className="text-xs font-bold text-slate-300 ml-1.5">({stats.withDevices} users)</span>
           </p>
         </div>
       </div>
 
-      {/* Search & Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+      {/* Search & Filters & View Mode Toggle */}
+      <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         <div className="relative flex-1">
-          <SearchIcon className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <SearchIcon className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by Code, Username, or Memo..."
-            className="w-full pl-10 pr-4 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-slate-200 placeholder-slate-400 outline-none focus:ring-2 focus:ring-purple-500/50"
+            placeholder="Search student by name, code, or memo..."
+            className="w-full pl-11 pr-10 py-2.5 bg-slate-900 border-2 border-slate-700 rounded-xl text-sm font-bold text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-purple-500/60"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 text-xs"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-bold"
             >
-              <XIcon className="w-3.5 h-3.5" />
+              <XIcon className="w-4 h-4" />
             </button>
           )}
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
+          {/* Card vs Table View Mode Switcher */}
+          <div className="flex items-center gap-1 p-1 bg-slate-900 rounded-xl border border-slate-700">
+            <button
+              onClick={() => setViewMode('cards')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 ${
+                viewMode === 'cards'
+                  ? 'bg-purple-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Card View - Easy to read on tablets and mobile"
+            >
+              <span>🃏 Card View</span>
+            </button>
+            <button
+              onClick={() => setViewMode('table')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 ${
+                viewMode === 'table'
+                  ? 'bg-purple-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Table View - Wide spreadsheet layout"
+            >
+              <span>📊 Table View</span>
+            </button>
+          </div>
+
           <select
             value={filterStatus}
             onChange={(e: any) => setFilterStatus(e.target.value)}
-            className="bg-slate-800 border border-slate-700 text-slate-300 text-xs rounded-xl px-3 py-2 outline-none focus:ring-1 focus:ring-purple-500"
+            className="bg-slate-900 border-2 border-slate-700 text-slate-200 text-xs font-bold rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="all">All Status</option>
             <option value="active">Active Only</option>
@@ -623,7 +650,7 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
           <select
             value={sortBy}
             onChange={(e: any) => setSortBy(e.target.value)}
-            className="bg-slate-800 border border-slate-700 text-slate-300 text-xs rounded-xl px-3 py-2 outline-none focus:ring-1 focus:ring-purple-500"
+            className="bg-slate-900 border-2 border-slate-700 text-slate-200 text-xs font-bold rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="newest">Sort: Newest First</option>
             <option value="oldest">Sort: Oldest First</option>
@@ -663,10 +690,176 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
               </button>
             )}
           </div>
+        ) : viewMode === 'cards' ? (
+          /* ========================================================================= */
+          /* 1. HIGH-CONTRAST CARD GRID VIEW (EASY TO READ ON TABLETS / PHONES / PC) */
+          /* ========================================================================= */
+          <div className="p-3 sm:p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {filteredCodes.map((item) => {
+              const displayName = item.user_name || item.Username || '';
+              const devices = item.device_ids || [];
+              const limit = getDeviceLimit(item.code);
+              const isEditingThis = editingId === item.id;
+              const isOverLimit = limit !== 'Unlimited' && devices.length >= parseInt(limit, 10);
+
+              return (
+                <div
+                  key={item.id}
+                  className={`p-4 rounded-2xl bg-slate-900 border-2 transition-all flex flex-col justify-between gap-3 shadow-lg ${
+                    item.is_active
+                      ? 'border-slate-700/80 hover:border-purple-500/60'
+                      : 'border-rose-900/40 opacity-70 bg-slate-950/70'
+                  }`}
+                >
+                  {/* Card Header: Username & Status */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      {isEditingThis ? (
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <input
+                            type="text"
+                            value={editingUserName}
+                            onChange={(e) => setEditingUserName(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') handleSaveUserName(item.id);
+                              if (e.key === 'Escape') setEditingId(null);
+                            }}
+                            autoFocus
+                            className="px-2.5 py-1 bg-slate-800 border-2 border-purple-500 rounded-lg text-sm text-white outline-none w-full font-bold"
+                            placeholder="Student Name"
+                          />
+                          <button
+                            onClick={() => handleSaveUserName(item.id)}
+                            disabled={isSavingEdit}
+                            className="p-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow"
+                            title="Save"
+                          >
+                            <CheckIcon className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="p-1.5 bg-slate-700 text-slate-300 rounded-lg"
+                            title="Cancel"
+                          >
+                            <XIcon className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2 group">
+                          <h4 className="text-base font-black text-white truncate" title={displayName || 'No Name'}>
+                            {displayName || <span className="text-slate-400 italic">No name assigned</span>}
+                          </h4>
+                          <button
+                            onClick={() => {
+                              setEditingId(item.id);
+                              setEditingUserName(displayName);
+                            }}
+                            className="opacity-70 hover:opacity-100 text-slate-300 hover:text-purple-300 p-0.5"
+                            title="Edit Name"
+                          >
+                            <PencilIcon className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Type and Memo */}
+                      <p className="text-xs text-slate-300 font-semibold truncate mt-0.5">
+                        <span className="text-purple-300 font-bold uppercase">{item.type || 'permanent'}</span>
+                        {item.memo && <span className="text-slate-400 ml-1.5">({item.memo})</span>}
+                      </p>
+                    </div>
+
+                    {/* Active Status Badge Button */}
+                    <button
+                      onClick={() => handleToggleActive(item)}
+                      className={`px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider transition-all border shrink-0 ${
+                        item.is_active
+                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 hover:bg-emerald-500/30'
+                          : 'bg-rose-500/20 text-rose-300 border-rose-500/50 hover:bg-rose-500/30'
+                      }`}
+                      title="Click to toggle Active/Disabled"
+                    >
+                      {item.is_active ? 'Active' : 'Disabled'}
+                    </button>
+                  </div>
+
+                  {/* Access Code Display with Copy */}
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-2">
+                    <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Redeem Code:</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-black text-sm text-purple-200 bg-purple-950/60 px-2 py-0.5 rounded-lg border border-purple-500/30">
+                        {item.code}
+                      </span>
+                      <button
+                        onClick={() => handleCopyCode(item.code)}
+                        className="px-2 py-1 rounded-lg bg-slate-800 hover:bg-purple-600 hover:text-white text-slate-300 text-xs font-bold transition-all"
+                        title="Copy Code"
+                      >
+                        {copiedCode === item.code ? '✓ Copied' : 'Copy'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Connected Devices Row */}
+                  <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <SmartphoneIcon className="w-4 h-4 text-sky-400 shrink-0" />
+                      <div>
+                        <p className="text-xs font-bold text-slate-200">
+                          {devices.length} / {limit} Devices
+                        </p>
+                        <p className="text-[10px] text-slate-400">
+                          {isOverLimit ? '⚠️ Device Limit Reached' : 'Registered Devices'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setSelectedCodeForDevices(item)}
+                        className="px-2.5 py-1 rounded-lg bg-sky-600/80 hover:bg-sky-500 text-white text-[11px] font-black transition-all"
+                        title="Manage Devices"
+                      >
+                        Manage
+                      </button>
+                      {devices.length > 0 && (
+                        <button
+                          onClick={() => handleResetDevices(item)}
+                          disabled={isResettingDevices}
+                          className="px-2 py-1 rounded-lg bg-rose-600/80 hover:bg-rose-500 text-white text-[11px] font-black transition-all"
+                          title="Reset all devices"
+                        >
+                          Reset
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Card Bottom Actions */}
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-800 text-xs">
+                    <span className="text-[10px] text-slate-400">
+                      ID: #{item.id}
+                    </span>
+                    <button
+                      onClick={() => setCodeToDelete(item)}
+                      className="px-2.5 py-1 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-500/30 text-rose-300 text-[11px] font-bold transition-all flex items-center gap-1"
+                      title="Delete Key"
+                    >
+                      <TrashIcon className="w-3.5 h-3.5" />
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         ) : (
+          /* ========================================================================= */
+          /* 2. HIGH-CONTRAST SPREADSHEET TABLE VIEW */
+          /* ========================================================================= */
           <div className="overflow-x-auto custom-scrollbar">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-800/90 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-700/60">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-900 text-slate-200 uppercase tracking-wider font-black text-xs border-b-2 border-slate-700">
                 <tr>
                   <th className="p-3.5 pl-4">Access Code</th>
                   <th className="p-3.5">Username (User)</th>
@@ -676,7 +869,7 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                   <th className="p-3.5 pr-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-200">
+              <tbody className="divide-y divide-slate-800 text-slate-100">
                 {filteredCodes.map((item) => {
                   const displayName = item.user_name || item.Username || '';
                   const devices = item.device_ids || [];
@@ -687,30 +880,30 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                   return (
                     <tr 
                       key={item.id} 
-                      className={`hover:bg-slate-800/40 transition-colors ${!item.is_active ? 'opacity-60 bg-slate-900/40' : ''}`}
+                      className={`hover:bg-slate-800/80 transition-colors ${!item.is_active ? 'opacity-60 bg-slate-950/50' : 'bg-slate-900/30'}`}
                     >
                       {/* Code Column */}
                       <td className="p-3.5 pl-4">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-sm text-purple-300 bg-purple-950/40 px-2 py-0.5 rounded-lg border border-purple-500/20">
+                          <span className="font-mono font-black text-sm text-purple-200 bg-purple-950/80 px-2.5 py-1 rounded-lg border border-purple-500/40">
                             {item.code}
                           </span>
                           <button
                             onClick={() => handleCopyCode(item.code)}
-                            className="text-slate-400 hover:text-purple-300 transition-colors p-1"
+                            className="text-slate-300 hover:text-purple-300 transition-colors p-1"
                             title="Copy Code"
                           >
                             {copiedCode === item.code ? (
-                              <span className="text-[10px] text-emerald-400 font-bold">Copied!</span>
+                              <span className="text-[11px] text-emerald-400 font-black">Copied!</span>
                             ) : (
-                              <span className="text-[11px] opacity-70 hover:opacity-100">📋</span>
+                              <span className="text-xs opacity-80 hover:opacity-100">📋</span>
                             )}
                           </button>
                         </div>
                       </td>
 
                       {/* Username Column (Inline editable) */}
-                      <td className="p-3.5 min-w-[180px]">
+                      <td className="p-3.5 min-w-[200px]">
                         {isEditingThis ? (
                           <div className="flex items-center gap-1.5">
                             <input
@@ -722,20 +915,20 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                                 if (e.key === 'Escape') setEditingId(null);
                               }}
                               autoFocus
-                              className="px-2 py-1 bg-slate-900 border border-purple-500 rounded-lg text-xs text-white outline-none w-full font-medium"
+                              className="px-2.5 py-1 bg-slate-900 border-2 border-purple-500 rounded-lg text-sm text-white outline-none w-full font-bold"
                               placeholder="Enter username"
                             />
                             <button
                               onClick={() => handleSaveUserName(item.id)}
                               disabled={isSavingEdit}
-                              className="p-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-md transition-colors"
+                              className="p-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-md transition-colors"
                               title="Save Username"
                             >
                               <CheckIcon className="w-3.5 h-3.5" />
                             </button>
                             <button
                               onClick={() => setEditingId(null)}
-                              className="p-1 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-md transition-colors"
+                              className="p-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-md transition-colors"
                               title="Cancel"
                             >
                               <XIcon className="w-3.5 h-3.5" />
@@ -743,15 +936,15 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                           </div>
                         ) : (
                           <div className="flex items-center gap-2 group">
-                            <span className="font-semibold text-slate-200">
-                              {displayName || <span className="text-slate-500 italic">No name assigned</span>}
+                            <span className="font-black text-white text-sm">
+                              {displayName || <span className="text-slate-400 italic">No name assigned</span>}
                             </span>
                             <button
                               onClick={() => {
                                 setEditingId(item.id);
                                 setEditingUserName(displayName);
                               }}
-                              className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-purple-300 transition-opacity p-0.5"
+                              className="opacity-70 group-hover:opacity-100 text-slate-300 hover:text-purple-300 transition-opacity p-0.5"
                               title="Edit Username"
                             >
                               <PencilIcon className="w-3.5 h-3.5" />
@@ -763,11 +956,11 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                       {/* Type & Memo Column */}
                       <td className="p-3.5">
                         <div className="flex flex-col gap-0.5">
-                          <span className="text-[11px] font-bold text-slate-300 uppercase">
+                          <span className="text-xs font-black text-purple-300 uppercase">
                             {item.type || 'permanent'}
                           </span>
                           {item.memo && (
-                            <span className="text-[10px] text-slate-500 truncate max-w-[150px]" title={item.memo}>
+                            <span className="text-xs text-slate-300 truncate max-w-[170px]" title={item.memo}>
                               {item.memo}
                             </span>
                           )}
@@ -779,12 +972,12 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => setSelectedCodeForDevices(item)}
-                            className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition-all ${
+                            className={`px-3 py-1 rounded-xl text-xs font-mono font-black flex items-center gap-1.5 transition-all ${
                               devices.length === 0
-                                ? 'bg-slate-800 text-slate-400 hover:bg-slate-750'
+                                ? 'bg-slate-800 text-slate-300 hover:bg-slate-750'
                                 : isOverLimit
-                                ? 'bg-amber-950/60 border border-amber-500/40 text-amber-300 hover:bg-amber-900/60'
-                                : 'bg-blue-950/60 border border-blue-500/30 text-blue-300 hover:bg-blue-900/60'
+                                ? 'bg-amber-950/70 border border-amber-500/50 text-amber-200 hover:bg-amber-900'
+                                : 'bg-sky-950/70 border border-sky-500/50 text-sky-200 hover:bg-sky-900'
                             }`}
                             title="Click to view & manage device IDs"
                           >
@@ -792,12 +985,12 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                             <span>{devices.length} / {limit}</span>
                           </button>
 
-                          {/* Reset Devices Button (Device history ဖျက်ခြင်း) */}
+                          {/* Reset Devices Button */}
                           {devices.length > 0 && (
                             <button
                               onClick={() => handleResetDevices(item)}
                               disabled={isResettingDevices}
-                              className="px-2 py-1 rounded-lg bg-rose-950/40 hover:bg-rose-900/60 border border-rose-500/30 text-rose-300 text-[11px] font-bold transition-all active:scale-95 flex items-center gap-1"
+                              className="px-2.5 py-1 rounded-lg bg-rose-950/50 hover:bg-rose-900 border border-rose-500/40 text-rose-300 text-xs font-black transition-all active:scale-95 flex items-center gap-1"
                               title="Reset / Clear all connected devices for this key"
                             >
                               <RefreshIcon className="w-3 h-3" />
@@ -811,10 +1004,10 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
                       <td className="p-3.5 text-center">
                         <button
                           onClick={() => handleToggleActive(item)}
-                          className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all border ${
+                          className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider transition-all border ${
                             item.is_active
-                              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/30'
-                              : 'bg-slate-700 text-slate-400 border-slate-600 hover:bg-slate-650'
+                              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 hover:bg-emerald-500/30'
+                              : 'bg-rose-500/20 text-rose-300 border-rose-500/50 hover:bg-rose-500/30'
                           }`}
                           title="Click to Toggle Active/Inactive"
                         >
@@ -824,23 +1017,23 @@ export const AccessCodeManagement: React.FC<AccessCodeManagementProps> = ({ admi
 
                       {/* Actions Column */}
                       <td className="p-3.5 pr-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
+                        <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => {
                               setEditingId(item.id);
                               setEditingUserName(displayName);
                             }}
-                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all"
+                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white transition-all"
                             title="Edit Username"
                           >
-                            <PencilIcon className="w-3.5 h-3.5" />
+                            <PencilIcon className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => setCodeToDelete(item)}
-                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-900/60 text-slate-400 hover:text-rose-400 transition-all"
+                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-900 text-slate-300 hover:text-rose-300 transition-all"
                             title="Delete Access Code"
                           >
-                            <TrashIcon className="w-3.5 h-3.5" />
+                            <TrashIcon className="w-4 h-4" />
                           </button>
                         </div>
                       </td>

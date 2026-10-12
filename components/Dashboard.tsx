@@ -253,6 +253,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   // Admin View State (Direct access for admin user MANOEL)
   const [isAdminViewVisible, setIsAdminViewVisible] = useState(false);
+  const [adminViewWidth, setAdminViewWidth] = useState<'wide' | 'full'>('wide');
   const [adminToken, setAdminToken] = useState<string>(() => {
     try {
       return sessionStorage.getItem('admin_token') || 'adm_manoel_access';
@@ -262,7 +263,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   });
   const [adminActiveTab, setAdminActiveTab] = useState<'access_codes' | 'questions' | 'activity'>('access_codes');
   const [historyData, setHistoryData] = useState<HistoryEntry[]>([]);
-  const [onlineUsers, setOnlineUsers] = useState<{key: string, userName: string, count: number}[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState<{key: string, userName: string, count: number, action?: string, lastActiveAgoSeconds?: number}[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
   const [isSyncingVocab, setIsSyncingVocab] = useState(false);
   const [migrationStatus, setMigrationStatus] = useState('');
@@ -331,12 +332,20 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
 
   // --- REALTIME ONLINE USERS POLLING VIA BACKEND ---
   useEffect(() => {
-    if (!user?.isAdmin) return;
+    const isManoelOrAdmin = Boolean(
+      isAdminViewVisible ||
+      user?.isAdmin ||
+      user?.accessKey?.toUpperCase() === 'MANOEL' ||
+      user?.userName?.toUpperCase() === 'MANOEL' ||
+      user?.userName?.toUpperCase() === 'MYOKO'
+    );
+    if (!isManoelOrAdmin) return;
 
     const fetchOnlineUsers = async () => {
       try {
+        const token = adminToken || sessionStorage.getItem('admin_token') || 'adm_manoel_access';
         const res = await fetch('/api/admin/online-users', {
-          headers: { 'x-admin-token': adminToken }
+          headers: { 'x-admin-token': token }
         });
         if (res.ok) {
           const data = await res.json();
@@ -344,7 +353,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             setOnlineUsers(data.onlineUsers.map((ou: any) => ({
               key: ou.key,
               userName: ou.userName,
-              count: 1
+              count: 1,
+              action: ou.action || 'Studying / Active',
+              lastActiveAgoSeconds: ou.lastActiveAgoSeconds || 0
             })));
           }
         }
@@ -354,9 +365,9 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     };
 
     fetchOnlineUsers();
-    const interval = setInterval(fetchOnlineUsers, 15000);
+    const interval = setInterval(fetchOnlineUsers, 12000);
     return () => clearInterval(interval);
-  }, [user, adminToken]);
+  }, [isAdminViewVisible, user, adminToken]);
 
   const loadHistoryData = () => {
     try {
@@ -948,18 +959,95 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                         Admin Dashboard
                         <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono font-medium">ADMIN ACTIVE</span>
                       </h2>
-                      <p className="text-xs text-slate-400">Master Session: {user?.userName || user?.accessKey} (Full Admin Access)</p>
+                      <p className="text-xs text-slate-300 font-medium">Master Session: {user?.userName || user?.accessKey} (Full Admin Access)</p>
                     </div>
                 </div>
                 <div className='flex gap-2.5 items-center flex-wrap'>
+                    <button 
+                      onClick={() => setAdminViewWidth(prev => prev === 'wide' ? 'full' : 'wide')}
+                      className={`px-3 py-2 rounded-xl text-xs font-black transition-all shadow-md flex items-center gap-1.5 border active:scale-95 ${
+                        adminViewWidth === 'full' 
+                          ? 'bg-emerald-600 text-white border-emerald-400' 
+                          : 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-750'
+                      }`}
+                      title={adminViewWidth === 'wide' ? 'Expand to Full Screen Width (မျက်နှာပြင်ပြည့် ချဲ့မည်)' : 'Switch to Boxed Width'}
+                    >
+                      <span>{adminViewWidth === 'full' ? '📐 Boxed View' : '↔️ Full Width (မျက်နှာပြင်ပြည့်)'}</span>
+                    </button>
                     <button onClick={loadHistoryData} className="p-2.5 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors shadow-lg border border-slate-700/80" title="Refresh">
                         <RefreshIcon className="w-4 h-4 text-slate-300" />
                     </button>
-                    <button onClick={handleCloseAdminPanel} className="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition-all shadow-lg text-xs font-bold flex items-center gap-1.5 active:scale-95" title="Close Admin View">
+                    <button onClick={handleCloseAdminPanel} className="px-3.5 py-2.5 bg-rose-700 hover:bg-rose-600 text-white rounded-xl transition-all shadow-lg text-xs font-bold flex items-center gap-1.5 active:scale-95 border border-rose-500/50" title="Close Admin View">
                         <XIcon className="w-4 h-4" />
                         <span>Close Admin</span>
                     </button>
                 </div>
+            </div>
+
+            {/* REAL-TIME ONLINE USERS PROMINENT BANNER (Always visible in Admin Panel) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-emerald-500/60 shadow-xl space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="relative flex h-3.5 w-3.5 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
+                  </span>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-white flex items-center gap-2">
+                      <span>Real-Time Online Students (လက်ရှိ ဝင်ရောက်လေ့လာနေသူများ)</span>
+                      <span className="bg-emerald-500 text-black px-2.5 py-0.5 rounded-full text-xs font-black shadow-sm">
+                        {onlineUsers.length} Active Now
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-300 font-medium">
+                      Live Heartbeat စနစ်ဖြင့် တိုက်ရိုက်ချိတ်ဆက်စောင့်ကြည့်ပြသနေပါသည် (၁၂ စက္ကန့်တစ်ကြိမ် Auto-Sync)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={() => setAdminActiveTab('activity')}
+                    className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all flex items-center gap-1.5"
+                  >
+                    <AcademicCapIcon className="w-3.5 h-3.5" />
+                    <span>View Student Analytics (အသေးစိတ်) ↗</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Active Students Quick Chips */}
+              <div className="pt-2 border-t border-slate-800">
+                {onlineUsers.length > 0 ? (
+                  <div className="flex flex-wrap gap-2.5 items-center">
+                    {onlineUsers.map((ou, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 border-2 border-emerald-500/50 text-xs shadow-sm"
+                      >
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span className="font-black text-white text-sm">{ou.userName || 'Student'}</span>
+                        <span className="text-xs font-mono font-bold text-emerald-300">({ou.key})</span>
+                        {ou.action && (
+                          <span className="text-[10px] bg-slate-700 text-slate-200 px-1.5 py-0.5 rounded font-semibold">
+                            {ou.action}
+                          </span>
+                        )}
+                        {ou.lastActiveAgoSeconds !== undefined && (
+                          <span className="text-[10px] text-slate-400">
+                            {ou.lastActiveAgoSeconds < 60 ? 'just now' : `${Math.floor(ou.lastActiveAgoSeconds / 60)}m ago`}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-xs text-slate-300 py-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>Admin Master Session ({user?.userName || 'Admin'}) တိုက်ရိုက်ချိတ်ဆက်ထားပြီး အခြားကျောင်းသားများ ဝင်ရောက်လာပါက ဤနေရာတွင် ချက်ချင်းပေါ်လာပါမည်။</span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Admin Tabs Navigation */}
@@ -1791,7 +1879,11 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         </div>
       </header>
 
-      <main className="w-full max-w-4xl lg:max-w-5xl mx-auto p-3 sm:p-6 lg:p-8 pb-20">
+      <main className={`w-full mx-auto p-3 sm:p-6 lg:p-8 pb-20 transition-all duration-300 ${
+        isAdminViewVisible
+          ? (adminViewWidth === 'full' ? 'max-w-none px-2 sm:px-6 lg:px-8' : 'max-w-7xl 2xl:max-w-[96rem]')
+          : 'max-w-4xl lg:max-w-5xl'
+      }`}>
         {migrationStatus && (
           <div className="mb-6 p-4 bg-slate-900/90 border border-blue-500/40 text-slate-100 rounded-2xl shadow-xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2">
             <div className="flex items-center gap-3">

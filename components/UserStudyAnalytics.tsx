@@ -10,7 +10,6 @@ import {
   SparkleIcon,
   LoadingSpinnerIcon,
   SmartphoneIcon,
-  BookmarkIcon,
   BookOpenIcon,
   ChevronDownIcon
 } from './Icons';
@@ -283,114 +282,118 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
   const SYLLABUS_TOTAL = 292;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-slate-100">
       {/* ========================================================================= */}
-      {/* 1. TOP STATS OVERVIEW CARDS */}
+      {/* 1. TOP STATS OVERVIEW CARDS (HIGH CONTRAST & CLEAR) */}
       {/* ========================================================================= */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Card 1: Live Online */}
-        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/80 shadow-md relative overflow-hidden flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-emerald-500/50 shadow-xl relative overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-              <span className="relative flex h-2.5 w-2.5">
+            <span className="text-xs font-black uppercase tracking-wider text-emerald-300 flex items-center gap-2">
+              <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
               </span>
-              Live Online
+              Realtime Online
             </span>
-            <span className="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">
-              Realtime
+            <span className="text-xs bg-emerald-500/30 text-emerald-200 px-2.5 py-1 rounded-full font-black border border-emerald-500/40">
+              Live
             </span>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-black text-white">
+          <div className="my-2 flex items-baseline gap-2">
+            <span className="text-3xl sm:text-4xl font-black text-white">
               {summary?.onlineNowCount ?? onlineStudents.length}
             </span>
-            <span className="text-xs text-slate-400 font-medium">students</span>
+            <span className="text-sm text-emerald-300 font-extrabold">Students Active</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1 truncate">
+          <p className="text-xs text-slate-300 font-semibold truncate">
             {onlineStudents.length > 0
               ? `${onlineStudents.map((s) => s.userName).join(', ')}`
-              : 'No students online right now'}
+              : 'No other students online right now'}
           </p>
         </div>
 
         {/* Card 2: Total Questions Answered */}
-        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/80 shadow-md flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-blue-500/50 shadow-xl flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
-              <BookOpenIcon className="w-3.5 h-3.5 text-blue-400" />
+            <span className="text-xs font-black uppercase tracking-wider text-blue-300 flex items-center gap-2">
+              <BookOpenIcon className="w-4 h-4 text-blue-400" />
               Questions Studied
             </span>
-            <span className="text-[10px] text-slate-400">Total</span>
+            <span className="text-xs bg-blue-500/30 text-blue-200 px-2.5 py-1 rounded-full font-black border border-blue-500/40">
+              Total
+            </span>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-black text-white">
+          <div className="my-2 flex items-baseline gap-2">
+            <span className="text-3xl sm:text-4xl font-black text-white">
               {(summary?.totalQuestionsAnsweredSum || 0).toLocaleString()}
             </span>
-            <span className="text-xs text-slate-400 font-medium">times</span>
+            <span className="text-sm text-blue-300 font-extrabold">Times Answered</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Across all registered learners</p>
+          <p className="text-xs text-slate-300 font-semibold">Across all registered learners</p>
         </div>
 
         {/* Card 3: Active Learners */}
-        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/80 shadow-md flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-indigo-500/50 shadow-xl flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
-              <UsersIcon className="w-3.5 h-3.5 text-indigo-400" />
-              Active Learners
+            <span className="text-xs font-black uppercase tracking-wider text-indigo-300 flex items-center gap-2">
+              <UsersIcon className="w-4 h-4 text-indigo-400" />
+              Active Students
             </span>
-            <span className="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full font-bold">
+            <span className="text-xs bg-indigo-500/30 text-indigo-200 px-2.5 py-1 rounded-full font-black border border-indigo-500/40">
               {summary ? Math.round((summary.activeLearnersCount / (summary.totalStudents || 1)) * 100) : 0}%
             </span>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-black text-white">
+          <div className="my-2 flex items-baseline gap-2">
+            <span className="text-3xl sm:text-4xl font-black text-white">
               {summary?.activeLearnersCount || 0}
             </span>
-            <span className="text-xs text-slate-400 font-medium">/ {summary?.totalStudents || users.length} users</span>
+            <span className="text-sm text-indigo-300 font-extrabold">/ {summary?.totalStudents || users.length} Users</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Have answered &gt;0 questions</p>
+          <p className="text-xs text-slate-300 font-semibold">Have answered &gt;0 questions</p>
         </div>
 
         {/* Card 4: Flashcards Mastered */}
-        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/80 shadow-md flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border-2 border-amber-500/50 shadow-xl flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-              <AcademicCapIcon className="w-3.5 h-3.5 text-amber-400" />
+            <span className="text-xs font-black uppercase tracking-wider text-amber-300 flex items-center gap-2">
+              <AcademicCapIcon className="w-4 h-4 text-amber-400" />
               Vocab Mastered
             </span>
-            <span className="text-[10px] text-slate-400">Flashcards</span>
+            <span className="text-xs bg-amber-500/30 text-amber-200 px-2.5 py-1 rounded-full font-black border border-amber-500/40">
+              Words
+            </span>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-black text-white">
+          <div className="my-2 flex items-baseline gap-2">
+            <span className="text-3xl sm:text-4xl font-black text-white">
               {(summary?.totalFlashcardsLearnedSum || 0).toLocaleString()}
             </span>
-            <span className="text-xs text-slate-400 font-medium">words</span>
+            <span className="text-sm text-amber-300 font-extrabold">Words Learned</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Technical terms learned</p>
+          <p className="text-xs text-slate-300 font-semibold">Technical flashcards mastered</p>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. LIVE ONLINE STUDENTS BANNER (REALTIME) */}
+      {/* 2. LIVE ONLINE STUDENTS BANNER (CRISP & LUMINOUS) */}
       {/* ========================================================================= */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-emerald-500/30 shadow-lg">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+      <div className="p-5 rounded-2xl bg-slate-900 border-2 border-emerald-500/60 shadow-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b-2 border-slate-800">
           <div className="flex items-center gap-3">
-            <span className="relative flex h-3.5 w-3.5 shrink-0">
+            <span className="relative flex h-4 w-4 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
             </span>
             <div>
-              <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                လက်ရှိ Online ဖြစ်နေသော သင်တန်းသားများ (Live Online Students)
-                <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/40 font-mono font-bold">
-                  {onlineStudents.length} Online
+              <h3 className="text-base sm:text-lg font-black text-white flex items-center gap-2.5">
+                လက်ရှိ Online ဖြစ်နေသော ကျောင်းသားများ (Live Online Students)
+                <span className="text-xs bg-emerald-500/30 text-emerald-200 px-3 py-1 rounded-full border border-emerald-500/50 font-mono font-black">
+                  {onlineStudents.length} Online Now
                 </span>
               </h3>
-              <p className="text-xs text-slate-400">
-                လတ်တလော ၃ မိနစ်အတွင်း App ကို အသုံးပြုလေ့ကျင့်နေသော ကျောင်းသားများ
+              <p className="text-xs text-slate-300 font-medium">
+                App တွင် လက်ရှိအချိန် တိုက်ရိုက် စာကျက်/လေ့ကျင့်နေသော ကျောင်းသားများ (Heartbeat စနစ်ဖြင့် တိုက်ရိုက်ပြသ)
               </p>
             </div>
           </div>
@@ -398,24 +401,24 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => setAutoRefresh((prev) => !prev)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                 autoRefresh
-                  ? 'bg-emerald-600/20 text-emerald-300 border border-emerald-500/40'
-                  : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  ? 'bg-emerald-600 text-white shadow-md border border-emerald-400'
+                  : 'bg-slate-800 text-slate-300 border border-slate-700'
               }`}
               title="Toggle 15s auto-refresh"
             >
-              <span className={`w-2 h-2 rounded-full ${autoRefresh ? 'bg-emerald-400' : 'bg-slate-500'}`} />
-              <span>{autoRefresh ? 'Auto-Sync (15s)' : 'Manual Sync'}</span>
+              <span className={`w-2.5 h-2.5 rounded-full ${autoRefresh ? 'bg-white animate-pulse' : 'bg-slate-400'}`} />
+              <span>{autoRefresh ? 'Auto-Sync: ON (15s)' : 'Manual Sync'}</span>
             </button>
 
             <button
               onClick={() => fetchAnalytics(false)}
               disabled={isLoading}
-              className="p-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 rounded-xl transition-all border border-slate-700"
+              className="p-2.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-white rounded-xl transition-all border border-slate-700 shadow-md"
               title="Refresh Now"
             >
-              <RefreshIcon className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+              <RefreshIcon className={`w-4 h-4 ${isLoading ? 'animate-spin text-blue-400' : ''}`} />
             </button>
           </div>
         </div>
@@ -427,26 +430,26 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
               {onlineStudents.map((st) => (
                 <div
                   key={st.id}
-                  className="p-3 rounded-xl bg-slate-800/80 border border-emerald-500/30 flex items-center justify-between gap-3 shadow-sm hover:border-emerald-500/50 transition-all"
+                  className="p-3.5 rounded-xl bg-slate-800/90 border-2 border-emerald-500/50 flex items-center justify-between gap-3 shadow-md"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold text-xs shrink-0 border border-emerald-500/30">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-500 text-black flex items-center justify-center font-black text-sm shrink-0 shadow">
                       {st.userName.charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <p className="font-bold text-xs text-white truncate">{st.userName}</p>
-                      <p className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 truncate">
+                      <p className="font-black text-sm text-white truncate">{st.userName}</p>
+                      <p className="text-xs font-mono text-emerald-300 flex items-center gap-1 truncate font-bold">
                         <span>{st.code}</span>
-                        {st.memo && <span className="text-slate-400 truncate">({st.memo})</span>}
+                        {st.memo && <span className="text-slate-300 truncate font-normal">({st.memo})</span>}
                       </p>
                     </div>
                   </div>
 
                   <div className="text-right shrink-0">
-                    <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-md font-bold block">
+                    <span className="text-xs bg-emerald-500 text-black px-2.5 py-0.5 rounded-full font-black block shadow-sm">
                       Active Now
                     </span>
-                    <span className="text-[10px] text-slate-400 font-medium">
+                    <span className="text-xs text-slate-200 font-extrabold mt-0.5 block">
                       {st.questionsAnswered} Qs done
                     </span>
                   </div>
@@ -454,32 +457,32 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
               ))}
             </div>
           ) : (
-            <div className="py-4 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-              <ClockIcon className="w-4 h-4 text-slate-500" />
-              <span>ယခုအချိန်တွင် တိုက်ရိုက် Online ဖြစ်နေသူ မရှိသေးပါ (မကြာသေးမီက လေ့ကျင့်ထားသူများကို အောက်တွင် ကြည့်ရှုနိုင်ပါသည်)</span>
+            <div className="py-4 text-center text-xs text-slate-300 font-bold flex items-center justify-center gap-2">
+              <ClockIcon className="w-4 h-4 text-slate-400" />
+              <span>ယခုအချိန်တွင် တိုက်ရိုက် Online ဖြစ်နေသူ မရှိသေးပါ (မကြာသေးမီက လေ့ကျင့်ထားသော ကျောင်းသားမှတ်တမ်းများကို အောက်တွင် ကြည့်ရှုနိုင်ပါသည်)</span>
             </div>
           )}
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. SEARCH, FILTERS & CONTROLS */}
+      {/* 3. SEARCH, FILTERS & CONTROLS (HIGH CONTRAST & INTUITIVE) */}
       {/* ========================================================================= */}
       <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         {/* Search Input */}
         <div className="relative flex-1 max-w-md">
-          <SearchIcon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <SearchIcon className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by student name, code, or memo..."
-            className="w-full pl-9 pr-8 py-2.5 bg-slate-900/80 border border-slate-700 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full pl-10 pr-9 py-3 bg-slate-900 border-2 border-slate-700 rounded-xl text-sm font-bold text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 shadow-inner"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-sm font-bold"
             >
               ✕
             </button>
@@ -487,47 +490,47 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           <button
             onClick={() => setFilterTab('all')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 ${
               filterTab === 'all'
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-blue-600 text-white shadow-lg border-2 border-blue-400'
+                : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
             }`}
           >
-            All ({users.length})
+            All Students ({users.length})
           </button>
 
           <button
             onClick={() => setFilterTab('online')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 flex items-center gap-1.5 ${
               filterTab === 'online'
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-emerald-600 text-white shadow-lg border-2 border-emerald-400'
+                : 'bg-slate-800 text-emerald-300 hover:text-white border border-slate-700'
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
             <span>Online ({onlineStudents.length})</span>
           </button>
 
           <button
             onClick={() => setFilterTab('active')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 ${
               filterTab === 'active'
-                ? 'bg-indigo-600 text-white shadow-md'
-                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-indigo-600 text-white shadow-lg border-2 border-indigo-400'
+                : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
             }`}
           >
-            Learners ({users.filter((u) => u.questionsAnswered > 0).length})
+            Active Learners ({users.filter((u) => u.questionsAnswered > 0).length})
           </button>
 
           <button
             onClick={() => setFilterTab('top10')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1 ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 flex items-center gap-1.5 ${
               filterTab === 'top10'
-                ? 'bg-amber-600 text-white shadow-md'
-                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-amber-600 text-white shadow-lg border-2 border-amber-400'
+                : 'bg-slate-800 text-amber-300 hover:text-white border border-slate-700'
             }`}
           >
             <SparkleIcon className="w-3.5 h-3.5" />
@@ -536,10 +539,10 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
 
           <button
             onClick={() => setFilterTab('inactive')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 ${
               filterTab === 'inactive'
-                ? 'bg-slate-700 text-white shadow-md'
-                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-slate-700 text-white shadow-lg border-2 border-slate-500'
+                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700'
             }`}
           >
             Not Started ({users.filter((u) => u.questionsAnswered === 0).length})
@@ -548,11 +551,11 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
 
         {/* Sort Select */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-xs text-slate-400 font-bold">Sort:</span>
+          <span className="text-xs text-slate-300 font-extrabold">Sort by:</span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 px-3 py-2 focus:outline-none focus:border-blue-500 font-semibold"
+            className="bg-slate-900 border-2 border-slate-700 rounded-xl text-xs font-black text-white px-3.5 py-2.5 focus:outline-none focus:border-blue-400 shadow-md"
           >
             <option value="questions">Questions Studied (Most)</option>
             <option value="recent">Recently Active</option>
@@ -566,28 +569,28 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
       {/* 4. STUDENTS STUDY PROGRESS LIST / CARDS */}
       {/* ========================================================================= */}
       {isLoading ? (
-        <div className="py-16 text-center text-slate-400 flex flex-col items-center justify-center gap-3">
-          <LoadingSpinnerIcon className="w-8 h-8 text-blue-500" />
-          <p className="text-xs font-bold">ကျောင်းသားများ၏ လေ့လာမှုမှတ်တမ်းများကို ရယူနေပါသည်...</p>
+        <div className="py-20 text-center text-slate-300 flex flex-col items-center justify-center gap-3">
+          <LoadingSpinnerIcon className="w-10 h-10 text-blue-400" />
+          <p className="text-sm font-extrabold text-white">ကျောင်းသားများ၏ လေ့လာမှုမှတ်တမ်းများကို ရယူနေပါသည်...</p>
         </div>
       ) : error ? (
-        <div className="p-6 rounded-2xl bg-red-950/30 border border-red-500/50 text-center space-y-2">
-          <p className="text-xs font-bold text-red-400">{error}</p>
+        <div className="p-6 rounded-2xl bg-red-950/40 border-2 border-red-500 text-center space-y-3">
+          <p className="text-sm font-extrabold text-red-300">{error}</p>
           <button
             onClick={() => fetchAnalytics(false)}
-            className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl"
+            className="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-xs font-black rounded-xl shadow-lg"
           >
             Try Again
           </button>
         </div>
       ) : filteredUsers.length === 0 ? (
-        <div className="py-16 text-center text-slate-400 bg-slate-900/40 rounded-2xl border border-slate-800">
-          <AcademicCapIcon className="w-12 h-12 text-slate-600 mx-auto mb-2" />
-          <p className="text-sm font-bold text-slate-300">ရှာဖွေမှုနှင့် ကိုက်ညီသော ကျောင်းသား မရှိပါ</p>
-          <p className="text-xs text-slate-500 mt-1">အခြား အမည် သို့မဟုတ် Access Code ဖြင့် ထပ်မံစမ်းသပ်ပါ</p>
+        <div className="py-20 text-center text-slate-300 bg-slate-900/60 rounded-3xl border-2 border-slate-800">
+          <AcademicCapIcon className="w-14 h-14 text-slate-500 mx-auto mb-3" />
+          <p className="text-base font-black text-white">ရှာဖွေမှုနှင့် ကိုက်ညီသော ကျောင်းသား မရှိပါ</p>
+          <p className="text-xs text-slate-400 mt-1 font-semibold">အခြား အမည် သို့မဟုတ် Access Code ဖြင့် ထပ်မံစမ်းသပ်ပါ</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           {filteredUsers.map((student, idx) => {
             const isExpanded = expandedUserId === student.id;
             const progressPercent = Math.min(100, Math.round((student.questionsAnswered / SYLLABUS_TOTAL) * 100));
@@ -595,10 +598,10 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
             return (
               <div
                 key={student.id}
-                className={`rounded-2xl transition-all border ${
+                className={`rounded-2xl transition-all border-2 ${
                   student.isOnline
-                    ? 'bg-slate-900/90 border-emerald-500/40 shadow-lg'
-                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                    ? 'bg-slate-900 border-emerald-500/80 shadow-xl'
+                    : 'bg-slate-900/90 border-slate-700/80 hover:border-blue-500/60 shadow-lg'
                 }`}
               >
                 {/* Main Card Row */}
@@ -607,28 +610,28 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
                   <div className="flex items-start sm:items-center gap-3.5 min-w-0">
                     {/* Rank Badge */}
                     <div
-                      className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black shrink-0 ${
+                      className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0 shadow-md ${
                         idx === 0 && sortBy === 'questions'
-                          ? 'bg-amber-500 text-black shadow-md'
+                          ? 'bg-amber-400 text-black border border-amber-300'
                           : idx === 1 && sortBy === 'questions'
-                          ? 'bg-slate-300 text-black'
+                          ? 'bg-slate-200 text-black border border-white'
                           : idx === 2 && sortBy === 'questions'
-                          ? 'bg-amber-700 text-white'
-                          : 'bg-slate-800 text-slate-400'
+                          ? 'bg-amber-700 text-white border border-amber-600'
+                          : 'bg-slate-800 text-slate-300 border border-slate-700'
                       }`}
                     >
-                      {idx + 1}
+                      #{idx + 1}
                     </div>
 
                     {/* Avatar with Status Ring */}
                     <div className="relative shrink-0">
-                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center font-black text-slate-200 text-base shadow-inner border border-slate-700">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center font-black text-white text-lg shadow-inner border border-blue-400/40">
                         {student.userName.charAt(0).toUpperCase()}
                       </div>
                       <span
-                        className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-slate-900 ${
+                        className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-slate-900 ${
                           student.isOnline
-                            ? 'bg-emerald-500 ring-2 ring-emerald-400/40'
+                            ? 'bg-emerald-400 ring-2 ring-emerald-400/50'
                             : student.isIdle
                             ? 'bg-amber-400'
                             : 'bg-slate-600'
@@ -638,30 +641,30 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
                     </div>
 
                     {/* Student Info */}
-                    <div className="min-w-0 space-y-0.5">
+                    <div className="min-w-0 space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="font-extrabold text-sm sm:text-base text-white truncate">
+                        <h4 className="font-black text-base sm:text-lg text-white tracking-wide truncate">
                           {student.userName}
                         </h4>
 
                         {/* Live Online Badge */}
                         {student.isOnline && (
-                          <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/40 font-bold flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <span className="text-xs bg-emerald-500 text-black px-2.5 py-0.5 rounded-full font-black flex items-center gap-1 shadow">
+                            <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
                             <span>Online Now</span>
                           </span>
                         )}
 
                         {student.type === 'trial' && (
-                          <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full font-bold">
+                          <span className="text-xs bg-amber-500/30 text-amber-300 px-2.5 py-0.5 rounded-full font-bold border border-amber-500/40">
                             Trial
                           </span>
                         )}
                       </div>
 
                       {/* Code & Devices row */}
-                      <div className="flex items-center gap-2 flex-wrap text-xs text-slate-400">
-                        <div className="flex items-center gap-1 font-mono bg-slate-800 px-2 py-0.5 rounded-md text-blue-400">
+                      <div className="flex items-center gap-2 flex-wrap text-xs font-semibold">
+                        <div className="flex items-center gap-1.5 font-mono bg-blue-950/80 border border-blue-500/50 px-2.5 py-1 rounded-lg text-blue-300 font-bold shadow-sm">
                           <span>{student.code}</span>
                           <button
                             onClick={() => handleCopyCode(student.code)}
@@ -669,21 +672,21 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
                             title="Copy code"
                           >
                             {copiedCode === student.code ? (
-                              <CheckIcon className="w-3 h-3 text-green-400" />
+                              <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
                             ) : (
-                              <CopyIcon className="w-3 h-3 text-slate-400" />
+                              <CopyIcon className="w-3.5 h-3.5 text-blue-400" />
                             )}
                           </button>
                         </div>
 
                         {student.memo && (
-                          <span className="text-[11px] text-slate-400 truncate max-w-[160px]">
+                          <span className="text-slate-300 truncate max-w-[180px]">
                             • {student.memo}
                           </span>
                         )}
 
-                        <span className="text-[11px] text-slate-500 flex items-center gap-1">
-                          <SmartphoneIcon className="w-3 h-3" />
+                        <span className="text-slate-300 flex items-center gap-1 font-bold">
+                          <SmartphoneIcon className="w-3.5 h-3.5 text-slate-400" />
                           <span>{student.deviceCount} device{student.deviceCount === 1 ? '' : 's'}</span>
                         </span>
                       </div>
@@ -691,54 +694,54 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
                   </div>
 
                   {/* Middle / Right: Study Progress & Numbers */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between lg:justify-end gap-4 shrink-0">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between lg:justify-end gap-5 shrink-0">
                     {/* Questions Progress Metric */}
-                    <div className="space-y-1 sm:w-56">
+                    <div className="space-y-1.5 sm:w-60">
                       <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-xs text-slate-400 font-bold">Questions Studied:</span>
+                        <span className="text-xs text-slate-300 font-black uppercase tracking-wider">Questions Studied:</span>
                         <div className="flex items-baseline gap-1">
-                          <span className="text-lg font-black text-white">
+                          <span className="text-xl font-black text-blue-400">
                             {student.questionsAnswered}
                           </span>
-                          <span className="text-xs text-slate-400">/ {SYLLABUS_TOTAL} Qs</span>
+                          <span className="text-xs text-slate-300 font-extrabold">/ {SYLLABUS_TOTAL} Qs</span>
                         </div>
                       </div>
 
                       {/* Visual Progress Bar */}
-                      <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden p-0.5 border border-slate-700/60">
+                      <div className="w-full bg-slate-950 h-3.5 rounded-full overflow-hidden p-0.5 border border-slate-700 shadow-inner">
                         <div
                           className={`h-full rounded-full transition-all duration-500 ${
                             student.questionsAnswered >= SYLLABUS_TOTAL
-                              ? 'bg-gradient-to-r from-emerald-500 to-teal-400'
+                              ? 'bg-gradient-to-r from-emerald-400 to-teal-300 shadow-sm'
                               : student.questionsAnswered > 100
-                              ? 'bg-gradient-to-r from-blue-500 to-indigo-500'
+                              ? 'bg-gradient-to-r from-blue-500 to-indigo-400'
                               : student.questionsAnswered > 0
-                              ? 'bg-gradient-to-r from-amber-500 to-orange-500'
+                              ? 'bg-gradient-to-r from-amber-500 to-orange-400'
                               : 'bg-slate-700'
                           }`}
                           style={{ width: `${Math.max(student.questionsAnswered > 0 ? 5 : 0, progressPercent)}%` }}
                         />
                       </div>
 
-                      <div className="flex items-center justify-between text-[10px] text-slate-400">
-                        <span>{progressPercent}% syllabus completed</span>
+                      <div className="flex items-center justify-between text-xs font-black">
+                        <span className="text-slate-300">{progressPercent}% Syllabus Completed</span>
                         {student.flashcardsLearned > 0 && (
-                          <span className="text-amber-400 font-bold">
-                            ⭐ {student.flashcardsLearned} vocab
+                          <span className="text-amber-400">
+                            ⭐ {student.flashcardsLearned} Vocab
                           </span>
                         )}
                       </div>
                     </div>
 
                     {/* Last Active Timestamp */}
-                    <div className="text-left sm:text-right space-y-0.5 min-w-[110px]">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 block">
+                    <div className="text-left sm:text-right space-y-0.5 min-w-[120px]">
+                      <span className="text-xs uppercase font-black text-slate-400 block tracking-wider">
                         Last Active
                       </span>
-                      <p className="text-xs font-bold text-slate-200">
+                      <p className="text-sm font-black text-white">
                         {formatTimeAgo(student.lastActiveAt)}
                       </p>
-                      <p className="text-[10px] text-slate-400 font-mono">
+                      <p className="text-xs text-slate-300 font-mono font-bold">
                         {student.lastActiveAt ? new Date(student.lastActiveAt).toLocaleDateString() : 'Never'}
                       </p>
                     </div>
@@ -746,11 +749,11 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
                     {/* Expand Details Button */}
                     <button
                       onClick={() => setExpandedUserId((prev) => (prev === student.id ? null : student.id))}
-                      className="px-3 py-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all self-end sm:self-center border border-slate-700"
+                      className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-white rounded-xl text-xs font-black flex items-center gap-2 transition-all self-end sm:self-center border border-slate-600 shadow-md"
                     >
                       <span>{isExpanded ? 'Hide' : 'Details'}</span>
                       <ChevronDownIcon
-                        className={`w-3.5 h-3.5 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                        className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                       />
                     </button>
                   </div>
@@ -760,103 +763,103 @@ export const UserStudyAnalytics: React.FC<UserStudyAnalyticsProps> = ({
                 {/* EXPANDABLE CHAPTER BREAKDOWN & DETAILS */}
                 {/* ========================================================================= */}
                 {isExpanded && (
-                  <div className="px-5 pb-5 pt-2 border-t border-slate-800 bg-slate-950/40 rounded-b-2xl space-y-4">
+                  <div className="px-5 pb-5 pt-3 border-t-2 border-slate-800 bg-slate-950 rounded-b-2xl space-y-4">
                     {/* Chapter Breakdown Pills */}
                     <div>
-                      <h5 className="text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <BookOpenIcon className="w-3.5 h-3.5 text-blue-400" />
+                      <h5 className="text-xs font-black text-slate-200 uppercase tracking-wider mb-2.5 flex items-center gap-2">
+                        <BookOpenIcon className="w-4 h-4 text-blue-400" />
                         <span>Chapter-by-Chapter Learning Breakdown</span>
                       </h5>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
-                        <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
-                          <span className="text-[10px] font-bold text-slate-400 block">Chapter 1</span>
-                          <span className="text-sm font-black text-blue-400">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
+                        <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-center">
+                          <span className="text-xs font-black text-slate-400 block">Chapter 1</span>
+                          <span className="text-base font-black text-blue-400">
                             {student.chapterCounts.ch1}
                           </span>
-                          <span className="text-[10px] text-slate-400 block">Qs</span>
+                          <span className="text-xs text-slate-300 block font-bold">Qs</span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
-                          <span className="text-[10px] font-bold text-slate-400 block">Chapter 2</span>
-                          <span className="text-sm font-black text-indigo-400">
+                        <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-center">
+                          <span className="text-xs font-black text-slate-400 block">Chapter 2</span>
+                          <span className="text-base font-black text-indigo-400">
                             {student.chapterCounts.ch2}
                           </span>
-                          <span className="text-[10px] text-slate-400 block">Qs</span>
+                          <span className="text-xs text-slate-300 block font-bold">Qs</span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
-                          <span className="text-[10px] font-bold text-slate-400 block">Chapter 3</span>
-                          <span className="text-sm font-black text-purple-400">
+                        <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-center">
+                          <span className="text-xs font-black text-slate-400 block">Chapter 3</span>
+                          <span className="text-base font-black text-purple-400">
                             {student.chapterCounts.ch3}
                           </span>
-                          <span className="text-[10px] text-slate-400 block">Qs</span>
+                          <span className="text-xs text-slate-300 block font-bold">Qs</span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
-                          <span className="text-[10px] font-bold text-slate-400 block">Chapter 4</span>
-                          <span className="text-sm font-black text-teal-400">
+                        <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-center">
+                          <span className="text-xs font-black text-slate-400 block">Chapter 4</span>
+                          <span className="text-base font-black text-teal-400">
                             {student.chapterCounts.ch4}
                           </span>
-                          <span className="text-[10px] text-slate-400 block">Qs</span>
+                          <span className="text-xs text-slate-300 block font-bold">Qs</span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
-                          <span className="text-[10px] font-bold text-slate-400 block">Chapter 5</span>
-                          <span className="text-sm font-black text-emerald-400">
+                        <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-center">
+                          <span className="text-xs font-black text-slate-400 block">Chapter 5</span>
+                          <span className="text-base font-black text-emerald-400">
                             {student.chapterCounts.ch5}
                           </span>
-                          <span className="text-[10px] text-slate-400 block">Qs</span>
+                          <span className="text-xs text-slate-300 block font-bold">Qs</span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
-                          <span className="text-[10px] font-bold text-slate-400 block">Past Exams</span>
-                          <span className="text-sm font-black text-amber-400">
+                        <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-center">
+                          <span className="text-xs font-black text-slate-400 block">Past Exams</span>
+                          <span className="text-base font-black text-amber-400">
                             {student.chapterCounts.pastExams}
                           </span>
-                          <span className="text-[10px] text-slate-400 block">Qs</span>
+                          <span className="text-xs text-slate-300 block font-bold">Qs</span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
-                          <span className="text-[10px] font-bold text-slate-400 block">Other / 2026</span>
-                          <span className="text-sm font-black text-slate-300">
+                        <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-center">
+                          <span className="text-xs font-black text-slate-400 block">Other / 2026</span>
+                          <span className="text-base font-black text-slate-200">
                             {student.chapterCounts.other}
                           </span>
-                          <span className="text-[10px] text-slate-400 block">Qs</span>
+                          <span className="text-xs text-slate-300 block font-bold">Qs</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Metadata Details Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Vocabulary Flashcards</span>
-                        <p className="font-bold text-amber-400 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1 text-xs">
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                        <span className="text-xs uppercase font-black text-slate-400 block">Vocabulary Flashcards</span>
+                        <p className="font-black text-amber-400 text-sm">
                           {student.flashcardsLearned} Words Mastered
                         </p>
-                        <p className="text-[11px] text-slate-400">
-                          Bookmarks: <span className="text-white font-bold">{student.bookmarksCount}</span> saved
+                        <p className="text-xs text-slate-300 font-bold">
+                          Bookmarks: <span className="text-white font-black">{student.bookmarksCount}</span> saved
                         </p>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Key Registration Date</span>
-                        <p className="font-mono text-slate-300 text-xs">
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                        <span className="text-xs uppercase font-black text-slate-400 block">Key Registration Date</span>
+                        <p className="font-mono text-white text-xs font-bold">
                           {student.createdAt ? new Date(student.createdAt).toLocaleString() : 'N/A'}
                         </p>
-                        <p className="text-[11px] text-slate-400">
-                          Type: <span className="text-blue-400 font-bold uppercase">{student.type || 'permanent'}</span>
+                        <p className="text-xs text-slate-300 font-bold">
+                          Type: <span className="text-blue-400 font-black uppercase">{student.type || 'permanent'}</span>
                         </p>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Connected Device Fingerprints</span>
-                        <p className="text-xs font-bold text-slate-300">
-                          {student.deviceCount} registered devices
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                        <span className="text-xs uppercase font-black text-slate-400 block">Connected Device Fingerprints</span>
+                        <p className="text-xs font-black text-white">
+                          {student.deviceCount} Registered Devices
                         </p>
-                        <div className="max-h-16 overflow-y-auto space-y-1 scrollbar-none">
+                        <div className="max-h-20 overflow-y-auto space-y-1 scrollbar-none font-bold">
                           {student.deviceIds.map((did, didIdx) => (
-                            <p key={didIdx} className="font-mono text-[9px] text-slate-400 truncate">
-                              #{didIdx + 1}: {did.slice(0, 16)}...
+                            <p key={didIdx} className="font-mono text-[10px] text-slate-400 truncate">
+                              Device #{didIdx + 1}: {did.slice(0, 20)}...
                             </p>
                           ))}
                         </div>
