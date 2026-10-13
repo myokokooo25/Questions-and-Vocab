@@ -1,10 +1,11 @@
 
 import React, { useState, useRef } from 'react';
-import { BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon, RefreshIcon, BotIcon } from './Icons';
+import { BookOpenIcon, PencilIcon, AcademicCapIcon, FolderIcon, InfoIcon, ScaleIcon, CalculatorIcon, SunIcon, MoonIcon, SparkleIcon, ContrastIcon, RefreshIcon, BotIcon, MenuIcon } from './Icons';
 import DailyTrackerWidget from './DailyTrackerWidget';
 import { useProgress } from '../contexts/ProgressContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { forceAppUpdateAndRefresh } from './PWAUpdatePrompt';
+import ReadingSettingsModal from './ReadingSettingsModal';
 
 interface WelcomeScreenProps {
   onSelectApp: (app: 'main' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | '2026-level2' | 'flashcards' | 'dictionary' | 'cheat-sheet' | 'weak-points' | 'calculator' | 'gemini-tutor') => void;
@@ -83,6 +84,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
   const oldYears = ['2021', '2022', '2023', '2024', '2025'] as const;
   const [showInstallInfo, setShowInstallInfo] = useState(false);
   const [isRefreshingApp, setIsRefreshingApp] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const handleManualRefresh = async () => {
     setIsRefreshingApp(true);
@@ -91,31 +93,47 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectApp }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-3 sm:p-6 bg-neumorphic-bg relative w-full">
+      <ReadingSettingsModal
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        onOpenInstallInfo={() => setShowInstallInfo(true)}
+      />
+
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2 z-10">
+        {/* [ ☰ ဆက်တင် အားလုံး ] Button (Exact match for user Image 1 & 2) */}
+        <button
+          onClick={() => setShowSettings(true)}
+          className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-neumorphic-outset text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 active:shadow-neumorphic-inset transition-all font-bold text-xs sm:text-sm flex items-center gap-2 bg-neumorphic-bg ring-1 ring-slate-400/20 hover:ring-blue-500/40"
+          title="ဆက်တင် အားလုံး (All Settings & Font Adjustment)"
+        >
+          <MenuIcon className="w-4 h-4 text-blue-500 shrink-0" />
+          <span>ဆက်တင် အားလုံး</span>
+        </button>
+
         <button
           onClick={handleManualRefresh}
           disabled={isRefreshingApp}
-          className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all"
+          className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all"
           title="Check Update & Refresh App (ဗားရှင်းအသစ် စစ်ဆေးပြီး Refresh လုပ်မည်)"
         >
-          <RefreshIcon className={`w-5 h-5 sm:w-6 sm:h-6 ${isRefreshingApp ? 'animate-spin text-indigo-600' : ''}`} />
+          <RefreshIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${isRefreshingApp ? 'animate-spin text-indigo-600' : ''}`} />
         </button>
         <button
           onClick={toggleTheme}
-          className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
+          className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all"
           title={`Theme: ${theme === 'light' ? 'Light' : theme === 'dark' ? 'Dark' : theme === 'gold' ? 'Gold' : 'Minimalist B&W (အဖြူအမည်း)'}`}
         >
-          {theme === 'light' ? <SunIcon className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" /> :
-           theme === 'dark' ? <MoonIcon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" /> :
-           theme === 'gold' ? <SparkleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" /> :
-           <ContrastIcon className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900 dark:text-slate-100" />}
+          {theme === 'light' ? <SunIcon className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" /> :
+           theme === 'dark' ? <MoonIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" /> :
+           theme === 'gold' ? <SparkleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" /> :
+           <ContrastIcon className="w-4 h-4 sm:w-5 sm:h-5 text-slate-900 dark:text-slate-100" />}
         </button>
         <button
           onClick={() => setShowInstallInfo(true)}
-          className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
+          className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all"
           title="iOS Install Guide"
         >
-          <InfoIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+          <InfoIcon className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       </div>
 

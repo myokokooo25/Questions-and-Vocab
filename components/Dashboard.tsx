@@ -10,7 +10,7 @@ import { chapter2025Data } from '../data/2025-old-question';
 import { StudyCardData, Kanji } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme, Theme } from '../contexts/ThemeContext';
 import { LogoutIcon, BookmarkIcon, SearchIcon, BookOpenIcon, PencilIcon, GlobeIcon, RefreshIcon, ClockIcon, ChevronLeftIcon, ListBulletIcon, CheckCircleSolidIcon, SunIcon, MoonIcon, AcademicCapIcon, UsersIcon, FolderIcon, LoadingSpinnerIcon, SparkleIcon, InfoIcon, TextSizeIcon, MenuIcon, ScaleIcon, ContrastIcon, LockClosedIcon, KeyIcon, XIcon, BotIcon } from './Icons';
 import { useProgress } from '../contexts/ProgressContext';
 import ChapterQuiz from './ChapterQuiz';
@@ -26,6 +26,7 @@ import GeminiChatbot from './GeminiChatbot';
 import { AccessCodeManagement } from './AccessCodeManagement';
 import { UserStudyAnalytics } from './UserStudyAnalytics';
 import { forceAppUpdateAndRefresh } from './PWAUpdatePrompt';
+import { ReadingSettingsModal } from './ReadingSettingsModal';
 
 interface HistoryEntry {
   deviceId: string;
@@ -43,7 +44,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const { user, logout, syncLocalKeys } = useAuth();
   const { language, toggleLanguage, setLanguage } = useLanguage();
-  const { theme, toggleTheme, setTheme, fontSize, setFontSize } = useTheme();
+  const { theme, toggleTheme, setTheme, fontSize, setFontSize, fontSizePx, increaseFontSize, decreaseFontSize, resetFontSize } = useTheme();
   const { bookmarkedIds, studyHistory, recordAnswer, weakQuestions, recordWrongQuestion, incrementDailyAnswered } = useProgress(); 
   
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
@@ -55,6 +56,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [showReadingSettings, setShowReadingSettings] = useState(false);
   const [showAppGuide, setShowAppGuide] = useState(false);
   const [showInstallInfo, setShowInstallInfo] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -1617,263 +1619,61 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             </div>
             
             {/* --- Center: Status Badges (Visible on larger screens so they never crowd the Back button) --- */}
-            <div className="hidden xl:flex items-center gap-2 shrink-0">
-              {user?.type === 'trial' && timeLeft && (
-                  <div className="flex items-center px-3.5 py-1.5 bg-red-100 dark:bg-red-950/40 rounded-xl border border-red-200 dark:border-red-900/40">
-                      <ClockIcon className="w-4 h-4 text-red-500 mr-2 animate-pulse" />
-                      <span className="text-xs font-black text-red-600 dark:text-red-400 font-mono tracking-widest">{timeLeft}</span>
-                  </div>
-              )}
-
-              {user && onlineUsers.find(ou => ou.key === user.accessKey) && (
-                  <div className="flex items-center px-3.5 py-1.5 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-100 dark:border-blue-900/40 shadow-sm">
-                      <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse mr-2"></span>
-                      <span className="text-xs font-bold text-blue-700 dark:text-blue-400">
-                          {onlineUsers.find(ou => ou.key === user.accessKey)?.count} Device(s) Active
-                      </span>
-                  </div>
-              )}
-            </div>
-
-            {/* --- Mobile Header Actions (< sm) --- */}
-            <div className="flex sm:hidden items-center gap-1.5 shrink-0">
+            {/* --- Unified Header Actions (Identical for Mobile, Tablet, and Window View) --- */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
-                        <SearchIcon className="w-3.5 h-3.5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-2.5 sm:pl-3 pointer-events-none">
+                        <SearchIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                     </div>
                     <input
                         type="text"
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-16 focus:w-24 pl-7 pr-2 py-1.5 text-xs font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all"
+                        className="w-16 focus:w-28 sm:w-28 sm:focus:w-36 md:w-36 md:focus:w-48 pl-7 sm:pl-9 pr-2 sm:pr-3 py-1.5 sm:py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-xl sm:rounded-2xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all"
                     />
                 </div>
                 <button
                     onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
-                    className={`p-2 rounded-xl transition-all shrink-0 ${
+                    className={`p-2 sm:p-2.5 rounded-xl sm:rounded-2xl transition-all shrink-0 ${
                     showOnlyBookmarked
                         ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10'
-                        : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700'
+                        : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
                     }`}
-                    title="Bookmarks"
+                    title="Bookmarks (မှတ်သားထားသော မေးခွန်းများ)"
                     aria-label="Bookmarks"
                 >
-                    <BookmarkIcon className="w-4 h-4" />
+                    <BookmarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 <button
                     onClick={() => setShowDictionary(true)}
-                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="Technical Dictionary"
+                    className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 active:shadow-neumorphic-inset transition-all shrink-0"
+                    title="Technical Dictionary (နည်းပညာ ဝေါဟာရ အဘိဓာန်)"
                     aria-label="Technical Dictionary"
                 >
-                    <BookOpenIcon className="w-4 h-4" />
+                    <BookOpenIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 <button
                     onClick={toggleLanguage}
-                    className={`px-2 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 shrink-0 ${
+                    className={`px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl text-xs font-black transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 ${
                       language === 'my' 
                         ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' 
-                        : 'shadow-neumorphic-outset text-slate-500'
+                        : 'shadow-neumorphic-outset text-slate-500 hover:text-slate-700 dark:hover:text-slate-200'
                     }`}
-                    title="Toggle Language (ဘာသာစကားပြောင်းရန်)"
+                    title="Toggle Language: Burmese / Japanese / JP Only (ဘာသာစကားပြောင်းရန်)"
                     aria-label="Toggle Language"
                 >
-                    <GlobeIcon className="w-3.5 h-3.5" />
+                    <GlobeIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500" />
                     <span>{language === 'my' ? '🇲🇲' : language === 'jp' ? '🇯🇵+🇲🇲' : '🇯🇵'}</span>
                 </button>
                 <button
                     onClick={() => setShowMoreMenu(true)}
-                    className="p-2 rounded-xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative shrink-0"
-                    title="More Options"
+                    className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 active:shadow-neumorphic-inset transition-all relative shrink-0"
+                    title="Menu & Management (ရွေးချယ်စရာများနှင့် စီမံခန့်ခွဲမှု)"
                     aria-label="More Options"
                 >
-                    <MenuIcon className="w-4 h-4" />
-                    {user?.type === 'trial' && <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full"></span>}
-                </button>
-            </div>
-
-            {/* --- Desktop / Tablet Header Actions (>= sm) --- */}
-            <div className="hidden sm:flex items-center gap-1.5 lg:gap-2 shrink-0">
-                 <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <SearchIcon className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        className="w-28 md:w-36 lg:w-48 pl-9 pr-3 py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
-                    />
-                </div>
-                 <button
-                    onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
-                    className={`p-2 sm:p-2.5 rounded-2xl transition-all shrink-0 ${
-                    showOnlyBookmarked
-                        ? 'shadow-neumorphic-inset text-blue-600'
-                        : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700'
-                    }`}
-                    title="Bookmarks"
-                >
-                    <BookmarkIcon className="w-5 h-5" />
-                </button>
-                <button
-                    onClick={() => setShowWeakPoints(true)}
-                    className="hidden lg:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all relative shrink-0"
-                    title="Weak Points Notebook (အမှားမှတ်စု)"
-                >
-                    <PencilIcon className="w-5 h-5" />
-                    {Object.keys(weakQuestions).length > 0 && (
-                      <span className="absolute -top-1 -right-1 px-1.5 py-0.2 text-[10px] font-black rounded-full bg-red-500 text-white min-w-[18px] text-center shadow">
-                        {Object.keys(weakQuestions).length}
-                      </span>
-                    )}
-                </button>
-                <button
-                    onClick={() => setShowCheatSheet(true)}
-                    className="hidden xl:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-amber-500 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="Cheat Sheet (စံနှုန်းနှင့် ဖော်မြူလာ)"
-                >
-                    <ScaleIcon className="w-5 h-5" />
-                </button>
-                <button
-                    onClick={() => setShowAnswerKey(true)}
-                    className="hidden md:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="Answer Key"
-                >
-                    <ListBulletIcon className="w-5 h-5" />
-                </button>
-                <button
-                    onClick={() => setShowDictionary(true)}
-                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="Technical Dictionary (ဝေါဟာရ အဘိဓာန်)"
-                >
-                    <BookOpenIcon className="w-5 h-5" />
-                </button>
-                <button
-                    onClick={() => setShowGeminiTutor(true)}
-                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0 flex items-center gap-1.5"
-                    title="Tekkotsu Assistant (Gemini AI Chatbot) - စာမေးပွဲမေးခွန်းနှင့် တွက်နည်းများ မေးမြန်းရန်"
-                >
-                    <BotIcon className="w-5 h-5 text-indigo-500" />
-                    <span className="hidden xl:inline text-xs font-bold text-indigo-600 dark:text-indigo-400">AI Assistant</span>
-                </button>
-                {user?.isAdmin && (
-                    <button
-                        onClick={handleOpenAdminPanel}
-                        className={`p-2 sm:p-2.5 rounded-2xl transition-all shrink-0 ${
-                        isAdminViewVisible
-                            ? 'shadow-neumorphic-inset text-purple-600'
-                            : 'shadow-neumorphic-outset text-slate-400 hover:text-purple-600'
-                        }`}
-                        title="Admin Panel"
-                    >
-                        <SparkleIcon className="w-5 h-5" />
-                    </button>
-                )}
-                <button
-                    onClick={() => setShowProfile(true)}
-                    className="hidden lg:flex items-center gap-2 p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative shrink-0"
-                    title="Account"
-                >
-                    <UsersIcon className="w-5 h-5" />
-                    <span className="hidden xl:block text-xs font-bold text-slate-600 max-w-[80px] truncate">
-                        {user?.userName || 'Profile'}
-                    </span>
-                    {user?.type === 'trial' && <span className="absolute top-2 right-2 w-2 h-2 bg-amber-500 rounded-full border border-white"></span>}
-                </button>
-                <button
-                    onClick={() => setShowAppGuide(true)}
-                    className="hidden xl:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-600 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="App Guide"
-                >
-                    <InfoIcon className="w-5 h-5" />
-                </button>
-                <button
-                    onClick={toggleLanguage}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-black transition-all shrink-0 ${
-                      language === 'my' 
-                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' 
-                        : 'shadow-neumorphic-outset text-slate-600 hover:text-slate-800 active:shadow-neumorphic-inset'
-                    }`}
-                    title="Toggle Language: Burmese / Japanese / JP Only"
-                >
-                    <GlobeIcon className="w-4 h-4 text-blue-500" />
-                    <span>{language === 'my' ? '🇲🇲 မြန်မာ' : language === 'jp' ? '🇯🇵+🇲🇲' : '🇯🇵 Only'}</span>
-                </button>
-                <div className="relative hidden xl:block">
-                    <button
-                        onClick={() => setShowFontSizeMenu(!showFontSizeMenu)}
-                        className={`p-2 sm:p-2.5 rounded-2xl transition-all shrink-0 ${showFontSizeMenu ? 'shadow-neumorphic-inset text-slate-700' : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset'}`}
-                        title="Font Size"
-                    >
-                        <TextSizeIcon className="w-5 h-5" />
-                    </button>
-                    {showFontSizeMenu && (
-                        <>
-                            <div className="fixed inset-0 z-40" onClick={() => setShowFontSizeMenu(false)}></div>
-                            <div className="absolute right-0 mt-2 w-32 bg-neumorphic-bg rounded-2xl shadow-neumorphic-outset z-50 p-2 flex flex-col gap-2">
-                                <button
-                                    onClick={() => { setFontSize('small'); setShowFontSizeMenu(false); }}
-                                    className={`px-4 py-2 text-sm text-left rounded-xl transition-all ${fontSize === 'small' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
-                                >
-                                    Small
-                                </button>
-                                <button
-                                    onClick={() => { setFontSize('medium'); setShowFontSizeMenu(false); }}
-                                    className={`px-4 py-2 text-sm text-left rounded-xl transition-all ${fontSize === 'medium' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
-                                >
-                                    Medium
-                                </button>
-                                <button
-                                    onClick={() => { setFontSize('large'); setShowFontSizeMenu(false); }}
-                                    className={`px-4 py-2 text-sm text-left rounded-xl transition-all ${fontSize === 'large' ? 'shadow-neumorphic-inset text-blue-600 font-bold' : 'text-slate-500 hover:shadow-neumorphic-inset hover:text-slate-700'}`}
-                                >
-                                    Large
-                                </button>
-                            </div>
-                        </>
-                    )}
-                </div>
-                <button
-                    onClick={toggleTheme}
-                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title={`Theme: ${theme === 'light' ? 'Light' : theme === 'dark' ? 'Dark' : theme === 'gold' ? 'Gold' : 'Minimalist B&W (အဖြူအမည်း)'}`}
-                >
-                    {theme === 'light' ? <SunIcon className="w-5 h-5 text-amber-500" /> : theme === 'dark' ? <MoonIcon className="w-5 h-5 text-blue-400" /> : theme === 'gold' ? <SparkleIcon className="w-5 h-5 text-amber-400" /> : <ContrastIcon className="w-5 h-5 text-slate-900 dark:text-slate-100" />}
-                </button>
-                <button
-                    onClick={handleManualRefresh}
-                    disabled={isRefreshingApp}
-                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="Check Update & Refresh App (ဗားရှင်းအသစ် စစ်ဆေးပြီး Refresh လုပ်မည်)"
-                >
-                    <RefreshIcon className={`w-5 h-5 ${isRefreshingApp ? 'animate-spin text-indigo-600' : ''}`} />
-                </button>
-                <button
-                    onClick={() => setShowInstallInfo(true)}
-                    className="hidden xl:flex p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-blue-500 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="iOS Install Guide"
-                >
-                    <InfoIcon className="w-5 h-5" />
-                </button>
-                {/* On medium/tablet screens (< xl), show More Menu button so all options are reachable without crowding */}
-                <button
-                    onClick={() => setShowMoreMenu(true)}
-                    className="flex xl:hidden p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 active:shadow-neumorphic-inset transition-all shrink-0 relative"
-                    title="More Options"
-                    aria-label="More Options"
-                >
-                    <MenuIcon className="w-5 h-5" />
-                    {user?.type === 'trial' && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full"></span>}
-                </button>
-                <button
-                    onClick={() => setShowLogoutConfirm(true)}
-                    className="p-2 sm:p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all shrink-0"
-                    title="Logout"
-                >
-                    <LogoutIcon className="w-5 h-5" />
+                    <MenuIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    {user?.type === 'trial' && <span className="absolute top-1 sm:top-1.5 right-1 sm:right-1.5 w-2 h-2 bg-amber-500 rounded-full"></span>}
                 </button>
             </div>
         </div>
@@ -1935,6 +1735,87 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </div>
             </div>
 
+            {/* --- Reading & Font Size Stepper Row (Search ရဲ့ အောက်က အတန်း အောက်တွင် တိုက်ရိုက်ချိန်ညှိနိုင်သော စနစ်) --- */}
+            <div className="flex flex-wrap items-center justify-between p-3 sm:p-4 mb-6 sm:mb-10 bg-neumorphic-bg rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset gap-3 sm:gap-4">
+              {/* AA Font Stepper [ A- ] 18px [ A+ ] */}
+              <div className="flex items-center gap-2 sm:gap-3 bg-neumorphic-bg px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl shadow-neumorphic-inset">
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="text-xs font-black text-slate-400 dark:text-slate-500 font-mono tracking-tighter">
+                    AA
+                  </span>
+                  <span className="text-xs sm:text-base font-bold text-slate-700 dark:text-slate-200">
+                    Font
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <button
+                    onClick={decreaseFontSize}
+                    disabled={fontSizePx <= 12}
+                    className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl sm:rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 font-black text-xs sm:text-sm transition-all disabled:opacity-40 select-none active:scale-95"
+                    title="Font Size လျှော့ရန် (A-)"
+                    aria-label="Decrease font size"
+                  >
+                    A-
+                  </button>
+
+                  <button
+                    onClick={resetFontSize}
+                    className="min-w-[48px] text-center font-mono font-black text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1 px-1.5 rounded-lg"
+                    title="မူလ 18px သို့ ပြန်ထားရန် နှိပ်ပါ (Click to reset to 18px)"
+                  >
+                    {fontSizePx}px
+                  </button>
+
+                  <button
+                    onClick={increaseFontSize}
+                    disabled={fontSizePx >= 30}
+                    className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl sm:rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 font-black text-xs sm:text-sm transition-all disabled:opacity-40 select-none active:scale-95"
+                    title="Font Size တိုးရန် (A+)"
+                    aria-label="Increase font size"
+                  >
+                    A+
+                  </button>
+                </div>
+              </div>
+
+              {/* Theme Quick Switcher */}
+              <div className="flex items-center gap-1 sm:gap-1.5 bg-neumorphic-bg p-1 rounded-xl sm:rounded-2xl shadow-neumorphic-inset">
+                {(
+                  [
+                    { id: 'light', label: 'Light', icon: SunIcon, color: 'text-amber-500' },
+                    { id: 'dark', label: 'Dark', icon: MoonIcon, color: 'text-blue-400' },
+                    { id: 'gold', label: 'Gold', icon: SparkleIcon, color: 'text-amber-400' },
+                    { id: 'mono', label: 'B&W', icon: ContrastIcon, color: 'text-slate-800 dark:text-slate-200' },
+                  ] as const
+                ).map(({ id, label, icon: Icon, color }) => (
+                  <button
+                    key={id}
+                    onClick={() => setTheme(id as Theme)}
+                    className={`px-2.5 py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      theme === id
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                    }`}
+                    title={`Theme: ${label}`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 ${theme === id ? 'text-white' : color}`} />
+                    <span className="hidden sm:inline">{label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* စာဖတ်ရန် ချိန်ညှိချက် (Reading Settings) Modal Trigger */}
+              <button
+                onClick={() => setShowReadingSettings(true)}
+                className="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 text-xs sm:text-sm font-black transition-all bg-neumorphic-bg shrink-0 ml-auto sm:ml-0"
+                title="စာဖတ်ရန် ချိန်ညှိချက် အားလုံး ဖွင့်ရန် (All Reading Settings)"
+              >
+                <TextSizeIcon className="w-4 h-4 text-blue-500" />
+                <span>စာဖတ်ရန် ချိန်ညှိချက်</span>
+              </button>
+            </div>
+
             {view !== 'quiz' && (
               <div className="grid grid-cols-3 gap-2.5 sm:gap-6 mb-6 sm:mb-10">
                   <div className="bg-neumorphic-bg p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] shadow-neumorphic-outset flex flex-col sm:flex-row items-center justify-between text-center sm:text-left group">
@@ -1966,29 +1847,211 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                   </div>
               </div>
             )}
+
+            {/* Quick Tools & Study Management Hub on Dashboard */}
+            {view !== 'quiz' && (
+              <div className="mb-6 sm:mb-10 p-4 sm:p-6 bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset">
+                <div className="flex items-center justify-between mb-3.5 px-1 gap-2">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="p-2 sm:p-2.5 bg-neumorphic-bg rounded-xl shadow-neumorphic-inset text-blue-600 shrink-0">
+                      <SparkleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-xs sm:text-base font-black text-slate-700 dark:text-slate-200 truncate">
+                        ကိရိယာများနှင့် စီမံခန့်ခွဲမှု (Tools & Management)
+                      </h3>
+                      <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate">
+                        Dashboard မှ အလွယ်တကူ ဖွင့်လှစ်အသုံးပြုနိုင်သော စာမေးပွဲကိရိယာများနှင့် ဆက်တင်များ
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowMoreMenu(true)}
+                    className="px-2.5 sm:px-3.5 py-1.5 rounded-xl shadow-neumorphic-outset text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 active:shadow-neumorphic-inset text-xs font-black flex items-center gap-1.5 transition-all shrink-0"
+                    title="ဆက်တင် အားလုံး ဖွင့်ရန်"
+                  >
+                    <MenuIcon className="w-3.5 h-3.5 text-blue-500" />
+                    <span className="hidden sm:inline">ဆက်တင် အားလုံး</span>
+                    <span className="sm:hidden">Settings</span>
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5">
+                  {/* 1. Weak Points Notebook */}
+                  <button
+                    onClick={() => setShowWeakPoints(true)}
+                    className="p-3 sm:p-4 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-left transition-all duration-200 group flex flex-col justify-between"
+                  >
+                    <div className="flex items-center justify-between w-full mb-2">
+                      <div className="p-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-red-500 group-hover:scale-110 transition-transform">
+                        <PencilIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </div>
+                      {Object.keys(weakQuestions).length > 0 ? (
+                        <span className="px-1.5 py-0.2 text-[10px] font-black rounded-full bg-red-100 dark:bg-red-950/60 text-red-600 border border-red-500/20 font-mono">
+                          {Object.keys(weakQuestions).length}
+                        </span>
+                      ) : (
+                        <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 group-hover:text-red-500 transition-colors">
+                        အမှားမှတ်စု
+                      </p>
+                      <p className="text-[10px] text-slate-400 truncate">Weak Points</p>
+                    </div>
+                  </button>
+
+                  {/* 2. Cheat Sheet */}
+                  <button
+                    onClick={() => setShowCheatSheet(true)}
+                    className="p-3 sm:p-4 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-left transition-all duration-200 group flex flex-col justify-between"
+                  >
+                    <div className="flex items-center justify-between w-full mb-2">
+                      <div className="p-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-amber-500 group-hover:scale-110 transition-transform">
+                        <ScaleIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </div>
+                      <span className="text-[9px] font-black text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded">JASS 6</span>
+                    </div>
+                    <div>
+                      <p className="text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 group-hover:text-amber-500 transition-colors">
+                        Cheat Sheet
+                      </p>
+                      <p className="text-[10px] text-slate-400 truncate">စံနှုန်း & 溶接</p>
+                    </div>
+                  </button>
+
+                  {/* 3. Answer Key */}
+                  <button
+                    onClick={() => setShowAnswerKey(true)}
+                    className="p-3 sm:p-4 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-left transition-all duration-200 group flex flex-col justify-between"
+                  >
+                    <div className="flex items-center justify-between w-full mb-2">
+                      <div className="p-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-blue-600 group-hover:scale-110 transition-transform">
+                        <ListBulletIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </div>
+                      <span className="text-[9px] font-mono text-slate-400">All Qs</span>
+                    </div>
+                    <div>
+                      <p className="text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 group-hover:text-blue-600 transition-colors">
+                        Answer Key
+                      </p>
+                      <p className="text-[10px] text-slate-400 truncate">အဖြေလွှာများ</p>
+                    </div>
+                  </button>
+
+                  {/* 4. Technical Dictionary */}
+                  <button
+                    onClick={() => setShowDictionary(true)}
+                    className="p-3 sm:p-4 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-left transition-all duration-200 group flex flex-col justify-between"
+                  >
+                    <div className="flex items-center justify-between w-full mb-2">
+                      <div className="p-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-indigo-600 group-hover:scale-110 transition-transform">
+                        <BookOpenIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </div>
+                      <span className="text-[9px] font-black text-indigo-500">Dict</span>
+                    </div>
+                    <div>
+                      <p className="text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 group-hover:text-indigo-600 transition-colors">
+                        Dictionary
+                      </p>
+                      <p className="text-[10px] text-slate-400 truncate">ဝေါဟာရ အဘိဓာန်</p>
+                    </div>
+                  </button>
+
+                  {/* 5. AI Assistant (Gemini) */}
+                  <button
+                    onClick={() => setShowGeminiTutor(true)}
+                    className="p-3 sm:p-4 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-left transition-all duration-200 group flex flex-col justify-between border border-indigo-500/30"
+                  >
+                    <div className="flex items-center justify-between w-full mb-2">
+                      <div className="p-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-indigo-500 group-hover:scale-110 transition-transform">
+                        <BotIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </div>
+                      <span className="px-1.5 py-0.2 text-[9px] font-black rounded bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600">AI</span>
+                    </div>
+                    <div>
+                      <p className="text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 group-hover:text-indigo-500 transition-colors">
+                        Tekkotsu AI
+                      </p>
+                      <p className="text-[10px] text-slate-400 truncate">Assistant</p>
+                    </div>
+                  </button>
+
+                  {/* 6. Settings & System Management */}
+                  <button
+                    onClick={() => setShowMoreMenu(true)}
+                    className="p-3 sm:p-4 rounded-2xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-left transition-all duration-200 group flex flex-col justify-between"
+                  >
+                    <div className="flex items-center justify-between w-full mb-2">
+                      <div className="p-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-slate-600 dark:text-slate-300 group-hover:scale-110 transition-transform">
+                        <MenuIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </div>
+                      {user?.isAdmin ? (
+                        <span className="px-1.5 py-0.2 text-[9px] font-black rounded bg-purple-100 dark:bg-purple-950/60 text-purple-600 font-mono">ADMIN</span>
+                      ) : (
+                        <span className="text-[9px] text-slate-400 font-semibold">Config</span>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 group-hover:text-blue-600 transition-colors">
+                        စီမံခန့်ခွဲမှု
+                      </p>
+                      <p className="text-[10px] text-slate-400 truncate">Theme, Font, Sync</p>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
         </>
        )}
        
        {renderContent()}
       </main>
 
-        {/* Drawer / Action Sheet Menu (< xl) */}
+        {/* Unified Drawer / Modal Menu (Available across Mobile, Tablet, and Window View) */}
       {showMoreMenu && (
-        <div className="fixed inset-0 z-50 flex items-end xl:hidden bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setShowMoreMenu(false)}>
+        <div 
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200" 
+          onClick={() => setShowMoreMenu(false)}
+        >
           <div 
-            className="w-full max-h-[85vh] overflow-y-auto bg-neumorphic-bg rounded-t-3xl shadow-2xl p-5 border-t border-slate-400/20 animate-in slide-in-from-bottom duration-300 max-w-lg mx-auto"
+            className="w-full max-h-[90vh] sm:max-h-[85vh] overflow-y-auto bg-neumorphic-bg rounded-t-3xl sm:rounded-[2.5rem] shadow-2xl p-5 sm:p-7 border-t sm:border border-slate-400/20 animate-in slide-in-from-bottom sm:zoom-in-95 duration-300 max-w-lg lg:max-w-xl mx-auto custom-scrollbar"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-4" />
+            {/* Mobile drag handle */}
+            <div className="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-3 sm:hidden" />
+
+            {/* Modal Title Bar with Close Button */}
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-300/30 dark:border-slate-700/50 mb-4 gap-2">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 bg-neumorphic-bg rounded-xl shadow-neumorphic-inset text-blue-600">
+                  <MenuIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-black text-slate-800 dark:text-slate-100 leading-tight">
+                    Menu & Management (စီမံခန့်ခွဲမှု)
+                  </h3>
+                  <p className="text-[11px] text-slate-400 font-medium">လေ့လာရေး ကိရိယာများနှင့် စနစ် ဆက်တင်များ</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowMoreMenu(false)}
+                className="p-2 rounded-xl shadow-neumorphic-outset text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 active:shadow-neumorphic-inset transition-all"
+                title="Close"
+              >
+                <XIcon className="w-5 h-5" />
+              </button>
+            </div>
             
-            {/* Header info */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-300/30 mb-4 gap-2">
+            {/* Header info / User Profile Summary */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-300/30 dark:border-slate-700/50 mb-4 gap-2">
               <div className="flex items-center gap-3 min-w-0">
                 <div className="p-2.5 rounded-2xl shadow-neumorphic-inset text-blue-600 shrink-0">
                   <UsersIcon className="w-6 h-6" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-black text-slate-800 truncate">{user?.userName || 'User Profile'}</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200 truncate">{user?.userName || 'User Profile'}</p>
                   <p className="text-xs font-mono text-slate-400 font-bold truncate">{user?.accessKey ? `Key: ${user.accessKey}` : 'Guest'}</p>
                 </div>
               </div>
@@ -2035,28 +2098,35 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </button>
               <button
                 onClick={() => { setShowMoreMenu(false); setShowDictionary(true); }}
-                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 text-xs font-bold transition-all"
               >
                 <BookOpenIcon className="w-4 h-4 text-indigo-600 shrink-0" />
                 <span>Dictionary</span>
               </button>
               <button
+                onClick={() => { setShowMoreMenu(false); setShowGeminiTutor(true); }}
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 text-xs font-bold transition-all border border-indigo-500/30"
+              >
+                <BotIcon className="w-4 h-4 text-indigo-500 shrink-0" />
+                <span>AI Assistant</span>
+              </button>
+              <button
                 onClick={() => { setShowMoreMenu(false); setShowProfile(true); }}
-                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 text-xs font-bold transition-all"
               >
                 <UsersIcon className="w-4 h-4 text-indigo-600 shrink-0" />
                 <span>Account Info</span>
               </button>
               <button
                 onClick={() => { setShowMoreMenu(false); setShowAppGuide(true); }}
-                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 text-xs font-bold transition-all"
               >
                 <InfoIcon className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>App Guide</span>
               </button>
               <button
                 onClick={() => { setShowMoreMenu(false); setShowInstallInfo(true); }}
-                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 text-xs font-bold transition-all"
+                className="flex items-center gap-2.5 p-3 rounded-2xl shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 text-xs font-bold transition-all"
               >
                 <FolderIcon className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>iOS Install</span>
@@ -2119,21 +2189,38 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                 </div>
               </div>
 
-              {/* Font Size Switch */}
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <TextSizeIcon className="w-4 h-4 text-purple-500" /> Font Size
-                </span>
-                <div className="flex gap-1 bg-neumorphic-bg p-1 rounded-xl shadow-neumorphic-inset">
-                  {(['small', 'medium', 'large'] as const).map((sz) => (
-                    <button
-                      key={sz}
-                      onClick={() => setFontSize(sz)}
-                      className={`px-2.5 py-1 text-xs font-bold rounded-lg capitalize transition-all ${fontSize === sz ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500'}`}
-                    >
-                      {sz}
-                    </button>
-                  ))}
+              {/* Font Size Adjustment Stepper (Image 3: AA Font [ A- ] 18px [ A+ ]) */}
+              <div className="p-3 sm:p-3.5 rounded-2xl bg-neumorphic-bg shadow-neumorphic-inset flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-slate-400 font-mono tracking-tighter">AA</span>
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-200">Font</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={decreaseFontSize}
+                    disabled={fontSizePx <= 12}
+                    className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 font-black text-xs sm:text-sm transition-all disabled:opacity-40 active:scale-95"
+                    title="Font လျှော့မည် (A-)"
+                    aria-label="Decrease font size"
+                  >
+                    A-
+                  </button>
+                  <button
+                    onClick={resetFontSize}
+                    className="min-w-[48px] text-center font-mono font-bold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors py-1"
+                    title="Click to reset font size to 18px"
+                  >
+                    {fontSizePx}px
+                  </button>
+                  <button
+                    onClick={increaseFontSize}
+                    disabled={fontSizePx >= 30}
+                    className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-neumorphic-bg shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset text-slate-700 dark:text-slate-200 font-black text-xs sm:text-sm transition-all disabled:opacity-40 active:scale-95"
+                    title="Font တိုးမည် (A+)"
+                    aria-label="Increase font size"
+                  >
+                    A+
+                  </button>
                 </div>
               </div>
 
@@ -2188,6 +2275,15 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           </div>
         </div>
       )}
+
+      {/* Reading & Display Settings Modal (Matches user design) */}
+      <ReadingSettingsModal
+        isOpen={showReadingSettings}
+        onClose={() => setShowReadingSettings(false)}
+        onOpenAppGuide={() => setShowAppGuide(true)}
+        onOpenInstallInfo={() => setShowInstallInfo(true)}
+        onOpenAdminPanel={user?.isAdmin ? () => setIsAdminViewVisible(true) : undefined}
+      />
 
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">

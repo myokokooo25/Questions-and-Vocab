@@ -1,8 +1,9 @@
 
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
+    <meta name="theme-color" content="#ecf0f3" />
     <script>
       (function() {
         // Safe Vite HMR WebSocket handling in AI Studio preview environment
@@ -52,11 +53,19 @@
         }, true);
 
         try {
-          var t = localStorage.getItem('app_theme') || 'dark';
+          var v2 = localStorage.getItem('app_theme_default_v2');
+          var t = localStorage.getItem('app_theme');
+          if (!v2) {
+            t = 'light';
+            localStorage.setItem('app_theme', 'light');
+            localStorage.setItem('app_theme_default_v2', 'applied');
+          } else if (!t) {
+            t = 'light';
+          }
           if (t === 'khachannel') t = 'gold';
           document.documentElement.className = t;
         } catch (e) {
-          document.documentElement.className = 'dark';
+          document.documentElement.className = 'light';
         }
       })();
     </script>
@@ -308,7 +317,7 @@
         box-sizing: border-box;
       }
       html {
-        font-size: clamp(0.9rem, 0.6rem + 0.8vw, 1.15rem);
+        font-size: var(--app-font-size-px, 18px);
       }
       ruby {
         font-family: inherit;
