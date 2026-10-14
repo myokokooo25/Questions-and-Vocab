@@ -277,86 +277,110 @@ const Card: React.FC<CardProps> = ({
     return (
       <button
         onClick={(e) => { e.stopPropagation(); handlePlayAudio(text, id); }}
-        className={`p-2 rounded-full shrink-0 transition-all duration-200 ${
+        className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl sm:rounded-2xl shrink-0 transition-all duration-200 active:scale-95 ${
           isPlaying 
             ? 'text-blue-600 bg-blue-100/60 shadow-neumorphic-inset scale-105 ring-2 ring-blue-400/40 animate-pulse' 
-            : 'text-slate-400 hover:text-blue-500 shadow-neumorphic-outset active:shadow-neumorphic-inset'
+            : 'text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 shadow-neumorphic-outset active:shadow-neumorphic-inset'
         }`}
         title={title || (isPlaying ? "Stop audio" : "Listen pronunciation")}
         aria-label={title || (isPlaying ? "Stop audio" : "Listen pronunciation")}
       >
-        <SpeakerIcon className="w-4 h-4" />
+        <SpeakerIcon className="w-4 h-4 sm:w-5 sm:h-5" />
       </button>
     );
   };
 
   return (
-    <div className="bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset overflow-hidden w-full max-w-full">
+    <div className="bg-neumorphic-bg rounded-2xl sm:rounded-[2.5rem] shadow-neumorphic-outset overflow-hidden w-full max-w-full ring-1 ring-slate-300/30 dark:ring-white/10">
       <ReportModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} contextInfo={`Question ${data.id}`} />
-      <div className="p-3.5 sm:p-8 w-full max-w-full">
-        <div className='flex flex-col sm:flex-row items-start justify-between mb-5 sm:mb-8 gap-3 sm:gap-0 w-full min-w-0'>
-            <div className="flex-1 pr-0 sm:pr-6 w-full min-w-0">
-                <p className="mb-1.5 sm:mb-2 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Question {data.id}</p>
-                 {language === 'my' ? (
-                  <>
-                    <p className={`${getFontSizeClass('lg')} font-bold leading-relaxed text-slate-700 break-words [overflow-wrap:anywhere]`}>{data.questionMY}</p>
-                    <div className="flex items-start gap-2.5 sm:gap-3 mt-3 sm:mt-4 w-full min-w-0">
-                      <div className={`flex-1 min-w-0 font-mono ${getFontSizeClass('sm')} font-semibold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-3.5 sm:px-6 py-2.5 sm:py-4 rounded-xl sm:rounded-2xl leading-relaxed break-words [overflow-wrap:anywhere]`}>
-                        <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
-                      </div>
-                      <div className="shrink-0 mt-1">
-                        <AudioButton text={data.questionJP} id={`q-${data.id}`} />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex items-start gap-2.5 sm:gap-4 mb-3 sm:mb-4 w-full min-w-0">
-                      <div className={`flex-1 min-w-0 font-mono ${getFontSizeClass('lg')} font-bold text-slate-700 bg-neumorphic-bg shadow-neumorphic-inset px-3.5 sm:px-8 py-2.5 sm:py-6 rounded-xl sm:rounded-[2rem] leading-relaxed sm:leading-loose break-words [overflow-wrap:anywhere]`}>
-                        <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
-                      </div>
-                      <div className="shrink-0 mt-1">
-                        <AudioButton text={data.questionJP} id={`q-${data.id}`} />
-                      </div>
-                    </div>
-                     {language === 'jp' && (
-                        <p className={`${getFontSizeClass('base')} font-bold leading-relaxed text-slate-500 italic ml-1 sm:ml-2 break-words [overflow-wrap:anywhere]`}>{data.questionMY}</p>
-                    )}
-                  </>
-                )}
-            </div>
-            <div className="flex flex-row sm:flex-col gap-2 sm:gap-3 w-full sm:w-auto justify-end sm:justify-start shrink-0 pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-300/20 sm:border-transparent">
-                 <button 
-                    onClick={() => toggleBookmark(data.id)}
-                    className={`p-2 sm:p-3.5 rounded-xl sm:rounded-full transition-all duration-300 ${isBookmarked ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-blue-500'}`}
-                    title="Bookmark"
-                >
-                  <BookmarkIcon className="w-4 h-4 sm:w-6 sm:h-6" />
-                </button>
-                <button
-                    onClick={handleGetHint}
-                    disabled={isHintLoading || !!hint || isSubmitted}
-                    className={`p-2 sm:p-3.5 rounded-xl sm:rounded-full transition-all duration-300 disabled:opacity-30 ${hint ? 'shadow-neumorphic-inset text-amber-600 bg-amber-50/10' : 'shadow-neumorphic-outset text-slate-400 hover:text-amber-500'}`}
-                    title="Hint"
-                >
-                    {isHintLoading ? <LoadingSpinnerIcon className="w-4 h-4 sm:w-6 sm:h-6" /> : <LightBulbIcon className="w-4 h-4 sm:w-6 sm:h-6" />}
-                </button>
-                <button
-                    onClick={() => setIsReportOpen(true)}
-                    className="p-2 sm:p-3.5 rounded-xl sm:rounded-full shadow-neumorphic-outset text-slate-400 hover:text-red-500 transition-all duration-300 active:shadow-neumorphic-inset"
-                    title="Report"
-                >
-                    <FlagIcon className="w-4 h-4 sm:w-6 sm:h-6" />
-                </button>
-            </div>
+      <div className="p-4 sm:p-7 md:p-8 w-full max-w-full">
+        {/* Card Top Meta Bar: Question Badge on Left, Action Bar on Right (Zero overlap) */}
+        <div className="flex items-center justify-between pb-3.5 mb-4 sm:mb-6 border-b border-slate-300/25 dark:border-slate-700/40 gap-3">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-xs sm:text-sm font-black font-mono text-blue-600 dark:text-blue-400 tracking-wider">
+              Question {data.id}
+            </span>
+          </div>
+
+          {/* Action Cluster (Bookmark, Hint, Report) */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <button 
+              onClick={() => toggleBookmark(data.id)}
+              className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl sm:rounded-2xl transition-all duration-200 active:scale-95 ${
+                isBookmarked 
+                  ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/20 ring-1 ring-blue-400/40' 
+                  : 'shadow-neumorphic-outset text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 active:shadow-neumorphic-inset'
+              }`}
+              title={isBookmarked ? "Remove Bookmark" : "Bookmark Question"}
+              aria-label="Bookmark"
+            >
+              <BookmarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <button
+              onClick={handleGetHint}
+              disabled={isHintLoading || !!hint || isSubmitted}
+              className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl sm:rounded-2xl transition-all duration-200 disabled:opacity-30 active:scale-95 ${
+                hint 
+                  ? 'shadow-neumorphic-inset text-amber-600 bg-amber-50/20 ring-1 ring-amber-400/40' 
+                  : 'shadow-neumorphic-outset text-slate-400 hover:text-amber-500 active:shadow-neumorphic-inset'
+              }`}
+              title="အကူအညီ (Hint)"
+              aria-label="Hint"
+            >
+              {isHintLoading ? <LoadingSpinnerIcon className="w-4 h-4 sm:w-5 sm:h-5" /> : <LightBulbIcon className="w-4 h-4 sm:w-5 sm:h-5" />}
+            </button>
+            <button
+              onClick={() => setIsReportOpen(true)}
+              className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl sm:rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-red-500 active:shadow-neumorphic-inset transition-all active:scale-95"
+              title="Report issue (အမှား သတင်းပို့ရန်)"
+              aria-label="Report"
+            >
+              <FlagIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Question Statement Area */}
+        <div className="mb-5 sm:mb-8 w-full min-w-0">
+          {language === 'my' ? (
+            <>
+              <p className={`${getFontSizeClass('lg')} font-bold leading-relaxed text-slate-800 dark:text-slate-100 break-words [overflow-wrap:anywhere]`}>
+                {data.questionMY}
+              </p>
+              <div className="flex items-start gap-2.5 sm:gap-3 mt-3.5 sm:mt-4 w-full min-w-0">
+                <div className={`flex-1 min-w-0 font-mono ${getFontSizeClass('sm')} font-semibold text-slate-700 dark:text-slate-200 bg-neumorphic-bg shadow-neumorphic-inset px-3.5 sm:px-6 py-2.5 sm:py-4 rounded-xl sm:rounded-2xl leading-relaxed break-words [overflow-wrap:anywhere]`}>
+                  <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
+                </div>
+                <div className="shrink-0 mt-0.5">
+                  <AudioButton text={data.questionJP} id={`q-${data.id}`} title="မေးခွန်း အသံထွက် နားထောင်ရန်" />
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex items-start gap-2.5 sm:gap-4 mb-3 sm:mb-4 w-full min-w-0">
+                <div className={`flex-1 min-w-0 font-mono ${getFontSizeClass('lg')} font-bold text-slate-800 dark:text-slate-100 bg-neumorphic-bg shadow-neumorphic-inset px-3.5 sm:px-8 py-2.5 sm:py-6 rounded-xl sm:rounded-[2rem] leading-relaxed sm:leading-loose break-words [overflow-wrap:anywhere]`}>
+                  <JapaneseText text={data.questionJP} onKanjiClick={(k, e) => onKanjiClick(k, e, data.id)} />
+                </div>
+                <div className="shrink-0 mt-0.5">
+                  <AudioButton text={data.questionJP} id={`q-${data.id}`} title="မေးခွန်း အသံထွက် နားထောင်ရန်" />
+                </div>
+              </div>
+              {language === 'jp' && (
+                <p className={`${getFontSizeClass('base')} font-bold leading-relaxed text-slate-500 dark:text-slate-300 italic ml-1 sm:ml-2 break-words [overflow-wrap:anywhere]`}>
+                  {data.questionMY}
+                </p>
+              )}
+            </>
+          )}
         </div>
         
         { (hint || hintError) && (
-          <div className="mb-5 sm:mb-8 p-3.5 sm:p-6 rounded-xl sm:rounded-[2rem] bg-neumorphic-bg shadow-neumorphic-inset border border-amber-400/20">
-            <h4 className="font-black text-amber-600 flex items-center uppercase text-xs tracking-widest mb-2">
+          <div className="mb-5 sm:mb-8 p-3.5 sm:p-6 rounded-xl sm:rounded-2xl bg-neumorphic-bg shadow-neumorphic-inset border border-amber-400/30">
+            <h4 className="font-black text-amber-600 dark:text-amber-400 flex items-center uppercase text-xs tracking-widest mb-2">
               <LightBulbIcon className="w-4 h-4 mr-2" /> အကူအညီ (Hint)
             </h4>
-            {hint && <div className="text-xs sm:text-sm font-bold text-slate-600 italic leading-relaxed break-words [overflow-wrap:anywhere]">{hint}</div>}
+            {hint && <div className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 italic leading-relaxed break-words [overflow-wrap:anywhere]">{hint}</div>}
             {hintError && <div className="text-xs sm:text-sm font-bold text-red-500 break-words">{hintError}</div>}
           </div>
         )}
@@ -367,16 +391,16 @@ const Card: React.FC<CardProps> = ({
             const isCorrect = isSubmitted && option.id === data.correctOptionId;
             const isIncorrect = isSelected && isSubmitted && !isCorrect;
 
-            let cardStyle = 'shadow-neumorphic-outset';
-            if (isSelected) cardStyle = 'shadow-neumorphic-inset bg-slate-50/5';
+            let cardStyle = 'shadow-neumorphic-outset ring-1 ring-slate-300/40 dark:ring-white/10 hover:ring-blue-500/50';
+            if (isSelected) cardStyle = 'shadow-neumorphic-inset bg-blue-50/10 ring-2 ring-blue-500/60 dark:ring-blue-400/70';
             
-            const textStyle = isCorrect ? 'text-green-600' : isIncorrect ? 'text-red-600' : 'text-slate-600';
+            const textStyle = isCorrect ? 'text-green-600 dark:text-green-400' : isIncorrect ? 'text-red-600 dark:text-red-400' : 'text-slate-700 dark:text-slate-100';
 
             return (
               <div
                 key={option.id}
                 onClick={!isSubmitted ? () => onOptionSelect && onOptionSelect(option.id) : undefined}
-                className={`w-full p-3.5 sm:p-6 rounded-xl sm:rounded-[2rem] transition-all duration-300 flex items-start justify-between text-left ${cardStyle} ${textStyle} group ${!isSubmitted ? 'cursor-pointer' : ''} min-w-0 overflow-hidden`}
+                className={`w-full p-4 sm:p-6 rounded-xl sm:rounded-[2rem] transition-all duration-200 flex items-start justify-between text-left ${cardStyle} ${textStyle} group ${!isSubmitted ? 'cursor-pointer active:scale-[0.99]' : ''} min-w-0 overflow-hidden`}
                 role="button"
                 aria-disabled={isSubmitted}
               >

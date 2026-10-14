@@ -259,43 +259,44 @@ export const TechnicalDictionary: React.FC<TechnicalDictionaryProps> = ({ onGoBa
 
       <div className="w-full max-w-5xl lg:max-w-6xl mx-auto space-y-6">
         {/* Header Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-4 sm:p-6 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-4 sm:p-6 bg-neumorphic-bg rounded-[2rem] shadow-neumorphic-outset ring-1 ring-slate-300/30 dark:ring-white/10">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
             <button
               onClick={onGoBack}
-              className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-800 active:shadow-neumorphic-inset transition-all"
+              className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white active:shadow-neumorphic-inset transition-all ring-1 ring-slate-400/20 active:scale-95 shrink-0"
               title="Go Back to Main Menu"
+              aria-label="Go Back"
             >
-              <ChevronLeftIcon className="w-6 h-6" />
+              <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="p-2 rounded-xl bg-blue-100/60 text-blue-600 shadow-neumorphic-inset">
-                  <BookOpenIcon className="w-5 h-5" />
+                <span className="p-1.5 sm:p-2 rounded-xl bg-blue-100/60 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 shadow-neumorphic-inset shrink-0">
+                  <BookOpenIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </span>
-                <h1 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">
+                <h1 className="text-lg sm:text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight truncate">
                   Technical Dictionary (ဝေါဟာရ အဘိဓာန်)
                 </h1>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-1 truncate">
                 မေးခွန်းများအားလုံးရှိ နည်းပညာဝေါဟာရများကို စုစည်း၍ အပြည့်စုံဆုံး အဓိပ္ပာယ်များဖြင့် ရှာဖွေလေ့လာနိုင်ပါသည်
               </p>
             </div>
           </div>
 
           {/* Quick Stat Pill & Play All */}
-          <div className="flex items-center gap-3">
-            <div className="px-3.5 py-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-center">
-              <span className="text-xs text-slate-400 font-bold uppercase tracking-wider block">စုစုပေါင်း</span>
-              <span className="text-sm font-black text-blue-600">{dictionary.length} စာလုံး</span>
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <div className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-center ring-1 ring-slate-300/20">
+              <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider block">စုစုပေါင်း</span>
+              <span className="text-xs sm:text-sm font-black text-blue-600 dark:text-blue-400 font-mono">{dictionary.length} စာလုံး</span>
             </div>
 
             <button
               onClick={handleTogglePlayAll}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-200 ${
+              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-200 ring-1 ${
                 isPlayingAll
-                  ? 'text-red-500 bg-red-50/70 shadow-neumorphic-inset ring-2 ring-red-400/40 animate-pulse'
-                  : 'text-blue-600 bg-neumorphic-bg shadow-neumorphic-outset hover:text-blue-700 active:shadow-neumorphic-inset'
+                  ? 'text-red-500 bg-red-50/70 shadow-neumorphic-inset ring-red-400/50 animate-pulse'
+                  : 'text-blue-600 dark:text-blue-400 bg-neumorphic-bg shadow-neumorphic-outset hover:text-blue-700 ring-slate-400/20 active:shadow-neumorphic-inset active:scale-95'
               }`}
               title={isPlayingAll ? 'Stop audio' : 'Play pronunciation for filtered list'}
             >

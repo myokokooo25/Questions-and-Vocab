@@ -100,18 +100,19 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
   return (
     <div className="fixed inset-0 z-[60] bg-neumorphic-bg flex flex-col text-slate-700 dark:text-slate-200">
       {/* Header */}
-      <header className="shrink-0 shadow-neumorphic-outset bg-neumorphic-bg z-10 p-4 sm:p-6">
-        <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
-          <div className="flex items-center gap-3 sm:gap-4">
+      <header className="shrink-0 shadow-neumorphic-outset bg-neumorphic-bg z-10 p-3.5 sm:p-5 border-b border-slate-300/30 dark:border-slate-800/60">
+        <div className="max-w-5xl mx-auto w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
             <button
               onClick={onClose}
-              className="p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 active:shadow-neumorphic-inset transition-all"
+              className="p-2.5 sm:p-3 rounded-2xl shadow-neumorphic-outset text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 active:shadow-neumorphic-inset transition-all ring-1 ring-slate-400/20 active:scale-95 shrink-0"
               title="Go Back"
+              aria-label="Go Back"
             >
-              <ChevronLeftIcon className="w-6 h-6" />
+              <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
-            <div>
-              <h1 className="text-lg sm:text-xl font-black text-slate-800 dark:text-slate-100">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-base sm:text-xl font-black text-slate-800 dark:text-slate-100 truncate">
                 Answer Key ({currentCategoryObj.label})
               </h1>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
@@ -121,7 +122,7 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
           </div>
 
           {/* Search Input */}
-          <div className="relative w-36 sm:w-64">
+          <div className="relative w-full sm:w-64">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <SearchIcon className="w-4 h-4 text-slate-400" />
             </div>
@@ -130,7 +131,8 @@ const AnswerKeyView: React.FC<AnswerKeyViewProps> = ({
               placeholder="Search Q or Answer..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-slate-700 dark:text-slate-200 placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border-2 border-transparent focus:outline-none transition-all"
+              className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-slate-700 dark:text-slate-200 placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all ring-1 ring-slate-300/30 dark:ring-white/10"
+              aria-label="Search answers"
             />
           </div>
         </div>

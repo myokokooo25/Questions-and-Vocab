@@ -31,16 +31,18 @@ import {
   CopyIcon,
   BookOpenIcon
 } from './Icons';
+import Chapter2026CheatSheet from './Chapter2026CheatSheet';
 
-interface CheatSheetViewProps {
+export interface CheatSheetViewProps {
   onGoBack: () => void;
+  initialSection?: ActiveSection;
 }
 
-type ActiveSection = 'welding_limits' | 'cards' | 'tolerances_table' | 'welding_deep_dive' | 'inspection_chapters';
+export type ActiveSection = 'chapter2026_exam' | 'welding_limits' | 'cards' | 'tolerances_table' | 'welding_deep_dive' | 'inspection_chapters';
 
-export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack }) => {
-  // Default to the user's requested welding limits section
-  const [activeSection, setActiveSection] = useState<ActiveSection>('welding_limits');
+export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack, initialSection = 'chapter2026_exam' }) => {
+  // Default to 2026 Chapter Study 1級 pre-exam memorization cheat sheet
+  const [activeSection, setActiveSection] = useState<ActiveSection>(initialSection);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedWeldingCategory, setSelectedWeldingCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -189,11 +191,24 @@ export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack }) => {
         </div>
 
         {/* Section Navigation Tabs */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-2.5 p-2 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset">
-          {/* 1. NEW DEDICATED WELDING PERMISSIBLE SECTION */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5 p-2 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset">
+          {/* 1. 2026 CHAPTER STUDY 1級 PRE-EXAM MEMORIZATION CHEAT SHEET */}
+          <button
+            onClick={() => setActiveSection('chapter2026_exam')}
+            className={`py-3 px-2 sm:px-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 col-span-2 sm:col-span-1 ${
+              activeSection === 'chapter2026_exam'
+                ? 'shadow-neumorphic-inset text-amber-600 dark:text-amber-400 bg-amber-50/40'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 shadow-neumorphic-outset'
+            }`}
+          >
+            <AcademicCapIcon className="w-4 h-4 shrink-0 text-amber-500" />
+            <span>🎯 2026 1級 (146問)</span>
+          </button>
+
+          {/* 2. DEDICATED WELDING PERMISSIBLE SECTION */}
           <button
             onClick={() => setActiveSection('welding_limits')}
-            className={`py-3 px-2 sm:px-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 col-span-2 lg:col-span-1 ${
+            className={`py-3 px-2 sm:px-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 ${
               activeSection === 'welding_limits'
                 ? 'shadow-neumorphic-inset text-rose-600 dark:text-rose-400 bg-rose-50/30'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 shadow-neumorphic-outset'
@@ -203,7 +218,7 @@ export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack }) => {
             <span>🔥 管理・限界許溶接</span>
           </button>
 
-          {/* 2. ALL STANDARD CARDS */}
+          {/* 3. ALL STANDARD CARDS */}
           <button
             onClick={() => setActiveSection('cards')}
             className={`py-3 px-2 sm:px-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 ${
@@ -216,7 +231,7 @@ export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack }) => {
             <span>📚 စံနှုန်းကတ်များ</span>
           </button>
 
-          {/* 3. FABRICATION TOLERANCES TABLE */}
+          {/* 4. FABRICATION TOLERANCES TABLE */}
           <button
             onClick={() => setActiveSection('tolerances_table')}
             className={`py-3 px-2 sm:px-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 ${
@@ -229,7 +244,7 @@ export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack }) => {
             <span>📊 工作精度 ဇယား</span>
           </button>
 
-          {/* 4. WELDING DEEP DIVE */}
+          {/* 5. WELDING DEEP DIVE */}
           <button
             onClick={() => setActiveSection('welding_deep_dive')}
             className={`py-3 px-2 sm:px-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 ${
@@ -242,7 +257,7 @@ export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack }) => {
             <span>🔬 工法・JIS 3841</span>
           </button>
 
-          {/* 5. INSPECTION & CHAPTERS */}
+          {/* 6. INSPECTION & CHAPTERS */}
           <button
             onClick={() => setActiveSection('inspection_chapters')}
             className={`py-3 px-2 sm:px-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 ${
@@ -256,27 +271,36 @@ export const CheatSheetView: React.FC<CheatSheetViewProps> = ({ onGoBack }) => {
           </button>
         </div>
 
-        {/* Search Bar */}
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none text-slate-400">
-            <SearchIcon className="w-5 h-5" />
+        {/* Search Bar (Only shown for other tabs, since 2026 exam cheat sheet has its own dedicated search & chapter filter) */}
+        {activeSection !== 'chapter2026_exam' && (
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none text-slate-400">
+              <SearchIcon className="w-5 h-5" />
+            </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="စံနှုန်း၊ ကိန်းဂဏန်း (ဥပမာ- 管理許容差, 7mm, ±1.5mm, 16mm, Undercut 0.5mm, 350℃, 1:2.5) ရှာဖွေရန်..."
+              className="w-full pl-12 pr-10 py-3.5 sm:py-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-slate-800 dark:text-slate-100 text-sm sm:text-base font-bold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-500/30"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 text-sm font-bold"
+              >
+                ✕
+              </button>
+            )}
           </div>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="စံနှုန်း၊ ကိန်းဂဏန်း (ဥပမာ- 管理許容差, 7mm, ±1.5mm, 16mm, Undercut 0.5mm, 350℃, 1:2.5) ရှာဖွေရန်..."
-            className="w-full pl-12 pr-10 py-3.5 sm:py-4 bg-neumorphic-bg rounded-2xl sm:rounded-3xl shadow-neumorphic-inset text-slate-800 dark:text-slate-100 text-sm sm:text-base font-bold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-500/30"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 text-sm font-bold"
-            >
-              ✕
-            </button>
-          )}
-        </div>
+        )}
+
+        {/* ============================================================== */}
+        {/* NEW SECTION: 2026 CHAPTER STUDY 1級 PRE-EXAM MEMORIZATION CHEAT */}
+        {/* ============================================================== */}
+        {activeSection === 'chapter2026_exam' && (
+          <Chapter2026CheatSheet />
+        )}
 
         {/* ============================================================== */}
         {/* NEW SECTION: JASS-6 管理許溶接 & 限界許溶接 COMPREHENSIVE TABLE */}

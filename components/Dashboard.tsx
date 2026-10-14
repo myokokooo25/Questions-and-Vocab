@@ -1259,7 +1259,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     }
 
     if (showCheatSheet) {
-        return <CheatSheetView onGoBack={() => setShowCheatSheet(false)} />;
+        return <CheatSheetView onGoBack={() => setShowCheatSheet(false)} initialSection={selectedApp === '2026' ? 'chapter2026_exam' : 'welding_limits'} />;
     }
 
     if (showDictionary) {
@@ -1333,28 +1333,30 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
     return (
       <div className="relative">
         
-        {/* Floating Navigation - Left (Visible on large screens) */}
+        {/* Floating Navigation - Left (Visible only on XL screens >= 1280px so it never overlaps the card) */}
         <button
             onClick={goToPreviousCard}
             disabled={currentCardIndex === 0}
-            className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex items-center justify-center w-16 h-16 bg-neumorphic-bg rounded-full shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all disabled:opacity-0 text-slate-500 hover:text-blue-600"
+            className="fixed xl:left-4 2xl:left-12 top-1/2 -translate-y-1/2 z-30 hidden xl:flex items-center justify-center w-14 h-14 2xl:w-16 2xl:h-16 bg-neumorphic-bg rounded-full shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all disabled:opacity-0 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-slate-300/30 dark:ring-white/10"
             title="Previous Question"
+            aria-label="Previous Question"
         >
-            <ChevronLeftIcon className="w-8 h-8" />
+            <ChevronLeftIcon className="w-7 h-7 2xl:w-8 2xl:h-8" />
         </button>
 
-        {/* Floating Navigation - Right (Visible on large screens) */}
+        {/* Floating Navigation - Right (Visible only on XL screens >= 1280px so it never overlaps the card) */}
         <button
             onClick={goToNextCard}
             disabled={currentCardIndex === filteredData.length - 1}
-            className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex items-center justify-center w-16 h-16 bg-neumorphic-bg rounded-full shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all disabled:opacity-0 text-slate-500 hover:text-blue-600"
+            className="fixed xl:right-4 2xl:right-12 top-1/2 -translate-y-1/2 z-30 hidden xl:flex items-center justify-center w-14 h-14 2xl:w-16 2xl:h-16 bg-neumorphic-bg rounded-full shadow-neumorphic-outset hover:shadow-neumorphic-inset active:shadow-neumorphic-inset transition-all disabled:opacity-0 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-slate-300/30 dark:ring-white/10"
             title="Next Question"
+            aria-label="Next Question"
         >
-            <ChevronLeftIcon className="w-8 h-8 rotate-180" />
+            <ChevronLeftIcon className="w-7 h-7 2xl:w-8 2xl:h-8 rotate-180" />
         </button>
 
-        <p className="text-center mb-6 text-sm font-bold text-slate-400 uppercase tracking-widest">
-          Question <span className="text-slate-700 px-1">{currentCardIndex + 1}</span> of <span className="text-slate-700 px-1">{filteredData.length}</span>
+        <p className="text-center mb-5 sm:mb-6 text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest">
+          Question <span className="text-slate-700 dark:text-slate-200 px-1 font-mono">{currentCardIndex + 1}</span> of <span className="text-slate-700 dark:text-slate-200 px-1 font-mono">{filteredData.length}</span>
         </p>
 
         <Card 
@@ -1367,20 +1369,25 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
           isSubmitted={currentSessionAnswer !== null}
         />
         
+        {/* Inline Prev / Next Action Bar (Optimized touch size min-h-[48px] with crisp 1px borders) */}
         <div className="flex items-center justify-between mt-6 sm:mt-8 gap-3 sm:gap-6">
           <button 
               onClick={goToPreviousCard}
               disabled={currentCardIndex === 0}
-              className="flex-1 py-3 sm:py-4 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-slate-600 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
+              className="flex-1 min-h-[48px] sm:min-h-[52px] py-3 sm:py-4 px-4 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-slate-600 dark:text-slate-300 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale ring-1 ring-slate-300/30 dark:ring-white/10 active:scale-95 flex items-center justify-center gap-2"
+              aria-label="Previous question"
           >
-            Prev
+            <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span>Prev</span>
           </button>
           <button 
               onClick={goToNextCard}
               disabled={currentCardIndex === filteredData.length - 1}
-              className="flex-1 py-3 sm:py-4 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-blue-600 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale"
+              className="flex-1 min-h-[48px] sm:min-h-[52px] py-3 sm:py-4 px-4 text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-blue-600 dark:text-blue-400 bg-neumorphic-bg rounded-xl sm:rounded-2xl shadow-neumorphic-outset hover:shadow-neumorphic-outset active:shadow-neumorphic-inset transition-all disabled:opacity-30 disabled:grayscale ring-1 ring-blue-500/30 dark:ring-blue-400/30 active:scale-95 flex items-center justify-center gap-2"
+              aria-label="Next question"
           >
-            Next
+            <span>Next</span>
+            <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
           </button>
         </div>
       </div>
@@ -1592,13 +1599,13 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
         </div>
       )}
       
-      <header className="sticky top-0 z-50 w-full bg-neumorphic-bg/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full bg-neumorphic-bg/90 backdrop-blur-md border-b border-slate-300/30 dark:border-slate-800/60">
         <div className="flex items-center justify-between h-16 sm:h-20 max-w-6xl px-3 sm:px-6 lg:px-8 mx-auto gap-2">
-            {/* Left: Back to Dashboard Button & Title (Protected with shrink-0 and z-20 so it is never obscured) */}
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-20">
+            {/* Left: Back to Dashboard Button & Title (Generous space, no severe truncation) */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 sm:flex-initial min-w-0 z-20">
               <button
                 onClick={onGoBack}
-                className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-2.5 rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 active:shadow-neumorphic-inset transition-all shrink-0 z-20 bg-neumorphic-bg ring-1 ring-slate-400/20 hover:ring-blue-500/40"
+                className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-2.5 rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 active:shadow-neumorphic-inset transition-all shrink-0 z-20 bg-neumorphic-bg ring-1 ring-slate-400/20 hover:ring-blue-500/40 active:scale-95"
                 title="Dashboard သို့ ပြန်သွားရန် (Back to Dashboard)"
                 aria-label="Back to Dashboard"
               >
@@ -1607,7 +1614,7 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                   Dashboard
                 </span>
               </button>
-              <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-black text-slate-700 dark:text-slate-200 whitespace-nowrap truncate max-w-[110px] xs:max-w-[150px] sm:max-w-[190px] md:max-w-[240px] lg:max-w-none">
+              <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-black text-slate-800 dark:text-slate-100 truncate min-w-0">
                 {isOldQuestionMode 
                   ? `${selectedApp}年 過去問題` 
                   : selectedApp === '2026'
@@ -1618,68 +1625,93 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
               </h1>
             </div>
             
-            {/* --- Center: Status Badges (Visible on larger screens so they never crowd the Back button) --- */}
-            {/* --- Unified Header Actions (Identical for Mobile, Tablet, and Window View) --- */}
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* --- Mobile Top Right: Compact Search & Menu (Clean, uncrowded) --- */}
+            <div className="flex items-center gap-1.5 sm:hidden shrink-0">
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
+                  <SearchIcon className="w-3.5 h-3.5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className="w-20 focus:w-32 pl-7 pr-2 py-1.5 text-xs font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all"
+                  aria-label="Search questions"
+                />
+              </div>
+              <button
+                onClick={() => setShowMoreMenu(true)}
+                className="p-2 rounded-xl shadow-neumorphic-outset text-slate-600 dark:text-slate-300 hover:text-blue-600 active:shadow-neumorphic-inset transition-all relative shrink-0 ring-1 ring-slate-400/20"
+                title="Menu"
+                aria-label="Menu"
+              >
+                <MenuIcon className="w-4 h-4" />
+                {user?.type === 'trial' && <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full"></span>}
+              </button>
+            </div>
+
+            {/* --- Tablet & Desktop Header Actions (Full expanded controls) --- */}
+            <div className="hidden sm:flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-2.5 sm:pl-3 pointer-events-none">
-                        <SearchIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <SearchIcon className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                     </div>
                     <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Search questions..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-16 focus:w-28 sm:w-28 sm:focus:w-36 md:w-36 md:focus:w-48 pl-7 sm:pl-9 pr-2 sm:pr-3 py-1.5 sm:py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-xl sm:rounded-2xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all"
+                        className="w-32 sm:focus:w-44 md:w-40 md:focus:w-56 pl-9 pr-3 py-2 text-xs sm:text-sm font-bold bg-neumorphic-bg text-neumorphic-text placeholder-slate-400 rounded-2xl shadow-neumorphic-inset border border-transparent focus:outline-none transition-all ring-1 ring-slate-300/30 dark:ring-white/10"
                     />
                 </div>
                 <button
                     onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
-                    className={`p-2 sm:p-2.5 rounded-xl sm:rounded-2xl transition-all shrink-0 ${
+                    className={`p-2.5 rounded-2xl transition-all shrink-0 ring-1 ${
                     showOnlyBookmarked
-                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10'
-                        : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10 ring-blue-400/40'
+                        : 'shadow-neumorphic-outset text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 ring-slate-400/20'
                     }`}
                     title="Bookmarks (မှတ်သားထားသော မေးခွန်းများ)"
                     aria-label="Bookmarks"
                 >
-                    <BookmarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <BookmarkIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={() => setShowDictionary(true)}
-                    className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 active:shadow-neumorphic-inset transition-all shrink-0"
+                    className="p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 active:shadow-neumorphic-inset transition-all shrink-0 ring-1 ring-slate-400/20"
                     title="Technical Dictionary (နည်းပညာ ဝေါဟာရ အဘိဓာန်)"
                     aria-label="Technical Dictionary"
                 >
-                    <BookOpenIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <BookOpenIcon className="w-5 h-5" />
                 </button>
                 <button
                     onClick={toggleLanguage}
-                    className={`px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl text-xs font-black transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 ${
+                    className={`px-3 py-2 rounded-2xl text-xs font-black transition-all flex items-center gap-1.5 shrink-0 ring-1 ${
                       language === 'my' 
-                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10' 
-                        : 'shadow-neumorphic-outset text-slate-500 hover:text-slate-700 dark:hover:text-slate-200'
+                        ? 'shadow-neumorphic-inset text-blue-600 bg-blue-50/10 ring-blue-400/40' 
+                        : 'shadow-neumorphic-outset text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 ring-slate-400/20'
                     }`}
                     title="Toggle Language: Burmese / Japanese / JP Only (ဘာသာစကားပြောင်းရန်)"
                     aria-label="Toggle Language"
                 >
-                    <GlobeIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500" />
-                    <span>{language === 'my' ? '🇲🇲' : language === 'jp' ? '🇯🇵+🇲🇲' : '🇯🇵'}</span>
+                    <GlobeIcon className="w-4 h-4 text-blue-500" />
+                    <span>{language === 'my' ? '🇲🇲 မြန်မာ' : language === 'jp' ? '🇯🇵+🇲🇲' : '🇯🇵 Only'}</span>
                 </button>
                 <button
                     onClick={() => setShowMoreMenu(true)}
-                    className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 active:shadow-neumorphic-inset transition-all relative shrink-0"
+                    className="p-2.5 rounded-2xl shadow-neumorphic-outset text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 active:shadow-neumorphic-inset transition-all relative shrink-0 ring-1 ring-slate-400/20"
                     title="Menu & Management (ရွေးချယ်စရာများနှင့် စီမံခန့်ခွဲမှု)"
                     aria-label="More Options"
                 >
-                    <MenuIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                    {user?.type === 'trial' && <span className="absolute top-1 sm:top-1.5 right-1 sm:right-1.5 w-2 h-2 bg-amber-500 rounded-full"></span>}
+                    <MenuIcon className="w-5 h-5" />
+                    {user?.type === 'trial' && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full"></span>}
                 </button>
             </div>
         </div>
       </header>
 
-      <main className={`w-full mx-auto p-3 sm:p-6 lg:p-8 pb-20 transition-all duration-300 ${
+      <main className={`w-full mx-auto p-3 sm:p-6 lg:p-8 pb-28 sm:pb-20 transition-all duration-300 ${
         isAdminViewVisible
           ? (adminViewWidth === 'full' ? 'max-w-none px-2 sm:px-6 lg:px-8' : 'max-w-7xl 2xl:max-w-[96rem]')
           : 'max-w-4xl lg:max-w-5xl'
@@ -1911,13 +1943,17 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
                       <div className="p-2 rounded-xl bg-neumorphic-bg shadow-neumorphic-inset text-amber-500 group-hover:scale-110 transition-transform">
                         <ScaleIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
-                      <span className="text-[9px] font-black text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded">JASS 6</span>
+                      <span className="text-[9px] font-black text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded">
+                        {selectedApp === '2026' ? '2026 1級 (146問)' : 'JASS 6'}
+                      </span>
                     </div>
                     <div>
                       <p className="text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 group-hover:text-amber-500 transition-colors">
                         Cheat Sheet
                       </p>
-                      <p className="text-[10px] text-slate-400 truncate">စံနှုန်း & 溶接</p>
+                      <p className="text-[10px] text-slate-400 truncate">
+                        {selectedApp === '2026' ? 'အခန်း ၁-၅ အလွတ်ကျက်' : 'စံနှုန်း & 溶接'}
+                      </p>
                     </div>
                   </button>
 
@@ -2310,6 +2346,98 @@ const Dashboard: React.FC<DashboardProps> = ({ selectedApp, onGoBack }) => {
             </div>
         </div>
       )}
+
+      {/* Mobile Bottom Navigation Bar (Thumb-Zone Friendly, Clean & Modern) */}
+      <nav className="fixed bottom-0 inset-x-0 z-40 bg-neumorphic-bg/95 backdrop-blur-md border-t border-slate-300/40 dark:border-slate-800/80 shadow-lg px-2 py-1.5 flex items-center justify-around sm:hidden">
+        {/* 1. Study / Bank */}
+        <button
+          onClick={() => { 
+            setShowAnswerKey(false); 
+            setShowDictionary(false); 
+            setShowCheatSheet(false); 
+            setShowWeakPoints(false); 
+            setShowGeminiTutor(false); 
+            setView(view === 'study' ? 'list' : 'study'); 
+          }}
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all ${
+            view === 'study' && !showDictionary && !showCheatSheet && !showWeakPoints && !showGeminiTutor && !showAnswerKey
+              ? 'text-blue-600 dark:text-blue-400 font-black'
+              : 'text-slate-500 dark:text-slate-400 font-bold'
+          }`}
+          title={view === 'list' ? 'Switch to Card Study' : 'Switch to Question Bank'}
+          aria-label={view === 'list' ? 'Study Mode' : 'Question Bank'}
+        >
+          {view === 'list' ? <BookOpenIcon className="w-5 h-5 mb-0.5" /> : <ListBulletIcon className="w-5 h-5 mb-0.5" />}
+          <span className="text-[10px] tracking-tight">{view === 'list' ? 'Study' : 'Bank'}</span>
+        </button>
+
+        {/* 2. Quiz */}
+        <button
+          onClick={() => { 
+            setShowAnswerKey(false); 
+            setShowDictionary(false); 
+            setShowCheatSheet(false); 
+            setShowWeakPoints(false); 
+            setShowGeminiTutor(false); 
+            setView(view === 'quiz' ? 'study' : 'quiz'); 
+          }}
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all ${
+            view === 'quiz'
+              ? 'text-blue-600 dark:text-blue-400 font-black'
+              : 'text-slate-500 dark:text-slate-400 font-bold'
+          }`}
+          title="Quiz Mode"
+          aria-label="Quiz Mode"
+        >
+          <AcademicCapIcon className="w-5 h-5 mb-0.5" />
+          <span className="text-[10px] tracking-tight">{view === 'quiz' ? 'Exit Quiz' : 'Quiz'}</span>
+        </button>
+
+        {/* 3. Bookmarks */}
+        <button
+          onClick={() => setShowOnlyBookmarked(!showOnlyBookmarked)}
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all relative ${
+            showOnlyBookmarked
+              ? 'text-blue-600 dark:text-blue-400 font-black'
+              : 'text-slate-500 dark:text-slate-400 font-bold'
+          }`}
+          title="Bookmarks"
+          aria-label="Bookmarks"
+        >
+          <BookmarkIcon className="w-5 h-5 mb-0.5" />
+          <span className="text-[10px] tracking-tight">Saved</span>
+          {bookmarkedIds.size > 0 && (
+            <span className="absolute top-0 right-3 px-1 min-w-[14px] text-[9px] font-black font-mono rounded-full bg-blue-600 text-white text-center">
+              {bookmarkedIds.size}
+            </span>
+          )}
+        </button>
+
+        {/* 4. Dictionary / Vocabulary */}
+        <button
+          onClick={() => setShowDictionary(true)}
+          className="flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all text-slate-500 dark:text-slate-400 font-bold"
+          title="Technical Dictionary"
+          aria-label="Technical Dictionary"
+        >
+          <BookOpenIcon className="w-5 h-5 mb-0.5 text-indigo-500" />
+          <span className="text-[10px] tracking-tight">Dict</span>
+        </button>
+
+        {/* 5. More Menu & Settings */}
+        <button
+          onClick={() => setShowMoreMenu(true)}
+          className="flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all text-slate-500 dark:text-slate-400 font-bold relative"
+          title="Menu & Settings"
+          aria-label="Menu"
+        >
+          <MenuIcon className="w-5 h-5 mb-0.5" />
+          <span className="text-[10px] tracking-tight">Menu</span>
+          {user?.type === 'trial' && (
+            <span className="absolute top-1 right-4 w-2 h-2 bg-amber-500 rounded-full" />
+          )}
+        </button>
+      </nav>
     </div>
   );
 };
